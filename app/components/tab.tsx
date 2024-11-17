@@ -6,11 +6,13 @@ import {cn} from '../utils'
 export interface TabProps {
   src: StaticImageData; // Icon source
   text: string; // Label for the tab
+  isChosen: boolean;
+  chooseTab: () => void
 }
 
-export const Tab: React.FC<TabProps> = ({ src, text }) => {
+export const Tab: React.FC<TabProps> = ({ src, text, isChosen, chooseTab }) => {
   return (
-    <div className={cn("flex items-center cursor-pointer justify-start pl-[10px] gap-[10px] h-[70px] text-[18px] font-bold", text !== 'Messages' ? "gap-[14px]" : 'gap-[10px]')}>
+    <div className={cn("flex items-center cursor-pointer justify-start pl-[10px] gap-[10px] h-[70px] text-[18px] font-bold rounded-xl", text !== 'Messages' ? "gap-[14px]" : 'gap-[10px]', isChosen ? "bg-neutral-200" : '')} onClick={chooseTab}>
       {/* <img
             src="/assets/icons/newMessage.svg" // Path from the public folder
             alt="messages"
