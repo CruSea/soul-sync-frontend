@@ -1,7 +1,12 @@
-const Chat: React.FC = () => {
+import ChatHeader from './chatHeader'
+
+const Chat = () => {
   return (
-    <div className="flex-1 bg-white rounded-lg">
-          
+    <div className="flex-1 flex flex-col bg-white rounded-lg">
+      <ChatHeader />
+      <div className='h-full w-full flex-1'>
+
+      </div>
     </div>
   )
 }
