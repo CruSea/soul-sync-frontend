@@ -29,4 +29,4 @@ const Theme: React.FC<ThemeProps> = ({ src, text, isChosen, changeTheme }) => {
   )
 }
 
-export default Theme;
+export default Theme
