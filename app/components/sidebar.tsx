@@ -1,7 +1,7 @@
 "use client"
 
 import { useState } from 'react';
-import {Tab, TabProps} from './tab';
+import {Tab} from './tab';
 import Theme from './theme';
 
 import messagesIcon from '../assets/icons/messages.png';
@@ -10,17 +10,6 @@ import helpIcon from '../assets/icons/help.png';
 import sun from '../assets/icons/sun.svg';
 import moon from '../assets/icons/moon.svg';
 
-
-
-
-// props for the theme component 
-
-interface ThemeProps {
-  src: string; // Icon source
-  text: string; // Label for the theme
-  isChosen: boolean; // If the theme is currently selected
-  changeTheme: () => void; // Function to update the theme
-}
 
 export default function Sidebar(): JSX.Element {
   const [theme, setTheme] = useState<"Light" | "Dark">('Light');

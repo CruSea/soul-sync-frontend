@@ -1,7 +1,16 @@
 import Image from 'next/image';
 import { cn } from '../utils'
 
-export default function Theme({ src, text, isChosen, changeTheme }) {
+// props for the theme component 
+
+interface ThemeProps {
+  src: string; // Icon source
+  text: string; // Label for the theme
+  isChosen: boolean; // If the theme is currently selected
+  changeTheme: () => void; // Function to update the theme
+}
+
+const Theme: React.FC<ThemeProps> = ({ src, text, isChosen, changeTheme }) => {
   return (
     <div className={cn("w-full h-full px-[16px] py-[6px] cursor-pointer flex justify-between items-center rounded-full", isChosen ? 'shadow-[0px_5px_10px_0px_rgba(0,0,0,0.1)]' : '')} onClick={changeTheme}>
       {text == 'Light' && <svg width="25" height="25" viewBox="0 0 15 15" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -19,3 +28,5 @@ export default function Theme({ src, text, isChosen, changeTheme }) {
     </div>
   )
 }
+
+export default Theme;
