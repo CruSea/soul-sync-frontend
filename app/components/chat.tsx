@@ -2,7 +2,7 @@
 
 import { useState } from 'react';
 import ChatHeader from './chatHeader'
-import Today from './today'
+import ChatCss from '../styles/chat.module.css'
 import Message from './message';
 
 // type for the group of message threads between user and mentor
@@ -33,7 +33,7 @@ const Chat = () => {
       text: "Lorem ipsum odor? todor? huodor hjhkhask aamet, consectetuer adipiscing elit. Sed eros nullam fermentum viverra ante amet justo. Facilisi justo bibendum mus ante augue sem. Malesuada natoque urna ornare primis neque mattis. Dictum volutpat fames tempus taciti pellentesque amet amet primis neque mattis. Dictum volutpat fames tempus taciti.",
       time: '2:44 PM',
       newDay: ''
-      
+
     },
     {
       isUser: false,
@@ -56,10 +56,12 @@ const Chat = () => {
   return (
     <div className="flex-1 flex flex-col bg-white rounded-lg">
       <ChatHeader />
-      <div className='relative h-full w-full flex-1 pt-12 px-4 pb-4'>
-
-        <div className="flex flex-col gap-6 w-full">
-        {thread.map((message, index) => <Message text={message.text} isUser={message.isUser} time={message.time} newDay={message.newDay} index={index}/> )}
+      <div className='relative h-full w-full flex-1 pt-12 px-6 pb-4'>
+        <div className={`flex-1 flex flex-col gap-6 w-full overflow-y-auto z-10 ${ChatCss.messageThread}`}>
+          {thread.map((message, index) => <Message text={message.text} isUser={message.isUser} time={message.time} newDay={message.newDay} index={index} />)}
+        </div>
+        <div>
+          
         </div>
       </div>
     </div>

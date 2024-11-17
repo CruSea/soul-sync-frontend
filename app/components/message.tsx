@@ -11,13 +11,13 @@ interface MessageProps {
 
 const Message: React.FC<MessageProps> = ({ text, isUser, time, newDay, index }) => {
   return (
-    <div className={cn("relative flex gap-2 items-end", !isUser ? "ml-auto flex-row-reverse" : "flex", newDay !== "" ? "pt-7" : '', index === 0 && newDay !== "" ? "mt-[-22px]" : '')}>
+    <div className={cn("relative flex gap-2 items-end", !isUser ? "ml-auto flex-row-reverse" : "flex", newDay !== "" ? "pt-6" : '')}>
       {/* if it is a user the account icon will be on the right side instead of left.
           if it is the first message of the day, give a padding for the Date text.
           if it is the first message of the day and the first message of the message thread give an extra padding for the text at top 
       
       */}
-      {newDay !== "" && <div className='absolute top-[-4px] left-1/2 transform translate-x-[-50%] font-normal text-xs text-neutral-400'>
+      {newDay !== "" && <div className='absolute z-40 top-[-3px] left-1/2 transform translate-x-[-50%] font-normal text-xs text-neutral-400'>
         {newDay}
       </div>}
       <Image
