@@ -2,8 +2,9 @@ const ClockSection = () => {
   return (
     <div className="flex items-center gap-3">
           <svg
-            width="50"
-            height="50"
+          className=""
+            width="60"
+            height="60"
             viewBox="0 0 50 50"
             fill="none"
             xmlns="http://www.w3.org/2000/svg"
@@ -72,7 +73,7 @@ const ClockSection = () => {
               strokeLinejoin="round"
             />
           </svg>
-          <div>08:20 AM</div>
+          <div className="text-[24px] font-medium">08:20 AM</div>
         </div>
   )
 }

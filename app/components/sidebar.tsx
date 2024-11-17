@@ -11,7 +11,7 @@ import sun from '../assets/icons/sun.svg';
 import moon from '../assets/icons/moon.svg';
 
 
-export default function Sidebar(): JSX.Element {
+export default function Sidebar() {
   const [theme, setTheme] = useState<"Light" | "Dark">('Light');
 
   return (
@@ -23,7 +23,7 @@ export default function Sidebar(): JSX.Element {
             TURUMBA
           </div>
           {/* Decorative bottom shadow */}
-          <div className="absolute bottom-0 left-0 right-0 border-b shadow-custom-bottom"></div>
+          <div className="absolute bottom-0 left-0 right-0 border-t shadow-custom-bottom"></div>
         </div>
 
         {/* Navigation Tabs */}

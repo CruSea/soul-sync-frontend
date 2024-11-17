@@ -1,4 +1,8 @@
-const GreetingSection = ({ date }: { date: string }) => {
+interface GreetingSectionProps {
+  date: string;
+}
+
+const GreetingSection: React.FC<GreetingSectionProps> = ({ date }) => {
   return (
     <div className="flex">
       <div className="relative flex flex-col px-2 gap-1">

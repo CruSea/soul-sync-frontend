@@ -3,10 +3,10 @@ import GreetingSection from './greetingSection'
 import ClockSection from './clockSection'
 import UserActions from "./userActions";
 
-export default function Header() {
+const Header: React.FC = () => {
   return (
     <div className="w-full h-[110px] flex justify-between p-8 border-b border-gray-200 ">
-      <div className="flex gap-0 w-[495px] justify-between items-center">
+      <div className="flex gap-10 w-[530px] justify-between items-center">
         <GreetingSection date="16th July 2024" />
         <ClockSection />
       </div>
@@ -14,3 +14,5 @@ export default function Header() {
     </div>
   );
 }
+
+export default Header;
