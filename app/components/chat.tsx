@@ -40,7 +40,6 @@ const Chat = () => {
       time: '2:44 PM',
       newDay: '',
       id: uuidv4()
-
     },
     {
       isUser: false,
@@ -69,7 +68,7 @@ const Chat = () => {
         <div className={`flex-1 flex flex-col gap-6 w-full overflow-y-auto z-10 ${ChatCss.messageThread}`}>
           {thread.map((message, index) => <Message key={message.id} text={message.text} isUser={message.isUser} time={message.time} newDay={message.newDay} index={index} />)}
         </div>
-        <div className='relative h-[50px] mt-5 w-full rounded-[20px] bg-neutral-200 flex align-center'>
+        {/* <div className='relative h-[50px] mt-5 w-full rounded-[20px] bg-neutral-200 flex align-center'>
 
           <Image
             src="/assets/send.png"
@@ -79,7 +78,7 @@ const Chat = () => {
             height={100}
             className="absolute top-1/2 transform translate-y-[-50%] right-[8px] cursor-pointer w-[35px] h-[35px] border-black rounded-full"
           />
-        </div>
+        </div> */}
       </div>
     </div>
   )
