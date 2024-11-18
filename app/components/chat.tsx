@@ -112,7 +112,10 @@ const Chat = () => {
       time: '2:44 PM',
       newDay: '',
       id: uuidv4()} ])
-    textBox.current.value = ''
+    
+    if (textBox.current) {
+      textBox.current.value = ''
+    }
   }
 
 

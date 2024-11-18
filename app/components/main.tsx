@@ -9,7 +9,7 @@ const Main: React.FC = () => {
         <Chat />
         <div className="w-[370px] h-full flex flex-col gap-5">
           <Profile />
-          <Profile />
+          
         </div>
     </div>
   )
