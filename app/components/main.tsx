@@ -4,7 +4,7 @@ import Profile from "./profile"
 
 const Main: React.FC = () => {
   return (
-    <div className="w-full h-full bg-gray-100 flex gap-5 p-5 custom-outline">
+    <div className="w-full max-h-screen overflow-hidden bg-gray-100 flex gap-5 p-5 custom-outline">
         <Search />
         <Chat />
         <div className="w-[370px] h-full flex flex-col gap-5">
