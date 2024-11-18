@@ -19,12 +19,13 @@ const Search = () => {
     { name: "Alice Doe", title: "Mentor: Regina Phalange", id: uuidv4() },
     { name: "Bob Doe", title: "Mentor: Regina Phalange", id: uuidv4() },
   ];
+  
 
 
   const [currentUser, setCurrentUser] = useState<number>(0)
 
   return (
-    <div className="w-[370px] h-full bg-white rounded-lg py-2.5 flex flex-col gap-5">
+    <div className="w-[370px] overflow-y-auto bg-white rounded-lg py-2.5 flex flex-col gap-5">
       <SearchBar />
       <div className="flex flex-col gap-2.5">
         {users.map((user, index) =>

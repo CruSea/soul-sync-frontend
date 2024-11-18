@@ -4,7 +4,7 @@ import Info from "./info"
 
 const Profile = () => {
   return (
-    <div className="flex-1 w-full bg-white rounded-lg shadow-custom-profile p-5 flex flex-col  gap-5">
+    <div className="h-1/2 w-full bg-white rounded-lg shadow-custom-profile p-5 flex flex-col  gap-5">
         <div className="font-bold text-xl">User Profile</div>
         <Image
             src="/assets/mainProfile.png"
