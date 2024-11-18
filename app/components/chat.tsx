@@ -18,7 +18,10 @@ interface threadType {
 }
 
 const Chat = () => {
+  // text is where the text box saves what the mentor writes
+  const [text, setText] = useState<string>('')
 
+  // a list of messages between the user and mentor
   const [thread, setThread] = useState<threadType[]>([
     {
       isUser: true,
@@ -85,9 +88,15 @@ const Chat = () => {
     }
   ]);
 
-  const bottomOfPanelRef = useRef(null);
+  // an empty div at the end of the thread used to scroll to the bottom on send
+  const bottomOfPanelRef = useRef(null); 
+
+  // a refrance chat text box
+  const textBox = useRef(null)
 
   useEffect(() => {
+    // when a new message arrives on the thread, it scrolls it to the bottom referance div
+
     if (bottomOfPanelRef.current) {
       bottomOfPanelRef.current.scrollIntoView();
     }
@@ -95,15 +104,51 @@ const Chat = () => {
 
 
 
+  const sendText = (messageText) => {
+    // adds a message from the mentor to the thread and sets the text box to empty
+
+    setThread((prevThread) => [...prevThread, {isUser: false,
+      text: messageText,
+      time: '2:44 PM',
+      newDay: '',
+      id: uuidv4()} ])
+    textBox.current.value = ''
+  }
+
+
   return (
-    <div className="flex-1 flex flex-col bg-white px-6 pb-4 rounded-lg">
+    <div className="flex-1 flex flex-col bg-white pb-4 rounded-lg items-center">
+      {/* the header that shows user name*/}
       <ChatHeader />
-      <div className={`relative flex-1 w-full pt-12  flex flex-col gap-6 ${ChatCss.messageThread} overflow-y-auto`}>
+
+      {/* the chat thread between the user and mentor*/}
+      <div className={`relative flex-1 w-full pt-12 px-6 flex flex-col gap-6 ${ChatCss.messageThread} overflow-y-auto`}>
         {thread.map((message, index) => <Message key={message.id} text={message.text} isUser={message.isUser} time={message.time} newDay={message.newDay} index={index} />)}
         <div ref={bottomOfPanelRef} className='h-10 w-fu p-5'></div>
       </div>
-      <div className='relative w-full h-[50px] rounded-[20px] bg-neutral-200'>
-        <input type='text' placeholder='Write a Message' className="w-full h-full outline-none rounded-[20px] bg-neutral-200 pl-4 pr-14 font-normal text-md placeholder:text-neutral-400" />
+
+      {/* the text box the mentor writes in*/}
+      <div className='relative w-[95%] h-[50px] rounded-[20px] bg-neutral-200'>
+        <input 
+          type='text' 
+          ref={textBox}
+          placeholder='Write a Message' 
+          className="w-full h-full outline-none rounded-[20px] bg-neutral-200 pl-4 pr-14 font-normal text-md placeholder:text-neutral-400" 
+          onChange={(e) => {
+            // updates the value of the text state whenever something is written
+            setText(e.target.value);
+          }}
+          onKeyDown={(e) => {
+            // sends the text value when pressing enter
+            if (e.key === "Enter") {
+              e.preventDefault(); // Prevents newline on enter in the textarea
+              sendText(text);
+              
+            }
+          }}
+        />
+
+        {/* the sending Image on the text pox*/}
         <Image
           src="/assets/send.png"
           alt="user image"
@@ -111,6 +156,10 @@ const Chat = () => {
           width={100}
           height={100}
           className="absolute top-1/2 transform translate-y-[-50%] right-2 cursor-pointer w-[35px] h-[35px] border-black rounded-full"
+          onClick={() => {
+            // sends the text value when clicking send
+            sendText(text)
+          }}
         />
       </div>
     </div>

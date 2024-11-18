@@ -31,7 +31,7 @@ const Message: React.FC<MessageProps> = ({ text, isUser, time, newDay, index }) 
       <div className="bg-neutral-200 text-sm font-normal p-2.5 rounded-xl max-w-[420px]">
         {text}
       </div>
-      <div className={cn("absolute bottom-[-15px] font-normal text-[9px] text-neutral-400", isUser ? "left-[53px]" : "right-[53px]")}>
+      <div className={cn("absolute bottom-[-15px] min-w-[45px] font-normal text-[9px] text-neutral-400", isUser ? "left-[53px]" : "right-[53px]")}>
         {/* make the time text directly under the text */}
         {time}
       </div>
