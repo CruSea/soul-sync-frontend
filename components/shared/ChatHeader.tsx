@@ -12,7 +12,7 @@ import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 
 const ChatHeader = () => {
   return (
-    <CardHeader className="h-[70px] w-full bg-neutral-300 rounded-t-lg shadow-custom-chat flex flex-row gap-2.5 items-center px-5 py-0">
+    <CardHeader className="w-full bg-neutral-300 rounded-t-lg shadow-custom-chat flex flex-row gap-2.5 items-center px-5 py-2.5">
       <Avatar className="w-[50px] h-[50px]">
         <AvatarImage
           src="/assets/avatars/man1.png"

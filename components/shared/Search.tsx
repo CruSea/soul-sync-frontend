@@ -9,7 +9,7 @@ import {
   CommandList,
 } from "@/components/ui/command";
 
-import { cn } from "../../lib/utils";
+import { cn } from "@/lib/utils";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { useState } from "react";
 import { v4 as uuidv4 } from 'uuid';
