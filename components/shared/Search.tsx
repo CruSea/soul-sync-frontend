@@ -2,51 +2,49 @@
 
 import {
   Command,
-  CommandDialog,
   CommandEmpty,
   CommandGroup,
   CommandInput,
   CommandItem,
   CommandList,
-  CommandSeparator,
-  CommandShortcut,
 } from "@/components/ui/command";
 
-import { cn } from "../../lib/utils"
-
+import { cn } from "../../lib/utils";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
+import { useState } from "react";
+import { v4 as uuidv4 } from 'uuid';
+
 
 interface User {
-  id: number,
+  id: string,
   name: string,
   fallback: string,
-  description: string,
-  clicked: boolean
+  description: string
 }
 
-const Search = () => {
 
+const Search = () => {
+  const [chosenUser, setChosenUser] = useState<number>(0)
+
+  // dummy user objects
   const users:User[] = [
     {
-      id: 1,
+      id: '1234',
       name: "Jennie Doe",
       fallback: "JD",
       description: "Mentor : Regina Phalange",
-      clicked: true
     },
     {
-      id: 2,
+      id: uuidv4(),
       name: "John Smith",
       fallback: "JS",
       description: "Mentor : Monica Geller",
-      clicked: false
     },
     {
-      id: 3,
+      id: uuidv4(),
       name: "Alice Johnson",
       fallback: "AJ",
       description: "Mentor : Chandler Bing",
-      clicked: false
     },
   ];
 
@@ -64,8 +62,12 @@ const Search = () => {
           <CommandEmpty>No results found.</CommandEmpty>
           <CommandGroup className="p-3 flex flex-col">
             {/* a an individual user */}
-            {users.map(user => 
-              <CommandItem className={cn("flex px-2.5 gap-3.5 items-center h-[70px] outline-none rounded-lg cursor-pointer", user.clicked ? "!bg-[#d9d9d9]" : "bg-white")}>
+            {users.map((user, index) => 
+              <CommandItem 
+                key={user.id} 
+                className={cn("flex px-2.5 gap-3.5 items-center h-[70px] outline-none rounded-lg cursor-pointer", index == chosenUser ? "!bg-gray-300" : "bg-white")} // if user is selected sets the background to gry
+                onSelect={() => setChosenUser(index)} // sets the chosen user to the index of the selected item
+              >
                 {/* Avatar image a user */}
                 <Avatar className="w-[32px] h-[32px]">
                   <AvatarImage
