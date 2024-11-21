@@ -2,6 +2,7 @@
 
 import { useState, useRef, useEffect } from 'react';
 import { v4 as uuidv4 } from 'uuid';
+import { cn } from "@/lib/utils";
 
 import {
   Card,
@@ -12,7 +13,8 @@ import {
   CardTitle,
 } from "@/components/ui/card"
 import { ScrollArea } from "@/components/ui/scroll-area"
-
+import { Button } from "@/components/ui/button"
+import { Input } from "@/components/ui/input"
 
 import ChatHeader from './ChatHeader'
 import Message from './Message';
@@ -100,7 +102,10 @@ const Chat = () => {
   ]);
 
     // an empty div at the end of the thread used to scroll to the bottom on send
-    const bottomOfPanelRef = useRef(null); 
+    const bottomOfPanelRef = useRef<HTMLDivElement | null>(null);
+
+    // a referance for where the you will write the text
+    const textBox = useRef<HTMLInputElement | null>(null);
   
     useEffect(() => {
       // Scroll to the bottom whenever `thread` changes
@@ -108,6 +113,21 @@ const Chat = () => {
         bottomOfPanelRef.current.scrollIntoView({ behavior: "smooth" }); // Optional: Add smooth scrolling
       }
     }, [thread]);
+
+
+    const sendText = (messageText: string) => {
+      // adds a message from the mentor to the thread and sets the text box to empty
+  
+      setThread((prevThread) => [...prevThread, {isUser: false,
+        text: messageText,
+        time: '2:44 PM',
+        newDay: '',
+        id: uuidv4()} ])
+      
+      if (textBox.current) {
+        textBox.current.value = ''
+      }
+    }
 
   return (
     <Card className="flex-1 rounded-[10px] flex flex-col ">
@@ -121,6 +141,39 @@ const Chat = () => {
           <div ref={bottomOfPanelRef} className='h-10 w-full p-5'></div>
         </div>
       </ScrollArea>
+
+      {/*textbox where you input text */}
+      <div className='relative flex gap-2.5 mx-5 mb-2 h-[50px]'>
+        <Input 
+          ref={textBox}
+          placeholder='Write a Message' 
+          className="h-full rounded-md bg-neutral-200 outline-none border border-[1px] border-neutral-300 pl-4 pr-4 font-normal text-md placeholder:text-neutral-400" 
+          onChange={(e) => {
+            // updates the value of the text state whenever something is written
+            setText(e.target.value);
+          }}
+          onKeyDown={(e) => {
+            // sends the text value when pressing enter
+            if (e.key === "Enter") {
+              e.preventDefault(); // Prevents newline on enter in the textarea
+              sendText(text);
+              
+            }
+          }}
+        />
+
+        {/* the sending Image on the text pox*/}
+
+        <Button
+          onClick={() => {
+            // sends the text value when clicking send
+            sendText(text)
+            className="absolute top-1/2 transform translate-y-[-50%] right-2 w-[35px] h-[35px] border-black"
+          }}
+        >
+          <img src="/assets/send.svg" />
+        </Button>
+      </div>
     </Card>
   )
 }
