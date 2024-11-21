@@ -3,7 +3,7 @@ import Main from '@/components/shared/Main'
 
 const MentorView = () => {
   return (
-    <div className="flex flex-col w-screen h-screen">
+    <div className="flex flex-col w-full h-screen">
       <Header />
       <Main />
     </div>

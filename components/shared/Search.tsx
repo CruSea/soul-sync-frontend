@@ -29,7 +29,7 @@ const Search = () => {
   // dummy user objects
   const users:User[] = [
     {
-      id: '1234',
+      id: uuidv4(),
       name: "Jennie Doe",
       fallback: "JD",
       description: "Mentor : Regina Phalange",
@@ -46,10 +46,11 @@ const Search = () => {
       fallback: "AJ",
       description: "Mentor : Chandler Bing",
     },
+    
   ];
 
   return (
-    <div className="w-96 h-full bg-white rounded-[10px] py-4">
+    <div className="w-96 overflow-y-auto bg-white rounded-[10px] py-4">
       <Command className="px-0">
         {/* the user search box */}
         <CommandInput
@@ -58,7 +59,7 @@ const Search = () => {
         />
 
         {/* a list of the users */}
-        <CommandList className="py-1 h-full bg-white">
+        <CommandList className="py-1 h-full bg-white max-h-none overflow-y-auto">
           <CommandEmpty>No results found.</CommandEmpty>
           <CommandGroup className="p-3 flex flex-col">
             {/* a an individual user */}
