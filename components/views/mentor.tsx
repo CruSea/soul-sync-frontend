@@ -7,7 +7,6 @@ const MentorView = () => {
       <Header />
       <Main />
     </div>
-
   )
 }
 
