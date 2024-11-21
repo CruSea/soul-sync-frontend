@@ -2,15 +2,9 @@
 
 import { useState, useRef, useEffect } from 'react';
 import { v4 as uuidv4 } from 'uuid';
-import { cn } from "@/lib/utils";
 
 import {
   Card,
-  CardContent,
-  CardDescription,
-  CardFooter,
-  CardHeader,
-  CardTitle,
 } from "@/components/ui/card"
 import { ScrollArea } from "@/components/ui/scroll-area"
 import { Button } from "@/components/ui/button"
@@ -157,13 +151,11 @@ const Chat = () => {
             if (e.key === "Enter") {
               e.preventDefault(); // Prevents newline on enter in the textarea
               sendText(text);
-              
             }
           }}
         />
 
-        {/* the sending Image on the text pox*/}
-
+        {/* send button*/}
         <Button
           onClick={() => {
             // sends the text value when clicking send
