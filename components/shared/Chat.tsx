@@ -3,6 +3,19 @@
 import { useState, useRef, useEffect } from 'react';
 import { v4 as uuidv4 } from 'uuid';
 
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardFooter,
+  CardHeader,
+  CardTitle,
+} from "@/components/ui/card"
+
+import ChatHeader from './ChatHeader'
+
+
+
 // type for the group of message threads between user and mentor
 interface threadType {
   isUser: boolean;
@@ -37,7 +50,9 @@ const Chat = () => {
 
 
   return (
-    <div className="flex-1 min-h-full bg-white"></div>
+    <Card className="flex-1 rounded-[10px]">
+      <ChatHeader />
+    </Card>
   )
 }
 
