@@ -1,5 +1,9 @@
+"use client"
+
 import BellIcon from "@/components/shared/Icons/BellIcon";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
+import { useSession } from "next-auth/react"
+
 
 const UserActions = () => {
   return (

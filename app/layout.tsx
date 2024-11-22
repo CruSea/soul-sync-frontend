@@ -1,5 +1,5 @@
 import "./globals.css";
-import SessionWrapper from "@/components/SessionWrapper";
+import SessionWrapper from "@/components/providers/SessionWrapper";
 
 export default function RootLayout({
   children,
