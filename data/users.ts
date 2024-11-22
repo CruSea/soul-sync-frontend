@@ -1,0 +1,86 @@
+import {Users} from '@/types/users';
+
+const users: Users[] = [
+    {
+        id: '1',
+        username: 'tur',
+        phone: 9987877578,
+        location: 'Addis Abeba',
+        platform: 'Telegram',
+        date: '2024-05-01',
+      },
+      {
+        id: '2',
+        phone: 9987877578,
+        location: 'Addis Abeba',
+        platform: 'Telegram',
+        username: 'Emily Smith',
+        date: '2024-04-28',
+      },
+      {
+        id: '3',
+        phone: 9987877578,
+        location: 'Addis Abeba',
+        platform: 'Telegram',
+        username: 'David Johnson',
+        date: '2024-05-03',
+      },
+      {
+        id: '4',
+        phone: 9987877578,
+        location: 'Addis Abeba',
+        platform: 'Telegram',
+        username: 'Sophia Williams',
+        date: '2024-05-05',
+      },
+      {
+        id: '5',
+        phone: 9987877578,
+        location: 'Addis Abeba',
+        platform: 'Telegram',
+        username: 'Andrew Brown',
+        date: '2024-05-08',
+      },
+      {
+        id: '6',
+        phone: 9987877578,
+        location: 'Addis Abeba',
+        platform: 'Telegram',
+        username: 'Emma Davis',
+        date: '2024-05-10',
+      },
+      {
+        id: '7',
+        phone: 9987877578,
+        location: 'Addis Abeba',
+        platform: 'Telegram',
+        username: 'Michael Johnson',
+        date: '2024-05-12',
+      },
+      {
+        id: '8',
+        phone: 9987877578,
+        location: 'Addis Abeba',
+        platform: 'Telegram',
+        username: 'Isabella White',
+        date: '2024-05-15',
+      },
+      {
+        id: '9',
+        phone: 9987877578,
+        location: 'Addis Abeba',
+        platform: 'Telegram',
+        username: 'James Taylor',
+        date: '2024-05-18',
+      },
+      {
+        id: '10',
+        phone: 9987877578,
+        location: 'Addis Abeba',
+        platform: 'Telegram',
+        username: 'Ava Johnson',
+        date: '2024-05-20',
+      },
+];
+
+export default users;
