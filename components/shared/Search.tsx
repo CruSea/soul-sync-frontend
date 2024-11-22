@@ -9,6 +9,7 @@ import {
   CommandList,
 } from "@/components/ui/command";
 
+import { ScrollArea } from "@/components/ui/scroll-area"
 import { cn } from "@/lib/utils";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { useState } from "react";
@@ -45,8 +46,7 @@ const Search = () => {
       name: "Alice Johnson",
       fallback: "AJ",
       description: "Mentor : Chandler Bing",
-    },
-    
+    }
   ];
 
   return (
@@ -59,6 +59,7 @@ const Search = () => {
         />
 
         {/* a list of the users */}
+        <ScrollArea>
         <CommandList className="py-1 h-full bg-white max-h-none overflow-y-auto">
           <CommandEmpty>No results found.</CommandEmpty>
           <CommandGroup className="p-3 flex flex-col">
@@ -89,6 +90,7 @@ const Search = () => {
             )}
           </CommandGroup>
         </CommandList>
+        </ScrollArea>
       </Command>
     </div>
   );
