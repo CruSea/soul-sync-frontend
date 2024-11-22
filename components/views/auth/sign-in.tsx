@@ -3,7 +3,16 @@
 import { Button } from "@/components/ui/button";
 import Image from "next/image";
 import { PiAsteriskSimpleBold } from "react-icons/pi";
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardFooter,
+  CardHeader,
+  CardTitle,
+} from "@/components/ui/card"
 import { useSession, signIn, signOut } from "next-auth/react";
+
 
 const SignInView = () => {
   const { data: session } = useSession();
@@ -22,8 +31,8 @@ const SignInView = () => {
           <Button onClick={() => signOut()}>Sign out</Button>
         </div>
       ) : (
-        <div className="w-screen h-screen flex font-manrope">
-          <div className="w-[643px] flex flex-col text-gray-900 bg-[#D9D9D9] ">
+        <div className="w-screen h-screen flex">
+          <div className="w-[643px] flex flex-col text-gray-900 bg-[#D9D9D9]  font-manrope">
             <Image
               src="/assets/signIn.png" // Path to your image in the `public` folder
               alt="Landing Page Image"
@@ -41,8 +50,20 @@ const SignInView = () => {
               </div>
             </div>
           </div>
+          <Card className="flex-1 flex flex-col items-center justify-center gap-1.5  ">
+            <CardHeader className="flex flex-col items-center">
+              <CardTitle className="font-bold text-3xl tracking-[-1px] mb-[-5px]">
+                Login
+              </CardTitle>
+              <CardDescription className="text-slate-500 font-normal text-base">Login with your Google account to proceed</CardDescription>
+            </CardHeader>
+            <CardContent className="flex flex-col items-center gap-1.5">
+            <Button className="w-96 h-10 font-medium text-sm" onClick={() => signIn("google")}>Login with Google</Button>
+            <div>Don’t have an account? <span className="underline cursor-pointer">Sign up</span></div>
+            </CardContent>
+          </Card>
 
-          <Button onClick={() => signIn("google")}>Sign up with Google</Button>
+          
         </div>
       )}
     </>
