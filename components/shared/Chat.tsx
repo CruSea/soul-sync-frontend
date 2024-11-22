@@ -141,7 +141,7 @@ const Chat = () => {
         <Input 
           ref={textBox}
           placeholder='Write a Message' 
-          className="h-full rounded-md bg-neutral-200 outline-none border border-[1px] border-neutral-300 pl-4 pr-4 font-normal text-md placeholder:text-neutral-400" 
+          className="h-full rounded-md bg-neutral-200 outline-none border border-neutral-300 pl-4 pr-4 font-normal text-md placeholder:text-neutral-400" 
           onChange={(e) => {
             // updates the value of the text state whenever something is written
             setText(e.target.value);
@@ -160,7 +160,6 @@ const Chat = () => {
           onClick={() => {
             // sends the text value when clicking send
             sendText(text)
-            className="absolute top-1/2 transform translate-y-[-50%] right-2 w-[35px] h-[35px] border-black"
           }}
         >
           <img src="/assets/send.svg" />
