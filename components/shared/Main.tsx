@@ -8,7 +8,8 @@ const Main = () => {
       <Search />
       <Chat />
       <div className="w-96 h-full flex flex-col gap-5">
-          <Profile />
+          <Profile type="user"/>
+          <Profile type="agent"/>
         </div>
     </div>
   )

@@ -8,7 +8,7 @@ const NavMenu = () => {
           TURUMBA
         </div>
         <Separator orientation="vertical" />
-        <div className="font-bold text-3xl">Greetings user</div>
+        <div className="font-bold text-3xl">Greetings mentor</div>
       </div>
     </nav>
   );
