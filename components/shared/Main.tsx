@@ -2,14 +2,23 @@ import Search from "./Search"
 import Chat from "./Chat"
 import Profile from "./Profile"
 
-const Main = () => {
+interface MainProps {
+  page: string
+}
+
+const Main:React.FC<MainProps> = ({ page }) => {
   return (
     <div className="flex-1 flex p-5 gap-5 w-full overflow-hidden bg-gray-100">
       <Search />
       <Chat />
       <div className="w-96 h-full flex flex-col gap-5">
-          <Profile type="user"/>
-          <Profile type="agent"/>
+          {page == "user" ? 
+          <Profile type="mentor"/> : 
+          <>
+            <Profile type="user"/>
+            <Profile type="agent"/>  
+          </>        
+          }
         </div>
     </div>
   )

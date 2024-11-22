@@ -14,7 +14,7 @@ interface ProfileTypes {
   email: string,
   phone: string,
   platform: string | undefined,
-  specialization: string | undefined,
+  Expertise: string | undefined,
   src: string,
   abrivation: string,
   age: string
@@ -31,7 +31,7 @@ const Profile:React.FC<ProfileProps> = ({ type }) => {
       email: "JennieDoe@example.com",
       phone: "+251972729423",
       platform: "Telegram Bot",
-      specialization: undefined,
+      Expertise: undefined,
       src: "woman1",
       abrivation: "RP",
       age: "24"
@@ -44,7 +44,7 @@ const Profile:React.FC<ProfileProps> = ({ type }) => {
       email: "JennieDoe@example.com",
       phone: "+251972729423",
       platform: undefined,
-      specialization: "Development",
+      Expertise: "Development",
       src: "woman1",
       abrivation: "JD",
       age: "25"
@@ -57,7 +57,7 @@ const Profile:React.FC<ProfileProps> = ({ type }) => {
       email: "JennieDoe@example.com",
       phone: "+251972729423",
       platform: undefined,
-      specialization: undefined,
+      Expertise: undefined,
       src: "woman2",
       abrivation: "JD",
       age: "26"
@@ -90,7 +90,7 @@ const Profile:React.FC<ProfileProps> = ({ type }) => {
           <Info title="Email" value={profiles[type].email} color="yellow"/>
           <Info title="Phone" value={profiles[type].phone} color="blue"/>
           {profiles[type].platform && <Info title="Platform" value={profiles[type].platform} color="blue"/>}
-          {profiles[type].specialization && <Info title="Specialization" value={profiles[type].specialization} color="blue"/>}
+          {profiles[type].Expertise && <Info title="Expertise" value={profiles[type].Expertise} color="blue"/>}
         </div>
       </CardContent>
       

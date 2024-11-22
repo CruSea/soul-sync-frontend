@@ -1,6 +1,11 @@
 import { Separator } from "@/components/ui/separator";
 
-const NavMenu = () => {
+interface NavProps {
+  page: string
+}
+
+
+const NavMenu:React.FC<NavProps> = ({ page }) => {
   return (
     <nav className="hidden lg:flex ml-11 justify-between items-center">
       <div className="flex h-20 items-center space-x-8">
@@ -8,7 +13,7 @@ const NavMenu = () => {
           TURUMBA
         </div>
         <Separator orientation="vertical" />
-        <div className="font-bold text-3xl">Greetings mentor</div>
+        <div className="font-bold text-3xl">{page == "user" ? "Greetings User" : "Greetings Mentor"}</div>
       </div>
     </nav>
   );
