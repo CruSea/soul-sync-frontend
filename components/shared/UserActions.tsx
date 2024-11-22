@@ -5,7 +5,7 @@ const UserActions = () => {
   return (
     <div className="ml-auto flex gap-5 items-center">
       <BellIcon size={30} hasNotification={true} />
-      <Avatar className="w-[60px] h-[60px]">
+      <Avatar className="w-[60px] h-[60px] cursor-pointer">
         <AvatarImage
           src="/assets/avatars/woman1.png"
           className="w-full h-full object-cover"
