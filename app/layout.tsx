@@ -1,3 +1,4 @@
+import SessionWrapper from "@/components/providers/SessionWrapper";
 import "./globals.css";
 import { ThemeProvider } from "@/components/providers/ThemeProvider";
 export default function RootLayout({
@@ -6,6 +7,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
+    <SessionWrapper>
     <html lang="en">
       <body className="font-general">
         <ThemeProvider
@@ -18,5 +20,6 @@ export default function RootLayout({
         </ThemeProvider>
       </body>
     </html>
+    </SessionWrapper>
   );
 }
