@@ -9,10 +9,7 @@ export default function RootLayout({
   return (
     <SessionWrapper>
     <html lang="en">
-      <body className="font-general"
-      >
-        {children}
-      </body>
+      <body className="font-general">{children}</body>
     </html>
     </SessionWrapper>
   );
