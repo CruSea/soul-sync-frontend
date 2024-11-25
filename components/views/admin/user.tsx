@@ -1,3 +1,4 @@
+import { GrowthChart } from "@/components/shared/dashboard/GrowthChart";
 import { StatsCards } from "@/components/shared/dashboard/StatCard";
 import Header from "@/components/shared/Header";
 import Sidebar from "@/components/shared/Sidebar";
@@ -14,6 +15,9 @@ const AdminView = () => {
           <div className="flex flex-col lg:flex-row gap-6">
             <div className="flex-1 bg-white dark:bg-black p-16 rounded-lg">
               <StatsCards />
+            </div>
+            <div className="flex-1">
+              <GrowthChart />
             </div>
           </div>
         </div>
