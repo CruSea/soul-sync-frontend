@@ -1,6 +1,6 @@
 import NavMenu from "./NavMenu";
 import UserActions from "./UserActions";
-import Dropdown from './Dropdown';
+import Dropdown from "./Dropdown";
 
 const Header = () => {
   return (
@@ -9,7 +9,7 @@ const Header = () => {
       <NavMenu />
       <UserActions />
     </header>
-  )
-}
+  );
+};
 
 export default Header;
