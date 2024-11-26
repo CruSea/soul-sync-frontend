@@ -7,9 +7,9 @@ import { useSession } from "next-auth/react"
 
 const UserActions = () => {
   return (
-    <div className="ml-auto flex gap-5 items-center">
-      <BellIcon size={30} hasNotification={true} />
-      <Avatar className="w-[60px] h-[60px] cursor-pointer">
+    <div class="flex flex-1 items-center justify-between gap-5 md:justify-end">
+      <BellIcon size={24} hasNotification={true} />
+      <Avatar className="w-[44px] h-[44px] cursor-pointer">
         <AvatarImage
           src="/assets/avatars/woman1.png"
           className="w-full h-full object-cover"
