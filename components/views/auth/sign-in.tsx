@@ -22,7 +22,24 @@ interface SignInViewProps {
   type: string
 }
 
-const pageDetails = {
+interface PageDetail {
+  routerForwardPath: string;
+  routerCurrentPath: string;
+  imgSrc: string;
+  imgAlt: string;
+  imgWidth: number;
+  imgHeight: number;
+  text: string;
+  subText: string;
+}
+
+type PageKeys = "admin" | "mentor"; // Restrict keys to these specific strings
+
+type PageDetails = {
+  [key in PageKeys]: PageDetail; // Use the restricted keys
+};
+
+const pageDetails: PageDetails = {
   mentor: {
     routerForwardPath: "/mentor",
     routerCurrentPath: "/mentor-sign-in",
