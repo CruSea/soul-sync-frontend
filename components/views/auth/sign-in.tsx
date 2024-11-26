@@ -1,7 +1,7 @@
 "use client";
 
-import { Button } from "@/components/ui/button";
 import Image from "next/image";
+import { Button } from "@/components/ui/button"
 import { PiAsteriskSimpleBold } from "react-icons/pi";
 import {
   Card,
@@ -11,9 +11,13 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card"
+
+
 import { useSession, signIn, signOut } from "next-auth/react";
 import { useRouter } from "next/navigation";
 import { useEffect } from "react";
+import SignInForm from '@/components/shared/SignInForm'
+
 
 const SignInView = () => {
   const { data: session } = useSession();
@@ -53,19 +57,13 @@ const SignInView = () => {
           </div>
         </div>
       </div>
-      <Card className="flex-1 flex flex-col items-center justify-center gap-1.5  ">
-        <CardHeader className="flex flex-col items-center">
-          <CardTitle className="font-bold text-3xl tracking-[-1px] mb-[-5px]">
-            Login
-          </CardTitle>
-          <CardDescription className="text-slate-500 font-normal text-base">Login with your Google account to proceed</CardDescription>
-        </CardHeader>
-        <CardContent className="flex flex-col items-center gap-1.5">
-          {/* the sign in with google button */}
-          <Button className="w-96 h-10 font-medium text-sm" onClick={handleSignIn}>Login with Google</Button> 
-          <div>Don’t have an account? <span className="underline cursor-pointer">Sign up</span></div>
-        </CardContent>
-      </Card>
+      
+      <div className="flex-1 flex items-center justify-center flex-col gap-4">
+        <SignInForm />
+        <Button className="w-96 h-10 font-medium text-sm" variant="outline" onClick={handleSignIn}>Login with Google</Button> 
+        <div className="text-sm text-center">Don’t have an account? <span className="underline">Sign up</span></div>
+
+      </div>
     </div>
   )
 };
