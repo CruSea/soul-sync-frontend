@@ -1,5 +1,5 @@
 "use client";
-import { Command, CommandGroup, CommandItem } from "@/components/ui/command";
+import { Command, CommandGroup, CommandItem, CommandList } from "@/components/ui/command";
 import { FaVectorSquare } from "react-icons/fa6";
 import { LuUser, LuMessagesSquare, LuMic2, LuLibrary } from "react-icons/lu";
 import { RxLinkNone2 } from "react-icons/rx";
@@ -10,6 +10,8 @@ import Link from "next/link";
 const Sidebar = () => {
   return (
     <Command className=" rounded-none">
+      <CommandList>
+
       <CommandGroup>
         <CommandItem className="bg-secondary font-bold size-fit">
           <FaVectorSquare className="mr-2 h-4 w-4" />
@@ -65,6 +67,7 @@ const Sidebar = () => {
           </div>
         </CommandItem>
       </CommandGroup>
+      </CommandList>
     </Command>
   );
 };
