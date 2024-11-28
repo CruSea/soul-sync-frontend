@@ -1,6 +1,7 @@
 import { Button } from "../ui/button"
 import { useRouter } from 'next/navigation';
 import { Page } from "@/components/views/auth/create-org";
+import { cn } from "@/lib/utils";
 
 // Defining the structure of a SidebarPage object
 interface SidebarPage {
@@ -60,12 +61,12 @@ const CreateOrgSidebar: React.FC<CreateOrgSidebarProps> = ({ currentPage, handle
   return (
     <div className="flex-1 flex flex-col gap-14 justify-center items-center">
       {/* Sidebar container */}
-      <div className="flex flex-col gap-14">
+      <div className="flex flex-col gap-14 w-min">
         {/* Step indicator */}
         <div className="flex flex-col gap-1">
           <div className="flex gap-2">
             <div className="bg-gray-900 h-6 w-6 rounded-[3px]"></div>
-            <div className="bg-neutral-300 h-6 w-6 rounded-[3px]"></div>
+            <div className={cn("bg-neutral-300 h-6 w-6 rounded-[3px]", currentPage === "second" ? "bg-gray-900" : "")}></div>
           </div>
           <div className="text-base font-bold text-slate-400">
             STEP {SidebarPages[currentPage].step} OF 2  {/* Display current step */}
@@ -73,11 +74,11 @@ const CreateOrgSidebar: React.FC<CreateOrgSidebarProps> = ({ currentPage, handle
         </div>
 
          {/* Page content */}
-        <div className="flex flex-col gap-4 items-start">
-          <div className="font-bold text-3xl text-gray-900 max-w-[70%]">
+        <div className="flex flex-col gap-4 items-start w-[500px]">
+          <div className="font-bold text-3xl text-gray-900 max-w-[85%]">
           {SidebarPages[currentPage].heading}
           </div>
-          <div className="text-sm text-neutral-400 max-w-[85%]">
+          <div className="text-sm text-neutral-400">
           {SidebarPages[currentPage].description}
           </div>
           <div className="flex gap-4">
