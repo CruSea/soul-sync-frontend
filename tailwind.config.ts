@@ -12,6 +12,7 @@ export default {
 			fontFamily: {
 				general: ["Inter", "sans-serif"],
 				logo: ["IBM Plex Mono", "monospace"],
+				manrope: ["Manrope", "sans-serif"],
 			},
   		colors: {
   			background: 'hsl(var(--background))',
