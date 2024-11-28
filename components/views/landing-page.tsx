@@ -19,15 +19,15 @@ const LandingPageView = () => {
         </div>
         <Button variant="default" className="rounded-[20px]" size="sm">Get Started</Button>
       </div>
-      <div className="flex-1 px-14 flex items-center justify-between">
-        <div className="flex flex-col gap-7">
-          <div className="font-bold text-4xl max-w-[400px]">
+      <div className="flex-1 flex items-center justify-evenly">
+        <div className="flex flex-col justify-center gap-7">
+          <div className="font-bold text-5xl max-w-[500px] text-center">
             Build the next Generation through Automation
           </div>
-          <div className="font-normal text-base max-w-[400px]">
+          <div className="font-normal text-lg max-w-[500px] text-center">
             TURUMBA helps you connect a mentor with a pupil to guide them through a journey with an Automation
           </div>
-          <Button variant="default" className="rounded-[20px] w-min gap-2 p-3" size="sm">
+          <Button variant="default" className="rounded-[20px] w-min gap-2 p-3 mx-auto" size="lg">
             Get Started
             <LuArrowRight />
           </Button>
