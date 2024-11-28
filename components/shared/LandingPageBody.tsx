@@ -2,7 +2,11 @@ import Image from "next/image";
 import { Button } from "@/components/ui/button"
 import { LuArrowRight } from "react-icons/lu";
 
-const LandingPageBody = () => {
+interface LandingPageHeaderProps {
+  handleGetStarted: () => void;
+}
+
+const LandingPageBody: React.FC<LandingPageHeaderProps> = ({ handleGetStarted }) => {
   return (
     <div className="flex-1 flex items-center justify-evenly">
     <div className="flex flex-col justify-center gap-7">
@@ -12,7 +16,7 @@ const LandingPageBody = () => {
       <div className="font-normal text-lg max-w-[500px] text-center">
         TURUMBA helps you connect a mentor with a pupil to guide them through a journey with an Automation
       </div>
-      <Button variant="default" className="rounded-[20px] w-min gap-2 p-3 mx-auto" size="lg">
+      <Button variant="default" className="rounded-[20px] w-min gap-2 p-3 mx-auto" size="lg" onClick={handleGetStarted}>
         Get Started
         <LuArrowRight />
       </Button>

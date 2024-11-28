@@ -7,6 +7,8 @@ const LogInView = () => {
 
   return (
     <div className="w-screen h-screen flex">
+
+
       <LoginPageSidebar />
       <LoginPageCard />
     </div>
