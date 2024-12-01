@@ -34,9 +34,10 @@ const SidebarPages: {[key: string]: SidebarPage} = {
 interface CreateOrgSidebarProps {
   currentPage: string,   // The current active page (either "first" or "second")
   handleSetCurrentPage: (Page: Page) => void;   // Function to update the current page
+  triggerSubmit: () => void
 }
 
-const CreateOrgSidebar: React.FC<CreateOrgSidebarProps> = ({ currentPage, handleSetCurrentPage }) => {
+const CreateOrgSidebar: React.FC<CreateOrgSidebarProps> = ({ triggerSubmit, currentPage, handleSetCurrentPage }) => {
 
   const router = useRouter();
 
@@ -54,6 +55,7 @@ const CreateOrgSidebar: React.FC<CreateOrgSidebarProps> = ({ currentPage, handle
     if (currentPage == "first") {
       handleSetCurrentPage("second");    // Move to the second page if currently on the first page
     } else {
+      triggerSubmit();
       router.push('/admin');     // Navigate to the admin page if on the second page
     }
   };
