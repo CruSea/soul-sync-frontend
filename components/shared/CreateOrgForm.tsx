@@ -7,6 +7,8 @@ import { z } from "zod"
 
 import { cn } from "@/lib/utils"
 import { Button } from "@/components/ui/button"
+import { Label } from "@/components/ui/label"
+import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group"
 import { HiOutlineExclamationCircle } from "react-icons/hi2";
 import { Input } from "@/components/ui/input"
 import {
@@ -37,7 +39,7 @@ const createOrgFormSchema = z.object({
     .max(70, {
       message: "companyDomain must not be longer than 30 characters.",
     }),
-  size: z.enum(["1-10", "11-50", "51-100", "101-500", "500-1000", "1000+"], {
+  size: z.enum(["1-10", "11-50", "51-100", "101-500", "501-1000", "1000+"], {
     required_error: "You need to select size of your mentors",
   }),
   focus: z.enum(["religion", "software", "engineering", "healthTech", "crypto"], {
@@ -104,13 +106,72 @@ const CreateOrgForm = () => {
                 )}
               />
               <div className="absolute top-8 right-0 h-14 w-36 flex-1 flex items-center justify-center box-border border border-slate-300 font-semibold text-sm rounded-lg bg-gray-100">
-              .Turumba.com
+                .Turumba.com
               </div>
             </div>
             <div className="flex items-center gap-1 text-slate-500 font-medium text-xs">
               <HiOutlineExclamationCircle size={20} /> We will create a unique company URL for you to log into Humanline
             </div>
           </div>
+          <div className="font-bold text-xl">What is the size of Mentors of your company</div>
+          <FormField
+            control={form.control}
+            name="size"
+            render={({ field }) => (
+              <FormItem className="w-full">
+                <FormControl>
+                  <RadioGroup
+                    defaultValue="1-10"
+                    
+                    onValueChange={field.onChange}
+                    className="grid grid-cols-[repeat(auto-fill,_minmax(142px,_1fr))] gap-4"
+                  >
+                    <FormItem className="flex items-center justify-between border border-gray-900 h-14 p-5 rounded-[6px]" onClick={() => field.onChange("1-10")}>
+                      <FormLabel className="font-normal cursor-pointer">
+                        1-10
+                      </FormLabel>
+                      <FormControl>
+                        <RadioGroupItem className="!mt-0 cursor-pointer" value="1-10" />
+                      </FormControl>
+                    </FormItem>
+                    <FormItem className="flex items-center justify-between border border-gray-900 h-14 p-5 rounded-[6px]" onClick={() => field.onChange("11-50")}>
+                      <FormLabel className="font-normal cursor-pointer">
+                        11-50
+                      </FormLabel>
+                      <FormControl>
+                        <RadioGroupItem className="!mt-0 cursor-pointer" value="11-50" />
+                      </FormControl>
+                    </FormItem>
+                    <FormItem className="flex items-center justify-between border border-gray-900 h-14 p-5 rounded-[6px]" onClick={() => field.onChange("51-100")}>
+                      <FormLabel className="font-normal cursor-pointer">51-100</FormLabel>
+                      <FormControl>
+                        <RadioGroupItem className="!mt-0 cursor-pointer" value="51-100" />
+                      </FormControl>
+                    </FormItem>
+                    <FormItem className="flex items-center justify-between border border-gray-900 h-14 p-5 rounded-[6px]" onClick={() => field.onChange("101-500")}>
+                      <FormLabel className="font-normal cursor-pointer">101-500</FormLabel>
+                      <FormControl>
+                        <RadioGroupItem className="!mt-0 cursor-pointer" value="101-500" />
+                      </FormControl>
+                    </FormItem>
+                    <FormItem className="flex items-center justify-between border border-gray-900 h-14 p-5 rounded-[6px]" onClick={() => field.onChange("501-1000")}>
+                      <FormLabel className="font-normal cursor-pointer">500-1000</FormLabel>
+                      <FormControl>
+                        <RadioGroupItem className="!mt-0 cursor-pointer" value="501-1000" />
+                      </FormControl>
+                    </FormItem>
+                    <FormItem className="flex items-center justify-between border border-gray-900 h-14 p-5 rounded-[6px]" onClick={() => field.onChange("1000+")}>
+                      <FormLabel className="font-normal cursor-pointer">1000+</FormLabel>
+                      <FormControl>
+                        <RadioGroupItem className="!mt-0 cursor-pointer" value="1000+" />
+                      </FormControl>
+                    </FormItem>
+                  </RadioGroup>
+                </FormControl>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
         </form>
       </Form>
     </div>
