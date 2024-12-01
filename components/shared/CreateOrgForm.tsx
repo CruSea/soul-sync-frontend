@@ -16,9 +16,14 @@ import {
   FormLabel,
   FormMessage,
 } from "@/components/ui/form"
-import React from "react"
-import { CreateOrgFormProps, createOrgFormSchema, createOrgFormValues } from "@/types/create-org"
 
+import React from "react"
+import { SizeField } from "./SizeField"
+import { CompanyNameField } from "./CompanyNameField"
+import { CompanyDomainField } from "./CompanyDomainField"
+import { FocusField } from "./FocusField"
+import { RoleField } from "./RoleField"
+import { CreateOrgFormProps, createOrgFormSchema, createOrgFormValues } from "@/types/create-org"
 import { formOptions } from "@/data/create-org"
 
 
@@ -46,33 +51,9 @@ const CreateOrgForm = React.forwardRef<HTMLFormElement, CreateOrgFormProps>(
               <>
                 <div className="space-y-4">
                   <div className="font-bold text-xl">Type the name of your company</div>
-                  <FormField
-                    control={form.control}
-                    name="companyName"
-                    render={({ field }) => (
-                      <FormItem className="w-input">
-                        <FormLabel className="text-sm font-semibold">Company Name<span className="text-red-500 ml-1">*</span></FormLabel>
-                        <FormControl>
-                          <Input className="text-sm h-[56px]" placeholder="Great Commission" {...field} />
-                        </FormControl>
-                        <FormMessage />
-                      </FormItem>
-                    )}
-                  />
+                  <CompanyNameField control={form.control} />
                   <div className="relative flex gap-2.5 ">
-                    <FormField
-                      control={form.control}
-                      name="companyDomain"
-                      render={({ field }) => (
-                        <FormItem className="w-input">
-                          <FormLabel className="text-sm font-semibold">Company Domain<span className="text-red-500 ml-1">*</span></FormLabel>
-                          <FormControl>
-                            <Input className="text-sm h-[56px]" placeholder="gcmethiopia" {...field} />
-                          </FormControl>
-                          <FormMessage />
-                        </FormItem>
-                      )}
-                    />
+                  <CompanyDomainField control={form.control} />
                     <div className="absolute top-8 right-0 h-14 w-36 flex-1 flex items-center justify-center box-border border border-slate-300 font-semibold text-sm rounded-lg bg-gray-100">
                       .Turumba.com
                     </div>
@@ -83,39 +64,7 @@ const CreateOrgForm = React.forwardRef<HTMLFormElement, CreateOrgFormProps>(
                 </div>
                 <div className="space-y-4">
                   <div className="font-bold text-xl">What is the size of Mentors of your company</div>
-                  <FormField
-                    control={form.control}
-                    name="size"
-                    render={({ field }) => (
-                      <FormItem className="w-full">
-                        <FormControl>
-                          <RadioGroup
-                            defaultValue="1-10"
-                            onValueChange={field.onChange}
-                            className="grid grid-cols-[repeat(auto-fill,_minmax(142px,_1fr))] gap-4"
-                          >
-                            {formOptions.sizeOptions.map((option) => (
-                              <FormItem
-                                key={option.value}
-                                className="flex items-center justify-between border border-gray-900 h-14 p-5 rounded-[6px]"
-                              >
-                                <FormLabel className="font-normal cursor-pointer">
-                                  {option.label}
-                                </FormLabel>
-                                <FormControl>
-                                  <RadioGroupItem
-                                    className="!mt-0 cursor-pointer size-5"
-                                    value={option.value}
-                                  />
-                                </FormControl>
-                              </FormItem>
-                            ))}
-                          </RadioGroup>
-                        </FormControl>
-                        <FormMessage />
-                      </FormItem>
-                    )}
-                  />
+                  <SizeField control={form.control} options={formOptions.sizeOptions} />
                 </div>
               </>
             }
@@ -128,99 +77,11 @@ const CreateOrgForm = React.forwardRef<HTMLFormElement, CreateOrgFormProps>(
                 <Separator />
                 <div className="space-y-4">
                   <div className="font-bold text-xl">Area of Focus?</div>
-                  <FormField
-                    control={form.control}
-                    name="focus"
-                    render={({ field }) => (
-                      <FormItem className="w-full">
-                        <FormControl>
-                          <RadioGroup
-                            defaultValue="religion"
-                            onValueChange={field.onChange}
-                            className="grid grid-cols-[repeat(auto-fill,_minmax(142px,_1fr))] gap-4"
-                          >
-                            {formOptions.focusOptions.map((option) => (
-                              <FormItem
-                                key={option.value}
-                                className="flex items-center justify-between border border-gray-900 h-14 p-5 rounded-[6px]"
-                              >
-                                <FormLabel className="font-normal cursor-pointer">
-                                  {option.label}
-                                </FormLabel>
-                                <FormControl>
-                                  <RadioGroupItem
-                                    className="!mt-0 cursor-pointer size-5"
-                                    value={option.value}
-                                  />
-                                </FormControl>
-                              </FormItem>
-                            ))}
-                          </RadioGroup>
-                        </FormControl>
-                        <FormMessage />
-                      </FormItem>
-                    )}
-                  />
+                  <FocusField control={form.control} options={formOptions.focusOptions} />
                 </div>
                 <div className="space-y-4">
                   <div className="font-bold text-xl">Your role?</div>
-                  <FormField
-                    control={form.control}
-                    name="role"
-                    render={({ field }) => (
-                      <FormItem className="w-full">
-                        <FormControl>
-                          <RadioGroup
-                            defaultValue="ceo/owner"
-                            onValueChange={field.onChange}
-                            className="grid grid-cols-[repeat(auto-fill,_minmax(142px,_1fr))] gap-4"
-                          >
-                            {formOptions.roleOptions.map((option) => (
-                              <FormItem
-                                key={option.value}
-                                className="flex items-center justify-between border border-gray-900 h-14 p-5 rounded-[6px]"
-                              >
-                                <FormLabel className="font-normal cursor-pointer">
-                                  {option.label}
-                                </FormLabel>
-                                <FormControl>
-                                  <RadioGroupItem
-                                    className="!mt-0 cursor-pointer size-5"
-                                    value={option.value}
-                                  />
-                                </FormControl>
-                              </FormItem>
-                            ))}
-                          </RadioGroup>
-                        </FormControl>
-                        <FormMessage />
-
-                        {field.value === "other" && (
-                          <div className="!mt-5 space-x-4">
-                            <FormField
-                              control={form.control}
-                              name="otherRole"
-                              render={({ field }) => (
-                                <FormItem className="w-input">
-                                  <FormLabel className="text-base font-semibold">
-                                    Input Your Role<span className="text-red-500 ml-1">*</span>
-                                  </FormLabel>
-                                  <FormControl>
-                                    <Input
-                                      className="text-sm h-[56px]"
-                                      placeholder="Admin"
-                                      {...field}
-                                    />
-                                  </FormControl>
-                                  <FormMessage />
-                                </FormItem>
-                              )}
-                            />
-                          </div>
-                        )}
-                      </FormItem>
-                    )}
-                  />
+                  <RoleField control={form.control} options={formOptions.roleOptions} />
                 </div>
               </>
             }
