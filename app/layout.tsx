@@ -7,10 +7,10 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <SessionWrapper>
+
     <html lang="en">
-      <body className="font-general">{children}</body>
+      <body className="font-general"><SessionWrapper>{children}</SessionWrapper></body>
     </html>
-    </SessionWrapper>
+
   );
 }

@@ -1,5 +1,6 @@
 "use client"
 
+import CreateOrgForm from "@/components/shared/CreateOrgForm";
 import CreateOrgSidebar from "@/components/shared/CreateOrgSidebar"
 import LandingPageHeader from "@/components/shared/LandingPageHeader"
 import { useState } from "react"
@@ -18,9 +19,7 @@ const CreateOrgView = () => {
 
         {/* where the organization form will be added */}
         <div className="flex-1 bg-gray-100 flex justify-center items-center p-10">
-          <div className="w-full h-full rounded-xl bg-white">
-
-          </div>
+          <CreateOrgForm />
         </div>
       </div>
     </div>
