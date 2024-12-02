@@ -1,5 +1,6 @@
 
-import { NextAuthProvider } from "@/context/Provider";
+//import { NextAuthProvider } from "@/context/Provider";
+import SessionWrapper from "@/components/providers/SessionWrapper";
 import "./globals.css";
 
 export default function RootLayout({
@@ -10,9 +11,9 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className="font-general">
-      <NextAuthProvider>
+      <SessionWrapper>
           {children}
-    </NextAuthProvider>
+    </SessionWrapper>
         </body>
     </html>
   );
