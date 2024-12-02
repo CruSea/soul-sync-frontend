@@ -1,5 +1,6 @@
+
+import { NextAuthProvider } from "@/context/Provider";
 import "./globals.css";
-import SessionWrapper from "@/components/providers/SessionWrapper";
 
 export default function RootLayout({
   children,
@@ -7,10 +8,12 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <SessionWrapper>
     <html lang="en">
-      <body className="font-general">{children}</body>
+      <body className="font-general">
+      <NextAuthProvider>
+          {children}
+    </NextAuthProvider>
+        </body>
     </html>
-    </SessionWrapper>
   );
 }
