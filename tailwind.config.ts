@@ -9,6 +9,11 @@ export default {
   ],
   theme: {
   	extend: {
+			fontFamily: {
+				general: ["Inter", "sans-serif"],
+				logo: ["IBM Plex Mono", "monospace"],
+				manrope: ["Manrope", "sans-serif"],
+			},
   		colors: {
   			background: 'hsl(var(--background))',
   			foreground: 'hsl(var(--foreground))',
@@ -55,7 +60,10 @@ export default {
   			lg: 'var(--radius)',
   			md: 'calc(var(--radius) - 2px)',
   			sm: 'calc(var(--radius) - 4px)'
-  		}
+  		},
+			boxShadow: {
+				sidebar: '0px 1px 2px 0px rgba(0, 0, 0, 0.1)'
+			}
   	}
   },
   plugins: [require("tailwindcss-animate")],
