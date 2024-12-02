@@ -22,7 +22,7 @@ const SignInView = () => {
   useEffect(() => {
     // if signed in sends it to the mentor page
     if (session) {
-      router.push("/admin/mentor")
+      router.push("/mentor")
     } else {
       router.push("/sign-in-with")
     }
