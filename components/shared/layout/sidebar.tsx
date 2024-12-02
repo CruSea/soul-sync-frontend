@@ -15,7 +15,7 @@ import { Button } from "@/components/ui/button";
 const menuItems = [
   { icon: LuLayoutDashboard, label: "Dashboard", href: "/admin" },
   { icon: LuUser, label: "Mentors", href: "/admin/mentor" },
-  { icon: LuMessagesSquare, label: "Messages", href: "/messages" },
+  { icon: LuMessagesSquare, label: "Messages", href: "/admin/messages" },
   { icon: RxLinkNone2, label: "Channels", href: "/channels" },
   { icon: LuMic2, label: "Admins", href: "/admins" },
   { icon: LuLibrary, label: "Agents", href: "/agents" },
