@@ -1,9 +1,12 @@
-export interface Users {
+export interface User {
     id: string;
-    username: string;
-    phone: number;
+    name: string;
+    email: string;
+    phoneNumber: string;
+    joinedDate: string;
     location: string;
-    platform: string;
-    date:string;
-    avatar: string;
-}
+  }
+  
+  export type SortField = 'name' | 'email' | 'joinedDate' | 'location';
+  
+  
