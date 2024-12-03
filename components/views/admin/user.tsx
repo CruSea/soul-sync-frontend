@@ -1,5 +1,6 @@
 import { GrowthChart } from "@/components/shared/dashboard/GrowthChart";
 import { StatsCards } from "@/components/shared/dashboard/StatCard";
+import UsersTable from "@/components/shared/dashboard/UserTable";
 import Header from "@/components/shared/Header";
 import Sidebar from "@/components/shared/Sidebar";
 
@@ -18,6 +19,12 @@ const AdminView = () => {
             </div>
             <div className="flex-1">
               <GrowthChart />
+            </div>
+          </div>
+          <div className="flex flex-wrap lg:flex-nowrap gap-6 mt-8">
+            <div className="flex-1">
+              <UsersTable limit={6} />
+              {/* <TablePagination /> */}
             </div>
           </div>
         </div>
