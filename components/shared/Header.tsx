@@ -1,6 +1,6 @@
 import NavMenu from "./NavMenu";
 import UserActions from "./UserActions";
-import Dropdown from './Dropdown';
+import Dropdown from "./Dropdown";
 
 interface HeaderProps {
   page: string
@@ -13,7 +13,7 @@ const Header:React.FC<HeaderProps> = ({ page }) => {
       <NavMenu page={page} />
       <UserActions />
     </header>
-  )
-}
+  );
+};
 
 export default Header;
