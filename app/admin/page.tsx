@@ -1,9 +1,9 @@
-import AdminView from "@/components/views/admin/dashboard";
+import UserView from "@/components/views/User";
 
-export default function AdminsPage() {
+export default function UserPage() {
   return (
     <>
-      <AdminView />
+      <UserView />
     </>
   );
 }

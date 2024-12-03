@@ -1,13 +1,13 @@
 import Header from '@/components/shared/Header'
 import Main from '@/components/shared/Main'
 
-const MentorView = () => {
+const UserView = () => {
   return (
     <div className="flex flex-col w-full h-screen">
-      <Header page="mentor"/>
-      <Main page="mentor"/>
+      <Header page="user" />
+      <Main page="user"/>
     </div>
   )
 }
 
-export default MentorView
+export default UserView
