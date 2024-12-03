@@ -16,7 +16,7 @@ const LandingPageView = () => {
   };
 
   return (
-    <div className="w-screen h-screen flex flex-col">
+    <div className=" flex flex-col">
       <LandingPageHeader handleGetStarted={handleGetStarted} />
       <LandingPageBody handleGetStarted={handleGetStarted} />
       <LandingPageFooter />

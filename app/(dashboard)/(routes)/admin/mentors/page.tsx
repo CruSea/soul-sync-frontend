@@ -1,7 +1,9 @@
-export default function Default() {
+import { Mentors } from "@/components/shared/mentors";
+
+export default function Mentor() {
   return (
     <>
-    channel
+   <Mentors />
     </>
   );
 }
