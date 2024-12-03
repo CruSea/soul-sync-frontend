@@ -8,7 +8,7 @@ interface AdminLayoutProps {
 
 export function AdminLayout({ children, title }: AdminLayoutProps) {
   return (
-    <div className="flex h-screen">
+    <div className="flex max-h-screen">
       <Sidebar />
       <div className="flex flex-1 flex-col">
         <Header title={title} />
