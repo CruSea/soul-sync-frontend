@@ -2,7 +2,7 @@ import { GrowthChart } from "@/components/shared/GrowthChart";
 import { AdminLayout } from "@/components/shared/layout/admin-layout";
 import { MentorsChart } from "@/components/shared/MentorsChart";
 import { StatsCards } from "@/components/shared/StatCard";
-import UsersTable from "@/components/shared/UserTable";
+import { UsersTable } from "@/components/shared/UserTable";
 
 export default function AdminView() {
   return (
@@ -18,8 +18,7 @@ export default function AdminView() {
         </div>
         <div className="flex flex-wrap lg:flex-nowrap gap-6 mt-8">
           <div className="flex-1 basis-[70%]">
-            <UsersTable limit={6} />
-            {/* <TablePagination /> */}
+            <UsersTable />
           </div>
           <div className="flex-1 basis-[30%]">
             <MentorsChart />
