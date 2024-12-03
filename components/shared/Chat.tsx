@@ -137,7 +137,7 @@ const Chat = () => {
       </ScrollArea>
 
       {/*textbox where you input text */}
-      <div className='relative flex gap-2.5 mx-5 mb-2 h-[50px]'>
+      <div className='relative flex gap-2.5 mx-4 mb-4 h-[50px]'>
         <Input 
           ref={textBox}
           placeholder='Write a Message' 

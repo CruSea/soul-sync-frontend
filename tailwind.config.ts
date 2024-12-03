@@ -9,10 +9,11 @@ export default {
   ],
   theme: {
   	extend: {
-  		fontFamily: {
-  			general: ["Inter", "sans-serif"],
-  			logo: ["IBM Plex Mono", "monospace"]
-  		},
+			fontFamily: {
+				general: ["Inter", "sans-serif"],
+				logo: ["IBM Plex Mono", "monospace"],
+				manrope: ["Manrope", "sans-serif"],
+			},
   		colors: {
   			background: 'hsl(var(--background))',
   			foreground: 'hsl(var(--foreground))',
