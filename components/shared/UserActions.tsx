@@ -20,13 +20,6 @@ const UserActions = () => {
   const { data: session } = useSession();
   const router = useRouter();
 
-  useEffect(() => {
-    // if the user is signed out send them to the sign in page
-    if (!session) {
-      router.push("/mentor-sign-in")
-    }
-  }, [session])
-
   const handleSignOut = () => {
     signOut()
   }
