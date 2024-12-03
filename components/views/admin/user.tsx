@@ -1,4 +1,5 @@
 import { GrowthChart } from "@/components/shared/dashboard/GrowthChart";
+import { MentorsChart } from "@/components/shared/dashboard/MentorsChart";
 import { StatsCards } from "@/components/shared/dashboard/StatCard";
 import UsersTable from "@/components/shared/dashboard/UserTable";
 import Header from "@/components/shared/Header";
@@ -25,6 +26,9 @@ const AdminView = () => {
             <div className="flex-1">
               <UsersTable limit={6} />
               {/* <TablePagination /> */}
+            </div>
+            <div className="flex-1">
+              <MentorsChart />
             </div>
           </div>
         </div>
