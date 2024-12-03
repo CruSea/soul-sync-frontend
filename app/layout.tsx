@@ -1,15 +1,6 @@
-import "./globals.css";
 import SessionWrapper from "@/components/providers/SessionWrapper";
-import type { Metadata } from "next";
-import { Inter } from "next/font/google";
-
-const inter = Inter({ subsets: ["latin"] });
-
-export const metadata: Metadata = {
-  title: "Admin Dashboard",
-  description: "Admin dashboard for Turumba",
-};
-
+import "./globals.css";
+import { ThemeProvider } from "@/components/providers/ThemeProvider";
 export default function RootLayout({
   children,
 }: Readonly<{
@@ -18,10 +9,15 @@ export default function RootLayout({
   return (
     <SessionWrapper>
       <html lang="en">
-        <body className={inter.className}>
-          <div className="flex h-screen">
-            <div className="flex-1">{children}</div>
-          </div>
+        <body className="font-general">
+          <ThemeProvider
+            attribute="class"
+            defaultTheme="light"
+            enableSystem={false}
+            storageKey="dashboard-theme"
+          >
+            {children}
+          </ThemeProvider>
         </body>
       </html>
     </SessionWrapper>
