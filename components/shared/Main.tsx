@@ -1,3 +1,5 @@
+"use client"
+
 import Search from "./Search"
 import Chat from "./Chat"
 import Profile from "./Profile"

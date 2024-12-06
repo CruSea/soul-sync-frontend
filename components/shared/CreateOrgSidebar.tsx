@@ -1,16 +1,9 @@
 import { Button } from "../ui/button"
 import { useRouter } from 'next/navigation';
-import { Page } from "@/components/views/auth/create-org";
+import { CreateOrgSidebarProps, Page, SidebarPage } from "@/types/create-org";
 import { cn } from "@/lib/utils";
 
-// Defining the structure of a SidebarPage object
-interface SidebarPage {
-  heading: string,
-  description: string,
-  button1Text: string,
-  button2Text: string,
-  step: number
-}
+
 
 // Defining the SidebarPages object with two pages: first and second
 const SidebarPages: {[key: string]: SidebarPage} = {
@@ -29,13 +22,6 @@ const SidebarPages: {[key: string]: SidebarPage} = {
     step: 2
   }
 } 
-
-// Defining the props for the CreateOrgSidebar component
-interface CreateOrgSidebarProps {
-  currentPage: string,   // The current active page (either "first" or "second")
-  handleSetCurrentPage: (Page: Page) => void;   // Function to update the current page
-  triggerSubmit: () => void
-}
 
 const CreateOrgSidebar: React.FC<CreateOrgSidebarProps> = ({ triggerSubmit, currentPage, handleSetCurrentPage }) => {
 
