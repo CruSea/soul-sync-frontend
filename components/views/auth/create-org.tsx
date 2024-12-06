@@ -6,8 +6,6 @@ import LandingPageHeader from "@/components/shared/LandingPageHeader"
 import { Page } from "@/types/create-org";
 import { useState, useRef } from "react"
 
-
-
 const CreateOrgView = () => {
   const [currentPage, setCurrentPage] = useState<Page>("first");
   const formRef = useRef<HTMLFormElement>(null)
