@@ -3,7 +3,6 @@
 import Link from "next/link"
 import { zodResolver } from "@hookform/resolvers/zod"
 import { useFieldArray, useForm } from "react-hook-form"
-
 import { Separator } from "@/components/ui/separator"
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group"
 import { HiOutlineExclamationCircle } from "react-icons/hi2";
@@ -20,31 +19,7 @@ import {
 import React from "react"
 import { CreateOrgFormProps, createOrgFormSchema, createOrgFormValues } from "@/types/create-org"
 
-const sizeOptions = [
-  { label: "1-10", value: "1-10" },
-  { label: "11-50", value: "11-50" },
-  { label: "51-100", value: "51-100" },
-  { label: "101-500", value: "101-500" },
-  { label: "501-1000", value: "501-1000" },
-  { label: "1000+", value: "1000+" },
-];
-
-const focusOptions = [
-  { label: "Religion", value: "religion" },
-  { label: "Software", value: "software" },
-  { label: "Engineering", value: "engineering" },
-  { label: "Health Tech", value: "healthTech" },
-  { label: "Crypto", value: "crypto" },
-];
-
-const roleOptions = [
-  { label: "CEO/Owner", value: "ceo/owner" },
-  { label: "HR Manager", value: "hrManager" },
-  { label: "IT/Tech Manager", value: "it/techManager" },
-  { label: "IT/Tech Staff", value: "it/techStaff" },
-  { label: "HR Staff", value: "hrStaff" },
-  { label: "Other", value: "other" },
-];
+import { formOptions } from "@/data/create-org"
 
 
 const CreateOrgForm = React.forwardRef<HTMLFormElement, CreateOrgFormProps>(
@@ -119,7 +94,7 @@ const CreateOrgForm = React.forwardRef<HTMLFormElement, CreateOrgFormProps>(
                             onValueChange={field.onChange}
                             className="grid grid-cols-[repeat(auto-fill,_minmax(142px,_1fr))] gap-4"
                           >
-                            {sizeOptions.map((option) => (
+                            {formOptions.sizeOptions.map((option) => (
                               <FormItem
                                 key={option.value}
                                 className="flex items-center justify-between border border-gray-900 h-14 p-5 rounded-[6px]"
@@ -164,7 +139,7 @@ const CreateOrgForm = React.forwardRef<HTMLFormElement, CreateOrgFormProps>(
                             onValueChange={field.onChange}
                             className="grid grid-cols-[repeat(auto-fill,_minmax(142px,_1fr))] gap-4"
                           >
-                            {focusOptions.map((option) => (
+                            {formOptions.focusOptions.map((option) => (
                               <FormItem
                                 key={option.value}
                                 className="flex items-center justify-between border border-gray-900 h-14 p-5 rounded-[6px]"
@@ -200,7 +175,7 @@ const CreateOrgForm = React.forwardRef<HTMLFormElement, CreateOrgFormProps>(
                             onValueChange={field.onChange}
                             className="grid grid-cols-[repeat(auto-fill,_minmax(142px,_1fr))] gap-4"
                           >
-                            {roleOptions.map((option) => (
+                            {formOptions.roleOptions.map((option) => (
                               <FormItem
                                 key={option.value}
                                 className="flex items-center justify-between border border-gray-900 h-14 p-5 rounded-[6px]"

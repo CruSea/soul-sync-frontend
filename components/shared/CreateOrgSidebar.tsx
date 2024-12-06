@@ -2,26 +2,8 @@ import { Button } from "../ui/button"
 import { useRouter } from 'next/navigation';
 import { CreateOrgSidebarProps, Page, SidebarPage } from "@/types/create-org";
 import { cn } from "@/lib/utils";
+import { CreateOrgPage } from "@/content/page";
 
-
-
-// Defining the SidebarPages object with two pages: first and second
-const SidebarPages: {[key: string]: SidebarPage} = {
-  first: {
-    heading: "We need some of your Organization’s Information",
-    description: "This data is needed so that we can easily provide solutions according to your company's capacity",
-    button1Text: "Cancel",
-    button2Text: "Continue",
-    step: 1
-  },
-  second: {
-    heading: "We can now create an Automation for your company.",
-    description: "This data is needed so that we can easily provide solutions according to your company's capacity",
-    button1Text: "Go Back",
-    button2Text: "Sign up",
-    step: 2
-  }
-} 
 
 const CreateOrgSidebar: React.FC<CreateOrgSidebarProps> = ({ triggerSubmit, currentPage, handleSetCurrentPage }) => {
 
@@ -57,24 +39,24 @@ const CreateOrgSidebar: React.FC<CreateOrgSidebarProps> = ({ triggerSubmit, curr
             <div className={cn("bg-neutral-300 h-6 w-6 rounded-[3px]", currentPage === "second" ? "bg-gray-900" : "")}></div>
           </div>
           <div className="text-base font-bold text-slate-400">
-            STEP {SidebarPages[currentPage].step} OF 2  {/* Display current step */}
+            STEP {CreateOrgPage[currentPage].step} OF 2  {/* Display current step */}
           </div>
         </div>
 
          {/* Page content */}
         <div className="flex flex-col gap-4 items-start w-[500px]">
           <div className="font-bold text-3xl text-gray-900 max-w-[85%]">
-          {SidebarPages[currentPage].heading}
+          {CreateOrgPage[currentPage].heading}
           </div>
           <div className="text-sm text-neutral-400">
-          {SidebarPages[currentPage].description}
+          {CreateOrgPage[currentPage].description}
           </div>
           <div className="flex gap-4">
             <Button className="w-32 h-11 border-gray-900" variant="outline" onClick={handleFirstButton}>
-            {SidebarPages[currentPage].button1Text}
+            {CreateOrgPage[currentPage].button1Text}
             </Button>
             <Button className="w-32 h-11" variant="default" onClick={handleSecondButton} >
-            {SidebarPages[currentPage].button2Text}
+            {CreateOrgPage[currentPage].button2Text}
             </Button>
           </div>
         </div>
