@@ -6,14 +6,14 @@ import { formOptions } from "@/data/create-org"
 import { FormOneProps } from "@/types/create-org"
 
 
-const FormOne = ({ form }: FormOneProps) => {
+const FormOne = ({ formOne }: FormOneProps) => {
   return (
-    <>
+    <div className="flex flex-col gap-5">
       <div className="space-y-4">
         <div className="font-bold text-xl">Type the name of your company</div>
-        <CompanyNameField control={form.control} />
+        <CompanyNameField control={formOne.control} />
         <div className="relative flex gap-2.5 ">
-          <CompanyDomainField control={form.control} />
+          <CompanyDomainField control={formOne.control} />
           <div className="absolute top-8 right-0 h-14 w-36 flex-1 flex items-center justify-center box-border border border-slate-300 font-semibold text-sm rounded-lg bg-gray-100">
             .Turumba.com
           </div>
@@ -24,9 +24,9 @@ const FormOne = ({ form }: FormOneProps) => {
       </div>
       <div className="space-y-4">
         <div className="font-bold text-xl">What is the size of Mentors of your company</div>
-        <SizeField control={form.control} options={formOptions.sizeOptions} />
+        <SizeField control={formOne.control} options={formOptions.sizeOptions} />
       </div>
-    </>
+    </div>
   )
 }
 

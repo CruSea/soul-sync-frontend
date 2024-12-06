@@ -4,7 +4,7 @@ import { zodResolver } from "@hookform/resolvers/zod"
 import CreateOrgForm from "@/components/shared/CreateOrg/CreateOrgForm";
 import CreateOrgSidebar from "@/components/shared/CreateOrg/CreateOrgSidebar"
 import LandingPageHeader from "@/components/shared/LandingPage/LandingPageHeader"
-import { createOrgFormSchema, createOrgFormValues, Page } from "@/types/create-org";
+import { createOrgFormOneSchema, createOrgFormOneValues, createOrgFormTwoSchema, createOrgFormTwoValues, Page } from "@/types/create-org";
 import { useState, useRef } from "react"
 import { useForm } from "react-hook-form";
 
@@ -12,13 +12,33 @@ const CreateOrgView = () => {
   const [currentPage, setCurrentPage] = useState<Page>("first");
   const formRef = useRef<HTMLFormElement>(null)
 
-  const form = useForm<createOrgFormValues>({
-    resolver: zodResolver(createOrgFormSchema),
+  // const form = useForm<createOrgFormValues>({
+  //   resolver: zodResolver(createOrgFormSchema),
+  //   mode: "onChange",
+  //   defaultValues: {
+  //     companyName: "",   // Set an empty string to avoid uncontrolled behavior
+  //     companyDomain: "",
+  //     size: "1-10",
+  //     focus: "religion",
+  //     role: "ceo/owner",
+  //     otherRole: "",
+  //   },
+  // })
+
+  const formOne = useForm<createOrgFormOneValues>({
+    resolver: zodResolver(createOrgFormOneSchema),
     mode: "onChange",
     defaultValues: {
       companyName: "",   // Set an empty string to avoid uncontrolled behavior
       companyDomain: "",
       size: "1-10",
+    },
+  })
+
+  const formTwo = useForm<createOrgFormTwoValues>({
+    resolver: zodResolver(createOrgFormTwoSchema),
+    mode: "onChange",
+    defaultValues: {
       focus: "religion",
       role: "ceo/owner",
       otherRole: "",
@@ -45,7 +65,7 @@ const CreateOrgView = () => {
 
         {/* where the organization form will be added */}
         <div className="flex-1 bg-gray-100 flex justify-center items-center p-10">
-          <CreateOrgForm mySubmit={handleSubmit} ref={formRef} currentPage={currentPage} form={form} />
+          <CreateOrgForm ref={formRef} currentPage={currentPage} formOne={formOne} formTwo={formTwo} />
         </div>
       </div>
     </div>

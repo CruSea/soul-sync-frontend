@@ -10,20 +10,26 @@ import FormOne from "./FormOne"
 import FormTwo from "./FormTwo"
 
 const CreateOrgForm = React.forwardRef<HTMLFormElement, CreateOrgFormProps>(
-  ({ mySubmit, currentPage, form }, ref) => {
+  ({ currentPage, formOne, formTwo }, ref) => {
 
     return (
       <div className="w-full h-full rounded-xl bg-white p-6">
-        <Form {...form}>
-          <form ref={ref} onSubmit={form.handleSubmit(mySubmit)} className="flex flex-col gap-5">
-            {currentPage == "first" &&
-              <FormOne form={form} />
-            }
-            {currentPage === "second" &&
-              <FormTwo form={form}/>
-            }
-          </form>
-        </Form>
+        {
+          currentPage == "first" ?
+            <Form {...formOne}>
+              <form>
+                <FormOne formOne={formOne} />
+              </form>
+            </Form> :
+            currentPage == "second" ?
+              <Form {...formOne}>
+                <form>
+                  <FormTwo formTwo={formTwo} />
+                </form>
+              </Form> :
+              <h1>Form Page Not Found</h1>
+        }
+
       </div>
     )
   })
