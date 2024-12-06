@@ -16,7 +16,8 @@ export interface SidebarPage {
 export interface CreateOrgSidebarProps {
   currentPage: string; // The current active page (either "first" or "second")
   handleSetCurrentPage: (Page: Page) => void; // Function to update the current page
-  handleSubmit: () => void;
+  handleSubmit: () => Promise<boolean>;
+  orgData: OrgDataValues;
 }
 
 // the zod schema for the form One requirements

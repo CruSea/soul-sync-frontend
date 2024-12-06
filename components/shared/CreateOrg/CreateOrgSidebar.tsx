@@ -5,7 +5,7 @@ import { cn } from "@/lib/utils";
 import { CreateOrgPage } from "@/content/page";
 
 
-const CreateOrgSidebar: React.FC<CreateOrgSidebarProps> = ({ handleSubmit, currentPage, handleSetCurrentPage }) => {
+const CreateOrgSidebar: React.FC<CreateOrgSidebarProps> = ({ handleSubmit, currentPage, handleSetCurrentPage, orgData }) => {
 
   const router = useRouter();
 
@@ -19,8 +19,16 @@ const CreateOrgSidebar: React.FC<CreateOrgSidebarProps> = ({ handleSubmit, curre
   };
 
   // Function to handle the second button click
-  const handleSecondButton = () => {
-    handleSubmit();
+  const handleSecondButton = async () => {
+    let isValid = await handleSubmit(); // checks validation for page 
+
+    if (isValid) {
+      if (currentPage === "first") {
+        handleSetCurrentPage("second")
+      } else {
+        router.push('/admin');
+      }
+    }
   };
 
   return (
