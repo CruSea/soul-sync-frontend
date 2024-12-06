@@ -1,12 +1,11 @@
 import { GrowthChart } from "@/components/shared/GrowthChart";
-import { AdminLayout } from "@/components/shared/layout/admin-layout";
 import { MentorsChart } from "@/components/shared/MentorsChart";
 import { StatsCards } from "@/components/shared/StatCard";
 import { UsersTable } from "@/components/shared/UserTable";
 
 export default function AdminView() {
   return (
-    <AdminLayout title="Dashboard">
+  
       <div className="flex-1 p-4 bg-secondary dark:bg-gray-900">
         <div className="flex flex-col lg:flex-row gap-6">
           <div className="flex-1 basis-[40%] bg-white dark:bg-black p-10 rounded-lg ">
@@ -25,6 +24,6 @@ export default function AdminView() {
           </div>
         </div>
       </div>
-    </AdminLayout>
+
   );
 }

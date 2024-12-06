@@ -16,7 +16,7 @@ export default function MessagesView() {
         <Search />
         <Chat toggleProfileInView={() => setProfileInView(!profileInView)}/>
         <div className={cn("w-96 h-full flex flex-col gap-5", !profileInView ? "hidden" : "")}>
-          <Profile />
+          <Profile type="mentor"/>
         </div>
       </div>
     </AdminLayout>
