@@ -1,4 +1,4 @@
-import { Button } from "../ui/button"
+import { Button } from "../../ui/button"
 import { useRouter } from 'next/navigation';
 import { CreateOrgSidebarProps, Page, SidebarPage } from "@/types/create-org";
 import { cn } from "@/lib/utils";
@@ -43,20 +43,20 @@ const CreateOrgSidebar: React.FC<CreateOrgSidebarProps> = ({ triggerSubmit, curr
           </div>
         </div>
 
-         {/* Page content */}
+        {/* Page content */}
         <div className="flex flex-col gap-4 items-start w-[500px]">
           <div className="font-bold text-3xl text-gray-900 max-w-[85%]">
-          {CreateOrgPage[currentPage].heading}
+            {CreateOrgPage[currentPage].heading}
           </div>
           <div className="text-sm text-neutral-400">
-          {CreateOrgPage[currentPage].description}
+            {CreateOrgPage[currentPage].description}
           </div>
           <div className="flex gap-4">
             <Button className="w-32 h-11 border-gray-900" variant="outline" onClick={handleFirstButton}>
-            {CreateOrgPage[currentPage].button1Text}
+              {CreateOrgPage[currentPage].button1Text}
             </Button>
             <Button className="w-32 h-11" variant="default" onClick={handleSecondButton} >
-            {CreateOrgPage[currentPage].button2Text}
+              {CreateOrgPage[currentPage].button2Text}
             </Button>
           </div>
         </div>

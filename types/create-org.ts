@@ -1,3 +1,4 @@
+import { UseFormReturn } from "react-hook-form";
 import { z } from "zod";
 
 export type Page = "first" | "second";
@@ -60,6 +61,15 @@ export type createOrgFormValues = z.infer<typeof createOrgFormSchema>
 
 
 export interface CreateOrgFormProps {
-  currentPage: string,   // The current active page (either "first" or "second")
-  mySubmit: (data: createOrgFormValues) => void
+  currentPage: string;   // The current active page (either "first" or "second")
+  mySubmit: (data: createOrgFormValues) => void;
+  form: UseFormReturn<createOrgFormValues>;
+}
+
+export interface FormOneProps {
+  form: UseFormReturn<createOrgFormValues>;
+}
+
+export interface FormTwoProps {
+  form: UseFormReturn<createOrgFormValues>;
 }

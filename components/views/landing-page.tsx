@@ -1,8 +1,8 @@
 "use client"
 
-import LandingPageBody from "../shared/LandingPageBody";
-import LandingPageFooter from "../shared/LandingPageFooter";
-import LandingPageHeader from "../shared/LandingPageHeader";
+import LandingPageBody from "../shared/LandingPage/LandingPageBody";
+import LandingPageFooter from "../shared/LandingPage/LandingPageFooter";
+import LandingPageHeader from "../shared/LandingPage/LandingPageHeader";
 
 import { useRouter } from 'next/navigation';
 
