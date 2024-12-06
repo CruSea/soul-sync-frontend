@@ -9,8 +9,8 @@ import { CreateOrgFormProps } from "@/types/create-org"
 import FormOne from "./FormOne"
 import FormTwo from "./FormTwo"
 
-const CreateOrgForm = React.forwardRef<HTMLFormElement, CreateOrgFormProps>(
-  ({ currentPage, formOne, formTwo }, ref) => {
+const CreateOrgForm = (
+  ({ currentPage, formOne, formTwo }: CreateOrgFormProps) => {
 
     return (
       <div className="w-full h-full rounded-xl bg-white p-6">
@@ -29,7 +29,6 @@ const CreateOrgForm = React.forwardRef<HTMLFormElement, CreateOrgFormProps>(
               </Form> :
               <h1>Form Page Not Found</h1>
         }
-
       </div>
     )
   })

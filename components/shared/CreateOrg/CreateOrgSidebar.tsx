@@ -5,7 +5,7 @@ import { cn } from "@/lib/utils";
 import { CreateOrgPage } from "@/content/page";
 
 
-const CreateOrgSidebar: React.FC<CreateOrgSidebarProps> = ({ triggerSubmit, currentPage, handleSetCurrentPage }) => {
+const CreateOrgSidebar: React.FC<CreateOrgSidebarProps> = ({ handleSubmit, currentPage, handleSetCurrentPage }) => {
 
   const router = useRouter();
 
@@ -14,18 +14,13 @@ const CreateOrgSidebar: React.FC<CreateOrgSidebarProps> = ({ triggerSubmit, curr
     if (currentPage == "first") {
       router.push('/log-in');   // Navigate to the login page if on the first page
     } else {
-      handleSetCurrentPage("first");   // Go back to the first page if on the second page
+      handleSetCurrentPage("first")
     }
   };
 
   // Function to handle the second button click
   const handleSecondButton = () => {
-    if (currentPage == "first") {
-      handleSetCurrentPage("second");    // Move to the second page if currently on the first page
-    } else {
-      triggerSubmit();
-      router.push('/admin');     // Navigate to the admin page if on the second page
-    }
+    handleSubmit();
   };
 
   return (

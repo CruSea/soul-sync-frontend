@@ -19,7 +19,7 @@ const FormTwo = ({ formTwo }: FormTwoProps) => {
       </div>
       <div className="space-y-4">
         <div className="font-bold text-xl">Your role?</div>
-        <RoleField control={formTwo.control} options={formOptions.roleOptions} />
+        <RoleField control={formTwo.control} options={formOptions.roleOptions}/>
       </div>
     </div>
   )
