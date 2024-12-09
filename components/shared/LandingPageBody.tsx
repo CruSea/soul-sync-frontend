@@ -8,7 +8,7 @@ interface LandingPageHeaderProps {
 
 const LandingPageBody: React.FC<LandingPageHeaderProps> = ({ handleGetStarted }) => {
   return (
-    <div className="flex-1 flex items-center justify-evenly">
+    <div className="flex-1 flex items-center justify-evenly h-full">
     <div className="flex flex-col justify-center gap-7">
       <div className="font-bold text-5xl max-w-[500px] text-center">
         Build the next Generation through Automation
@@ -21,12 +21,16 @@ const LandingPageBody: React.FC<LandingPageHeaderProps> = ({ handleGetStarted })
         <LuArrowRight />
       </Button>
     </div>
+    <div className="width">
+
     <Image
       src='/assets/landingImage.png'
       alt="Landing Page Image"
-      width={640}
-      height={640}
+      width={650} // Intrinsic width of the image
+      height={650} // Intrinsic height of the image
+      
     />
+    </div>
   </div>
   )
 }
