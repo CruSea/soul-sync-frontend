@@ -1,9 +1,9 @@
-import Main from "@/components/shared/Main";
+import { MessageTable } from "@/components/shared/MessageTable";
 
-export default function Default() {
+export default function Mentor() {
   return (
     <>
-       <Main page="mentor"/>
+      <MessageTable />
     </>
   );
 }
