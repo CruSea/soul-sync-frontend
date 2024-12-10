@@ -49,14 +49,14 @@ export default function ChannelsPage() {
 
   return (
     <div className="h-svh container mx-auto p-10 ">
-      <div className="space-y-6  bg-white p-6 rounded-lg">
+      <div className="h-full space-y-6  bg-white p-6 rounded-lg">
         <div className="flex items-center justify-between mb-6">
           <h1 className="text-2xl font-bold">List of Channels</h1>
           <p className="text-sm text-muted-foreground">
             {channels.length} channels added
           </p>
         </div>
-        <div className="h-auto grid grid-cols- sm:grid-cols-1 md:grid-cols-3 lg:grid-cols-4 gap-4">
+        <div className="grid grid-cols- sm:grid-cols-1 md:grid-cols-3 lg:grid-cols-4 gap-4">
           {channels.map((channel) => (
             <ChannelCard key={channel.id} channel={channel} />
           ))}
