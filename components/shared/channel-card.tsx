@@ -25,7 +25,7 @@ export function ChannelCard({ channel }: ChannelCardProps) {
       break;
   }
   return (
-    <div className="flex flex-col items-center justify-center p-6 border rounded-lg bg-white hover:shadow-md transition-shadow">
+    <div className="h-[232px] flex flex-col items-center justify-center p-6 border rounded-lg bg-white hover:shadow-md transition-shadow">
       <div className="relative w-12 h-12 mb-2">
         <Image
           src={iconURL}

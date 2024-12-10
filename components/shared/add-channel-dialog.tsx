@@ -73,7 +73,7 @@ export function AddChannelDialog({ onAddChannel }: AddChannelDialogProps) {
   return (
     <Dialog open={open} onOpenChange={setOpen}>
       <DialogTrigger asChild>
-        <Button variant="outline" className="h-[120px] w-full">
+        <Button variant="outline" className="h-[232px] w-full">
           <Plus className="h-8 w-8" />
           <span className="sr-only">Add a Channel</span>
         </Button>
