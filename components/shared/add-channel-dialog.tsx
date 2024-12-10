@@ -66,6 +66,8 @@ export function AddChannelDialog({ onAddChannel }: AddChannelDialogProps) {
 
   function onSubmit(values: z.infer<typeof formSchema>) {
     onAddChannel(values);
+    console.log(values);
+    
     setOpen(false);
     form.reset();
   }
