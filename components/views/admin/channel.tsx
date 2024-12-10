@@ -48,8 +48,8 @@ export default function ChannelsPage() {
   };
 
   return (
-    <div className="h-svh container mx-auto p-10 ">
-      <div className="h-full space-y-6  bg-white p-6 rounded-lg">
+    <div className="h-fit min-h-dvh container mx-auto p-10 ">
+      <div className="h-fit min-h-dvh space-y-6  bg-white p-6 rounded-lg">
         <div className="flex items-center justify-between mb-6">
           <h1 className="text-2xl font-bold">List of Channels</h1>
           <p className="text-sm text-muted-foreground">
