@@ -11,9 +11,12 @@ export const landingPage={
 }
 
  export const loginPage={
-    name: "Soul Sync",
-    description: "A platform for mentors and mentees to connect, learn, and grow together",
+    title: "TURUMBA",
+    line1: "Connect with ",
+    line2: " your audience Today.",
+    description: "Connect Mentors and Peoples anytime anywhere"
 }
+
 export const SignInPage={
     name: "Soul Sync",
     description: "A platform for mentors and mentees to connect, learn, and grow together",
