@@ -6,12 +6,30 @@ interface ChannelCardProps {
 }
 
 export function ChannelCard({ channel }: ChannelCardProps) {
+  let iconURL = "";
+  switch (channel.type) {
+    case "Telegram Bot":
+      iconURL = "/telegram.png";
+      break;
+    case "Negarit":
+      iconURL = "/negarit.png";
+      break;
+    case "WhatsApp":
+      iconURL = "/Whatsapp.png";
+      break;
+    case "Facebook":
+      iconURL = "/Facebook.svg";
+      break;
+    default:
+      iconURL = "";
+      break;
+  }
   return (
     <div className="flex flex-col items-center justify-center p-6 border rounded-lg bg-white hover:shadow-md transition-shadow">
       <div className="relative w-12 h-12 mb-2">
         <Image
-          src={channel.icon}
-          alt={channel.name}
+          src={iconURL}
+          alt={channel.type}
           fill
           className="object-contain"
         />
