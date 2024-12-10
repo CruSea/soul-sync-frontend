@@ -1,6 +1,6 @@
 "use client"
 
-import BellIcon from "@/components/shared/Icons/BellIcon";
+import { icon } from "@/components/shared/Icons/BellIcon";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { useSession, signIn, signOut } from "next-auth/react";
 import { useEffect } from "react"
@@ -26,7 +26,7 @@ const UserActions = () => {
 
   return (
     <div className="ml-auto flex gap-5 items-center">
-      <BellIcon size={30} hasNotification={true} />
+      <icon.BellIcon size={30} hasNotification={true} />
       <DropdownMenu>
         <DropdownMenuTrigger >
           <Avatar className="w-[60px] h-[60px] cursor-pointer">
