@@ -21,8 +21,16 @@ const GetStartedForm = () => {
       gender: "male",
       location: "",
       specialization: ["marriageCounseling"],
-      startTime: "",
-      EndTime: ""
+      startTime: {
+        hours: "09",
+        minutes: "00",
+        dayPeriod: "AM",
+      },
+      endTime: {
+        hours: "05",
+        minutes: "00",
+        dayPeriod: "PM",
+      },
     }
   })
 

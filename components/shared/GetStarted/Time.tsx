@@ -2,10 +2,11 @@ import { FormField, FormItem, FormLabel, FormControl, FormMessage } from "@/comp
 import { TimePicker } from "./time-picker";
 import { record } from "zod";
 
+export type TimeTypes = "startTime" | "endTime";
 
 interface TimeFieldProps {
   control: any;
-  type: "startTime" | "endTime"
+  type: TimeTypes
 }
 
 export type Time = {
@@ -16,7 +17,7 @@ export type Time = {
 
 export function Time({ control, type }: TimeFieldProps) {
   const logTime = (time: Time) => {
-    if (type == "startTime"){
+    if (type == "startTime") {
       console.log("Start time is ", time)
     } else {
       console.log("end time is ", time)
@@ -33,7 +34,10 @@ export function Time({ control, type }: TimeFieldProps) {
             {type === "startTime" ? "Start Time" : "End Time"}
           </FormLabel>
           <FormControl>
-            <TimePicker handleTime={logTime}/>
+            <TimePicker handleTime={(time) => {
+              console.log(`${type === "startTime" ? "Start" : "End"} time is`, time);
+              //field.onChange(time); // Update the form state
+            }} />
           </FormControl>
           <FormMessage />
         </FormItem>
