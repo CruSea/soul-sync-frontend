@@ -10,6 +10,7 @@ import { GenderField } from "./GenderField"
 import { formOptions } from "@/data/get-started-data"
 import { LocationField } from "./LocationField"
 import { SpecializationField } from "./SpecializationField"
+import { Time } from "./Time"
 
 const GetStartedForm = () => {
   const form = useForm<getStartedFormValues>({
@@ -39,6 +40,13 @@ const GetStartedForm = () => {
         </div>
         <LocationField control={form.control} />
         <SpecializationField control={form.control} options={formOptions.specializationOptions} />
+        <div className="space-y-2">
+          <div className="font-medium text-xl">Availability Time</div>
+          <div className="flex gap-6">
+            <Time type="startTime" control={form.control} />
+            <Time type="endTime" control={form.control} />
+          </div>
+        </div>
       </form>
     </Form>
   )
