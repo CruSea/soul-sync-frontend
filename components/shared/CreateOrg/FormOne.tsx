@@ -1,4 +1,4 @@
-import { SizeField } from "../SizeField"
+import { SizeField } from "./SizeField"
 import { CompanyNameField } from "./CompanyNameField"
 import { CompanyDomainField } from "./CompanyDomainField"
 import { HiOutlineExclamationCircle } from "react-icons/hi2"

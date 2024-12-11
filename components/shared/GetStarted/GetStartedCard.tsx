@@ -8,6 +8,7 @@ import {
   CardTitle,
 } from "@/components/ui/card"
 import Link from "next/link"
+import GetStartedForm from "./GetStartedForm"
 
 
 
@@ -23,8 +24,8 @@ const GetStartedCard = () => {
           Fill Out your information and get started
         </CardDescription>
       </CardHeader>
-      <CardContent className="flex flex-col gap-4 pt-0">
-        
+      <CardContent className="flex flex-col gap-4 p-0 w-[450px]">
+        <GetStartedForm />
       </CardContent>
     </Card>
   )
