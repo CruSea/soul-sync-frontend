@@ -75,7 +75,7 @@ export function AddChannelDialog({ onAddChannel }: AddChannelDialogProps) {
   return (
     <Dialog open={open} onOpenChange={setOpen}>
       <DialogTrigger asChild>
-        <Button variant="outline" className="h-[232px] w-full">
+        <Button variant="outline" className="h-[278px] w-[200px]">
           <Plus className="h-8 w-8" />
           <span className="sr-only">Add a Channel</span>
         </Button>
@@ -133,7 +133,7 @@ export function AddChannelDialog({ onAddChannel }: AddChannelDialogProps) {
                 <FormItem>
                   <FormLabel>API Key</FormLabel>
                   <FormControl>
-                    <Input placeholder="buonesares@gmail.com" {...field} />
+                    <Input placeholder="Aef35jhjsf48Hfe" {...field} />
                   </FormControl>
                   <FormMessage />
                 </FormItem>
