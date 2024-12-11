@@ -2,24 +2,27 @@ import { UseFormReturn } from "react-hook-form";
 import { z } from "zod";
 
 // the zod schema for the form One requirements
-export const createOrgFormOneSchema = z.object({
-  companyName: z
+export const getStartedSchema = z.object({
+  age: z
+    .number()
+    .min(14, { message: "Age must be at least 14." })
+    .max(120, { message: "Age must be no more than 120." }),
+  gender: z.enum(["male", "female"], {
+    required_error: "You need to select your gender",
+  }),
+  location: z
     .string()
     .min(2, {
       message: "companyName must be at least 2 characters.",
     })
-    .max(70, {
+    .max(30, {
       message: "companyName must not be longer than 30 characters.",
     }),
-  companyDomain: z
-    .string()
-    .min(2, {
-      message: "companyDomain must be at least 2 characters.",
+  specialization: z
+    .array(z.enum(["marriageCounseling", "discipleship", "spritual"]), {
+      required_error: "You need to select at least one specialization",
     })
-    .max(70, {
-      message: "companyDomain must not be longer than 30 characters.",
-    }),
-  size: z.enum(["1-10", "11-50", "51-100", "101-500", "501-1000", "1000+"], {
-    required_error: "You need to select size of your mentors",
-  }),
+    .min(1, "You need to select at least one specialization"),
+  startTime: z.string(), // temporary till time picker component is made
+  EndTime: z.string(), // temporary till time picker component is made
 });
