@@ -9,13 +9,38 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card"
-import { useRouter } from "next/navigation"
+import { useRouter, useSearchParams } from "next/navigation"
 import Link from "next/link"
+import { useEffect } from "react"
+import { decodeToken } from "@/lib/utils"
+import Cookies from "js-cookie";
 
 
 const LoginPageCard = () => {
   const router = useRouter();
+  const searchParams = useSearchParams();
 
+  useEffect(() => {
+    const token = searchParams.get("token"); // Extract the token from the URL
+    if (token) {
+      console.log("token", token)
+      const decoded = decodeToken(token);
+      console.log("token decoded", decoded);
+      // You can store the token in state, sessionStorage, or make an API call with it
+
+
+      // Store the decoded token in the cookie
+      Cookies.set("user", JSON.stringify(decoded), { expires: 7 }); // Cookie will expire in 7 days
+
+      setTimeout(() => {
+        const user = Cookies.get("user");
+
+        if (user) {
+          console.log("from cookie", user)
+        }
+      }, 2000)
+    }
+  }, [searchParams]);
 
   const handleLogin = () => {
     router.push("https://jlh2d981-3000.uks1.devtunnels.ms/auth/google")
