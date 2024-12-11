@@ -55,9 +55,11 @@ export default function ChannelsPage() {
       icon: `/${newChannel.type.toLowerCase().replace(" ", "-")}-icon.svg`,
       Date: `${new Date().toLocaleDateString("en-US", format)}`,
     };
-    setChannels([...channels, channelWithId]);
+    setChannels([...channels, channelWithId]);   
+    console.log(channelWithId); // send this to back end 
+     
   };
-
+  
   return (
     <div className="h-fit min-h-dvh container mx-auto p-10 ">
       <div className="h-fit min-h-dvh space-y-6  bg-white p-6 rounded-lg">
@@ -67,7 +69,7 @@ export default function ChannelsPage() {
             {channels.length} channels added
           </p>
         </div>
-        <div className="grid grid-cols- sm:grid-cols-1 md:grid-cols-4 lg:grid-cols-5">
+        <div className="grid grid-cols- sm:grid-cols-1 md:grid-cols-3 md:gap-10 lg:grid-cols-5 lg:gap-2">
           {channels.map((channel) => (
             <ChannelCard key={channel.id} channel={channel} />
           ))}

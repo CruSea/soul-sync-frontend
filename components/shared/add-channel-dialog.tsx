@@ -47,11 +47,16 @@ const formSchema = z.object({
 });
 
 interface AddChannelDialogProps {
-  onAddChannel: (channel: Omit<Channel, "id" | "icon" | "Date">) => void;
+  onAddChannel: (channel: Omit<Channel, "id" | "icon">) => void;
 }
 
 export function AddChannelDialog({ onAddChannel }: AddChannelDialogProps) {
   const [open, setOpen] = useState(false);
+  const format: Intl.DateTimeFormatOptions = {
+    year: "numeric",
+    month: "short",
+    day: "numeric",
+  };
 
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
@@ -65,8 +70,8 @@ export function AddChannelDialog({ onAddChannel }: AddChannelDialogProps) {
   });
 
   function onSubmit(values: z.infer<typeof formSchema>) {
-    onAddChannel(values);
-    console.log(values);
+    const date = new Date().toLocaleDateString("en-US", format)
+    onAddChannel({ ...values, Date: date });
     
     setOpen(false);
     form.reset();
