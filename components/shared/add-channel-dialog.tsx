@@ -47,7 +47,7 @@ const formSchema = z.object({
 });
 
 interface AddChannelDialogProps {
-  onAddChannel: (channel: Omit<Channel, "id" | "icon">) => void;
+  onAddChannel: (channel: Omit<Channel, "id" | "icon" | "Date">) => void;
 }
 
 export function AddChannelDialog({ onAddChannel }: AddChannelDialogProps) {

@@ -13,4 +13,5 @@ export interface Channel {
   webhookUrl: string;
   customGreeting: string;
   icon: string;
+  Date: string;
 }

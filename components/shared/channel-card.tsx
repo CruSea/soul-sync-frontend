@@ -34,7 +34,7 @@ export function ChannelCard({ channel }: ChannelCardProps) {
           </div>
         </div>
         {/* <div className="w-6 h-6 px-[3px] py-[2.62px] justify-center items-center flex"></div> */}
-        <AiOutlineDelete className="w-5 h-5 cursor-pointer hover:bg-[#f1f2f4] rounded-xl"/>
+        <AiOutlineDelete className="w-5 h-5 cursor-pointer hover:bg-[#f1f2f4] rounded-xl" />
       </div>
       <div className="relative w-16 h-16 mb-2">
         <Image
@@ -75,7 +75,8 @@ export function ChannelCard({ channel }: ChannelCardProps) {
             </div>
           </div>
           <div className="grow shrink basis-0 text-gray-900 text-xs font-bold font-['Manrope'] leading-tight tracking-tight">
-            Jan 16,2024
+            {/* Jan 16,2024 */}
+            {channel.Date}
           </div>
         </div>
         <div className="self-stretch justify-between items-center inline-flex gap-9">

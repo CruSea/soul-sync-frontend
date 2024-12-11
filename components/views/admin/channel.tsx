@@ -14,6 +14,7 @@ const initialChannels: Channel[] = [
     webhookUrl: "https://example.com/webhook1",
     customGreeting: "Welcome!",
     icon: "/negarit.png",
+    Date: "Jan 16,2024",
   },
   {
     id: "2",
@@ -23,6 +24,7 @@ const initialChannels: Channel[] = [
     webhookUrl: "https://example.com/webhook2",
     customGreeting: "Welcome!",
     icon: "/telegram.png",
+    Date: "Jan 16,2024",
   },
   {
     id: "3",
@@ -32,17 +34,26 @@ const initialChannels: Channel[] = [
     webhookUrl: "https://example.com/webhook3",
     customGreeting: "Welcome!",
     icon: "/Whatsapp.png",
+    Date: "Jan 16,2024",
   },
 ];
 
 export default function ChannelsPage() {
   const [channels, setChannels] = useState<Channel[]>(initialChannels);
+  const format: Intl.DateTimeFormatOptions = {
+    year: "numeric",
+    month: "short",
+    day: "numeric",
+  };
 
-  const handleAddChannel = (newChannel: Omit<Channel, "id" | "icon">) => {
+  const handleAddChannel = (
+    newChannel: Omit<Channel, "id" | "icon" | "Date">
+  ) => {
     const channelWithId: Channel = {
       ...newChannel,
       id: `${channels.length + 1}`,
       icon: `/${newChannel.type.toLowerCase().replace(" ", "-")}-icon.svg`,
+      Date: `${new Date().toLocaleDateString("en-US", format)}`,
     };
     setChannels([...channels, channelWithId]);
   };
