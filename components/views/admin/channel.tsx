@@ -8,7 +8,7 @@ import type { Channel } from "@/types/channel";
 const initialChannels: Channel[] = [
   {
     id: "1",
-    name: "Negarit",
+    name: "My SMS",
     type: "Negarit",
     apiKey: "key1",
     webhookUrl: "https://example.com/webhook1",
@@ -17,7 +17,7 @@ const initialChannels: Channel[] = [
   },
   {
     id: "2",
-    name: "Telegram",
+    name: "Soul Sync Bot",
     type: "Telegram Bot",
     apiKey: "key2",
     webhookUrl: "https://example.com/webhook2",
@@ -26,7 +26,7 @@ const initialChannels: Channel[] = [
   },
   {
     id: "3",
-    name: "WhatsApp",
+    name: "Soul Sync",
     type: "WhatsApp",
     apiKey: "key3",
     webhookUrl: "https://example.com/webhook3",
@@ -56,7 +56,7 @@ export default function ChannelsPage() {
             {channels.length} channels added
           </p>
         </div>
-        <div className="grid grid-cols- sm:grid-cols-1 md:grid-cols-3 lg:grid-cols-4 gap-4">
+        <div className="grid grid-cols- sm:grid-cols-1 md:grid-cols-4 lg:grid-cols-5">
           {channels.map((channel) => (
             <ChannelCard key={channel.id} channel={channel} />
           ))}
