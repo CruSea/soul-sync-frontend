@@ -1,5 +1,6 @@
 import { FormField, FormItem, FormLabel, FormControl, FormMessage } from "@/components/ui/form";
 import { TimePicker } from "./time-picker";
+import { record } from "zod";
 
 
 interface TimeFieldProps {
@@ -7,7 +8,21 @@ interface TimeFieldProps {
   type: "startTime" | "endTime"
 }
 
+export type Time = {
+  hours: string;
+  minutes: string;
+  dayPeriod: string;
+}
+
 export function Time({ control, type }: TimeFieldProps) {
+  const logTime = (time: Time) => {
+    if (type == "startTime"){
+      console.log("Start time is ", time)
+    } else {
+      console.log("end time is ", time)
+    }
+  }
+
   return (
     <FormField
       control={control}
@@ -18,7 +33,7 @@ export function Time({ control, type }: TimeFieldProps) {
             {type === "startTime" ? "Start Time" : "End Time"}
           </FormLabel>
           <FormControl>
-            <TimePicker/>
+            <TimePicker handleTime={logTime}/>
           </FormControl>
           <FormMessage />
         </FormItem>

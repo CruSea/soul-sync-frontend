@@ -1,12 +1,17 @@
 "use client"
 
 import { DateSegment } from "./date-segment";
-import { useRef } from "react";
+import { useEffect, useRef } from "react";
 import { AriaTimeFieldProps, TimeValue, useLocale, useTimeField } from "react-aria";
 import { useTimeFieldState } from "react-stately";
 import { cn } from "@/lib/utils";
+import { Time } from "./Time";
 
-function TimeField(props: AriaTimeFieldProps<TimeValue>) {
+interface TimeFieldProps extends AriaTimeFieldProps<TimeValue> {
+	handleTime: (time: Time) => void;
+}
+
+function TimeField({handleTime, ...props}: TimeFieldProps) {
 	const ref = useRef<HTMLDivElement | null>(null);
 
 	const { locale } = useLocale();
@@ -18,6 +23,15 @@ function TimeField(props: AriaTimeFieldProps<TimeValue>) {
 		fieldProps: { ...fieldProps },
 		labelProps,
 	} = useTimeField(props, state, ref);
+
+	useEffect(() => {
+		const time = {
+			hours: state.segments.filter(segment => segment.type == "hour")[0].text,
+			minutes: state.segments.filter(segment => segment.type == "minute")[0].text,
+			dayPeriod: state.segments.filter(segment => segment.type == "dayPeriod")[0].text,
+		}
+		handleTime(time)
+	}, [state])
 
 	return (
 		<div

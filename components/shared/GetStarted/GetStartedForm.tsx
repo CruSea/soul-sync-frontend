@@ -33,7 +33,6 @@ const GetStartedForm = () => {
   return (
     <Form {...form}>
       <form className="flex flex-col gap-5">
-
         <div className="flex gap-16 w-full">
           <AgeField control={form.control} />
           <GenderField control={form.control} options={formOptions.genderOptions} />
