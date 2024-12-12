@@ -26,7 +26,7 @@ export function ChannelCard({ channel }: ChannelCardProps) {
       break;
   }
   return (
-    <div className="h-[278px] w-[200px] flex flex-col items-center justify-between px-2.5 pt-1 pb-2 border rounded-lg bg-white hover:shadow-md transition-shadow">
+    <div className="h-[278px] w-full  flex flex-col items-center justify-between px-2.5 pt-1 pb-2 border rounded-xl bg-white hover:shadow-md hover:rounded-xl transition-shadow">
       <div className="h-10 px-1 py-2 rounded-tl-lg rounded-tr-lg justify-between items-center inline-flex w-full">
         <div className="px-1.5 py-0.5 rounded-xl border border-zinc-500 justify-center items-center gap-2.5 flex">
           <div className="w-[31px] h-3 text-center text-zinc-500 text-[8px] font-bold font-['Inter'] leading-3 tracking-wide">
@@ -45,15 +45,15 @@ export function ChannelCard({ channel }: ChannelCardProps) {
         />
       </div>
       <div className="h-[98px] w-full p-1 flex-col justify-center items-start gap-0.5 inline-flex">
-        <div className="self-stretch w-full justify-between items-center inline-flex gap-7">
+        <div className="self-stretch w-full justify-between items-center inline-flex gap-7 border text-wrap">
           <div className="h-[19px] justify-start items-center gap-2 flex">
             <div className="w-2.5 h-2.5 bg-[#27a376] rounded-[50px]" />
             <div className="text-[#677488] text-xs font-medium font-['Manrope'] leading-tight">
               Name
             </div>
           </div>
-          <div className="grow shrink basis-0 text-gray-900 text-xs font-bold font-['Manrope'] leading-tight tracking-tight">
-            {channel.name}
+          <div className="grow shrink basis-0 text-gray-900 text-xs font-bold font-['Manrope'] leading-tight tracking-tight text-wrap border">
+            <p className="w-full">{channel.name}</p>
           </div>
         </div>
         <div className="self-stretch justify-between items-center inline-flex gap-3">

@@ -72,7 +72,7 @@ export function AddChannelDialog({ onAddChannel }: AddChannelDialogProps) {
   function onSubmit(values: z.infer<typeof formSchema>) {
     const date = new Date().toLocaleDateString("en-US", format)
     onAddChannel({ ...values, Date: date });
-    
+
     setOpen(false);
     form.reset();
   }
@@ -80,7 +80,7 @@ export function AddChannelDialog({ onAddChannel }: AddChannelDialogProps) {
   return (
     <Dialog open={open} onOpenChange={setOpen}>
       <DialogTrigger asChild>
-        <Button variant="outline" className="h-[278px] w-[200px]">
+        <Button variant="outline" className="h-[278px] w-full">
           <Plus className="h-8 w-8" />
           <span className="sr-only">Add a Channel</span>
         </Button>
