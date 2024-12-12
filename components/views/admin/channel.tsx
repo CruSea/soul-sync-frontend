@@ -4,6 +4,16 @@ import { useState } from "react";
 import { AddChannelDialog } from "@/components/shared/add-channel-dialog";
 import { ChannelCard } from "@/components/shared/channel-card";
 import type { Channel } from "@/types/channel";
+import {
+  Command,
+  CommandEmpty,
+  CommandGroup,
+  CommandInput,
+  CommandItem,
+  CommandList,
+  CommandSeparator,
+  CommandShortcut,
+} from "@/components/ui/command";
 
 const initialChannels: Channel[] = [
   {
@@ -55,11 +65,10 @@ export default function ChannelsPage() {
       icon: `/${newChannel.type.toLowerCase().replace(" ", "-")}-icon.svg`,
       Date: `${new Date().toLocaleDateString("en-US", format)}`,
     };
-    setChannels([...channels, channelWithId]);   
-    console.log(channelWithId); // send this to back end 
-     
+    setChannels([...channels, channelWithId]);
+    console.log(channelWithId); // send this to back end
   };
-  
+
   return (
     <div className="h-fit min-h-dvh container mx-auto p-10 ">
       <div className="h-fit min-h-dvh space-y-6  bg-white p-6 rounded-lg">
@@ -69,13 +78,40 @@ export default function ChannelsPage() {
             {channels.length} channels added
           </p>
         </div>
-        <div className="grid grid-cols- sm:grid-cols-1 md:grid-cols-3 md:gap-10 lg:grid-cols-5 lg:gap-2">
-          {channels.map((channel) => (
-            <ChannelCard key={channel.id} channel={channel} />
-          ))}
-          <AddChannelDialog onAddChannel={handleAddChannel} />
-        </div>
+
+        <Command className="w-full">
+          <CommandInput placeholder="Type a command or search..." />
+          <CommandList className="">
+            <CommandEmpty>Channel Not Found</CommandEmpty>
+            <div className="grid gap-4">
+              <CommandGroup className="p-2">
+                <div className="grid grid-cols- sm:grid-cols-1 md:grid-cols-3 md:gap-10 lg:grid-cols-5 lg:gap-2">
+                  {channels.map((channel) => (
+                    <CommandItem
+                      key={channel.id}
+                      className="flex-1 w-fit"
+                    >
+                      <ChannelCard key={channel.id} channel={channel} />
+                    </CommandItem>
+                  ))}
+                  <CommandItem>
+                    <AddChannelDialog onAddChannel={handleAddChannel} />
+                  </CommandItem>
+                </div>
+              </CommandGroup>
+            </div>
+          </CommandList>
+        </Command>
       </div>
     </div>
   );
+}
+
+{
+  /* <div className="grid grid-cols- sm:grid-cols-1 md:grid-cols-3 md:gap-10 lg:grid-cols-5 lg:gap-2">
+  {channels.map((channel) => (
+    <ChannelCard key={channel.id} channel={channel} />
+  ))}
+  <AddChannelDialog onAddChannel={handleAddChannel} />
+</div>; */
 }
