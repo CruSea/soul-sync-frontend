@@ -21,6 +21,9 @@ export function ChannelCard({ channel }: ChannelCardProps) {
     case "Facebook":
       iconURL = "/Facebook.svg";
       break;
+    case "Twilio":
+      iconURL = "/Twilio.png";
+      break;
     default:
       iconURL = "";
       break;
