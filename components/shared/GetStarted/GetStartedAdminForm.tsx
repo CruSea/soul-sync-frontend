@@ -1,7 +1,7 @@
 "use client"
 
 import { useForm } from "react-hook-form"
-import { getStartedAdminFormSchema, getStartedAdminFormValues, getStartedMentorFormSchema } from "@/types/get-started"
+import { getStartedAdminFormSchema, getStartedAdminFormValues } from "@/types/get-started"
 import { getStartedMentorFormValues } from "@/types/get-started"
 import { zodResolver } from "@hookform/resolvers/zod"
 import { Form } from "@/components/ui/form"
