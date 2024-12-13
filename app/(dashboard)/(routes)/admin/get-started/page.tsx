@@ -1,10 +1,10 @@
 import GetStartedView from "@/components/views/get-started";
 
 
-export default function MentorGetStartedPage() {
+export default function AdminGetStartedPage() {
   return (
     <>
-      <GetStartedView type="mentor"/>
+      <GetStartedView type="admin"/>
     </>
   );
 }

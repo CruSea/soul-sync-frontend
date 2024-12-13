@@ -1,7 +1,8 @@
 import GetStartedCard from "@/components/shared/GetStarted/GetStartedCard"
 import GetStartedSidebar from "@/components/shared/GetStarted/GetStartedSidebar"
 
-const GetStartedView = () => {
+
+const GetStartedView = ({ type }: GetStartedProps) => {
   return (
     <div className="w-screen h-screen flex">
       <GetStartedCard />
