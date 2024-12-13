@@ -73,3 +73,39 @@ export const getStartedFormSchema = z.object({
 );
 
 export type getStartedFormValues = z.infer<typeof getStartedFormSchema>;
+
+export interface AgeFieldProps {
+  control: any;
+}
+
+export interface DayPeriodFieldProps {
+  control: any;
+  type: "start" | "end";
+  form: getStartedFormValues | any | undefined
+}
+
+export interface SpecializationFieldProps {
+  control: any;
+  options: { label: string; value: string }[];
+}
+
+export interface MinuteFieldProps {
+  control: any;
+  type: "start" | "end";
+  form: getStartedFormValues | any | undefined
+}
+
+export interface LocationFieldProps {
+  control: any;
+}
+
+export interface HourFieldProps {
+  control: any;
+  type: "start" | "end";
+  form: getStartedFormValues | any | undefined
+}
+
+export interface GenderFieldProps {
+  control: any;
+  options: { label: string; value: string }[];
+}
