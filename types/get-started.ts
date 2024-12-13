@@ -45,6 +45,33 @@ export const getStartedFormSchema = z.object({
   endDayPeriod: z.string({
     required_error: "Please select day period time",
   }),
-});
+}).refine(
+  (data) => {
+    const parseTime = (hour: string, minute: string, period: string) => {
+      const h = parseInt(hour, 10);
+      const m = parseInt(minute, 10);
+      return (period === "PM" ? (h % 12) + 12 : h % 12) * 60 + m;
+    };
+
+    const startTime = parseTime(
+      data.startHour,
+      data.startMinute,
+      data.startDayPeriod
+    );
+    const endTime = parseTime(
+      data.endHour,
+      data.endMinute,
+      data.endDayPeriod
+    );
+
+    console.log("the start time", startTime, "the end time", endTime)
+
+    return startTime < endTime;
+  },
+  {
+    message: "Start time must be before end time.",
+    path: ["startHour", "startMinute", "startDayPeriod"], // Applies error to start time fields
+  }
+);
 
 export type getStartedFormValues = z.infer<typeof getStartedFormSchema>;

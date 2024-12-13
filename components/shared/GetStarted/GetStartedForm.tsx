@@ -14,6 +14,7 @@ import { FormField, FormItem, FormControl, FormMessage, FormLabel } from "@/comp
 import { HourField } from "./hourField"
 import { MinuteField } from "./MinuteField"
 import { DayPeriodField } from "./DayPeriod"
+import { useEffect } from "react"
 
 const GetStartedForm = () => {
   const form = useForm<getStartedFormValues>({
@@ -37,6 +38,12 @@ const GetStartedForm = () => {
     console.log("Mentor form data", data);
   }
 
+  const { register, handleSubmit, formState: { errors } } = form;
+
+  useEffect(() => {
+    console.log(errors)
+  }, [])
+
   return (
     <Form {...form}>
       <form className="flex flex-col gap-5">
@@ -53,6 +60,7 @@ const GetStartedForm = () => {
               <div className="font-medium text-zinc-500 font-base">Start Time</div>
               <div className="flex gap-2 items-center">
                 <HourField control={form.control} type="start" form={form} />
+                {errors.startHour && <p>{errors.startHour.message}</p>}
                 <div className="text-2xl text-neutral-500 mb-1 ml-[-4px] mr-[-5px]">:</div>
                 <MinuteField control={form.control} type="start" form={form} />
                 <DayPeriodField control={form.control} type="start" form={form}/>
