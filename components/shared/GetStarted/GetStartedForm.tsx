@@ -7,7 +7,7 @@ import { zodResolver } from "@hookform/resolvers/zod"
 import { Form } from "@/components/ui/form"
 import { AgeField } from "./AgeField"
 import { GenderField } from "./GenderField"
-import { formOptions } from "@/data/get-started-data"
+import { getStartedForm } from "@/data/get-started-data"
 import { LocationField } from "./LocationField"
 import { SpecializationField } from "./SpecializationField"
 import { FormField, FormItem, FormControl, FormMessage, FormLabel } from "@/components/ui/form";
@@ -45,7 +45,7 @@ const GetStartedForm = () => {
     router.push("/mentor");  // Use router.push for smooth navigation
   };
 
-  const { register, handleSubmit, formState: { errors } } = form;
+  const { formState: { errors } } = form;
 
   useEffect(() => {
     console.log(errors)
@@ -56,10 +56,10 @@ const GetStartedForm = () => {
       <form onSubmit={form.handleSubmit(onSubmit)} className="flex flex-col gap-5">
         <div className="flex gap-16 w-full">
           <AgeField control={form.control} />
-          <GenderField control={form.control} options={formOptions.genderOptions} />
+          <GenderField control={form.control} options={getStartedForm.genderOptions} />
         </div>
         <LocationField control={form.control} />
-        <SpecializationField control={form.control} options={formOptions.specializationOptions} />
+        <SpecializationField control={form.control} options={getStartedForm.specializationOptions} />
         <div className="space-y-2">
           <div className="font-medium text-xl">Availability Time</div>
           <div className="flex gap-6">

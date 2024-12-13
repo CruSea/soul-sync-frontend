@@ -1,10 +1,6 @@
 import { FormField, FormItem, FormControl, FormMessage, FormLabel } from "@/components/ui/form";
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
-
-interface GenderFieldProps {
-  control: any;
-  options: { label: string; value: string }[];
-}
+import { GenderFieldProps } from "@/types/create-org";
 
 export function GenderField({ control, options }: GenderFieldProps) {
   return (

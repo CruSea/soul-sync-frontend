@@ -1,10 +1,8 @@
 import { FormField, FormItem, FormControl, FormMessage, FormLabel } from "@/components/ui/form";
 import { Checkbox } from "@/components/ui/checkbox";
+import { SpecializationFieldProps } from "@/types/create-org";
 
-interface SpecializationFieldProps {
-  control: any;
-  options: { label: string; value: string }[];
-}
+
 
 export function SpecializationField({ control, options }: SpecializationFieldProps) {
   return (

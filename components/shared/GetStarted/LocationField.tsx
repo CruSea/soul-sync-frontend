@@ -1,9 +1,6 @@
 import { FormField, FormItem, FormLabel, FormControl, FormMessage } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
-
-interface LocationFieldProps {
-  control: any;
-}
+import { LocationFieldProps } from "@/types/create-org";
 
 export function LocationField({ control }: LocationFieldProps) {
   return (

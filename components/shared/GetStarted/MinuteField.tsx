@@ -23,15 +23,9 @@ import {
 } from "./TimePopover"
 import { cn } from "@/lib/utils";
 import { Check, ChevronsUpDown } from "lucide-react"
-import { formOptions } from "@/data/get-started-data";
+import { getStartedForm } from "@/data/get-started-data";
 import { getStartedFormValues } from "@/types/get-started";
-
-
-interface MinuteFieldProps {
-  control: any;
-  type: "start" | "end";
-  form: getStartedFormValues | any | undefined
-}
+import { MinuteFieldProps } from "@/types/create-org";
 
 export function MinuteField({ control, type, form }: MinuteFieldProps) {
   return (
@@ -52,7 +46,7 @@ export function MinuteField({ control, type, form }: MinuteFieldProps) {
                   )}
                 >
                   {field.value
-                    ? formOptions.minutes.find(
+                    ? getStartedForm.minutes.find(
                       (minute) => minute.value === field.value
                     )?.label
                     : "Select minute"}
@@ -65,7 +59,7 @@ export function MinuteField({ control, type, form }: MinuteFieldProps) {
                 <CommandList>
                   <CommandEmpty>No minutes found.</CommandEmpty>
                   <CommandGroup>
-                    {formOptions.minutes.map((minute) => (
+                    {getStartedForm.minutes.map((minute) => (
                       <CommandItem
                         value={minute.label}
                         key={minute.value}

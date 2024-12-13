@@ -23,15 +23,8 @@ import {
 } from "./TimePopover"
 import { cn } from "@/lib/utils";
 import { Check, ChevronsUpDown } from "lucide-react"
-import { formOptions } from "@/data/get-started-data";
-import { getStartedFormValues } from "@/types/get-started";
-
-
-interface HourFieldProps {
-  control: any;
-  type: "start" | "end";
-  form: getStartedFormValues | any | undefined
-}
+import { getStartedForm } from "@/data/get-started-data";
+import { HourFieldProps } from "@/types/create-org";
 
 export function HourField({ control, type, form }: HourFieldProps) {
   return (
@@ -52,7 +45,7 @@ export function HourField({ control, type, form }: HourFieldProps) {
                   )}
                 >
                   {field.value
-                    ? formOptions.hours.find(
+                    ? getStartedForm.hours.find(
                       (hour) => hour.value === field.value
                     )?.label
                     : "Select hour"}
@@ -65,7 +58,7 @@ export function HourField({ control, type, form }: HourFieldProps) {
                 <CommandList>
                   <CommandEmpty>No hours found.</CommandEmpty>
                   <CommandGroup>
-                    {formOptions.hours.map((hour) => (
+                    {getStartedForm.hours.map((hour) => (
                       <CommandItem
                         value={hour.label}
                         key={hour.value}

@@ -46,10 +46,11 @@ const dayPeriod = [
   { label: "PM", value: "PM" },
 ]
 
-export const formOptions = {
+
+export const getStartedForm = {
   genderOptions,
   specializationOptions,
   hours,
   minutes,
-  dayPeriod
+  dayPeriod,
 };

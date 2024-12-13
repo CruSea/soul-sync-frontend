@@ -23,15 +23,9 @@ import {
 } from "./TimePopover"
 import { cn } from "@/lib/utils";
 import { Check, ChevronsUpDown } from "lucide-react"
-import { formOptions } from "@/data/get-started-data";
-import { getStartedFormValues } from "@/types/get-started";
+import { getStartedForm } from "@/data/get-started-data";
+import { DayPeriodFieldProps } from "@/types/create-org";
 
-
-interface DayPeriodFieldProps {
-  control: any;
-  type: "start" | "end";
-  form: getStartedFormValues | any | undefined
-}
 
 export function DayPeriodField({ control, type, form }: DayPeriodFieldProps) {
   return (
@@ -52,7 +46,7 @@ export function DayPeriodField({ control, type, form }: DayPeriodFieldProps) {
                   )}
                 >
                   {field.value
-                    ? formOptions.dayPeriod.find(
+                    ? getStartedForm.dayPeriod.find(
                       (period) => period.value === field.value
                     )?.label
                     : "Select period"}
@@ -65,7 +59,7 @@ export function DayPeriodField({ control, type, form }: DayPeriodFieldProps) {
                 <CommandList>
                   <CommandEmpty>No dayPeriod found.</CommandEmpty>
                   <CommandGroup>
-                    {formOptions.dayPeriod.map((period) => (
+                    {getStartedForm.dayPeriod.map((period) => (
                       <CommandItem
                         value={period.label}
                         key={period.value}

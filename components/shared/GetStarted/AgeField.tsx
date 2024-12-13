@@ -1,10 +1,7 @@
 import { FormField, FormItem, FormControl, FormMessage, FormLabel } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
-
-
-interface AgeFieldProps {
-  control: any;
-}
+import { getStartedForm } from "@/data/get-started-data";
+import { AgeFieldProps } from "@/types/create-org";
 
 export function AgeField({ control }: AgeFieldProps) {
   return (
