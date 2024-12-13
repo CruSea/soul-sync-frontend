@@ -18,7 +18,7 @@ import { useEffect } from "react"
 import { Button } from "@/components/ui/button"
 import { useRouter } from "next/navigation";
 
-const GetStartedForm = () => {
+const GetStartedMentorForm = () => {
   const form = useForm<getStartedFormValues>({
     resolver: zodResolver(getStartedFormSchema),
     mode: "onChange",
@@ -90,4 +90,4 @@ const GetStartedForm = () => {
   )
 }
 
-export default GetStartedForm
+export default GetStartedMentorForm

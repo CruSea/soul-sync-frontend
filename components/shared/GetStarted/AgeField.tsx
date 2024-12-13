@@ -1,9 +1,9 @@
 import { FormField, FormItem, FormControl, FormMessage, FormLabel } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
-import { getStartedForm } from "@/data/get-started-data";
-import { AgeFieldProps } from "@/types/create-org";
+import { cn } from "@/lib/utils";
+import { AgeFieldProps } from "@/types/get-started";
 
-export function AgeField({ control }: AgeFieldProps) {
+export function AgeField({ control, className }: AgeFieldProps) {
   return (
     <FormField
       control={control}
@@ -14,7 +14,7 @@ export function AgeField({ control }: AgeFieldProps) {
             Age
           </FormLabel>
           <FormControl>
-            <Input type="number" className="text-sm h-14 w-28" {...field} />
+            <Input type="number" className={cn("text-sm h-14 w-28", className)} {...field} />
           </FormControl>
           <FormMessage />
         </FormItem>

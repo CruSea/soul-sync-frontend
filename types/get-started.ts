@@ -74,6 +74,7 @@ export const getStartedFormSchema = z.object({
 
 export interface AgeFieldProps {
   control: any;
+  className: string;
 }
 
 export interface DayPeriodFieldProps {
@@ -97,6 +98,10 @@ export interface LocationFieldProps {
   control: any;
 }
 
+export interface PhoneNumberFieldProps {
+  control: any;
+}
+
 export interface HourFieldProps {
   control: any;
   type: "start" | "end";
@@ -106,6 +111,10 @@ export interface HourFieldProps {
 export interface GenderFieldProps {
   control: any;
   options: { label: string; value: string }[];
+}
+
+export interface GetStartedProps {
+  type: "admin" | "mentor"
 }
 
 
