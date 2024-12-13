@@ -48,14 +48,14 @@ export function ChannelCard({ channel }: ChannelCardProps) {
         />
       </div>
       <div className="h-[98px] w-full p-1 flex-col justify-center items-start gap-0.5 inline-flex">
-        <div className="self-stretch w-full justify-between items-center inline-flex gap-7 border text-wrap">
+        <div className="self-stretch w-full justify-between items-center inline-flex gap-7 text-wrap">
           <div className="h-[19px] justify-start items-center gap-2 flex">
             <div className="w-2.5 h-2.5 bg-[#27a376] rounded-[50px]" />
             <div className="text-[#677488] text-xs font-medium font-['Manrope'] leading-tight">
               Name
             </div>
           </div>
-          <div className="grow shrink basis-0 text-gray-900 text-xs font-bold font-['Manrope'] leading-tight tracking-tight text-wrap border">
+          <div className="grow shrink basis-0 text-gray-900 text-xs font-bold font-['Manrope'] leading-tight tracking-tight text-wrap ">
             <p className="w-full">{channel.name}</p>
           </div>
         </div>
