@@ -16,6 +16,7 @@ import { MinuteField } from "./MinuteField"
 import { DayPeriodField } from "./DayPeriod"
 import { useEffect } from "react"
 import { Button } from "@/components/ui/button"
+import { useRouter } from "next/navigation";
 
 const GetStartedForm = () => {
   const form = useForm<getStartedFormValues>({
@@ -35,9 +36,14 @@ const GetStartedForm = () => {
     }
   })
 
+  const router = useRouter();  // Initialize the useRouter hook
+
   const onSubmit = (data: getStartedFormValues) => {
     console.log("Mentor form data", data);
-  }
+    
+    // Navigate to /mentor after form submission
+    router.push("/mentor");  // Use router.push for smooth navigation
+  };
 
   const { register, handleSubmit, formState: { errors } } = form;
 
@@ -78,7 +84,7 @@ const GetStartedForm = () => {
           </div>
           {errors.startHour && <p className="text-red-500">Start Time can't be less than End Time</p>}
         </div>
-        <Button type="submit" className="w-full h-12 ">Submit</Button>
+        <Button type="submit" className="w-4/5 mx-auto h-12 ">Submit</Button>
       </form>
     </Form>
   )
