@@ -10,7 +10,10 @@ import { GenderField } from "./GenderField"
 import { formOptions } from "@/data/get-started-data"
 import { LocationField } from "./LocationField"
 import { SpecializationField } from "./SpecializationField"
-import { Time } from "./Time"
+import { FormField, FormItem, FormControl, FormMessage, FormLabel } from "@/components/ui/form";
+import { HourField } from "./hourField"
+import { MinuteField } from "./MinuteField"
+import { DayPeriodField } from "./DayPeriod"
 
 const GetStartedForm = () => {
   const form = useForm<getStartedFormValues>({
@@ -21,16 +24,12 @@ const GetStartedForm = () => {
       gender: "male",
       location: "",
       specialization: ["marriageCounseling"],
-      startTime: {
-        hours: "09",
-        minutes: "00",
-        dayPeriod: "AM",
-      },
-      endTime: {
-        hours: "05",
-        minutes: "00",
-        dayPeriod: "PM",
-      },
+      startHour: "09",
+      startMinute: "00",
+      startDayPeriod: "AM",
+      endHour: "05",
+      endMinute: "00",
+      endDayPeriod: "PM"
     }
   })
 
@@ -50,8 +49,24 @@ const GetStartedForm = () => {
         <div className="space-y-2">
           <div className="font-medium text-xl">Availability Time</div>
           <div className="flex gap-6">
-            <Time type="startTime" control={form.control} />
-            <Time type="endTime" control={form.control} />
+            <div className="space-y-2">
+              <div className="font-medium text-zinc-500 font-base">Start Time</div>
+              <div className="flex gap-2 items-center">
+                <HourField control={form.control} type="start" form={form} />
+                <div className="text-2xl text-neutral-500 mb-1 ml-[-4px] mr-[-5px]">:</div>
+                <MinuteField control={form.control} type="start" form={form} />
+                <DayPeriodField control={form.control} type="start" form={form}/>
+              </div>
+            </div>
+            <div className="space-y-2">
+              <div className="font-medium text-zinc-500 font-base">End Time</div>
+              <div className="flex gap-2 items-center">
+                <HourField control={form.control} type="end" form={form} />
+                <div className="text-2xl text-neutral-500 mb-1 ml-[-4px] mr-[-5px]">:</div>
+                <MinuteField control={form.control} type="end" form={form} />
+                <DayPeriodField control={form.control} type="end" form={form}/>
+              </div>
+            </div>
           </div>
         </div>
       </form>

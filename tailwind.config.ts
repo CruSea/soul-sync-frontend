@@ -67,7 +67,11 @@ export default {
   				'accent-foreground': 'hsl(var(--sidebar-accent-foreground))',
   				border: 'hsl(var(--sidebar-border))',
   				ring: 'hsl(var(--sidebar-ring))'
-  			}
+  			},
+				scrollbar: {
+          track: "#f3f4f6", // Example: light gray track
+          thumb: "#9ca3af", // Example: gray thumb
+        },
   		},
   		borderRadius: {
   			lg: 'var(--radius)',
@@ -80,5 +84,8 @@ export default {
   	}
   },
   // eslint-disable-next-line @typescript-eslint/no-require-imports
-  plugins: [require("tailwindcss-animate")],
+  plugins: [
+		require("tailwindcss-animate"),
+		require("tailwind-scrollbar"),
+	],
 } as Config;
