@@ -24,7 +24,7 @@ import {
 import { cn } from "@/lib/utils";
 import { Check, ChevronsUpDown } from "lucide-react"
 import { getStartedForm } from "@/data/get-started-data";
-import { getStartedFormValues } from "@/types/get-started";
+import { getStartedMentorFormValues } from "@/types/get-started";
 import { MinuteFieldProps } from "@/types/get-started";
 
 export function MinuteField({ control, type, form }: MinuteFieldProps) {

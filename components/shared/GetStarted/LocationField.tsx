@@ -13,7 +13,7 @@ export function LocationField({ control }: LocationFieldProps) {
             Location
           </FormLabel>
           <FormControl>
-            <Input className="text-lg h-[56px] w-full"  {...field} />
+            <Input className="text-lg h-[56px] w-full" placeholder="" {...field} />
           </FormControl>
           <FormMessage />
         </FormItem>

@@ -1,49 +1,38 @@
 "use client"
 
 import { useForm } from "react-hook-form"
-import { getStartedFormSchema } from "@/types/get-started"
-import { getStartedFormValues } from "@/types/get-started"
+import { getStartedAdminFormSchema, getStartedAdminFormValues, getStartedMentorFormSchema } from "@/types/get-started"
+import { getStartedMentorFormValues } from "@/types/get-started"
 import { zodResolver } from "@hookform/resolvers/zod"
 import { Form } from "@/components/ui/form"
 import { AgeField } from "./AgeField"
 import { GenderField } from "./GenderField"
 import { getStartedForm } from "@/data/get-started-data"
 import { LocationField } from "./LocationField"
-import { SpecializationField } from "./SpecializationField"
-import { FormField, FormItem, FormControl, FormMessage, FormLabel } from "@/components/ui/form";
-import { HourField } from "./hourField"
-import { MinuteField } from "./MinuteField"
-import { DayPeriodField } from "./DayPeriod"
 import { useEffect } from "react"
 import { Button } from "@/components/ui/button"
 import { useRouter } from "next/navigation";
 import { PhoneNumberField } from "./PhoneNumberField"
 
 const GetStartedAdminForm = () => {
-  const form = useForm<getStartedFormValues>({
-    resolver: zodResolver(getStartedFormSchema),
-    mode: "onChange",
+  const form = useForm<getStartedAdminFormValues>({
+    resolver: zodResolver(getStartedAdminFormSchema),
+    mode: "onSubmit",
     defaultValues: {
-      age: 29,
+      age: undefined,
       gender: "male",
       location: "",
-      specialization: ["marriageCounseling"],
-      startHour: "09",
-      startMinute: "00",
-      startDayPeriod: "AM",
-      endHour: "05",
-      endMinute: "00",
-      endDayPeriod: "PM"
+      phoneNumber: ""
     }
   })
 
   const router = useRouter();  // Initialize the useRouter hook
 
-  const onSubmit = (data: getStartedFormValues) => {
-    console.log("Mentor form data", data);
+  const onSubmit = (data: getStartedAdminFormValues) => {
+    console.log("Admin form data", data);
 
     // Navigate to /mentor after form submission
-    router.push("/mentor");  // Use router.push for smooth navigation
+    router.push("/admin");  // Use router.push for smooth navigation
   };
 
   const { formState: { errors } } = form;
@@ -56,9 +45,10 @@ const GetStartedAdminForm = () => {
     <Form {...form}>
       <form onSubmit={form.handleSubmit(onSubmit)} className="flex flex-col gap-5">
         <AgeField control={form.control} className="w-full" />
-        <GenderField control={form.control} options={getStartedForm.genderOptions} />
-        <PhoneNumberField control={form.control}/>
+        <GenderField control={form.control} options={getStartedForm.genderOptions} className="space-y-[-10px]"/>
+        <PhoneNumberField control={form.control} />
         <LocationField control={form.control} />
+        <Button type="submit" className="w-4/5 mx-auto h-12 ">Submit</Button>
       </form>
     </Form>
   )

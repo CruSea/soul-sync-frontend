@@ -1,8 +1,8 @@
 "use client"
 
 import { useForm } from "react-hook-form"
-import { getStartedFormSchema } from "@/types/get-started"
-import { getStartedFormValues } from "@/types/get-started"
+import { getStartedMentorFormSchema } from "@/types/get-started"
+import { getStartedMentorFormValues } from "@/types/get-started"
 import { zodResolver } from "@hookform/resolvers/zod"
 import { Form } from "@/components/ui/form"
 import { AgeField } from "./AgeField"
@@ -20,8 +20,8 @@ import { useRouter } from "next/navigation";
 import { TimeFields } from "./TimeFields"
 
 const GetStartedMentorForm = () => {
-  const form = useForm<getStartedFormValues>({
-    resolver: zodResolver(getStartedFormSchema),
+  const form = useForm<getStartedMentorFormValues>({
+    resolver: zodResolver(getStartedMentorFormSchema),
     mode: "onChange",
     defaultValues: {
       age: 29,
@@ -39,9 +39,9 @@ const GetStartedMentorForm = () => {
 
   const router = useRouter();  // Initialize the useRouter hook
 
-  const onSubmit = (data: getStartedFormValues) => {
+  const onSubmit = (data: getStartedMentorFormValues) => {
     console.log("Mentor form data", data);
-    
+
     // Navigate to /mentor after form submission
     router.push("/mentor");  // Use router.push for smooth navigation
   };
