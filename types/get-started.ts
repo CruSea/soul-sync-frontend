@@ -74,7 +74,7 @@ export const getStartedFormSchema = z.object({
 
 export interface AgeFieldProps {
   control: any;
-  className: string;
+  className?: string;
 }
 
 export interface DayPeriodFieldProps {
@@ -106,6 +106,11 @@ export interface HourFieldProps {
   control: any;
   type: "start" | "end";
   form: getStartedFormValues | any | undefined
+}
+
+export interface TimeFieldsProps {
+  form: getStartedFormValues | any | undefined;
+  errors: any;
 }
 
 export interface GenderFieldProps {

@@ -17,6 +17,7 @@ import { DayPeriodField } from "./DayPeriod"
 import { useEffect } from "react"
 import { Button } from "@/components/ui/button"
 import { useRouter } from "next/navigation";
+import { TimeFields } from "./TimeFields"
 
 const GetStartedMentorForm = () => {
   const form = useForm<getStartedFormValues>({
@@ -60,30 +61,7 @@ const GetStartedMentorForm = () => {
         </div>
         <LocationField control={form.control} />
         <SpecializationField control={form.control} options={getStartedForm.specializationOptions} />
-        <div className="space-y-2">
-          <div className="font-medium text-xl">Availability Time</div>
-          <div className="flex gap-6">
-            <div className="space-y-2">
-              <div className="font-medium text-zinc-500 font-base">Start Time</div>
-              <div className="flex gap-2 items-center">
-                <HourField control={form.control} type="start" form={form} />
-                <div className="text-2xl text-neutral-500 mb-1 ml-[-4px] mr-[-5px]">:</div>
-                <MinuteField control={form.control} type="start" form={form} />
-                <DayPeriodField control={form.control} type="start" form={form}/>
-              </div>
-            </div>
-            <div className="space-y-2">
-              <div className="font-medium text-zinc-500 font-base">End Time</div>
-              <div className="flex gap-2 items-center">
-                <HourField control={form.control} type="end" form={form} />
-                <div className="text-2xl text-neutral-500 mb-1 ml-[-4px] mr-[-5px]">:</div>
-                <MinuteField control={form.control} type="end" form={form} />
-                <DayPeriodField control={form.control} type="end" form={form}/>
-              </div>
-            </div>
-          </div>
-          {errors.startHour && <p className="text-red-500">Start Time can't be less than End Time</p>}
-        </div>
+        <TimeFields form={form} errors={errors} />
         <Button type="submit" className="w-4/5 mx-auto h-12 ">Submit</Button>
       </form>
     </Form>
