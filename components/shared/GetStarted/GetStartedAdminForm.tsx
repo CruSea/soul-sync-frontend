@@ -44,8 +44,10 @@ const GetStartedAdminForm = () => {
   return (
     <Form {...form}>
       <form onSubmit={form.handleSubmit(onSubmit)} className="flex flex-col gap-5">
-        <AgeField control={form.control} className="w-full" />
-        <GenderField control={form.control} options={getStartedForm.genderOptions} className="space-y-[-10px]"/>
+        <div className="flex gap-16 w-full">
+          <AgeField control={form.control} />
+          <GenderField control={form.control} options={getStartedForm.genderOptions} />
+        </div>
         <PhoneNumberField control={form.control} />
         <LocationField control={form.control} />
         <Button type="submit" className="w-4/5 mx-auto h-12 ">Submit</Button>
