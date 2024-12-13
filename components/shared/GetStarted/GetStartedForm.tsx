@@ -15,6 +15,7 @@ import { HourField } from "./hourField"
 import { MinuteField } from "./MinuteField"
 import { DayPeriodField } from "./DayPeriod"
 import { useEffect } from "react"
+import { Button } from "@/components/ui/button"
 
 const GetStartedForm = () => {
   const form = useForm<getStartedFormValues>({
@@ -46,7 +47,7 @@ const GetStartedForm = () => {
 
   return (
     <Form {...form}>
-      <form className="flex flex-col gap-5">
+      <form onSubmit={form.handleSubmit(onSubmit)} className="flex flex-col gap-5">
         <div className="flex gap-16 w-full">
           <AgeField control={form.control} />
           <GenderField control={form.control} options={formOptions.genderOptions} />
@@ -60,7 +61,6 @@ const GetStartedForm = () => {
               <div className="font-medium text-zinc-500 font-base">Start Time</div>
               <div className="flex gap-2 items-center">
                 <HourField control={form.control} type="start" form={form} />
-                {errors.startHour && <p>{errors.startHour.message}</p>}
                 <div className="text-2xl text-neutral-500 mb-1 ml-[-4px] mr-[-5px]">:</div>
                 <MinuteField control={form.control} type="start" form={form} />
                 <DayPeriodField control={form.control} type="start" form={form}/>
@@ -76,7 +76,9 @@ const GetStartedForm = () => {
               </div>
             </div>
           </div>
+          {errors.startHour && <p className="text-red-500">Start Time can't be less than End Time</p>}
         </div>
+        <Button type="submit" className="w-full h-12 ">Submit</Button>
       </form>
     </Form>
   )

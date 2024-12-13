@@ -64,13 +64,11 @@ export const getStartedFormSchema = z.object({
       data.endDayPeriod
     );
 
-    console.log("the start time", startTime, "the end time", endTime)
-
     return startTime < endTime;
   },
   {
-    message: "Start time must be before end time.",
-    path: ["startHour", "startMinute", "startDayPeriod"], // Applies error to start time fields
+    message: "",
+    path: ["startHour"], // Attach to startHour or a relevant field
   }
 );
 
