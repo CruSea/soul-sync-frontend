@@ -2,12 +2,25 @@ import Image from "next/image";
 import type { Channel } from "@/types/channel";
 import { AiOutlineDelete } from "react-icons/ai";
 
+import {
+  Dialog,
+  DialogContent,
+  DialogDescription,
+  DialogFooter,
+  DialogHeader,
+  DialogTitle,
+} from "@/components/ui/dialog";
+import { Button } from "../ui/button";
+import { useState } from "react";
+
 interface ChannelCardProps {
   channel: Channel;
   setChannel: React.Dispatch<React.SetStateAction<Channel[]>>;
 }
 
 export function ChannelCard({ channel, setChannel }: ChannelCardProps) {
+  const [deleteId, setDeleteId] = useState<string | null>(null);
+
   let iconURL = "";
   switch (channel.type) {
     case "Telegram Bot":
@@ -29,10 +42,25 @@ export function ChannelCard({ channel, setChannel }: ChannelCardProps) {
       iconURL = "";
       break;
   }
-
-  const handleDeleteChannel = (id:string) => {
-    setChannel((prevItems) => prevItems.filter((item) => item.id !== id));
+  const handleDelete = (channel: Channel) => {
+    setDeleteId(channel.id);
+    
   };
+  const confirmDelete = () => {
+    if (deleteId !== null) {
+      setChannel((prevItems) =>
+        prevItems.filter((item) => item.id !== deleteId)
+      );
+      setDeleteId(null);
+    }
+  };
+  const cancelDelete = () => {
+    setDeleteId(null);
+  };
+
+  // const handleDeleteChannel = (id: string) => {
+  //   setChannel((prevItems) => prevItems.filter((item) => item.id !== id));
+  // };
 
   return (
     <div className="h-[278px] w-full  flex flex-col items-center justify-between px-2.5 pt-1 pb-2 border rounded-xl bg-white hover:shadow-md hover:rounded-xl transition-shadow">
@@ -43,7 +71,7 @@ export function ChannelCard({ channel, setChannel }: ChannelCardProps) {
           </div>
         </div>
         <div
-          onClick={() => handleDeleteChannel(channel.id)}
+          onClick={() => handleDelete(channel)}
           className="w-6 h-6 px-[3px] py-[2.62px] justify-center rounded-xl hover:bg-[#f1f2f4] items-center cursor-pointer flex"
         >
           <AiOutlineDelete className="w-full h-full cursor-pointer  " />
@@ -104,6 +132,25 @@ export function ChannelCard({ channel, setChannel }: ChannelCardProps) {
           </div>
         </div>
       </div>
+      <Dialog open={deleteId !== null} onOpenChange={cancelDelete}>
+        <DialogContent className="w-[400px] flex flex-col gap-y-4">
+          <DialogHeader>
+            <DialogTitle className="mb-2">Confirm Deletion</DialogTitle>
+            <DialogDescription>
+              Are you sure you want to delete? <p className="font-bold text-black inline">{channel.name} | {channel.type}</p> action cannot
+              be undone.
+            </DialogDescription>
+          </DialogHeader>
+          <DialogFooter>
+            <Button variant="secondary" onClick={cancelDelete} className="hover:bg-slate-200">
+              Cancel
+            </Button>
+            <Button variant="destructive" onClick={confirmDelete} className="hover:bg-[#c83a3a]">
+              Confirm
+            </Button>
+          </DialogFooter>
+        </DialogContent>
+      </Dialog>
     </div>
   );
 }
