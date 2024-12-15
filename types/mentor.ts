@@ -11,4 +11,11 @@ export interface Mentor {
     profileImage: string
   }
   
+export  interface MentorLayoutProps {
+    children: React.ReactNode;
+    title: string;
+  }
   
+export interface MentorLayoutProps {
+  children: React.ReactNode;
+}

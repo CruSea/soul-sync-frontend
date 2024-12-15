@@ -1,13 +1,16 @@
-"use client"
-import Header from '@/components/shared/Header'
-import Main from '@/components/shared/Main'
+import Chat from "@/components/shared/Chat";
+import Profile from "@/components/shared/Profile";
+import Search from "@/components/shared/Search";
 
 const MentorView = () => {
   return (
-    <div className="flex flex-col w-full h-screen">
-      <Header page="mentor"/>
-      <Main />
-    </div>
+    <>
+      <Search />
+      <Chat />
+      <div className="w-96 h-full flex flex-col gap-5">
+        <Profile type="user" />
+      </div>
+    </>
   )
 }
 

@@ -1,11 +1,8 @@
 'use client'
 import { AdminLayout } from "@/components/shared/layout/admin-layout";
+import { DashboardLayoutProps } from "@/types/admin";
 import { usePathname } from "next/navigation";
 
-
-interface DashboardLayoutProps {
-  children: React.ReactNode;
-}
 
 const DashboardLayout: React.FC<DashboardLayoutProps> =  ({ children }) => {
 
