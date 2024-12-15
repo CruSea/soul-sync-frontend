@@ -8,10 +8,36 @@ import UsersList from "./users-list";
 
 const MentorContainer = ({ users }: MentorContainerProps) => {
   const [currentUser, setCurrentUser] = useState<User>(users[0]);
+  const [userDetails, setUserDetails] = useState(null);
 
   useEffect(() => {
-    console.log("the current user", currentUser);
+    const fetchUserDetails = async () => {
+      try {
+        // fetches the userDetails from db
+        const response =
+        await fetch(`http://localhost:3001/userDetails?userId=${currentUser.userId}`); 
+
+        if (!response.ok) {
+          throw new Error("Network response was not ok");
+        }
+        const data = await response.json();
+
+        if (Array.isArray(data) && data.length > 0) {
+          setUserDetails(data[0]); // Assuming you want the first item
+        } else {
+          console.warn("No user details found");
+        }
+        console.log("the userDetails", data[0]);
+      } catch (error) {
+        console.error("Failed to fetch user details:", error);
+      }
+    };
+
+    if (currentUser && currentUser.userId) {
+      fetchUserDetails();
+    }
   }, [currentUser]);
+
   return (
     <>
       <UsersList
@@ -21,7 +47,11 @@ const MentorContainer = ({ users }: MentorContainerProps) => {
       />
       <Chat currentUser={currentUser} />
       <div className="w-96 h-full flex flex-col gap-5">
-        <Profile type="user" currentUser={currentUser} />
+        <Profile
+          type="user"
+          currentUser={currentUser}
+          userDetails={userDetails}
+        />
       </div>
     </>
   );

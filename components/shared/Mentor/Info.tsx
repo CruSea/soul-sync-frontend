@@ -1,8 +1,8 @@
 import { cn } from '@/lib/utils'
 
 interface InfoProps {
-  title: string;
-  value: string;
+  title: string | undefined ;
+  value: string | undefined;
   color: keyof typeof colors;
 }
 

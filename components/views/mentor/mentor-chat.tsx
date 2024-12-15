@@ -15,10 +15,6 @@ const MentorView = async () => {
   if (users.length === 0) {
     throw new Error("No users found");
   }
-
-  const currentUser = users[0];
-
-  console.log("users list ", users);
   return (
     <>
       <MentorContainer users={users} />
