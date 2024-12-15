@@ -23,11 +23,7 @@ interface threadType {
   id: string
 }
 
-interface ChatProps {
-  toggleProfileInView: () => void
-}
-
-const Chat: React.FC<ChatProps> = ({ toggleProfileInView }) => {
+const Chat = () => {
   // text is where the text box saves what the mentor writes
   const [text, setText] = useState<string>('')
 
@@ -129,7 +125,7 @@ const Chat: React.FC<ChatProps> = ({ toggleProfileInView }) => {
   return (
     <Card className="flex-1 rounded-[10px] flex flex-col ">
       {/* the header that shows user name*/}
-      <ChatHeader toggleProfileInView={toggleProfileInView}/>
+      <ChatHeader />
 
       {/* the chat thread between the user and mentor*/}
       <ScrollArea>
