@@ -8,7 +8,7 @@ import {
 } from "@/components/ui/card"
 
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
-import { Button } from "../ui/button";
+import { Button } from "../../ui/button";
 
 const ChatHeader = () => {
   return (

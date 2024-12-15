@@ -1,6 +1,6 @@
-import Chat from "@/components/shared/Chat";
-import Profile from "@/components/shared/Profile";
-import Search from "@/components/shared/Search";
+import Chat from "@/components/shared/Mentor/Chat";
+import Profile from "@/components/shared/Mentor/Profile";
+import Search from "@/components/shared/Mentor/Search";
 
 const MentorView = () => {
   return (

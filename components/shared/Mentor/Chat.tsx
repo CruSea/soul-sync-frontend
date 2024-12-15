@@ -94,33 +94,35 @@ const Chat = () => {
     }
   ]);
 
-    // an empty div at the end of the thread used to scroll to the bottom on send
-    const bottomOfPanelRef = useRef<HTMLDivElement | null>(null);
+  // an empty div at the end of the thread used to scroll to the bottom on send
+  const bottomOfPanelRef = useRef<HTMLDivElement | null>(null);
 
-    // a referance for where the you will write the text
-    const textBox = useRef<HTMLInputElement | null>(null);
-  
-    useEffect(() => {
-      // Scroll to the bottom whenever `thread` changes
-      if (bottomOfPanelRef.current) {
-        bottomOfPanelRef.current.scrollIntoView({ behavior: "smooth" }); // Optional: Add smooth scrolling
-      }
-    }, [thread]);
+  // a referance for where the you will write the text
+  const textBox = useRef<HTMLInputElement | null>(null);
 
-
-    const sendText = (messageText: string) => {
-      // adds a message from the mentor to the thread and sets the text box to empty
-  
-      setThread((prevThread) => [...prevThread, {isUser: false,
-        text: messageText,
-        time: '2:44 PM',
-        newDay: '',
-        id: uuidv4()} ])
-      
-      if (textBox.current) {
-        textBox.current.value = ''
-      }
+  useEffect(() => {
+    // Scroll to the bottom whenever `thread` changes
+    if (bottomOfPanelRef.current) {
+      bottomOfPanelRef.current.scrollIntoView({ behavior: "smooth" }); // Optional: Add smooth scrolling
     }
+  }, [thread]);
+
+
+  const sendText = (messageText: string) => {
+    // adds a message from the mentor to the thread and sets the text box to empty
+
+    setThread((prevThread) => [...prevThread, {
+      isUser: false,
+      text: messageText,
+      time: '2:44 PM',
+      newDay: '',
+      id: uuidv4()
+    }])
+
+    if (textBox.current) {
+      textBox.current.value = ''
+    }
+  }
 
   return (
     <Card className="flex-1 rounded-[10px] flex flex-col ">
@@ -137,10 +139,10 @@ const Chat = () => {
 
       {/*textbox where you input text */}
       <div className='relative flex gap-2.5 mx-4 mb-4 h-[50px]'>
-        <Input 
+        <Input
           ref={textBox}
-          placeholder='Write a Message' 
-          className="h-full rounded-md bg-neutral-200 outline-none border border-neutral-300 pl-4 pr-4 font-normal text-md placeholder:text-neutral-400" 
+          placeholder='Write a Message'
+          className="h-full rounded-md bg-neutral-200 outline-none border border-neutral-300 pl-4 pr-4 font-normal text-md placeholder:text-neutral-400"
           onChange={(e) => {
             // updates the value of the text state whenever something is written
             setText(e.target.value);

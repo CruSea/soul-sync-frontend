@@ -20,7 +20,7 @@ interface ProfileTypes {
   age: string
 }
 
-const Profile:React.FC<ProfileProps> = ({ type }) => {
+const Profile: React.FC<ProfileProps> = ({ type }) => {
 
   const profiles: { [key: string]: ProfileTypes } = {
     user: {
@@ -66,7 +66,7 @@ const Profile:React.FC<ProfileProps> = ({ type }) => {
 
   return (
     <Card className="h-[calc(50%-10px)] w-full bg-white rounded-lg shadow-sidebar flex flex-col justify-center gap-5">
-       <CardHeader className="py-0">
+      <CardHeader className="py-0">
         <CardTitle className="text-xl font-bold">{profiles[type].title} Profile</CardTitle>
       </CardHeader>
       <CardContent className="flex flex-col gap-5 p-5 py-0">
@@ -83,17 +83,17 @@ const Profile:React.FC<ProfileProps> = ({ type }) => {
 
         {/* User Information */}
         <div>
-          <Info title="Full Name" value={profiles[type].fullName} color="green"/>
-          <Info title="Age" value={profiles[type].age} color="green"/>
-          <Info title="Gender" value={profiles[type].gender} color="green"/>
-          <Info title="Location" value={profiles[type].location} color="yellow"/>
-          <Info title="Email" value={profiles[type].email} color="yellow"/>
-          <Info title="Phone" value={profiles[type].phone} color="blue"/>
-          {profiles[type].platform && <Info title="Platform" value={profiles[type].platform} color="blue"/>}
-          {profiles[type].Expertise && <Info title="Expertise" value={profiles[type].Expertise} color="blue"/>}
+          <Info title="Full Name" value={profiles[type].fullName} color="green" />
+          <Info title="Age" value={profiles[type].age} color="green" />
+          <Info title="Gender" value={profiles[type].gender} color="green" />
+          <Info title="Location" value={profiles[type].location} color="yellow" />
+          <Info title="Email" value={profiles[type].email} color="yellow" />
+          <Info title="Phone" value={profiles[type].phone} color="blue" />
+          {profiles[type].platform && <Info title="Platform" value={profiles[type].platform} color="blue" />}
+          {profiles[type].Expertise && <Info title="Expertise" value={profiles[type].Expertise} color="blue" />}
         </div>
       </CardContent>
-      
+
     </Card>
   )
 }

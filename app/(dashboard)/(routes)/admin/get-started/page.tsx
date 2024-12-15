@@ -1,10 +1,10 @@
-import GetStartedView from "@/components/views/get-started";
+import GetStartedView from "@/components/views/admin/get-started";
 
 
 export default function AdminGetStartedPage() {
   return (
     <>
-      <GetStartedView type="admin"/>
+      <GetStartedView type="admin" />
     </>
   );
 }
