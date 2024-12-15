@@ -67,7 +67,7 @@ const MentorContainer = ({ users }: MentorContainerProps) => {
         currentUser={currentUser}
         setCurrentUser={setCurrentUser}
       />
-      <Chat currentUser={currentUser} />
+      <Chat currentUser={currentUser} userMessages={userMessages}/>
       <div className="w-96 h-full flex flex-col gap-5">
         <Profile
           type="user"

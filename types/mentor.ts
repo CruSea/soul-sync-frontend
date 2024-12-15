@@ -31,8 +31,10 @@ export type Users = User[];
 export type Message = {
   sender: string;
   dateTime: string;
-  content: string
-}
+  content: string;
+};
+
+export type Messages = Message[];
 
 export type UserDetails = {
   fullName: string;
@@ -47,7 +49,6 @@ export type UserDetails = {
   messages: Message[];
 };
 
-
 export interface MentorContainerProps {
   users: Users;
 }
@@ -58,8 +59,14 @@ export interface UsersListProps {
   setCurrentUser: (user: User) => void;
 }
 
+export type UserMessages = {
+  userId: string;
+  messages: Messages;
+}
+
 export interface ChatProps {
   currentUser: User;
+  userMessages: UserMessages | null;
 }
 
 export interface ProfileProps {
