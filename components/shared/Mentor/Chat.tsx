@@ -9,21 +9,11 @@ import {
 import { ScrollArea } from "@/components/ui/scroll-area"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
-
 import ChatHeader from './ChatHeader'
 import Message from './Message';
+import { ChatProps, threadType } from '@/types/mentor';
 
-
-// type for the group of message threads between user and mentor
-interface threadType {
-  isUser: boolean;
-  text: string
-  time: string
-  newDay: string
-  id: string
-}
-
-const Chat = () => {
+const Chat = ({ currentUser }: ChatProps) => {
   // text is where the text box saves what the mentor writes
   const [text, setText] = useState<string>('')
 

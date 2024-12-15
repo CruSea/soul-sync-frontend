@@ -1,6 +1,7 @@
 import Chat from "@/components/shared/Mentor/Chat";
+import MentorContainer from "@/components/shared/Mentor/mentor-container";
 import Profile from "@/components/shared/Mentor/Profile";
-import Search from "@/components/shared/Mentor/Search";
+import Search from "@/components/shared/Mentor/users-list";
 
 const MentorView = async () => {
   // Fetch users from the JSON Server
@@ -11,16 +12,18 @@ const MentorView = async () => {
 
   const users = await response.json();
 
-  console.log("users list ", users)
+  if (users.length === 0) {
+    throw new Error("No users found");
+  }
+
+  const currentUser = users[0];
+
+  console.log("users list ", users);
   return (
     <>
-      <Search />
-      <Chat />
-      <div className="w-96 h-full flex flex-col gap-5">
-        <Profile type="user" />
-      </div>
+      <MentorContainer users={users} />
     </>
-  )
-}
+  );
+};
 
-export default MentorView
+export default MentorView;

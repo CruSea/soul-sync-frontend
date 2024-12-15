@@ -1,26 +1,9 @@
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import Info from "./Info";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { ProfileProps, ProfileTypes } from "@/types/mentor";
 
-interface ProfileProps {
-  type: string
-}
-
-interface ProfileTypes {
-  title: string,
-  fullName: string,
-  gender: string,
-  location: string,
-  email: string,
-  phone: string,
-  platform: string | undefined,
-  Expertise: string | undefined,
-  src: string,
-  abrivation: string,
-  age: string
-}
-
-const Profile: React.FC<ProfileProps> = ({ type }) => {
+const Profile: React.FC<ProfileProps> = ({ type, currentUser }) => {
 
   const profiles: { [key: string]: ProfileTypes } = {
     user: {

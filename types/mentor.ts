@@ -19,3 +19,53 @@ export  interface MentorLayoutProps {
 export interface MentorLayoutProps {
   children: React.ReactNode;
 }
+
+export type User = {
+  userId: string;
+  fullName: string;
+  imageUrl: string;
+}
+
+export type Users = User[];
+
+export interface MentorContainerProps {
+  users: Users;
+}
+
+export interface UsersListProps {
+  currentUser: User;
+  users: Users;
+  setCurrentUser: (user: User) => void
+}
+
+export interface ChatProps {
+  currentUser: User;
+}
+
+export interface ProfileProps {
+  type: string;
+  currentUser: User;
+}
+
+// type for the group of message threads between user and mentor
+export interface threadType {
+  isUser: boolean;
+  text: string
+  time: string
+  newDay: string
+  id: string
+}
+
+export interface ProfileTypes {
+  title: string,
+  fullName: string,
+  gender: string,
+  location: string,
+  email: string,
+  phone: string,
+  platform: string | undefined,
+  Expertise: string | undefined,
+  src: string,
+  abrivation: string,
+  age: string
+}

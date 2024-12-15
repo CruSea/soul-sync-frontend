@@ -2,23 +2,28 @@
   "users": [
     {
       "userId": "ec6cb555-26b8-452a-a707-ce6b9db2d6ac",
-      "fullName": "Jane Smith"
+      "fullName": "Jane Smith",
+      "imageUrl": "https://example.com/images/jane-smith.jpg"
     },
     {
       "userId": "fc6cb555-26b8-452a-a707-ce6b9db2d6ac",
-      "fullName": "John Doe"
+      "fullName": "John Doe",
+      "imageUrl": "https://example.com/images/john-doe.jpg"
     },
     {
       "userId": "gc6cb555-26b8-452a-a707-ce6b9db2d6ac",
-      "fullName": "Emily Davis"
+      "fullName": "Emily Davis",
+      "imageUrl": "https://example.com/images/emily-davis.jpg"
     },
     {
       "userId": "hc6cb555-26b8-452a-a707-ce6b9db2d6ac",
-      "fullName": "Michael Johnson"
+      "fullName": "Michael Johnson",
+      "imageUrl": "https://example.com/images/michael-johnson.jpg"
     },
     {
       "userId": "ic6cb555-26b8-452a-a707-ce6b9db2d6ac",
-      "fullName": "Sophia Brown"
+      "fullName": "Sophia Brown",
+      "imageUrl": "https://example.com/images/sophia-brown.jpg"
     }
   ],
   "userMessages": {
