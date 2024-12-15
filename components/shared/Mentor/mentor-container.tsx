@@ -9,6 +9,7 @@ import UsersList from "./users-list";
 const MentorContainer = ({ users }: MentorContainerProps) => {
   const [currentUser, setCurrentUser] = useState<User>(users[0]);
   const [userDetails, setUserDetails] = useState(null);
+  const [userMessages, setUserMessages] = useState(null);
 
   useEffect(() => {
     const fetchUserDetails = async () => {
@@ -27,14 +28,35 @@ const MentorContainer = ({ users }: MentorContainerProps) => {
         } else {
           console.warn("No user details found");
         }
-        console.log("the userDetails", data[0]);
+
       } catch (error) {
         console.error("Failed to fetch user details:", error);
       }
     };
 
+    const fetchUserMesages = async () => {
+      try {
+        const response = await fetch(`http://localhost:3001/userMessages?userId=${currentUser.userId}`);
+
+        if (!response.ok) {
+          throw new Error("Network response was not ok");
+        }
+
+        const data = await response.json();
+
+        if (Array.isArray(data) && data.length > 0) {
+          setUserMessages(data[0]); // Assuming you want the first item
+        } else {
+          console.warn("No user details found");
+        }
+        console.log("the userMessages", data[0]);  
+      } catch (error) {
+        console.error("Failed to fetch user Messages:", error);
+      }
+    }
+
     if (currentUser && currentUser.userId) {
-      fetchUserDetails();
+      fetchUserMesages();
     }
   }, [currentUser]);
 
