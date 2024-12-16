@@ -2,17 +2,9 @@ import Image from "next/image";
 import { cn } from "@/lib/utils";
 
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
-import { User } from "@/types/mentor";
+import { MessageProps } from "@/types/mentor";
 
-interface MessageProps {
-  text: string;
-  isUser: boolean;
-  time: string;
-  newDay: string;
-  currentUser: User;
-}
-
-const Message: React.FC<MessageProps> = ({ text, isUser, time, newDay, currentUser }) => {
+const Message: React.FC<MessageProps> = ({ text, isUser, time, newDay, imageUrl }) => {
   return (
     <div
       className={cn(
@@ -35,7 +27,7 @@ const Message: React.FC<MessageProps> = ({ text, isUser, time, newDay, currentUs
       {/*dummy avatar man for the user and woman for the mentor*/}
       <Avatar className="w-[50px] h-[50px]">
         <AvatarImage
-          src={isUser ? currentUser.imageUrl : "/assets/avatars/woman1.png"}
+          src={imageUrl}
           className="w-full h-full object-cover"
         />
         <AvatarFallback className="w-full h-full flex items-center justify-center text-xl">

@@ -34,6 +34,9 @@
   "userMessages": [
     {
       "userId": "ec6cb555-26b8-452a-a707-ce6b9db2d6ac",
+      "fullName": "Jane Smith",
+      "email": "janesmith@example.com",
+      "imageUrl": "https://plus.unsplash.com/premium_photo-1669703777437-27602d656c27?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MTN8fHBlb3BsZXxlbnwwfHwwfHx8MA%3D%3D",
       "messages": [
         {
           "sender": "mentor",
@@ -54,6 +57,9 @@
     },
     {
       "userId": "fc6cb555-26b8-452a-a707-ce6b9db2d6ac",
+      "fullName": "John Doe",
+      "email": "johndoe@example.com",
+      "imageUrl": "https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8M3x8cGVvcGxlfGVufDB8fDB8fHww",
       "messages":[
         {
           "sender": "mentor",
@@ -154,6 +160,9 @@
     },
     {
       "userId": "gc6cb555-26b8-452a-a707-ce6b9db2d6ac",
+      "fullName": "Emily Davis",
+      "email": "emilydavis@example.com",
+      "imageUrl": "https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Mnx8cGVvcGxlfGVufDB8fDB8fHww",
       "messages": [
         {
           "sender": "mentor",
@@ -174,6 +183,9 @@
     },
     {
       "userId": "hc6cb555-26b8-452a-a707-ce6b9db2d6ac",
+      "fullName": "Michael Johnson",
+      "email": "michaeljohnson@example.com",
+      "imageUrl": "https://plus.unsplash.com/premium_photo-1689551670902-19b441a6afde?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MjV8fGF2YXRhcnxlbnwwfHwwfHx8MA%3D%3D",
       "messages": [
         {
           "sender": "mentor",
@@ -194,6 +206,9 @@
     },
     {
       "userId": "ic6cb555-26b8-452a-a707-ce6b9db2d6ac",
+      "fullName": "Sophia Brown",
+      "email": "sophiabrown@example.com",
+      "imageUrl": "https://plus.unsplash.com/premium_photo-1689568126014-06fea9d5d341?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8NDl8fGF2YXRhcnxlbnwwfHwwfHx8MA%3D%3D",
       "messages": [
         {
           "sender": "mentor",

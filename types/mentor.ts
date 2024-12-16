@@ -1,3 +1,5 @@
+import { colors } from "@/data/mentor";
+
 export interface Mentor {
   id: string;
   name: string;
@@ -62,6 +64,9 @@ export interface UsersListProps {
 export type UserMessages = {
   userId: string;
   messages: Messages;
+  email: string;
+  imageUrl: string;
+  fullName: string;
 }
 
 export interface ChatProps {
@@ -96,4 +101,24 @@ export interface ProfileTypes {
   src: string;
   abrivation: string;
   age: string;
+}
+
+export interface ChatHeaderProps {
+  imageUrl: string;
+  fullName: string;
+  email: string
+}
+
+export interface InfoProps {
+  title: string | undefined ;
+  value: string | undefined;
+  color: keyof typeof colors;
+}
+
+export interface MessageProps {
+  text: string;
+  isUser: boolean;
+  time: string;
+  newDay: string;
+  imageUrl: string;
 }
