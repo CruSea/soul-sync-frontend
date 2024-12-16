@@ -1,8 +1,9 @@
-import { Button } from "../../ui/button"
+
 import { useRouter } from 'next/navigation';
 import { CreateOrgSidebarProps, Page, SidebarPage } from "@/types/create-org";
 import { cn } from "@/lib/utils";
 import { CreateOrgPage } from "@/content/page";
+import { Button } from '@/components/ui/button';
 
 
 const CreateOrgSidebar: React.FC<CreateOrgSidebarProps> = ({ handleSubmit, currentPage, handleSetCurrentPage, orgData }) => {
