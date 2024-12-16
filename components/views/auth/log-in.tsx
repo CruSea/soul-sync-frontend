@@ -15,8 +15,12 @@ const LogInView = () => {
       console.log("user is", userObj)
       console.log(userObj.roles.includes("OWNER"))
       if (userObj.roles.includes("OWNER")) {
-          router.push('/admin')
+          router.push('/admin')   // make it go to owner create page then info page, 
       }
+      if (userObj.roles.includes("MENTOR")) {
+        router.push('/admin/mentors') // make it go to mentor info page
+    }
+
     
     }
   }, [user, router])
