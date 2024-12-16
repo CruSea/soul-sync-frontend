@@ -70,8 +70,8 @@ export type UserMessages = {
 }
 
 export interface ChatProps {
-  currentUser: User;
   userMessages: UserMessages | null;
+  toggleDrawer: () => void;
 }
 
 export interface ProfileProps {
@@ -106,7 +106,8 @@ export interface ProfileTypes {
 export interface ChatHeaderProps {
   imageUrl: string;
   fullName: string;
-  email: string
+  email: string;
+  toggleDrawer: () => void;
 }
 
 export interface InfoProps {

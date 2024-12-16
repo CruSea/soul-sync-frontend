@@ -5,18 +5,23 @@ import Chat from "./Chat";
 import Profile from "./Profile";
 import { useEffect, useState } from "react";
 import UsersList from "./users-list";
+import { Drawer, DrawerContent } from "./ProfileDrawer";
+import { Sheet } from "lucide-react";
 
 const MentorContainer = ({ users }: MentorContainerProps) => {
   const [currentUser, setCurrentUser] = useState<User>(users[0]);
   const [userDetails, setUserDetails] = useState(null);
   const [userMessages, setUserMessages] = useState(null);
 
+  const [isDrawerOpen, setIsDrawerOpen] = useState<boolean>(false);
+
   useEffect(() => {
     const fetchUserDetails = async () => {
       try {
         // fetches the userDetails from db
-        const response =
-        await fetch(`http://localhost:3001/userDetails?userId=${currentUser.userId}`); 
+        const response = await fetch(
+          `http://localhost:3001/userDetails?userId=${currentUser.userId}`
+        );
 
         if (!response.ok) {
           throw new Error("Network response was not ok");
@@ -28,7 +33,6 @@ const MentorContainer = ({ users }: MentorContainerProps) => {
         } else {
           console.warn("No user details found");
         }
-
       } catch (error) {
         console.error("Failed to fetch user details:", error);
       }
@@ -36,7 +40,9 @@ const MentorContainer = ({ users }: MentorContainerProps) => {
 
     const fetchUserMesages = async () => {
       try {
-        const response = await fetch(`http://localhost:3001/userMessages?userId=${currentUser.userId}`);
+        const response = await fetch(
+          `http://localhost:3001/userMessages?userId=${currentUser.userId}`
+        );
 
         if (!response.ok) {
           throw new Error("Network response was not ok");
@@ -49,11 +55,11 @@ const MentorContainer = ({ users }: MentorContainerProps) => {
         } else {
           console.warn("No user details found");
         }
-        console.log("the userMessages", data[0]);  
+        console.log("the userMessages", data[0]);
       } catch (error) {
         console.error("Failed to fetch user Messages:", error);
       }
-    }
+    };
 
     if (currentUser && currentUser.userId) {
       fetchUserMesages();
@@ -68,14 +74,10 @@ const MentorContainer = ({ users }: MentorContainerProps) => {
         currentUser={currentUser}
         setCurrentUser={setCurrentUser}
       />
-      <Chat currentUser={currentUser} userMessages={userMessages}/>
-      <div className="w-fit h-full flex flex-col gap-5">
-        <Profile
-          type="user"
-          currentUser={currentUser}
-          userDetails={userDetails}
-        />
-      </div>
+      <Chat
+        userMessages={userMessages}
+        toggleDrawer={() => setIsDrawerOpen(!isDrawerOpen)}
+      />
     </>
   );
 };

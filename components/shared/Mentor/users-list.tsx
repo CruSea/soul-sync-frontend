@@ -1,5 +1,3 @@
-"use client";
-
 import {
   Command,
   CommandEmpty,
@@ -12,8 +10,6 @@ import {
 import { ScrollArea } from "@/components/ui/scroll-area";
 import { cn, getFallBack } from "@/lib/utils";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
-import { useState } from "react";
-import { v4 as uuidv4 } from "uuid";
 import { UsersListProps } from "@/types/mentor";
 
 const UsersList = ({ users, currentUser, setCurrentUser }: UsersListProps) => {
