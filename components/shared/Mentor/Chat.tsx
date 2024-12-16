@@ -4,13 +4,14 @@ import { useState, useRef, useEffect } from "react";
 import { v4 as uuidv4 } from "uuid";
 
 import { Card } from "@/components/ui/card";
-import { ScrollArea } from "@/components/ui/scroll-area";
+import { ScrollArea } from "./chat-scrollarea";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import ChatHeader from "./ChatHeader";
 import Message from "./Message";
 import { ChatProps, threadType } from "@/types/mentor";
 import { transformChatData } from "@/lib/utils";
+import Image from "next/image";
 
 const Chat = ({ currentUser, userMessages }: ChatProps) => {
   // text is where the text box saves what the mentor writes
@@ -93,12 +94,12 @@ const Chat = ({ currentUser, userMessages }: ChatProps) => {
   // a referance for where the you will write the text
   const textBox = useRef<HTMLInputElement | null>(null);
 
-  useEffect(() => {
-    // Scroll to the bottom whenever `thread` changes
-    if (bottomOfPanelRef.current) {
-      bottomOfPanelRef.current.scrollIntoView({ behavior: "smooth" }); // Optional: Add smooth scrolling
-    }
-  }, [userMessages]);
+  // useEffect(() => {
+  //   // Scroll to the bottom whenever `thread` changes
+  //   if (bottomOfPanelRef.current) {
+  //     bottomOfPanelRef.current.scrollIntoView({ behavior: "smooth" }); // Optional: Add smooth scrolling
+  //   }
+  // }, [userMessages]);
 
   // const sendText = (messageText: string) => {
   //   // adds a message from the mentor to the thread and sets the text box to empty
@@ -119,21 +120,26 @@ const Chat = ({ currentUser, userMessages }: ChatProps) => {
   return (
     <>
       {userMessages && (
-        <Card className="flex-1 rounded-[10px] flex flex-col ">
-          {/* the header that shows user name*/}
-          <ChatHeader />
+        <Card className="flex-1 h-full rounded-[10px] flex flex-col justify-between overflow-hidden">
+          <div className="flex-1 flex flex-col overflow-hidden">
+            {/* the header that shows user name*/}
+            <ChatHeader />
 
-          {/* the chat thread between the user and mentor*/}
-          <ScrollArea>
-            <div
-              className={`relative flex-1 w-full pt-3 px-6 flex flex-col gap-6`}
-            >
+            {/* the chat thread between the user and mentor*/}
+            <ScrollArea className="flex-1 overflow-hidden relative w-full pt-3 px-6 flex flex-col gap-8">
               {chatData?.map((message, index) => (
-                <Message key={message.id} {...message} />
+                <div key={message.id} className="w-full relative py-4">
+                  <Message
+      
+                    currentUser={currentUser}
+                    {...message}
+                  />
+                </div>
               ))}
+
               <div ref={bottomOfPanelRef} className="h-10 w-full p-5"></div>
-            </div>
-          </ScrollArea>
+            </ScrollArea>
+          </div>
 
           {/*textbox where you input text */}
           <div className="relative flex gap-2.5 mx-4 mb-4 h-[50px]">
@@ -156,12 +162,13 @@ const Chat = ({ currentUser, userMessages }: ChatProps) => {
 
             {/* send button*/}
             <Button
+              className="h-full"
               onClick={() => {
                 // sends the text value when clicking send
                 sendText(text);
               }}
             >
-              <img src="/assets/send.svg" />
+              <Image alt="send button" className="w-8 h-auto" width={10} height={10} src="/assets/send.svg" />
             </Button>
           </div>
         </Card>
