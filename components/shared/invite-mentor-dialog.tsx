@@ -13,6 +13,7 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { useToast } from "@/hooks/use-toast";
+import { useAuth } from "@/context/AuthContext";
 
 interface InviteMentorFormData {
   name: string;
@@ -30,16 +31,62 @@ export function InviteMentorDialog() {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
 
+    console.log("handle submit called")
+
     try {
-      await new Promise((resolve) => setTimeout(resolve, 1000));
+      const user = localStorage.getItem("user");
+      const token = localStorage.getItem("token");
 
-      toast({
-        title: "Invitation sent",
-        description: `Invitation has been sent to ${formData.email}`,
-      });
+      console.log(user, "user is")
 
-      setFormData({ name: "", email: "" });
-      setIsOpen(false);
+      if (user && token) {
+
+        const endPoint = "https://jlh2d981-3000.uks1.devtunnels.ms/admin/mentors"  // move base to env
+        const userObj = JSON.parse(user)
+        const requestBody = {
+          accountId: userObj.accounts[0].id,
+          name: userObj.accounts[0].name,
+          email: formData.email,
+        };
+      
+
+        console.log("all data", endPoint, userObj, requestBody, token)
+
+        fetch(endPoint, {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+            "Authorization": `Bearer ${JSON.parse(token)}`,
+          },
+          body: JSON.stringify(requestBody),
+        })
+          .then((response) => {
+            if (!response.ok) {
+              return response.text().then((text) => {
+                throw new Error(`Bad Request: ${text}`);
+              });
+            }
+            return response.json();
+          })
+          .then((data) => {
+            console.log("Response from server:", data);
+          })
+          .catch((error) => {
+            console.error("Error making POST request:", error);
+          });
+        
+        toast({
+          title: "Invitation sent",
+          description: `Invitation has been sent to ${formData.email}`,
+        });
+  
+        setFormData({ name: "", email: "" });
+        setIsOpen(false);
+      } else {
+        console.error("user not found")
+      }
+
+    
     } catch (error) {
       toast({
         title: "Error",

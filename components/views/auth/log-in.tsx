@@ -11,7 +11,13 @@ const LogInView = () => {
   const router =useRouter();
   useEffect(()=>{
     if(user) {
-      router.push('/admin')
+      const userObj = JSON.parse(user)
+      console.log("user is", userObj)
+      console.log(userObj.roles.includes("OWNER"))
+      if (userObj.roles.includes("OWNER")) {
+          router.push('/admin')
+      }
+    
     }
   }, [user, router])
 
