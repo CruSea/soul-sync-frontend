@@ -1,34 +1,26 @@
 {
   "channels": [
     {
-      "id": "1",
-      "name": "My SMS",
-      "type": "Negarit",
-      "apiKey": "key1",
-      "webhookUrl": "https://example.com/webhook1",
-      "customGreeting": "Welcome!",
-      "icon": "/negarit.png",
-      "Date": "Jan 16,2024"
-    },
-    {
-      "id": "2",
-      "name": "Soul Sync Bot",
+      "id": "7adb3741-c647-4479-972b-09404776fa96",
+      "name": "Soul sync - bot",
       "type": "Telegram Bot",
-      "apiKey": "key2",
-      "webhookUrl": "https://example.com/webhook2",
-      "customGreeting": "Welcome!",
-      "icon": "/telegram.png",
-      "Date": "Jan 16,2024"
+      "apiKey": "sfdfsfsdfs",
+      "webhookUrl": "https://www.google.com",
+      "customGreeting": "Welcome to our support bot!",
+      "Date": "Dec 16, 2024",
+      "isDeleted": false,
+      "icon": "/telegram-bot-icon.svg"
     },
     {
-      "id": "3",
-      "name": "Soul Sync",
-      "type": "WhatsApp",
-      "apiKey": "key3",
-      "webhookUrl": "https://example.com/webhook3",
-      "customGreeting": "Welcome!",
-      "icon": "/Whatsapp.png",
-      "Date": "Jan 16,2024"
+      "id": "f5135374-1e6b-4f0e-bf77-0379363b5c48",
+      "name": "Naty ",
+      "type": "Telegram Bot",
+      "apiKey": "sfdjkhjksjkfdhjksf",
+      "webhookUrl": "https://www.google.com",
+      "customGreeting": "Welcome to our support bot!",
+      "Date": "Dec 16, 2024",
+      "isDeleted": true,
+      "icon": "/telegram-bot-icon.svg"
     }
   ]
 }

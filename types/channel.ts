@@ -14,4 +14,5 @@ export interface Channel {
   customGreeting: string;
   icon: string;
   Date: string;
+  isDeleted: boolean;
 }

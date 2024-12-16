@@ -30,7 +30,7 @@ import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { Textarea } from "@/components/ui/textarea";
 import { Plus } from "lucide-react";
-import type { Channel} from "@/types/channel";
+import type { Channel } from "@/types/channel";
 
 const formSchema = z.object({
   name: z.string().min(2, {
@@ -70,8 +70,12 @@ export function AddChannelDialog({ onAddChannel }: AddChannelDialogProps) {
   });
 
   function onSubmit(values: z.infer<typeof formSchema>) {
-    const date = new Date().toLocaleDateString("en-US", format)
-    onAddChannel({ ...values, Date: date });
+    const date = new Date().toLocaleDateString("en-US", format);
+    onAddChannel({
+      ...values,
+      Date: date,
+      isDeleted: false,
+    });
 
     setOpen(false);
     form.reset();
