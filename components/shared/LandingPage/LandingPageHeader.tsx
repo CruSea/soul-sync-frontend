@@ -3,11 +3,10 @@ import { Button } from "@/components/ui/button";
 import Link from "next/link";
 
 interface LandingPageHeaderProps {
-  handleGetStarted?: () => void;
   showButton?: boolean;
 }
 
-const LandingPageHeader: React.FC<LandingPageHeaderProps> = ({ handleGetStarted, showButton = true }) => {
+const LandingPageHeader: React.FC<LandingPageHeaderProps> = ({ showButton = true }) => {
   return (
     <div className="w-full h-20 border-b border-neutral-200 px-14 flex items-center justify-between">
       <div className="flex gap-2.5 items-center">
