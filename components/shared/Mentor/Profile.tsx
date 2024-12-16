@@ -7,11 +7,11 @@ import { getFallBack } from "@/lib/utils";
 const Profile: React.FC<ProfileProps> = ({ type, currentUser, userDetails }) => {
 
   return (
-    <Card className="h-[calc(50%-10px)] w-full bg-white rounded-lg shadow-sidebar flex flex-col justify-center gap-5">
-      <CardHeader className="py-0">
+    <Card className="p-6  bg-white rounded-lg shadow-sidebar flex flex-col justify-center gap-5">
+      <CardHeader className="p-0">
         <CardTitle className="text-xl font-bold">User Profile</CardTitle>
       </CardHeader>
-      <CardContent className="flex flex-col gap-5 p-5 py-0">
+      <CardContent className="flex flex-col gap-5 p-0 w-min">
         {/* Profile Image */}
         <Avatar className="w-[120px] h-[120px] mx-auto">
           <AvatarImage

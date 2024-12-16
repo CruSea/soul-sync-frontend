@@ -19,7 +19,7 @@ import { UsersListProps } from "@/types/mentor";
 const UsersList = ({ users, currentUser, setCurrentUser }: UsersListProps) => {
 
   return (
-    <div className="w-96 overflow-y-auto bg-white rounded-[10px] py-4 shadow-sidebar">
+    <div className="w-80 overflow-y-auto bg-white rounded-[10px] py-4 shadow-sidebar">
       <Command className="px-0">
         {/* the user search box */}
         <CommandInput

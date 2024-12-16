@@ -57,6 +57,7 @@ const MentorContainer = ({ users }: MentorContainerProps) => {
 
     if (currentUser && currentUser.userId) {
       fetchUserMesages();
+      fetchUserDetails();
     }
   }, [currentUser]);
 
@@ -68,7 +69,7 @@ const MentorContainer = ({ users }: MentorContainerProps) => {
         setCurrentUser={setCurrentUser}
       />
       <Chat currentUser={currentUser} userMessages={userMessages}/>
-      <div className="w-96 h-full flex flex-col gap-5">
+      <div className="w-fit h-full flex flex-col gap-5">
         <Profile
           type="user"
           currentUser={currentUser}
