@@ -8,10 +8,12 @@ import { useState, useRef, useEffect } from "react"
 import { useForm } from "react-hook-form";
 import CreateOrgSidebar from "@/components/shared/admin/CreateOrg/CreateOrgSidebar";
 import CreateOrgForm from "@/components/shared/admin/CreateOrg/CreateOrgForm";
+import { useRouter } from 'next/navigation';
 
 const CreateOrgView = () => {
   const [currentPage, setCurrentPage] = useState<Page>("first");
-  const [orgData, setOrgData] = useState<OrgDataValues>({})
+  const [orgData, setOrgData] = useState<OrgDataValues>({});
+  const router = useRouter();
 
   const formOne = useForm<createOrgFormOneValues>({
     resolver: zodResolver(createOrgFormOneSchema),
@@ -33,12 +35,53 @@ const CreateOrgView = () => {
     },
   })
 
-  const onSubmit = (data: createOrgFormTwoValues | createOrgFormOneValues) => {
-    console.log("onSubmit is called")
+  const onSubmit = async (data: createOrgFormTwoValues | createOrgFormOneValues) => {
     setOrgData((prevOrgData) => {
       const updatedData = { ...prevOrgData, ...data };
       return updatedData;
     });
+
+    if (currentPage === "second") {
+      const user = localStorage.getItem("user");
+      const token = localStorage.getItem("token");
+      if (!user) {
+        console.error("user not found");
+        return;
+      }
+
+      if (!token) {
+        console.error("token not found");
+        return;
+      }
+
+      const userData = JSON.parse(user);
+
+      const reqBody = {
+        name: orgData.companyName,
+        domain: orgData.companyDomain
+      }
+      console.log(`fetch url is ${process.env.NEXT_PUBLIC_API_BASE_URL}/${process.env.NEXT_PUBLIC_API_ACCOUNT_URL}/${userData.accounts[0].id}`)
+
+      const response = await fetch(`${process.env.NEXT_PUBLIC_API_BASE_URL}/${process.env.NEXT_PUBLIC_API_ACCOUNT_URL}/${userData.accounts[0].id}`,
+        {
+          method: "PATCH", // Specify PATCH as the method
+          headers: {
+            "Content-Type": "application/json", // Ensure JSON content
+            Authorization: `Bearer ${JSON.parse(token)}`, // Optional: Include token if required
+          },
+          body: JSON.stringify(reqBody), // Stringify the request body
+        }
+      )
+
+
+      if (response.ok) {
+        console.log("successfull submission")
+      } else {
+        console.error("Form Submission is wrong")
+        setCurrentPage("first");
+        
+      }
+    }
   };
 
   const handleSubmit = async () => {

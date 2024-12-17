@@ -1,4 +1,4 @@
-import CreateOrgView from "@/components/views/auth/create-org"
+import CreateOrgView from "@/components/views/admin/create-org"
 
 export default function CreateOrgPage() {
   return (
