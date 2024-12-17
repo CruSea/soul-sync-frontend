@@ -5,8 +5,6 @@ import Chat from "./Chat";
 import Profile from "./Profile";
 import { useEffect, useState } from "react";
 import UsersList from "./users-list";
-import { Drawer, DrawerContent } from "./ProfileDrawer";
-import { Sheet } from "lucide-react";
 
 const MentorContainer = ({ users }: MentorContainerProps) => {
   const [currentUser, setCurrentUser] = useState<User>(users[0]);

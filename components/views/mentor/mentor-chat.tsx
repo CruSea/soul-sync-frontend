@@ -1,7 +1,5 @@
-import Chat from "@/components/shared/Mentor/Chat";
 import MentorContainer from "@/components/shared/Mentor/mentor-container";
-import Profile from "@/components/shared/Mentor/Profile";
-import Search from "@/components/shared/Mentor/users-list";
+import { sortUsers } from "@/lib/utils";
 
 const MentorView = async () => {
   // Fetch users from the JSON Server
@@ -15,9 +13,12 @@ const MentorView = async () => {
   if (users.length === 0) {
     throw new Error("No users found");
   }
+
+  const sortedUsers = sortUsers(users);  // backend will send a sorted list in actual implementation
+
   return (
     <>
-      <MentorContainer users={users} />
+      <MentorContainer users={sortedUsers} />
     </>
   );
 };

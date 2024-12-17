@@ -26,6 +26,7 @@ export type User = {
   userId: string;
   fullName: string;
   imageUrl: string;
+  lastUpdated: string;
 };
 
 export type Users = User[];
