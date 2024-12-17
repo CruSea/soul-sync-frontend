@@ -4,14 +4,14 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { ProfileProps, ProfileTypes } from "@/types/mentor";
 import { getFallBack } from "@/lib/utils";
 
-const Profile: React.FC<ProfileProps> = ({ type, currentUser, userDetails }) => {
+const Profile: React.FC<ProfileProps> = ({ userDetails }) => {
 
   return (
-    <Card className="p-6  bg-white rounded-lg shadow-sidebar flex flex-col justify-center gap-5">
+    <Card className="p-6 bg-white rounded-lg shadow-sidebar flex flex-col justify-center gap-5">
       <CardHeader className="p-0">
         <CardTitle className="text-xl font-bold">User Profile</CardTitle>
       </CardHeader>
-      <CardContent className="flex flex-col gap-5 p-0 w-min">
+      <CardContent className="flex flex-col gap-5 p-0 w-min ">
         {/* Profile Image */}
         <Avatar className="w-[120px] h-[120px] mx-auto">
           <AvatarImage

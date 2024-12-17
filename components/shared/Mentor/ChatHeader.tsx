@@ -4,8 +4,14 @@ import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Button } from "../../ui/button";
 import { getFallBack } from "@/lib/utils";
 import { ChatHeaderProps } from "@/types/mentor";
-import { Sheet } from "lucide-react";
-import { SheetContent, SheetTrigger } from "@/components/ui/sheet";
+import {
+  Sheet,
+  SheetContent,
+  SheetDescription,
+  SheetHeader,
+  SheetTitle,
+  SheetTrigger,
+} from "./metor-sheet";
 import Profile from "./Profile";
 
 const ChatHeader = ({
@@ -13,6 +19,7 @@ const ChatHeader = ({
   fullName,
   email,
   toggleDrawer,
+  userDetails,
 }: ChatHeaderProps) => {
   return (
     <CardHeader className="w-full bg-neutral-300 rounded-t-lg shadow-custom-chat flex flex-row justify-between px-5 py-2.5">
@@ -34,7 +41,7 @@ const ChatHeader = ({
         </div>
       </div>
       <Sheet>
-        <SheetTrigger>
+        <SheetTrigger className="3xl:hidden">
           <Button
             className="bg-white text-black font-medium text-sm hover:bg-white hover:opacity-80 "
             onClick={toggleDrawer}
@@ -42,12 +49,11 @@ const ChatHeader = ({
             View Profile
           </Button>
         </SheetTrigger>
-        <SheetContent>
-          <Profile
-            type="user"
-            currentUser={currentUser}
-            userDetails={userDetails}
-          />
+        <SheetContent className="py-12 w-min ">
+          <SheetHeader>
+            <SheetTitle className="sr-only">shows the profiles info</SheetTitle>
+          </SheetHeader>
+          <Profile userDetails={userDetails} />
         </SheetContent>
       </Sheet>
     </CardHeader>

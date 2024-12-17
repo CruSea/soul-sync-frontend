@@ -13,7 +13,7 @@ import { ChatProps, threadType } from "@/types/mentor";
 import { transformChatData } from "@/lib/utils";
 import Image from "next/image";
 
-const Chat = ({ userMessages, toggleDrawer }: ChatProps) => {
+const Chat = ({ userMessages, toggleDrawer, userDetails }: ChatProps) => {
   // text is where the text box saves what the mentor writes
   const [text, setText] = useState<string>("");
 
@@ -56,7 +56,7 @@ const Chat = ({ userMessages, toggleDrawer }: ChatProps) => {
         <Card className="flex-1 h-full rounded-[10px] flex flex-col justify-between overflow-hidden">
           <div className="flex-1 flex flex-col overflow-hidden">
             {/* the header that shows user name*/}
-            <ChatHeader imageUrl={userMessages.imageUrl} fullName={userMessages.fullName} email={userMessages.email} toggleDrawer={toggleDrawer}/>
+            <ChatHeader imageUrl={userMessages.imageUrl} fullName={userMessages.fullName} email={userMessages.email} toggleDrawer={toggleDrawer} userDetails={userDetails}/>
 
             {/* the chat thread between the user and mentor*/}
             <ScrollArea className="flex-1 overflow-hidden relative w-full pt-3 px-6 flex flex-col gap-8">

@@ -1,4 +1,4 @@
-import { colors } from "@/data/mentor";
+import { colors } from "@/components/shared/Mentor/Info";
 
 export interface Mentor {
   id: string;
@@ -71,12 +71,11 @@ export type UserMessages = {
 
 export interface ChatProps {
   userMessages: UserMessages | null;
+  userDetails: UserDetails | null;
   toggleDrawer: () => void;
 }
 
 export interface ProfileProps {
-  type: string;
-  currentUser: User;
   userDetails: UserDetails | null;
 }
 
@@ -108,6 +107,7 @@ export interface ChatHeaderProps {
   fullName: string;
   email: string;
   toggleDrawer: () => void;
+  userDetails: UserDetails | null;
 }
 
 export interface InfoProps {

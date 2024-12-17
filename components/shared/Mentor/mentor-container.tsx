@@ -77,7 +77,11 @@ const MentorContainer = ({ users }: MentorContainerProps) => {
       <Chat
         userMessages={userMessages}
         toggleDrawer={() => setIsDrawerOpen(!isDrawerOpen)}
+        userDetails={userDetails}
       />
+      <div className="hidden 3xl:block">
+        <Profile userDetails={userDetails}/>
+      </div>
     </>
   );
 };
