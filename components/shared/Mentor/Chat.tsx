@@ -5,13 +5,12 @@ import { v4 as uuidv4 } from "uuid";
 
 import { Card } from "@/components/ui/card";
 import { ScrollArea } from "./chat-scrollarea";
-import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
 import ChatHeader from "./ChatHeader";
 import Message from "./Message";
 import { ChatProps, threadType } from "@/types/mentor";
 import { transformChatData } from "@/lib/utils";
 import Image from "next/image";
+import InputArea from "./InputArea";
 
 const Chat = ({ userMessages, toggleDrawer, userDetails, setUserMessages }: ChatProps) => {
   // text is where the text box saves what the mentor writes
@@ -100,41 +99,8 @@ const Chat = ({ userMessages, toggleDrawer, userDetails, setUserMessages }: Chat
           </div>
 
           {/*textbox where you input text */}
-          <div className="relative flex gap-2.5 mx-4 mb-4 h-[50px]">
-            <Input
-              ref={textBox}
-              placeholder="Write a Message"
-              className="h-full rounded-md bg-neutral-200 outline-none border border-neutral-300 pl-4 pr-4 font-normal text-md placeholder:text-neutral-400"
-              onChange={(e) => {
-                // updates the value of the text state whenever something is written
-                setText(e.target.value);
-              }}
-              onKeyDown={(e) => {
-                // sends the text value when pressing enter
-                if (e.key === "Enter") {
-                  e.preventDefault(); // Prevents newline on enter in the textarea
-                  sendText(text);
-                }
-              }}
-            />
-
-            {/* send button*/}
-            <Button
-              className="h-full"
-              onClick={() => {
-                // sends the text value when clicking send
-                sendText(text);
-              }}
-            >
-              <Image
-                alt="send button"
-                className="w-8 h-auto"
-                width={10}
-                height={10}
-                src="/assets/send.svg"
-              />
-            </Button>
-          </div>
+          <InputArea ref={textBox} sendText={sendText}/>
+          
         </Card>
       )}
     </>
