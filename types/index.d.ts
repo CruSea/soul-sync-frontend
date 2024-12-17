@@ -6,6 +6,12 @@ declare global {
   interface HeaderProps {
     title: string;
   }
+
+  interface LandingPageHeaderProps {
+    showButton?: boolean;
+  }
+
+
 }
 
 export {};

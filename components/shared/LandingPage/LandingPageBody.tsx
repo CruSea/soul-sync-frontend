@@ -21,13 +21,11 @@ const LandingPageBody = () => {
         </Link>
       </div>
       <div className="width">
-
         <Image
           src='/assets/landingImage.png'
           alt="Landing Page Image"
           width={650} // Intrinsic width of the image
           height={650} // Intrinsic height of the image
-
         />
       </div>
     </div>
