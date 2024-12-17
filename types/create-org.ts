@@ -1,5 +1,6 @@
 import { UseFormReturn } from "react-hook-form";
 import { z } from "zod";
+import { getStartedMentorFormValues } from "@/types/get-started";
 
 export type Page = "first" | "second";
 
@@ -103,3 +104,4 @@ export interface FormOneProps {
 export interface FormTwoProps {
   formTwo: UseFormReturn<createOrgFormTwoValues>;
 }
+

@@ -1,12 +1,12 @@
-'use client'
-import { Mentors } from "@/components/shared/mentors";
+"use client";
 import withAuth from "@/context/withAuth";
+import { Mentors } from "@/components/shared/admin/admin-mentors/mentors";
 
- function Mentor() {
+function Mentor() {
   return (
     <>
-   <Mentors />
+      <Mentors />
     </>
   );
 }
-export default withAuth(Mentor)
+export default withAuth(Mentor);

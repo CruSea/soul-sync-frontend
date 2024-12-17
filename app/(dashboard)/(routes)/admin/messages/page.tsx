@@ -1,11 +1,11 @@
 'use client'
-import Main from "@/components/shared/Main";
 import withAuth from "@/context/withAuth";
+import Main from "@/components/shared/layout/mentor-main";
 
  function Message() {
   return (
     <>
-       <Main page="mentor"/>
+      <Main page="mentor" />
     </>
   );
 }

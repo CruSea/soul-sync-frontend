@@ -1,12 +1,13 @@
 "use client"
 
 import { zodResolver } from "@hookform/resolvers/zod"
-import CreateOrgForm from "@/components/shared/CreateOrg/CreateOrgForm";
-import CreateOrgSidebar from "@/components/shared/CreateOrg/CreateOrgSidebar"
+
 import LandingPageHeader from "@/components/shared/LandingPage/LandingPageHeader"
 import { createOrgFormOneSchema, createOrgFormOneValues, createOrgFormTwoSchema, createOrgFormTwoValues, OrgDataValues, Page } from "@/types/create-org";
 import { useState, useRef, useEffect } from "react"
 import { useForm } from "react-hook-form";
+import CreateOrgSidebar from "@/components/shared/admin/CreateOrg/CreateOrgSidebar";
+import CreateOrgForm from "@/components/shared/admin/CreateOrg/CreateOrgForm";
 
 const CreateOrgView = () => {
   const [currentPage, setCurrentPage] = useState<Page>("first");

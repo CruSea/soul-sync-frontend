@@ -1,10 +1,5 @@
 import { FiBell } from "react-icons/fi";
-
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
-
-interface HeaderProps {
-  title: string;
-}
 
 export function Header({ title }: HeaderProps) {
   return (
@@ -14,13 +9,15 @@ export function Header({ title }: HeaderProps) {
         <button className="text-gray-600 hover:text-gray-900">
           <FiBell className="h-5 w-5" />
         </button>
-        <Avatar className="h-8 w-8">
-          <AvatarImage
-            src="/placeholder.svg?height=32&width=32"
-            alt="User avatar"
-          />
-          <AvatarFallback>JD</AvatarFallback>
-        </Avatar>
+        <Avatar className="w-8 h-8 cursor-pointer">
+            <AvatarImage
+              src="/assets/avatars/woman1.png"
+              className="w-full h-full object-cover"
+            />
+            <AvatarFallback className="w-full h-full flex items-center justify-center text-xl">
+              CN
+            </AvatarFallback>
+          </Avatar>
       </div>
     </header>
   );
