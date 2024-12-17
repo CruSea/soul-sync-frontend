@@ -24,7 +24,6 @@ const LoginPageCard = () => {
       console.log("token decoded", decoded);
       // You can store the token in state, sessionStorage, or make an API call with it
 
-
       // Store the decoded token in the cookie
       // Cookies.set("user", JSON.stringify(decoded), { expires: 7 }); // Cookie will expire in 7 days
       localStorage.setItem("user", JSON.stringify(decoded))

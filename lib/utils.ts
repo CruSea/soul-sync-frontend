@@ -1,7 +1,7 @@
 import { Messages } from "@/types/mentor";
 import { clsx, type ClassValue } from "clsx"
 import { twMerge } from "tailwind-merge"
-import { jwtDecode } from "jwt-decode";
+import { jwtDecode } from "jwt-decode"
 import { v4 as uuidv4 } from "uuid";
 
 

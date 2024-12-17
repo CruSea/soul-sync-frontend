@@ -14,6 +14,7 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { useToast } from "@/hooks/use-toast";
 import { useAuth } from "@/context/AuthContext";
+import handler from "@/app/api/[...params]/route";
 
 interface InviteMentorFormData {
   name: string;
@@ -40,7 +41,6 @@ export function InviteMentorDialog() {
       console.log(user, "user is")
 
       if (user && token) {
-
         const endPoint = "https://jlh2d981-3000.uks1.devtunnels.ms/admin/mentors"  // move base to env
         const userObj = JSON.parse(user)
         const requestBody = {

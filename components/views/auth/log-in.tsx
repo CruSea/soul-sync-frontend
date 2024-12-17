@@ -8,7 +8,7 @@ import { useEffect } from "react";
 
 const LogInView = () => {
   const { user } = useAuth();
-  const router =useRouter();
+  const router = useRouter();
   useEffect(()=>{
     if(user) {
       const userObj = JSON.parse(user)
@@ -18,7 +18,7 @@ const LogInView = () => {
           router.push('/admin')   // make it go to owner create page then info page, 
       }
       if (userObj.roles.includes("MENTOR")) {
-        router.push('/admin/mentors') // make it go to mentor info page
+        router.push('/mentor') // make it go to mentor info page
     }
 
     
