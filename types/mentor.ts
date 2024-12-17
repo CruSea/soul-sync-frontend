@@ -23,7 +23,7 @@ export interface MentorLayoutProps {
 }
 
 export type User = {
-  userId: string;
+  id: string;
   fullName: string;
   imageUrl: string;
   lastUpdated: string;
@@ -63,16 +63,17 @@ export interface UsersListProps {
 }
 
 export type UserMessages = {
-  userId: string;
+  id: string;
   messages: Messages;
   email: string;
   imageUrl: string;
   fullName: string;
-}
+} | null;
 
 export interface ChatProps {
   userMessages: UserMessages | null;
   userDetails: UserDetails | null;
+  setUserMessages: React.Dispatch<React.SetStateAction<UserMessages | null>>;
   toggleDrawer: () => void;
 }
 
@@ -112,7 +113,7 @@ export interface ChatHeaderProps {
 }
 
 export interface InfoProps {
-  title: string | undefined ;
+  title: string | undefined;
   value: string | undefined;
   color: keyof typeof colors;
 }

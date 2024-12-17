@@ -13,13 +13,11 @@ import { ChatProps, threadType } from "@/types/mentor";
 import { transformChatData } from "@/lib/utils";
 import Image from "next/image";
 
-const Chat = ({ userMessages, toggleDrawer, userDetails }: ChatProps) => {
+const Chat = ({ userMessages, toggleDrawer, userDetails, setUserMessages }: ChatProps) => {
   // text is where the text box saves what the mentor writes
   const [text, setText] = useState<string>("");
 
   const chatData = transformChatData(userMessages?.messages);
-
-  console.log("transformed messages", chatData);
 
   // an empty div at the end of the thread used to scroll to the bottom on send
   const bottomOfPanelRef = useRef<HTMLDivElement | null>(null);
@@ -27,28 +25,53 @@ const Chat = ({ userMessages, toggleDrawer, userDetails }: ChatProps) => {
   // a referance for where the you will write the text
   const textBox = useRef<HTMLInputElement | null>(null);
 
-  // useEffect(() => {
-  //   // Scroll to the bottom whenever `thread` changes
-  //   if (bottomOfPanelRef.current) {
-  //     bottomOfPanelRef.current.scrollIntoView({ behavior: "smooth" }); // Optional: Add smooth scrolling
-  //   }
-  // }, [userMessages]);
+  const sendText = async (messageText: string) => {
+    if (!messageText.trim()) return; // Don't send empty messages
 
-  // const sendText = (messageText: string) => {
-  //   // adds a message from the mentor to the thread and sets the text box to empty
+    const newMessage = {
+      sender: "mentor",
+      dateTime: new Date().toISOString(), // Get current time
+      content: messageText.trim(),
+    };
 
-  //   setThread((prevThread) => [...prevThread, {
-  //     isUser: false,
-  //     text: messageText,
-  //     time: '2:44 PM',
-  //     newDay: '',
-  //     id: uuidv4()
-  //   }])
+    try {
+      // Find the current id from props
+      if (!userMessages) {
+        return;
+      }
 
-  //   if (textBox.current) {
-  //     textBox.current.value = ''
-  //   }
-  // }
+      // Append the new message to the messages array
+      const updatedMessages = [...userMessages.messages, newMessage];
+
+      // Update the backend
+      const patchResponse = await fetch(`http://localhost:3001/userMessages/${userMessages.id}`, {
+        method: "PATCH",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ messages: updatedMessages }),
+      });
+
+      console.log("the patch response", patchResponse)
+
+      // Reset the input box and update the UI
+      setText(""); // Clear the input
+      if (textBox.current) textBox.current.value = ""; // Reset input field
+
+
+      setUserMessages({...userMessages, messages: updatedMessages})
+
+    } catch (error) {
+      console.error("Failed to send message:", error);
+    }
+  };
+
+  useEffect(() => {
+    // Scroll to the bottom whenever `thread` changes
+    if (bottomOfPanelRef.current) {
+      bottomOfPanelRef.current.scrollIntoView({ behavior: "smooth" }); // Optional: Add smooth scrolling
+    }
+  }, [userMessages]);
 
   return (
     <>
@@ -56,16 +79,19 @@ const Chat = ({ userMessages, toggleDrawer, userDetails }: ChatProps) => {
         <Card className="flex-1 h-full rounded-[10px] flex flex-col justify-between overflow-hidden">
           <div className="flex-1 flex flex-col overflow-hidden">
             {/* the header that shows user name*/}
-            <ChatHeader imageUrl={userMessages.imageUrl} fullName={userMessages.fullName} email={userMessages.email} toggleDrawer={toggleDrawer} userDetails={userDetails}/>
+            <ChatHeader
+              imageUrl={userMessages.imageUrl}
+              fullName={userMessages.fullName}
+              email={userMessages.email}
+              toggleDrawer={toggleDrawer}
+              userDetails={userDetails}
+            />
 
             {/* the chat thread between the user and mentor*/}
             <ScrollArea className="flex-1 overflow-hidden relative w-full pt-3 px-6 flex flex-col gap-8">
               {chatData?.map((message, index) => (
                 <div key={message.id} className="w-full relative py-4">
-                  <Message
-                    imageUrl={userMessages.imageUrl}
-                    {...message}
-                  />
+                  <Message imageUrl={userMessages.imageUrl} {...message} />
                 </div>
               ))}
 
@@ -100,7 +126,13 @@ const Chat = ({ userMessages, toggleDrawer, userDetails }: ChatProps) => {
                 sendText(text);
               }}
             >
-              <Image alt="send button" className="w-8 h-auto" width={10} height={10} src="/assets/send.svg" />
+              <Image
+                alt="send button"
+                className="w-8 h-auto"
+                width={10}
+                height={10}
+                src="/assets/send.svg"
+              />
             </Button>
           </div>
         </Card>

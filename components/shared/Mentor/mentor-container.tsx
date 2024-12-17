@@ -1,6 +1,6 @@
 "use client";
 
-import { MentorContainerProps, User } from "@/types/mentor";
+import { MentorContainerProps, User, UserMessages } from "@/types/mentor";
 import Chat from "./Chat";
 import Profile from "./Profile";
 import { useEffect, useState } from "react";
@@ -9,7 +9,7 @@ import UsersList from "./users-list";
 const MentorContainer = ({ users }: MentorContainerProps) => {
   const [currentUser, setCurrentUser] = useState<User>(users[0]);
   const [userDetails, setUserDetails] = useState(null);
-  const [userMessages, setUserMessages] = useState(null);
+  const [userMessages, setUserMessages] = useState<UserMessages>(null);
 
   const [isDrawerOpen, setIsDrawerOpen] = useState<boolean>(false);
 
@@ -18,7 +18,7 @@ const MentorContainer = ({ users }: MentorContainerProps) => {
       try {
         // fetches the userDetails from db
         const response = await fetch(
-          `http://localhost:3001/userDetails?userId=${currentUser.userId}`
+          `http://localhost:3001/userDetails?id=${currentUser.id}`
         );
 
         if (!response.ok) {
@@ -39,7 +39,7 @@ const MentorContainer = ({ users }: MentorContainerProps) => {
     const fetchUserMesages = async () => {
       try {
         const response = await fetch(
-          `http://localhost:3001/userMessages?userId=${currentUser.userId}`
+          `http://localhost:3001/userMessages?id=${currentUser.id}`
         );
 
         if (!response.ok) {
@@ -59,7 +59,7 @@ const MentorContainer = ({ users }: MentorContainerProps) => {
       }
     };
 
-    if (currentUser && currentUser.userId) {
+    if (currentUser && currentUser.id) {
       fetchUserMesages();
       fetchUserDetails();
     }
@@ -76,9 +76,10 @@ const MentorContainer = ({ users }: MentorContainerProps) => {
         userMessages={userMessages}
         toggleDrawer={() => setIsDrawerOpen(!isDrawerOpen)}
         userDetails={userDetails}
+        setUserMessages={setUserMessages}
       />
       <div className="hidden 3xl:block">
-        <Profile userDetails={userDetails}/>
+        <Profile userDetails={userDetails} />
       </div>
     </>
   );
