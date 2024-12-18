@@ -16,6 +16,9 @@ import { useToast } from "@/hooks/use-toast";
 import { useAuth } from "@/context/AuthContext";
 import handler from "@/app/api/[...params]/route";
 
+const BASE_URL = process.env.NEXT_PUBLIC_API_BASE_URL
+const MENTORS_URL = process.env.NEXT_PUBLIC_API_ADMIN_MENTORS_URL
+
 interface InviteMentorFormData {
   name: string;
   email: string;
@@ -32,25 +35,19 @@ export function InviteMentorDialog() {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
 
-    console.log("handle submit called")
-
     try {
       const user = localStorage.getItem("user");
       const token = localStorage.getItem("token");
 
-      console.log(user, "user is")
-
       if (user && token) {
-        const endPoint = "https://jlh2d981-3000.uks1.devtunnels.ms/admin/mentors"  // move base to env
+        const endPoint = `${BASE_URL}/${MENTORS_URL}`  // move base to env
         const userObj = JSON.parse(user)
         const requestBody = {
           accountId: userObj.accounts[0].id,
           name: userObj.accounts[0].name,
           email: formData.email,
         };
-      
-
-        console.log("all data", endPoint, userObj, requestBody, token)
+    
 
         fetch(endPoint, {
           method: "POST",

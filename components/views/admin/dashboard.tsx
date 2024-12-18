@@ -6,6 +6,9 @@ import { StatsCards } from "@/components/shared/admin/dashboard/StatCard";
 import { UsersTable } from "@/components/shared/admin/dashboard/UserTable";
 import { useRouter } from 'next/navigation';
 
+const BASE_URL = process.env.NEXT_PUBLIC_API_BASE_URL
+const ACCOUNT_URL= process.env.NEXT_PUBLIC_API_ACCOUNT_URL
+
 export default function AdminView() {
   // const router = useRouter();
   // const user = localStorage.getItem("user");
@@ -47,7 +50,7 @@ export default function AdminView() {
 export async function getServerSideProps() {
   try {
     // Fetch data from the endpoint
-    const response = await fetch(`${process.env.API_BASE_URL}/${process.env.NEXT_PUBLIC_API_ACCOUNT_URL}`);
+    const response = await fetch(`${BASE_URL}/${ACCOUNT_URL}`);
     const data = await response.json();
 
     if (!data.domain) {

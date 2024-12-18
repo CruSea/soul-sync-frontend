@@ -9,28 +9,24 @@ import { useEffect } from "react";
 const LogInView = () => {
   const { user } = useAuth();
   const router = useRouter();
-  useEffect(()=>{
-    if(user) {
-      const userObj = JSON.parse(user)
-      console.log("user is", userObj)
-      console.log(userObj.roles.includes("OWNER"))
+  useEffect(() => {
+    if (user) {
+      const userObj = JSON.parse(user);
       if (userObj.roles.includes("OWNER")) {
-          router.push('/admin')   // make it go to owner create page then info page, 
+        router.push("/admin"); // make it go to owner create page then info page,
       }
       if (userObj.roles.includes("MENTOR")) {
-        router.push('/mentor') // make it go to mentor info page
+        router.push("/mentor"); // make it go to mentor info page
+      }
     }
-
-    
-    }
-  }, [user, router])
+  }, [user, router]);
 
   return (
     <div className="w-screen h-screen flex">
       <LoginPageSidebar />
       <LoginPageCard />
     </div>
-  )
+  );
 };
 
 export default LogInView;

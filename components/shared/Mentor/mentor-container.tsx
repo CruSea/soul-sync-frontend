@@ -55,7 +55,6 @@ const MentorContainer = ({ users }: MentorContainerProps) => {
         } else {
           console.warn("No user details found");
         }
-        console.log("the userMessages", data[0]);
       } catch (error) {
         console.error("Failed to fetch user Messages:", error);
       }

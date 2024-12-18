@@ -12,6 +12,9 @@ import { useRouter, useSearchParams } from "next/navigation"
 import { useEffect } from "react"
 import { decodeToken } from "@/lib/utils"
 
+const BASE_URL = process.env.NEXT_PUBLIC_API_BASE_URL
+const AUTH_URL= process.env.NEXT_PUBLIC_API_AUTH_URL
+
 const LoginPageCard = () => {
   const router = useRouter();
   const searchParams = useSearchParams();
@@ -19,9 +22,7 @@ const LoginPageCard = () => {
   useEffect(() => {
     const token = searchParams.get("token"); // Extract the token from the URL
     if (token) {
-      console.log("token", token)
       const decoded = decodeToken(token);
-      console.log("token decoded", decoded);
       // You can store the token in state, sessionStorage, or make an API call with it
 
       // Store the decoded token in the cookie
@@ -32,7 +33,7 @@ const LoginPageCard = () => {
   }, [searchParams]);
 
   const handleLogin = () => {
-   router.push("https://jlh2d981-3000.uks1.devtunnels.ms/auth/google")
+   router.push(`${BASE_URL}/${AUTH_URL}`)
   };
 
 

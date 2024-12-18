@@ -19,36 +19,11 @@ const Chat = ({ userMessages, toggleDrawer, userDetails }: ChatProps) => {
 
   const chatData = transformChatData(userMessages?.messages);
 
-  console.log("transformed messages", chatData);
-
   // an empty div at the end of the thread used to scroll to the bottom on send
   const bottomOfPanelRef = useRef<HTMLDivElement | null>(null);
 
   // a referance for where the you will write the text
   const textBox = useRef<HTMLInputElement | null>(null);
-
-  // useEffect(() => {
-  //   // Scroll to the bottom whenever `thread` changes
-  //   if (bottomOfPanelRef.current) {
-  //     bottomOfPanelRef.current.scrollIntoView({ behavior: "smooth" }); // Optional: Add smooth scrolling
-  //   }
-  // }, [userMessages]);
-
-  // const sendText = (messageText: string) => {
-  //   // adds a message from the mentor to the thread and sets the text box to empty
-
-  //   setThread((prevThread) => [...prevThread, {
-  //     isUser: false,
-  //     text: messageText,
-  //     time: '2:44 PM',
-  //     newDay: '',
-  //     id: uuidv4()
-  //   }])
-
-  //   if (textBox.current) {
-  //     textBox.current.value = ''
-  //   }
-  // }
 
   return (
     <>

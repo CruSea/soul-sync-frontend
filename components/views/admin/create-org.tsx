@@ -10,6 +10,9 @@ import CreateOrgSidebar from "@/components/shared/admin/CreateOrg/CreateOrgSideb
 import CreateOrgForm from "@/components/shared/admin/CreateOrg/CreateOrgForm";
 import { useRouter } from 'next/navigation';
 
+const BASE_URL = process.env.NEXT_PUBLIC_API_BASE_URL
+const ACCOUNT_URL= process.env.NEXT_PUBLIC_API_ACCOUNT_URL
+
 const CreateOrgView = () => {
   const [currentPage, setCurrentPage] = useState<Page>("first");
   const [orgData, setOrgData] = useState<OrgDataValues>({});
@@ -60,9 +63,10 @@ const CreateOrgView = () => {
         name: orgData.companyName,
         domain: orgData.companyDomain
       }
-      console.log(`fetch url is ${process.env.NEXT_PUBLIC_API_BASE_URL}/${process.env.NEXT_PUBLIC_API_ACCOUNT_URL}/${userData.accounts[0].id}`)
 
-      const response = await fetch(`${process.env.NEXT_PUBLIC_API_BASE_URL}/${process.env.NEXT_PUBLIC_API_ACCOUNT_URL}/${userData.accounts[0].id}`,
+      const AccountId = userData.accounts[0].id
+
+      const response = await fetch(`${BASE_URL}/${ACCOUNT_URL}/${AccountId}`,
         {
           method: "PATCH", // Specify PATCH as the method
           headers: {
@@ -86,7 +90,6 @@ const CreateOrgView = () => {
     let isValid = true;  // Initialize a flag for validation
 
     if (currentPage === "first") {
-      console.log("first page confirmation");
 
       try {
         // Await the form submission and validation
@@ -120,27 +123,6 @@ const CreateOrgView = () => {
 
     return isValid;  // Return the final validation status
   };
-
-  useEffect(() => {
-    if (currentPage === "second") {
-      if (
-        orgData?.companyName &&
-        orgData?.companyDomain &&
-        orgData?.size &&
-        orgData?.focus &&
-        orgData?.role &&
-        orgData?.otherRole) {
-        console.log("Sending org Data to backend:", orgData);
-          // add sending functionallity to backend
-      } else {
-        console.log("organization data has missing values ")
-      }
-    }
-
-  }, [orgData]);  // This will run whenever orgData changes
-
-
-
 
   return (
     <div className="w-screen h-screen flex flex-col">
