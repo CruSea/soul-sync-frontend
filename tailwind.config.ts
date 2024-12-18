@@ -14,6 +14,9 @@ export default {
 				logo: ["IBM Plex Mono", "monospace"],
 				manrope: ["Manrope", "sans-serif"],
 			},
+			width: {
+        'input': 'calc(100% - 150px)',
+      },
   		colors: {
   			background: 'hsl(var(--background))',
   			foreground: 'hsl(var(--foreground))',
