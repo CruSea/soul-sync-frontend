@@ -1,9 +1,12 @@
 import { MessageTable } from "@/components/shared/MessageTable";
+import withAuth from "@/context/withAuth";
 
-export default function Mentor() {
+function Message() {
   return (
     <>
       <MessageTable />
     </>
   );
 }
+
+export default withAuth(Message);

@@ -1,16 +1,40 @@
+"use client"
+
 import { Button } from "@/components/ui/button"
 import {
   Card,
   CardContent,
   CardDescription,
-  CardFooter,
   CardHeader,
   CardTitle,
 } from "@/components/ui/card"
-import Link from "next/link"
-
+import { useRouter, useSearchParams } from "next/navigation"
+import { useEffect } from "react"
+import { decodeToken } from "@/lib/utils"
 
 const LoginPageCard = () => {
+  const router = useRouter();
+  const searchParams = useSearchParams();
+
+  useEffect(() => {
+    const token = searchParams.get("token"); // Extract the token from the URL
+    if (token) {
+      console.log("token", token)
+      const decoded = decodeToken(token);
+      console.log("token decoded", decoded);
+      // You can store the token in state, sessionStorage, or make an API call with it
+
+      // Store the decoded token in the cookie
+      // Cookies.set("user", JSON.stringify(decoded), { expires: 7 }); // Cookie will expire in 7 days
+      localStorage.setItem("user", JSON.stringify(decoded))
+      localStorage.setItem("token", JSON.stringify(token))
+    }
+  }, [searchParams]);
+
+  const handleLogin = () => {
+   router.push("https://jlh2d981-3000.uks1.devtunnels.ms/auth/google")
+  };
+
 
   return (
     <Card className="flex-1 flex items-center justify-center flex-col gap-6">
@@ -23,13 +47,7 @@ const LoginPageCard = () => {
         </CardDescription>
       </CardHeader>
       <CardContent className="flex flex-col gap-4 pt-0">
-        <Button className="w-96 h-10 font-medium text-sm" variant="outline">Login with Google</Button>
-        <div className="text-sm text-center">Don’t have an Organization Platform?</div>
-        <Link href="/create-org" >
-          <Button className="w-96 h-10 font-medium text-sm" variant="default">
-            Sign Up
-          </Button>
-        </Link>
+        <Button className="w-96 h-10 font-medium text-sm" variant="default" onClick={handleLogin}>Login with Google</Button>
       </CardContent>
     </Card>
   )
