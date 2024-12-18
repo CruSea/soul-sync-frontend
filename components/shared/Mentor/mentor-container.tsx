@@ -1,6 +1,6 @@
 "use client";
 
-import { MentorContainerProps, User, UserMessages } from "@/types/mentor";
+import { MentorContainerProps, User, UserDetails, UserMessages } from "@/types/mentor";
 import Chat from "./Chat";
 import Profile from "./Profile";
 import { useEffect, useState } from "react";
@@ -8,8 +8,8 @@ import UsersList from "./users-list";
 
 const MentorContainer = ({ users }: MentorContainerProps) => {
   const [currentUser, setCurrentUser] = useState<User>(users[0]);
-  const [userDetails, setUserDetails] = useState(null);
-  const [userMessages, setUserMessages] = useState<UserMessages>(null);
+  const [userDetails, setUserDetails] = useState<UserDetails>();
+  const [userMessages, setUserMessages] = useState<UserMessages>();
 
   const [isDrawerOpen, setIsDrawerOpen] = useState<boolean>(false);
 

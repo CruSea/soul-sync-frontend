@@ -68,17 +68,17 @@ export type UserMessages = {
   email: string;
   imageUrl: string;
   fullName: string;
-} | null;
+};
 
 export interface ChatProps {
-  userMessages: UserMessages | null;
-  userDetails: UserDetails | null;
-  setUserMessages: React.Dispatch<React.SetStateAction<UserMessages | null>>;
+  userMessages: UserMessages | undefined;
+  userDetails: UserDetails | undefined;
+  setUserMessages: React.Dispatch<React.SetStateAction<UserMessages | undefined>>;
   toggleDrawer: () => void;
 }
 
 export interface ProfileProps {
-  userDetails: UserDetails | null;
+  userDetails: UserDetails | undefined;
 }
 
 // type for the group of message threads between user and mentor
@@ -109,7 +109,7 @@ export interface ChatHeaderProps {
   fullName: string;
   email: string;
   toggleDrawer: () => void;
-  userDetails: UserDetails | null;
+  userDetails: UserDetails | undefined;
 }
 
 export interface InfoProps {

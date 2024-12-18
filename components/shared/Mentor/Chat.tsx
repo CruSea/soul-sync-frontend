@@ -9,7 +9,6 @@ import ChatHeader from "./ChatHeader";
 import Message from "./Message";
 import { ChatProps, threadType } from "@/types/mentor";
 import { transformChatData } from "@/lib/utils";
-import Image from "next/image";
 import InputArea from "./InputArea";
 
 const Chat = ({ userMessages, toggleDrawer, userDetails, setUserMessages }: ChatProps) => {
@@ -53,8 +52,7 @@ const Chat = ({ userMessages, toggleDrawer, userDetails, setUserMessages }: Chat
 
       console.log("the patch response", patchResponse)
 
-      // Reset the input box and update the UI
-      setText(""); // Clear the input
+      
       if (textBox.current) textBox.current.value = ""; // Reset input field
 
 

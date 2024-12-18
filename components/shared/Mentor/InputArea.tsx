@@ -2,6 +2,7 @@
 import { Input } from "@/components/ui/input";
 import { useState, useRef, useEffect, forwardRef } from "react";
 import { Button } from "@/components/ui/button";
+import Image from "next/image";
 
 interface InputAreaProps {
   sendText: (message: string) => void
@@ -24,7 +25,7 @@ const InputArea = forwardRef<HTMLInputElement, InputAreaProps>(({sendText}, ref)
           // sends the text value when pressing enter
           if (e.key === "Enter") {
             e.preventDefault(); // Prevents newline on enter in the textarea
-            sendText(text);
+            sendText(inputText);
           }
         }}
       />
@@ -34,7 +35,7 @@ const InputArea = forwardRef<HTMLInputElement, InputAreaProps>(({sendText}, ref)
         className="h-full"
         onClick={() => {
           // sends the text value when clicking send
-          sendText(text);
+          sendText(inputText);
         }}
       >
         <Image
