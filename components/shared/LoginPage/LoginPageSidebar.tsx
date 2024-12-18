@@ -1,5 +1,6 @@
 import Image from "next/image";
 import { PiAsteriskSimpleBold } from "react-icons/pi";
+import { loginPage } from "@/content/page";
 
 const LoginPageSidebar = () => {
   return (
@@ -12,12 +13,12 @@ const LoginPageSidebar = () => {
         className="mx-auto"
       />
       <div className="flex-1 flex flex-col gap-5 justify-center px-12 border-t-[5px] border-black ">
-        <div className="font-extrabold text-4xl flex gap-2 items-center tracking-[15px] ml-[-10px]"><PiAsteriskSimpleBold size={55} /> TURUMBA</div>
+        <div className="font-extrabold text-4xl flex gap-2 items-center tracking-[15px] ml-[-10px]"><PiAsteriskSimpleBold size={55} />{loginPage.title}</div>
         <div className="font-bold text-4xl w-full whitespace-pre-line">
-          <div>Connect with <br /> your audience Today.</div>
+          <div>{loginPage.line1}<br />{loginPage.line2}</div>
         </div>
         <div className="font-normal text-lg">
-          Connect Mentors and Peoples anytime anywhere
+          {loginPage.description}
         </div>
       </div>
     </div>

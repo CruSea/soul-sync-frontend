@@ -1,5 +1,6 @@
 import Image from "next/image";
 import { Button } from "@/components/ui/button";
+import Link from "next/link";
 
 interface LandingPageHeaderProps {
   handleGetStarted?: () => void;
@@ -19,7 +20,12 @@ const LandingPageHeader: React.FC<LandingPageHeaderProps> = ({ handleGetStarted,
         />
         <div className="font-bold text-2xl">TURUMBA</div>
       </div>
-      {showButton && <Button variant="default" className="rounded-[20px]" size="sm" onClick={handleGetStarted}>Get Started</Button>}    </div>
+      {showButton && <Link href="/log-in">
+        <Button variant="default" className="rounded-[20px]" size="sm">
+          Get Started
+        </Button>
+      </Link>}
+    </div>
   )
 }
 
