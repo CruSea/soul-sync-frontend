@@ -7,7 +7,7 @@ export async function middleware(req: NextRequest) {
   const token = await getToken({ req, secret: process.env.NEXTAUTH_SECRET });
 
   // Define the restricted route
-  const protectedPath = "/admin/";
+  const protectedPath = "/user/";
   // Check if the user is accessing the protected route
   if (req.nextUrl.pathname.startsWith(protectedPath)) {
     // If no valid token, redirect to the sign-in page
