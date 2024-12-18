@@ -29,7 +29,7 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import type { Mentor } from "@/types/mentor";
-import { InviteMentorDialog } from "../invite-mentor-dialog";
+import { InviteMentorDialog } from "./invite-mentor-dialog";
 
 const ALL_MENTORS: Mentor[] = Array.from({ length: 50 }, (_, i) => ({
   id: `mentor-${i + 1}`,

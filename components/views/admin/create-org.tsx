@@ -72,8 +72,6 @@ const CreateOrgView = () => {
           body: JSON.stringify(reqBody), // Stringify the request body
         }
       )
-
-
       if (response.ok) {
         console.log("successfull submission")
       } else {

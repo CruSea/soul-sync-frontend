@@ -1,7 +1,6 @@
-import Chat from "@/components/shared/Mentor/Chat";
+
 import MentorContainer from "@/components/shared/Mentor/mentor-container";
-import Profile from "@/components/shared/Mentor/Profile";
-import Search from "@/components/shared/Mentor/users-list";
+
 
 const MentorView = async () => {
   // Fetch users from the JSON Server
