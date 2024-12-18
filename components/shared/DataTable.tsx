@@ -1,6 +1,7 @@
 "use client";
 
-import React, { useState, useMemo } from "react";
+import React, { useState, useEffect } from "react";
+import axios from "axios";
 import {
   ChevronDown,
   ChevronUp,
@@ -9,7 +10,17 @@ import {
   X,
   ChevronLeft,
   ChevronRight,
+  Trash2,
 } from "lucide-react";
+import {
+  Dialog,
+  DialogContent,
+  DialogDescription,
+  DialogFooter,
+  DialogHeader,
+  DialogTitle,
+} from "@/components/ui/dialog";
+
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import {
@@ -30,60 +41,73 @@ import {
 import { Column, FilterOption } from "@/types/data-table";
 
 interface DataTableProps<T> {
-  data: T[];
+  data?: T[];
+  apiUrl: string;
   columns: Column<T>[];
   searchFields?: (keyof T)[];
   filterOptions?: FilterOption<T>[];
   itemsPerPage?: number;
+  onDelete: (id: string | number) => Promise<void>;
 }
 
 export function DataTable<T extends { id: string | number }>({
-  data,
+  apiUrl,
   columns,
   searchFields = [],
   filterOptions = [],
-  itemsPerPage = 10,
+  itemsPerPage = 5,
+  onDelete,
 }: DataTableProps<T>) {
+  const [data, setData] = useState<T[]>([]);
+  const [totalItems, setTotalItems] = useState(0);
   const [searchQuery, setSearchQuery] = useState("");
   const [currentPage, setCurrentPage] = useState(1);
   const [filters, setFilters] = useState<string[]>([]);
+  const [isLoading, setIsLoading] = useState(false);
+  const [deleteDialog, setDeleteDialog] = useState<{
+    open: boolean;
+    id: string | number | null;
+  }>({ open: false, id: null });
 
-  const filteredData = useMemo(() => {
-    return data.filter((item) => {
-      const matchesSearch = searchFields.some((field) =>
-        String(item[field]).toLowerCase().includes(searchQuery.toLowerCase())
-      );
-      const matchesFilters =
-        filters.length === 0 ||
-        filters.some(
-          (filter) =>
-            String(
-              item[
-                filterOptions.find((option) => option.label === filter)
-                  ?.key as keyof T
-              ]
-            ).toLowerCase() === filter.toLowerCase()
-        );
-      return matchesSearch && matchesFilters;
-    });
-  }, [data, searchQuery, filters, searchFields, filterOptions]);
+  const fetchData = async () => {
+    setIsLoading(true);
+    try {
+      const response = await axios.get(apiUrl, {
+        params: {
+          page: currentPage,
+          limit: itemsPerPage,
+          search: searchQuery,
+          ...filters.reduce((acc, filter) => {
+            const [key, value] = filter.split(":");
+            return { ...acc, [key]: value };
+          }, {}),
+        },
+      });
+      setData(response.data);
+      setTotalItems(response.data.length);
+    } catch (error) {
+      console.error("Error fetching data:", error);
+    }
+    setIsLoading(false);
+  };
 
-  const totalPages = Math.ceil(filteredData.length / itemsPerPage);
-  const currentData = filteredData.slice(
-    (currentPage - 1) * itemsPerPage,
-    currentPage * itemsPerPage
-  );
+  useEffect(() => {
+    fetchData();
+  }, [currentPage, searchQuery, filters]);
+
+  const totalPages = Math.ceil(totalItems / itemsPerPage);
 
   const handleSearch = (e: React.ChangeEvent<HTMLInputElement>) => {
     setSearchQuery(e.target.value);
     setCurrentPage(1);
   };
 
-  const toggleFilter = (filter: string) => {
+  const toggleFilter = (filter: FilterOption<T>) => {
+    const filterString = `${String(filter.key)}:${filter.label}`;
     setFilters((prev) =>
-      prev.includes(filter)
-        ? prev.filter((f) => f !== filter)
-        : [...prev, filter]
+      prev.includes(filterString)
+        ? prev.filter((f) => f !== filterString)
+        : [...prev, filterString]
     );
     setCurrentPage(1);
   };
@@ -91,6 +115,23 @@ export function DataTable<T extends { id: string | number }>({
   const removeFilter = (filter: string) => {
     setFilters((prev) => prev.filter((f) => f !== filter));
     setCurrentPage(1);
+  };
+
+  const handleDelete = (id: string | number) => {
+    setDeleteDialog({ open: true, id });
+  };
+
+  const confirmDelete = async () => {
+    const id = deleteDialog.id;
+    if (!id) return;
+    const deleted = data.filter((item) => item.id !== id);
+    try {
+      await onDelete(id);
+      setData(deleted);
+      setDeleteDialog({ open: false, id: null });
+    } catch (error) {
+      console.error("Error deleting item:", error);
+    }
   };
 
   return (
@@ -116,9 +157,11 @@ export function DataTable<T extends { id: string | number }>({
             <DropdownMenuContent>
               {filterOptions.map((option) => (
                 <DropdownMenuCheckboxItem
-                  key={option.label}
-                  checked={filters.includes(option.label)}
-                  onCheckedChange={() => toggleFilter(option.label)}
+                  key={`${String(option.key)}:${option.label}`}
+                  checked={filters.includes(
+                    `${String(option.key)}:${option.label}`
+                  )}
+                  onCheckedChange={() => toggleFilter(option)}
                 >
                   {option.label}
                 </DropdownMenuCheckboxItem>
@@ -128,7 +171,7 @@ export function DataTable<T extends { id: string | number }>({
         )}
         {filters.map((filter) => (
           <Badge key={filter} variant="secondary" className="gap-2">
-            {filter}
+            {filter.split(":")[1]}
             <button
               onClick={() => removeFilter(filter)}
               className="focus:outline-none"
@@ -148,27 +191,47 @@ export function DataTable<T extends { id: string | number }>({
                   {column.header}
                 </TableHead>
               ))}
+              <TableHead>Action</TableHead>
             </TableRow>
           </TableHeader>
           <TableBody>
-            {currentData.map((item) => (
-              <TableRow key={item.id}>
-                {columns.map((column) => (
-                  <TableCell key={column.key as string}>
-                    {column.render
-                      ? column.render(item)
-                      : String(item[column.key])}
-                  </TableCell>
-                ))}
+            {isLoading ? (
+              <TableRow>
+                <TableCell colSpan={columns.length + 1} className="text-center">
+                  Loading...
+                </TableCell>
               </TableRow>
-            ))}
+            ) : (
+              data?.map((item) => (
+                <TableRow key={item.id}>
+                  {columns.map((column) => (
+                    <TableCell key={column.key as string}>
+                      {column.render
+                        ? column.render(item)
+                        : String(item[column.key])}
+                    </TableCell>
+                  ))}
+                  <TableCell>
+                    <Button
+                      variant="ghost"
+                      size="icon"
+                      onClick={() => handleDelete(item.id)}
+                      className="h-8 w-8"
+                    >
+                      <Trash2 className="h-4 w-4" />
+                      <span className="sr-only">Delete</span>
+                    </Button>
+                  </TableCell>
+                </TableRow>
+              ))
+            )}
           </TableBody>
         </Table>
       </div>
 
       <div className="flex items-center justify-between">
         <p className="text-sm text-muted-foreground">
-          Showing {currentData.length} out of {filteredData.length} items
+          Showing {data?.length} out of {totalItems} items
         </p>
         <div className="flex items-center gap-2">
           <Button
@@ -202,6 +265,33 @@ export function DataTable<T extends { id: string | number }>({
           </Button>
         </div>
       </div>
+
+      {/* Delete Confirmation Dialog */}
+      <Dialog
+        open={deleteDialog.open}
+        onOpenChange={(open) => setDeleteDialog({ ...deleteDialog, open })}
+      >
+        <DialogContent>
+          <DialogHeader>
+            <DialogTitle>Confirm Delete</DialogTitle>
+            <DialogDescription>
+              Are you sure you want to delete this item? This action cannot be
+              undone.
+            </DialogDescription>
+          </DialogHeader>
+          <DialogFooter>
+            <Button
+              variant="outline"
+              onClick={() => setDeleteDialog({ open: false, id: null })}
+            >
+              Cancel
+            </Button>
+            <Button variant="destructive" onClick={confirmDelete}>
+              Delete
+            </Button>
+          </DialogFooter>
+        </DialogContent>
+      </Dialog>
     </div>
   );
 }

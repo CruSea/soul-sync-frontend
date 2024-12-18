@@ -1,49 +1,83 @@
 "use client";
 
+import React from "react";
+import axios from "axios";
 import { DataTable } from "@/components/shared/DataTable";
-import type { User } from "@/types/users";
+import { Badge } from "@/components/ui/badge";
+import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Column, FilterOption } from "@/types/data-table";
 
-const USERS_DATA: User[] = Array.from({ length: 50 }, (_, i) => ({
-  id: `user-${i + 1}`,
-  name: `User ${i + 1}`,
-  email: `user${i + 1}@example.com`,
-  phoneNumber: `+1${Math.floor(1000000000 + Math.random() * 9000000000)}`,
-  joinedDate: new Date(
-    Date.now() - Math.floor(Math.random() * 10000000000)
-  ).toLocaleDateString(),
-  location: ["New York", "London", "Tokyo", "Paris", "Sydney"][
-    Math.floor(Math.random() * 5)
-  ],
-}));
+interface User {
+  id: string | number;
+  name: string;
+  username: string;
+  email: string;
+  phone: string;
+  website: string;
+  company: {
+    name: string;
+  };
+}
 
-const columns: Column<User>[] = [
-  { key: "name", header: "Name" },
+const columns: Array<Column<User>> = [
+  {
+    key: "name",
+    header: "Name",
+    render: (user) => (
+      <div className="flex items-center gap-2">
+        <Avatar className="h-8 w-8">
+          <AvatarImage
+            src={`https://api.dicebear.com/6.x/initials/svg?seed=${user.name}`}
+            alt={user.name}
+          />
+          <AvatarFallback>{user.name.slice(0, 2)}</AvatarFallback>
+        </Avatar>
+        {user.name}
+      </div>
+    ),
+  },
+  { key: "username", header: "Username" },
   { key: "email", header: "Email" },
-  { key: "phoneNumber", header: "Phone Number" },
-  { key: "joinedDate", header: "Joined Date" },
-  { key: "location", header: "Location" },
+  { key: "phone", header: "Phone" },
+  { key: "website", header: "Website" },
+  {
+    key: "company",
+    header: "Company",
+    render: (user) => user.company.name,
+  },
 ];
 
-const filterOptions: FilterOption<User>[] = [
-  { key: "location", label: "New York" },
-  { key: "location", label: "London" },
-  { key: "location", label: "Tokyo" },
-  { key: "location", label: "Paris" },
-  { key: "location", label: "Sydney" },
+const filterOptions: Array<FilterOption<User>> = [
+  { key: "website", label: "hildegard.org" },
+  { key: "website", label: "anastasia.net" },
+  { key: "website", label: "ramiro.info" },
 ];
 
 export function UsersTable() {
+  const handleDelete = async (id: string | number) => {
+    try {
+      await axios.delete(`https://jsonplaceholder.typicode.com/users/${id}`);
+      console.log(`User with id ${id} deleted successfully`);
+    } catch (error) {
+      console.error("Error deleting user:", error);
+    }
+  };
+
   return (
-    <div className="space-y-6 bg-white p-6 rounded-lg">
-      <h1 className="text-2xl font-semibold">Users</h1>
-      <DataTable
-        data={USERS_DATA}
-        columns={columns}
-        searchFields={["name", "email", "location"]}
-        filterOptions={filterOptions}
-        itemsPerPage={6}
-      />
+    <div className="flex-1 p-4 bg-secondary dark:bg-gray-900">
+      <div className="space-y-6 bg-white p-6 rounded-lg">
+        <div className="flex items-center justify-between">
+          <h1 className="text-2xl font-semibold">Users</h1>
+        </div>
+        <DataTable
+          apiUrl="https://jsonplaceholder.typicode.com/users"
+          columns={columns}
+          searchFields={["name", "username", "email", "phone", "website"]}
+          filterOptions={filterOptions}
+          itemsPerPage={3}
+          onDelete={handleDelete}
+        />
+      </div>
     </div>
   );
 }

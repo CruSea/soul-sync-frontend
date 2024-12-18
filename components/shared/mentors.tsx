@@ -1,103 +1,144 @@
 "use client";
 
-import React from "react";
+import React, { useEffect, useState } from "react";
+import axios from "axios";
 import { DataTable } from "@/components/shared/DataTable";
 import { Badge } from "@/components/ui/badge";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
-import { Button } from "@/components/ui/button";
-import { Trash2 } from "lucide-react";
 import { InviteMentorDialog } from "./invite-mentor-dialog";
 import type { Mentor } from "@/types/mentor";
 import { Column, FilterOption } from "@/types/data-table";
 
-const ALL_MENTORS: Mentor[] = Array.from({ length: 50 }, (_, i) => ({
-  id: `mentor-${i + 1}`,
-  name: `Mentor ${i + 1}`,
-  age: 25 + Math.floor(Math.random() * 30),
-  gender: Math.random() > 0.5 ? "Male" : "Female",
-  email: `mentor${i + 1}@example.com`,
-  phoneNumber: `+1${Math.floor(1000000000 + Math.random() * 9000000000)}`,
-  specialization: [
-    "Marriage Counseling",
-    "Career Guidance",
-    "Life Coaching",
-    "Financial Advice",
-  ][Math.floor(Math.random() * 4)],
-  location: ["Addis Ababa", "New York", "London", "Tokyo", "Sydney"][
-    Math.floor(Math.random() * 5)
-  ],
-  status: ["Joined", "Pending", "Inactive"][Math.floor(Math.random() * 3)],
-  profileImage: `/placeholder.svg?height=40&width=40`,
-}));
+interface Mentors {
+  id: string | number;
+  name: string;
+  expertise: string;
+  age: number;
+  gender: string;
+  location: string;
+  availability: any;
+  isActive: boolean;
+  profileImage: string;
+  user: any;
+}
 
-const columns: Array<Column<Mentor>> = [
+const columns: Array<Column<Mentors>> = [
   {
     key: "name",
     header: "Name",
     render: (mentor) => (
       <div className="flex items-center gap-2">
         <Avatar className="h-8 w-8">
-          <AvatarImage src={mentor.profileImage} alt={mentor.name} />
-          <AvatarFallback>{mentor.name.slice(0, 2)}</AvatarFallback>
+          <AvatarImage src={mentor?.user.imageUrl} alt={mentor.user.name} />
+          <AvatarFallback>{mentor?.user.name?.slice(0, 2)}</AvatarFallback>
         </Avatar>
-        {mentor.name}
+        {mentor.user.name}
       </div>
     ),
   },
   { key: "age", header: "Age" },
   { key: "gender", header: "Gender" },
-  { key: "email", header: "Email" },
-  { key: "phoneNumber", header: "Phone Number" },
-  { key: "specialization", header: "Specialization" },
+  { key: "expertise", header: "Expertise" },
+  {
+    key: "availability",
+    header: "Availability",
+    render: (mentor) => mentor.availability.startDate,
+  },
   { key: "location", header: "Location" },
   {
-    key: "status",
-    header: "Status",
-    render: (mentor) => <Badge variant="secondary">{mentor.status}</Badge>,
-  },
-  {
-    key: "id",
-    header: "Action",
-    render: () => (
-      <div className="flex items-center gap-2">
-        <Button variant="ghost" size="icon" className="h-8 w-8">
-          <Trash2 className="h-4 w-4" />
-          <span className="sr-only">Delete</span>
-        </Button>
-      </div>
+    key: "isActive",
+    header: "Is Active",
+    render: (mentor) => (
+      <Badge variant="secondary">{mentor.isActive ? "Yes" : "No"}</Badge>
     ),
   },
 ];
 
-const filterOptions: Array<FilterOption<Mentor>> = [
-  { key: "specialization", label: "Marriage Counseling" },
-  { key: "specialization", label: "Career Guidance" },
-  { key: "specialization", label: "Life Coaching" },
-  { key: "specialization", label: "Financial Advice" },
+const filterOptions: Array<FilterOption<Mentors>> = [
+  { key: "location", label: "Addis Ababa" },
 ];
 
 export function MentorsTable() {
+  const [mentors, setMentors] = useState<Mentors[]>([]);
+  const [isLoading, setIsLoading] = useState(false);
+
+  const fetchMentors = async () => {
+    setIsLoading(true);
+
+    try {
+      const response = await axios.get(
+        `${process.env.NEXTAUTH_URL}/admin/mentors/`,
+        {
+          headers: {
+            Authorization: `Bearer ${`eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIzZjE0MjE5ZC0zNGNhLTRiZDQtYWQyNy1hNjE4Y2E0YWEyZDAiLCJlbWFpbCI6ImplcmloYWdiakBnbWFpbC5jb20iLCJpbWFnZVVybCI6bnVsbCwiYWNjb3VudHMiOlt7ImlkIjoiODc4ODhmODAtZGI0Yi00OWUyLTgxMDQtMTMyYjMzOTU4NmQxIiwibmFtZSI6IkplcnVzYWxlbSJ9XSwicm9sZXMiOlsiT1dORVIiXSwiaWF0IjoxNzM0MjAyODU4fQ.7LYXWzv0phj_Xdg3YT-dkKGAovbhNlA16zsP3qUghvU`}`, // Include the Bearer token here
+          },
+        }
+      );
+
+      const transformedData = Array?.isArray(response.data)
+        ? response.data
+        : response.data.items || [];
+
+      setMentors(
+        transformedData.map((mentor: any) => ({
+          id: mentor.id,
+          name: mentor.user.name,
+          expertise: mentor.expertise,
+          age: mentor.age,
+          gender: mentor.gender,
+          location: mentor.location,
+          availability: mentor.availability.startDate,
+          isActive: mentor.isActive,
+          profileImage: mentor.user.imageUrl || "",
+        }))
+      );
+    } catch (error) {
+      console.error("Error fetching mentors:", error);
+    }
+    setIsLoading(false);
+  };
+
+  useEffect(() => {
+    fetchMentors();
+  }, []);
+
+  const handleDelete = async (id: string | number) => {
+    console.log("Deleting mentor with id:", id);
+    if (!id) {
+      console.error("Delete failed: Invalid mentor ID");
+      return;
+    }
+
+    try {
+      await axios.delete(
+        `${process.env.NEXT_PUBLIC_API_URL}/admin/mentors/${id}`,
+        {
+          headers: {
+            Authorization: `Bearer ${`eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIzZjE0MjE5ZC0zNGNhLTRiZDQtYWQyNy1hNjE4Y2E0YWEyZDAiLCJlbWFpbCI6ImplcmloYWdiakBnbWFpbC5jb20iLCJpbWFnZVVybCI6bnVsbCwiYWNjb3VudHMiOlt7ImlkIjoiODc4ODhmODAtZGI0Yi00OWUyLTgxMDQtMTMyYjMzOTU4NmQxIiwibmFtZSI6IkplcnVzYWxlbSJ9XSwicm9sZXMiOlsiT1dORVIiXSwiaWF0IjoxNzM0MjAyODU4fQ.7LYXWzv0phj_Xdg3YT-dkKGAovbhNlA16zsP3qUghvU`}`, // Include the Bearer token here
+          },
+        }
+      );
+      setMentors((prev) => prev.filter((mentor) => mentor.id !== id));
+      console.log("Mentor deleted successfully");
+    } catch (error) {
+      console.error("Error deleting mentor:", error);
+    }
+  };
   return (
     <div className="flex-1 p-4 bg-secondary dark:bg-gray-900">
-      <div className="space-y-6  bg-white p-6 rounded-lg">
-        <div className="flex items-center justify-between ">
+      <div className="space-y-6 bg-white p-6 rounded-lg">
+        <div className="flex items-center justify-between">
           <h1 className="text-2xl font-semibold">Mentors</h1>
           <InviteMentorDialog />
         </div>
         <DataTable
-          data={ALL_MENTORS}
+          apiUrl={`${process.env.NEXT_PUBLIC_API_URL}/admin/mentors/`}
           columns={columns}
-          searchFields={[
-            "name",
-            "email",
-            "specialization",
-            "location",
-            "age",
-            "gender",
-            "status",
-          ]}
+          searchFields={["name", "age", "gender", "location", "isActive"]}
           filterOptions={filterOptions}
           itemsPerPage={10}
+          onDelete={handleDelete}
+          data={mentors}
         />
       </div>
     </div>
