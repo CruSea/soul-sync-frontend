@@ -30,13 +30,13 @@ import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { Textarea } from "@/components/ui/textarea";
 import { Plus } from "lucide-react";
-import type { Channel, ChannelType } from "@/types/channel";
+import type { Channel} from "@/types/channel";
 
 const formSchema = z.object({
   name: z.string().min(2, {
     message: "Channel name must be at least 2 characters.",
   }),
-  type: z.enum(["Telegram Bot", "WhatsApp", "Negarit"]),
+  type: z.enum(["Telegram Bot", "WhatsApp", "Negarit", "Facebook", "Twilio"]),
   apiKey: z.string().min(1, {
     message: "API Key is required.",
   }),
@@ -52,6 +52,11 @@ interface AddChannelDialogProps {
 
 export function AddChannelDialog({ onAddChannel }: AddChannelDialogProps) {
   const [open, setOpen] = useState(false);
+  const format: Intl.DateTimeFormatOptions = {
+    year: "numeric",
+    month: "short",
+    day: "numeric",
+  };
 
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
@@ -65,7 +70,9 @@ export function AddChannelDialog({ onAddChannel }: AddChannelDialogProps) {
   });
 
   function onSubmit(values: z.infer<typeof formSchema>) {
-    onAddChannel(values);
+    const date = new Date().toLocaleDateString("en-US", format)
+    onAddChannel({ ...values, Date: date });
+
     setOpen(false);
     form.reset();
   }
@@ -73,7 +80,7 @@ export function AddChannelDialog({ onAddChannel }: AddChannelDialogProps) {
   return (
     <Dialog open={open} onOpenChange={setOpen}>
       <DialogTrigger asChild>
-        <Button variant="outline" className="h-[120px] w-full">
+        <Button variant="outline" className="h-[278px] w-full">
           <Plus className="h-8 w-8" />
           <span className="sr-only">Add a Channel</span>
         </Button>
@@ -116,6 +123,8 @@ export function AddChannelDialog({ onAddChannel }: AddChannelDialogProps) {
                       <SelectItem value="Telegram Bot">Telegram Bot</SelectItem>
                       <SelectItem value="WhatsApp">WhatsApp</SelectItem>
                       <SelectItem value="Negarit">Negarit</SelectItem>
+                      <SelectItem value="Facebook">Facebook</SelectItem>
+                      <SelectItem value="Twilio">Twilio</SelectItem>
                     </SelectContent>
                   </Select>
                   <FormMessage />
@@ -129,7 +138,7 @@ export function AddChannelDialog({ onAddChannel }: AddChannelDialogProps) {
                 <FormItem>
                   <FormLabel>API Key</FormLabel>
                   <FormControl>
-                    <Input placeholder="buonesares@gmail.com" {...field} />
+                    <Input placeholder="Aef35jhjsf48Hfe" {...field} />
                   </FormControl>
                   <FormMessage />
                 </FormItem>
