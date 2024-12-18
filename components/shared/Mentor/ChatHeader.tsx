@@ -41,7 +41,7 @@ const ChatHeader = ({
         </div>
       </div>
       <Sheet>
-        <SheetTrigger className="3xl:hidden">
+        <SheetTrigger asChild className="3xl:hidden">
           <Button
             className="bg-white text-black font-medium text-sm hover:bg-white hover:opacity-80 "
             onClick={toggleDrawer}
