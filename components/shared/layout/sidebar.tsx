@@ -13,12 +13,12 @@ import { cn } from "@/lib/utils";
 import { Button } from "@/components/ui/button";
 
 const menuItems = [
-  { icon: LuLayoutDashboard, label: "Dashboard", href: "/admin" },
-  { icon: LuUser, label: "Mentors", href: "/admin/mentor" },
+  { icon: LuLayoutDashboard, label: "Dashboard", href: "/admin/dashboard" },
+  { icon: LuUser, label: "Mentors", href: "/admin/mentors" },
   { icon: LuMessagesSquare, label: "Messages", href: "/admin/messages" },
-  { icon: RxLinkNone2, label: "Channels", href: "/channels" },
-  { icon: LuMic2, label: "Admins", href: "/admins" },
-  { icon: LuLibrary, label: "Agents", href: "/agents" },
+  { icon: RxLinkNone2, label: "Channels", href: "/admin/channels" },
+  { icon: LuMic2, label: "Admins", href: "/admin/users" },
+  { icon: LuLibrary, label: "Agents", href: "/admin/agents" },
 ];
 
 const footerItems = [
