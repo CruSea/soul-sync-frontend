@@ -1,24 +1,13 @@
-"use client"
-
-import LandingPageBody from "../shared/LandingPageBody";
-import LandingPageFooter from "../shared/LandingPageFooter";
-import LandingPageHeader from "../shared/LandingPageHeader";
-
-import { useRouter } from 'next/navigation';
-
+import LandingPageBody from "../shared/LandingPage/LandingPageBody";
+import LandingPageFooter from "../shared/LandingPage/LandingPageFooter";
+import LandingPageHeader from "../shared/LandingPage/LandingPageHeader";
 
 const LandingPageView = () => {
 
-  const router = useRouter();
-
-  const handleGetStarted = () => {
-    router.push('/log-in');
-  };
-
   return (
     <div className=" flex flex-col min-h-screen">
-      <LandingPageHeader handleGetStarted={handleGetStarted} />
-      <LandingPageBody handleGetStarted={handleGetStarted} />
+      <LandingPageHeader/>
+      <LandingPageBody />
       <LandingPageFooter />
     </div>
   );

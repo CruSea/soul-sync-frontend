@@ -1,9 +1,9 @@
-import { Mentors } from "@/components/shared/mentors";
+import { Mentors } from "@/components/shared/admin/admin-mentors/mentors";
 
 export default function Mentor() {
   return (
     <>
-   <Mentors />
+      <Mentors />
     </>
   );
 }

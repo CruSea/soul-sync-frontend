@@ -1,7 +1,7 @@
 "use client";
 
-import LoginPageCard from "@/components/shared/LoginPageCard";
-import LoginPageSidebar from "@/components/shared/LoginPageSidebar";
+import LoginPageCard from "@/components/shared/LoginPage/LoginPageCard";
+import LoginPageSidebar from "@/components/shared/LoginPage/LoginPageSidebar";
 
 const LogInView = () => {
 

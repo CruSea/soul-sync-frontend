@@ -7,6 +7,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
+
     <SessionWrapper>
       <html lang="en">
         <body className="font-general">
@@ -21,5 +22,6 @@ export default function RootLayout({
         </body>
       </html>
     </SessionWrapper>
+
   );
 }
