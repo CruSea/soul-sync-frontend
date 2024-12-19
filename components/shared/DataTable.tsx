@@ -56,7 +56,7 @@ export function DataTable<T extends { id: string | number }>({
   searchFields = [],
   filterOptions = [],
   itemsPerPage = 5,
-  onDelete,
+  onDelete
 }: DataTableProps<T>) {
   const [data, setData] = useState<T[]>([]);
   const [totalItems, setTotalItems] = useState(0);

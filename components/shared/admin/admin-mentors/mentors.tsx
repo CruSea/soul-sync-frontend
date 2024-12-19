@@ -72,44 +72,50 @@ export function MentorsTable() {
       const token = localStorage.getItem("token");
 
       if (user && token) {
-        const endPoint = `${BASE_URL}/${MENTORS_URL}`;
         const userObj = JSON.parse(user);
+        const accountId = String(userObj.accounts[0].id)
+        const endPoint = `${BASE_URL}/${MENTORS_URL}`;
+        const endPointWithId = `${endPoint}/${accountId}/all`;
 
-        console.log("all data", endPoint, userObj, token);
+        console.log("all data", endPointWithId, userObj, token);
 
-        const response = await fetch(endPoint, {
+        const response = await fetch(endPointWithId, {
           method: "GET",
           headers: {
             "Content-Type": "application/json",
             Authorization: `Bearer ${JSON.parse(token)}`,
-            accountId: `${userObj.accounts[0].id}`,
           },
         });
 
         if (!response.ok) {
           const errorText = await response.text();
+          console.log("the response is", response)
+          console.log("the whoel response", response)
           throw new Error(`Bad Request: ${errorText}`);
         }
 
         const responseData = await response.json();
-        console.log("Response from server:", responseData);
+        console.log("Response from server:", responseData, typeof responseData);
 
-        const transformedData = Array.isArray(responseData.data)
-          ? responseData.data
-          : responseData.data.items || [];
+
+        // const transformedData = (responseData);
+
 
         setMentors(
-          transformedData.map((mentor: any) => ({
-            id: mentor.id,
-            name: mentor.user.name,
-            expertise: mentor.expertise,
-            age: mentor.age,
-            gender: mentor.gender,
-            location: mentor.location,
-            availability: mentor.availability.startDate,
-            isActive: mentor.isActive,
-            profileImage: mentor.user.imageUrl || "",
-          }))
+          responseData.map((mentor: any) => {
+            console.log("the mentor", mentor)
+            return {
+              id: mentor.id,
+              name: mentor.user.name,
+              expertise: mentor.expertise,
+              age: mentor.age,
+              gender: mentor.gender,
+              location: mentor.location,
+              availability: mentor.availability.startDate,
+              isActive: mentor.isActive,
+              profileImage: mentor.user.imageUrl || "",
+            }
+          })
         );
       }
     } catch (error) {
@@ -122,6 +128,10 @@ export function MentorsTable() {
   useEffect(() => {
     fetchMentors();
   }, []);
+
+  useEffect(() => {
+    console.log("mentors:----------------------------", mentors)
+  }, [mentors])
 
   const handleDelete = async (id: string | number) => {
     console.log("Deleting mentor with id:", id);
@@ -180,6 +190,7 @@ export function MentorsTable() {
           itemsPerPage={10}
           onDelete={handleDelete}
           data={mentors}
+          
         />
       </div>
     </div>

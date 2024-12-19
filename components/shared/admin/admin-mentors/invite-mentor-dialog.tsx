@@ -58,8 +58,7 @@ export function InviteMentorDialog() {
           method: "POST",
           headers: {
             "Content-Type": "application/json",
-            Authorization: ` ${JSON.parse(token)}`,
-            accountId: ` ${userObj.accounts[0].id}`,
+            Authorization: `Bearer ${JSON.parse(token)}`,
           },
           body: JSON.stringify(requestBody),
         })
