@@ -16,6 +16,9 @@ import { useToast } from "@/hooks/use-toast";
 import { useAuth } from "@/context/AuthContext";
 import handler from "@/app/api/[...params]/route";
 
+const BASE_URL = process.env.NEXT_PUBLIC_API_BASE_URL;
+const MENTORS_URL = process.env.NEXT_PUBLIC_API_ADMIN_MENTORS_URL;
+
 interface InviteMentorFormData {
   name: string;
   email: string;
@@ -32,31 +35,31 @@ export function InviteMentorDialog() {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
 
-    console.log("handle submit called")
+    console.log("handle submit called");
 
     try {
       const user = localStorage.getItem("user");
       const token = localStorage.getItem("token");
 
-      console.log(user, "user is")
+      console.log(user, "user is");
 
       if (user && token) {
-        const endPoint = "https://jlh2d981-3000.uks1.devtunnels.ms/admin/mentors"  // move base to env
-        const userObj = JSON.parse(user)
+        const endPoint = `${BASE_URL}/${MENTORS_URL}`; // move base to env
+        const userObj = JSON.parse(user);
         const requestBody = {
           accountId: userObj.accounts[0].id,
           name: userObj.accounts[0].name,
           email: formData.email,
         };
-      
 
-        console.log("all data", endPoint, userObj, requestBody, token)
+        console.log("all data", endPoint, userObj, requestBody, token);
 
         fetch(endPoint, {
           method: "POST",
           headers: {
             "Content-Type": "application/json",
-            "Authorization": `Bearer ${JSON.parse(token)}`,
+            Authorization: ` ${JSON.parse(token)}`,
+            accountId: ` ${userObj.accounts[0].id}`,
           },
           body: JSON.stringify(requestBody),
         })
@@ -74,19 +77,17 @@ export function InviteMentorDialog() {
           .catch((error) => {
             console.error("Error making POST request:", error);
           });
-        
+
         toast({
           title: "Invitation sent",
           description: `Invitation has been sent to ${formData.email}`,
         });
-  
+
         setFormData({ name: "", email: "" });
         setIsOpen(false);
       } else {
-        console.error("user not found")
+        console.error("user not found");
       }
-
-    
     } catch (error) {
       toast({
         title: "Error",

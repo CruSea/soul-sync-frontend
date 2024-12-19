@@ -1,13 +1,15 @@
 "use client";
 
 import React, { useEffect, useState } from "react";
-import axios from "axios";
 import { DataTable } from "@/components/shared/DataTable";
 import { Badge } from "@/components/ui/badge";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
-import { InviteMentorDialog } from "./invite-mentor-dialog";
-import type { Mentor } from "@/types/mentor";
 import { Column, FilterOption } from "@/types/data-table";
+import { toast } from "sonner";
+import { InviteMentorDialog } from "./invite-mentor-dialog";
+
+const BASE_URL = process.env.NEXT_PUBLIC_API_BASE_URL;
+const MENTORS_URL = process.env.NEXT_PUBLIC_API_ADMIN_MENTORS_URL;
 
 interface Mentors {
   id: string | number;
@@ -66,36 +68,55 @@ export function MentorsTable() {
     setIsLoading(true);
 
     try {
-      const response = await axios.get(
-        `${process.env.NEXTAUTH_URL}/admin/mentors/`,
-        {
+      const user = localStorage.getItem("user");
+      const token = localStorage.getItem("token");
+
+      if (user && token) {
+        const endPoint = `${BASE_URL}/${MENTORS_URL}`;
+        const userObj = JSON.parse(user);
+
+        console.log("all data", endPoint, userObj, token);
+
+        const response = await fetch(endPoint, {
+          method: "GET",
           headers: {
-            Authorization: `Bearer ${`eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIzZjE0MjE5ZC0zNGNhLTRiZDQtYWQyNy1hNjE4Y2E0YWEyZDAiLCJlbWFpbCI6ImplcmloYWdiakBnbWFpbC5jb20iLCJpbWFnZVVybCI6bnVsbCwiYWNjb3VudHMiOlt7ImlkIjoiODc4ODhmODAtZGI0Yi00OWUyLTgxMDQtMTMyYjMzOTU4NmQxIiwibmFtZSI6IkplcnVzYWxlbSJ9XSwicm9sZXMiOlsiT1dORVIiXSwiaWF0IjoxNzM0MjAyODU4fQ.7LYXWzv0phj_Xdg3YT-dkKGAovbhNlA16zsP3qUghvU`}`, // Include the Bearer token here
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${JSON.parse(token)}`,
+            accountId: `${userObj.accounts[0].id}`,
           },
+        });
+
+        if (!response.ok) {
+          const errorText = await response.text();
+          throw new Error(`Bad Request: ${errorText}`);
         }
-      );
 
-      const transformedData = Array?.isArray(response.data)
-        ? response.data
-        : response.data.items || [];
+        const responseData = await response.json();
+        console.log("Response from server:", responseData);
 
-      setMentors(
-        transformedData.map((mentor: any) => ({
-          id: mentor.id,
-          name: mentor.user.name,
-          expertise: mentor.expertise,
-          age: mentor.age,
-          gender: mentor.gender,
-          location: mentor.location,
-          availability: mentor.availability.startDate,
-          isActive: mentor.isActive,
-          profileImage: mentor.user.imageUrl || "",
-        }))
-      );
+        const transformedData = Array.isArray(responseData.data)
+          ? responseData.data
+          : responseData.data.items || [];
+
+        setMentors(
+          transformedData.map((mentor: any) => ({
+            id: mentor.id,
+            name: mentor.user.name,
+            expertise: mentor.expertise,
+            age: mentor.age,
+            gender: mentor.gender,
+            location: mentor.location,
+            availability: mentor.availability.startDate,
+            isActive: mentor.isActive,
+            profileImage: mentor.user.imageUrl || "",
+          }))
+        );
+      }
     } catch (error) {
       console.error("Error fetching mentors:", error);
+    } finally {
+      setIsLoading(false);
     }
-    setIsLoading(false);
   };
 
   useEffect(() => {
@@ -108,20 +129,40 @@ export function MentorsTable() {
       console.error("Delete failed: Invalid mentor ID");
       return;
     }
-
     try {
-      await axios.delete(
-        `${process.env.NEXT_PUBLIC_API_URL}/admin/mentors/${id}`,
-        {
+      const user = localStorage.getItem("user");
+      const token = localStorage.getItem("token");
+
+      if (user && token) {
+        const endPoint = `${BASE_URL}/${MENTORS_URL}/${id}`;
+        const userObj = JSON.parse(user);
+
+        console.log("all data", endPoint, userObj, token);
+
+        const response = await fetch(endPoint, {
+          method: "DELETE",
           headers: {
-            Authorization: `Bearer ${`eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIzZjE0MjE5ZC0zNGNhLTRiZDQtYWQyNy1hNjE4Y2E0YWEyZDAiLCJlbWFpbCI6ImplcmloYWdiakBnbWFpbC5jb20iLCJpbWFnZVVybCI6bnVsbCwiYWNjb3VudHMiOlt7ImlkIjoiODc4ODhmODAtZGI0Yi00OWUyLTgxMDQtMTMyYjMzOTU4NmQxIiwibmFtZSI6IkplcnVzYWxlbSJ9XSwicm9sZXMiOlsiT1dORVIiXSwiaWF0IjoxNzM0MjAyODU4fQ.7LYXWzv0phj_Xdg3YT-dkKGAovbhNlA16zsP3qUghvU`}`, // Include the Bearer token here
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${JSON.parse(token)}`,
+            accountId: `${userObj.accounts[0].id}`,
           },
+        });
+
+        if (!response.ok) {
+          const errorText = await response.text();
+          throw new Error(`Bad Request: ${errorText}`);
         }
-      );
-      setMentors((prev) => prev.filter((mentor) => mentor.id !== id));
-      console.log("Mentor deleted successfully");
+
+        const responseData = await response.json();
+        console.log("Response from server:", responseData);
+      }
     } catch (error) {
-      console.error("Error deleting mentor:", error);
+      console.error("Error deleting mentors:", error);
+    } finally {
+      setMentors((prev) => prev.filter((mentor) => mentor.id !== id));
+
+      toast.success("Mentor has been deleted.");
+      console.log("Mentor deleted successfully");
     }
   };
   return (
@@ -132,7 +173,7 @@ export function MentorsTable() {
           <InviteMentorDialog />
         </div>
         <DataTable
-          apiUrl={`${process.env.NEXT_PUBLIC_API_URL}/admin/mentors/`}
+          apiUrl={`${BASE_URL}/${MENTORS_URL}`}
           columns={columns}
           searchFields={["name", "age", "gender", "location", "isActive"]}
           filterOptions={filterOptions}

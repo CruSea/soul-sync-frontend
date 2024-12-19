@@ -89,6 +89,10 @@ export function AdminsTable() {
           ]}
           filterOptions={filterOptions}
           itemsPerPage={10}
+          apiUrl={""}
+          onDelete={function (id: string | number): Promise<void> {
+            throw new Error("Function not implemented.");
+          }}
         />
       </div>
     </div>
