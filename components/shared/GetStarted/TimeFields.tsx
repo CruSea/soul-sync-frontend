@@ -1,6 +1,4 @@
-import { FormField, FormItem, FormControl, FormMessage, FormLabel } from "@/components/ui/form";
-import { Checkbox } from "@/components/ui/checkbox";
-import { SpecializationFieldProps, TimeFieldsProps } from "@/types/get-started";
+import { TimeFieldsProps } from "@/types/get-started";
 import { HourField } from "./hourField";
 import { DayPeriodField } from "./DayPeriod";
 import { MinuteField } from "./MinuteField";
@@ -10,7 +8,6 @@ import { MinuteField } from "./MinuteField";
 export function TimeFields({ form, errors }: TimeFieldsProps) {
   return (
     <div className="space-y-2">
-      <div className="font-medium text-xl">Availability Time</div>
       <div className="flex gap-6">
         <div className="space-y-2">
           <div className="font-medium text-zinc-500 font-base">Start Time</div>

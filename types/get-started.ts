@@ -164,6 +164,17 @@ export interface GenderFieldProps {
   className?: string;
 }
 
+export interface DayFieldProps {
+  control: any;
+  options: { label: string; value: string }[];
+}
+
+export interface AvailabilityFieldProps {
+  control: any;
+  options: { label: string; value: string }[];
+}
+
+
 export interface GetStartedProps {
   type: "admin" | "mentor";
 }
