@@ -63,6 +63,7 @@ const filterOptions: Array<FilterOption<Mentors>> = [
 export function MentorsTable() {
   const [mentors, setMentors] = useState<Mentors[]>([]);
   const [isLoading, setIsLoading] = useState(false);
+  let endPointUrl = ""
 
   const fetchMentors = async () => {
     setIsLoading(true);
@@ -76,6 +77,7 @@ export function MentorsTable() {
         const accountId = String(userObj.accounts[0].id)
         const endPoint = `${BASE_URL}/${MENTORS_URL}`;
         const endPointWithId = `${endPoint}/${accountId}/all`;
+        endPointUrl = endPointWithId 
 
         console.log("all data", endPointWithId, userObj, token);
 
@@ -183,7 +185,7 @@ export function MentorsTable() {
           <InviteMentorDialog />
         </div>
         <DataTable
-          apiUrl={`${BASE_URL}/${MENTORS_URL}`}
+          apiUrl={endPointUrl}
           columns={columns}
           searchFields={["name", "age", "gender", "location", "isActive"]}
           filterOptions={filterOptions}
