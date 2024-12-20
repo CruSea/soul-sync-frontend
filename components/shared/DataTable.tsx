@@ -1,7 +1,6 @@
 "use client";
 
 import React, { useState, useEffect } from "react";
-import axios from "axios";
 import {
   ChevronDown,
   ChevronUp,
@@ -20,7 +19,6 @@ import {
   DialogHeader,
   DialogTitle,
 } from "@/components/ui/dialog";
-
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import {
@@ -56,7 +54,7 @@ export function DataTable<T extends { id: string | number }>({
   searchFields = [],
   filterOptions = [],
   itemsPerPage = 5,
-  onDelete
+  onDelete,
 }: DataTableProps<T>) {
   const [data, setData] = useState<T[]>([]);
   const [totalItems, setTotalItems] = useState(0);
@@ -72,23 +70,60 @@ export function DataTable<T extends { id: string | number }>({
   const fetchData = async () => {
     setIsLoading(true);
     try {
-      const response = await axios.get(apiUrl, {
-        params: {
-          page: currentPage,
-          limit: itemsPerPage,
-          search: searchQuery,
-          ...filters.reduce((acc, filter) => {
-            const [key, value] = filter.split(":");
-            return { ...acc, [key]: value };
-          }, {}),
-        },
-      });
-      setData(response.data);
-      setTotalItems(response.data.length);
+      const token = localStorage.getItem("token");
+      const filterParams = filters.reduce((acc, filter) => {
+        const [key, value] = filter.split(":");
+        return `${acc}&${key}=${value}`;
+      }, "");
+
+      const response = await fetch(
+        `${apiUrl}?page=${currentPage}&limit=${itemsPerPage}&search=${searchQuery}${filterParams}`,
+        {
+          method: "GET",
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: token ? `Bearer ${JSON.parse(token)}` : "",
+          },
+        }
+      );
+
+      if (!response.ok) {
+        console.error(`HTTP error! Status: ${response.status}`);
+        throw new Error("Failed to fetch data.");
+      }
+
+      const text = await response.text();
+
+      if (text.trim() === "") {
+        setData([]);
+        setTotalItems(0);
+        return;
+      }
+
+      let result;
+      try {
+        result = JSON.parse(text);
+      } catch (error) {
+        console.error("Error parsing JSON response:", error);
+        setData([]);
+        setTotalItems(0);
+        return;
+      }
+
+      if (Array.isArray(result) && result.length > 0) {
+        setData(result);
+        setTotalItems(result.length);
+      } else {
+        setData([]);
+        setTotalItems(0);
+      }
     } catch (error) {
       console.error("Error fetching data:", error);
+      setData([]);
+      setTotalItems(0);
+    } finally {
+      setIsLoading(false);
     }
-    setIsLoading(false);
   };
 
   useEffect(() => {
@@ -97,26 +132,6 @@ export function DataTable<T extends { id: string | number }>({
 
   const totalPages = Math.ceil(totalItems / itemsPerPage);
 
-  const handleSearch = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setSearchQuery(e.target.value);
-    setCurrentPage(1);
-  };
-
-  const toggleFilter = (filter: FilterOption<T>) => {
-    const filterString = `${String(filter.key)}:${filter.label}`;
-    setFilters((prev) =>
-      prev.includes(filterString)
-        ? prev.filter((f) => f !== filterString)
-        : [...prev, filterString]
-    );
-    setCurrentPage(1);
-  };
-
-  const removeFilter = (filter: string) => {
-    setFilters((prev) => prev.filter((f) => f !== filter));
-    setCurrentPage(1);
-  };
-
   const handleDelete = (id: string | number) => {
     setDeleteDialog({ open: true, id });
   };
@@ -124,13 +139,14 @@ export function DataTable<T extends { id: string | number }>({
   const confirmDelete = async () => {
     const id = deleteDialog.id;
     if (!id) return;
-    const deleted = data.filter((item) => item.id !== id);
+
     try {
       await onDelete(id);
-      setData(deleted);
+      setData((prev) => prev.filter((item) => item.id !== id));
       setDeleteDialog({ open: false, id: null });
+      console.log("mentor is deleted with id ", id);
     } catch (error) {
-      console.error("Error deleting item:", error);
+      console.error("Error deleting data:", error);
     }
   };
 
@@ -142,7 +158,10 @@ export function DataTable<T extends { id: string | number }>({
           <Input
             placeholder="Search"
             value={searchQuery}
-            onChange={handleSearch}
+            onChange={(e) => {
+              setSearchQuery(e.target.value);
+              setCurrentPage(1);
+            }}
             className="pl-10"
           />
         </div>
@@ -161,7 +180,17 @@ export function DataTable<T extends { id: string | number }>({
                   checked={filters.includes(
                     `${String(option.key)}:${option.label}`
                   )}
-                  onCheckedChange={() => toggleFilter(option)}
+                  onCheckedChange={() => {
+                    const filterString = `${String(option.key)}:${
+                      option.label
+                    }`;
+                    setFilters((prev) =>
+                      prev.includes(filterString)
+                        ? prev.filter((f) => f !== filterString)
+                        : [...prev, filterString]
+                    );
+                    setCurrentPage(1);
+                  }}
                 >
                   {option.label}
                 </DropdownMenuCheckboxItem>
@@ -173,7 +202,10 @@ export function DataTable<T extends { id: string | number }>({
           <Badge key={filter} variant="secondary" className="gap-2">
             {filter.split(":")[1]}
             <button
-              onClick={() => removeFilter(filter)}
+              onClick={() => {
+                setFilters((prev) => prev.filter((f) => f !== filter));
+                setCurrentPage(1);
+              }}
               className="focus:outline-none"
             >
               <X className="h-3 w-3" />
@@ -187,9 +219,7 @@ export function DataTable<T extends { id: string | number }>({
           <TableHeader>
             <TableRow>
               {columns.map((column) => (
-                <TableHead key={column.key as string}>
-                  {column.header}
-                </TableHead>
+                <TableHead key={String(column.key)}>{column.header}</TableHead>
               ))}
               <TableHead>Action</TableHead>
             </TableRow>
@@ -205,7 +235,7 @@ export function DataTable<T extends { id: string | number }>({
               data?.map((item) => (
                 <TableRow key={item.id}>
                   {columns.map((column) => (
-                    <TableCell key={column.key as string}>
+                    <TableCell key={String(column.key)}>
                       {column.render
                         ? column.render(item)
                         : String(item[column.key])}
@@ -219,7 +249,6 @@ export function DataTable<T extends { id: string | number }>({
                       className="h-8 w-8"
                     >
                       <Trash2 className="h-4 w-4" />
-                      <span className="sr-only">Delete</span>
                     </Button>
                   </TableCell>
                 </TableRow>
@@ -231,7 +260,7 @@ export function DataTable<T extends { id: string | number }>({
 
       <div className="flex items-center justify-between">
         <p className="text-sm text-muted-foreground">
-          Showing {data?.length} out of {totalItems} items
+          Showing {data.length} out of {totalItems} items
         </p>
         <div className="flex items-center gap-2">
           <Button
@@ -241,7 +270,6 @@ export function DataTable<T extends { id: string | number }>({
             disabled={currentPage === 1}
           >
             <ChevronLeft className="h-4 w-4" />
-            <span className="sr-only">Previous page</span>
           </Button>
           {Array.from({ length: Math.min(3, totalPages) }, (_, i) => (
             <Button
@@ -261,12 +289,10 @@ export function DataTable<T extends { id: string | number }>({
             disabled={currentPage === totalPages}
           >
             <ChevronRight className="h-4 w-4" />
-            <span className="sr-only">Next page</span>
           </Button>
         </div>
       </div>
 
-      {/* Delete Confirmation Dialog */}
       <Dialog
         open={deleteDialog.open}
         onOpenChange={(open) => setDeleteDialog({ ...deleteDialog, open })}
