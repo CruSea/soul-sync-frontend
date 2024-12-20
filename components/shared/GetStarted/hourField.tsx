@@ -24,7 +24,7 @@ import {
 import { cn } from "@/lib/utils";
 import { Check, ChevronsUpDown } from "lucide-react"
 import { getStartedForm } from "@/data/get-started-data";
-import { HourFieldProps } from "@/types/create-org";
+import { HourFieldProps } from "@/types/get-started";
 
 export function HourField({ control, type, form }: HourFieldProps) {
   return (

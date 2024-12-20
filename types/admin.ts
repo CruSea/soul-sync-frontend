@@ -11,3 +11,6 @@ export interface Admin {
   }
   
   
+export interface DashboardLayoutProps {
+  children: React.ReactNode;
+}

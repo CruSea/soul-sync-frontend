@@ -1,8 +1,10 @@
 import { FormField, FormItem, FormControl, FormMessage, FormLabel } from "@/components/ui/form";
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
-import { GenderFieldProps } from "@/types/create-org";
 
-export function GenderField({ control, options }: GenderFieldProps) {
+import { cn } from "@/lib/utils";
+import { GenderFieldProps } from "@/types/get-started";
+
+export function GenderField({ control, options, className }: GenderFieldProps) {
   return (
     <FormField
       control={control}
@@ -16,14 +18,14 @@ export function GenderField({ control, options }: GenderFieldProps) {
             <RadioGroup
               defaultValue="male"
               onValueChange={field.onChange}
-              className="flex gap-10"
+              className="flex gap-10 !font-normal text-2xl"
             >
               {options.map((option) => (
                 <FormItem key={option.value} className="flex gap-2.5 h-14 items-center">
                   <FormControl>
-                    <RadioGroupItem className="!mt-0 ml-auto cursor-pointer" value={option.value} />
+                    <RadioGroupItem className="!mt-0 ml-auto !font-normal cursor-pointer" value={option.value} />
                   </FormControl>
-                  <FormLabel className="font-normal text-lg cursor-pointer pb-2">{option.label}</FormLabel>
+                  <FormLabel className="text-base font-medium cursor-pointer pb-2">{option.label}</FormLabel>
                 </FormItem>
               ))}
             </RadioGroup>

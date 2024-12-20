@@ -1,6 +1,6 @@
 import { UseFormReturn } from "react-hook-form";
 import { z } from "zod";
-import { getStartedFormValues } from "@/types/get-started";
+import { getStartedMentorFormValues } from "@/types/get-started";
 
 export type Page = "first" | "second";
 

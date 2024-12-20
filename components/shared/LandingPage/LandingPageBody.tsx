@@ -13,8 +13,8 @@ const LandingPageBody = () => {
         <div className="font-normal text-lg max-w-[500px] text-center">
           TURUMBA helps you connect a mentor with a pupil to guide them through a journey with an Automation
         </div>
-        <Link href="/log-in">
-          <Button variant="default" className="rounded-[20px] w-min gap-2 p-3 mx-auto" size="lg">
+        <Link href="/log-in" className="mx-auto">
+          <Button variant="default" className="rounded-[20px] w-min gap-2 p-3 " size="lg">
             Get Started
             <LuArrowRight />
           </Button>

@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState, useMemo } from "react";
+import React, { useState, useEffect } from "react";
 import {
   ChevronDown,
   ChevronUp,
@@ -9,7 +9,16 @@ import {
   X,
   ChevronLeft,
   ChevronRight,
+  Trash2,
 } from "lucide-react";
+import {
+  Dialog,
+  DialogContent,
+  DialogDescription,
+  DialogFooter,
+  DialogHeader,
+  DialogTitle,
+} from "@/components/ui/dialog";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import {
@@ -30,67 +39,115 @@ import {
 import { Column, FilterOption } from "@/types/data-table";
 
 interface DataTableProps<T> {
-  data: T[];
+  data?: T[];
+  apiUrl: string;
   columns: Column<T>[];
   searchFields?: (keyof T)[];
   filterOptions?: FilterOption<T>[];
   itemsPerPage?: number;
+  onDelete: (id: string | number) => Promise<void>;
 }
 
 export function DataTable<T extends { id: string | number }>({
-  data,
+  apiUrl,
   columns,
   searchFields = [],
   filterOptions = [],
-  itemsPerPage = 10,
+  itemsPerPage = 5,
+  onDelete,
 }: DataTableProps<T>) {
+  const [data, setData] = useState<T[]>([]);
+  const [totalItems, setTotalItems] = useState(0);
   const [searchQuery, setSearchQuery] = useState("");
   const [currentPage, setCurrentPage] = useState(1);
   const [filters, setFilters] = useState<string[]>([]);
+  const [isLoading, setIsLoading] = useState(false);
+  const [deleteDialog, setDeleteDialog] = useState<{
+    open: boolean;
+    id: string | number | null;
+  }>({ open: false, id: null });
 
-  const filteredData = useMemo(() => {
-    return data.filter((item) => {
-      const matchesSearch = searchFields.some((field) =>
-        String(item[field]).toLowerCase().includes(searchQuery.toLowerCase())
+  const fetchData = async () => {
+    setIsLoading(true);
+    try {
+      const token = localStorage.getItem("token");
+      const filterParams = filters.reduce((acc, filter) => {
+        const [key, value] = filter.split(":");
+        return `${acc}&${key}=${value}`;
+      }, "");
+
+      const response = await fetch(
+        `${apiUrl}?page=${currentPage}&limit=${itemsPerPage}&search=${searchQuery}${filterParams}`,
+        {
+          method: "GET",
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: token ? `Bearer ${JSON.parse(token)}` : "",
+          },
+        }
       );
-      const matchesFilters =
-        filters.length === 0 ||
-        filters.some(
-          (filter) =>
-            String(
-              item[
-                filterOptions.find((option) => option.label === filter)
-                  ?.key as keyof T
-              ]
-            ).toLowerCase() === filter.toLowerCase()
-        );
-      return matchesSearch && matchesFilters;
-    });
-  }, [data, searchQuery, filters, searchFields, filterOptions]);
 
-  const totalPages = Math.ceil(filteredData.length / itemsPerPage);
-  const currentData = filteredData.slice(
-    (currentPage - 1) * itemsPerPage,
-    currentPage * itemsPerPage
-  );
+      if (!response.ok) {
+        console.error(`HTTP error! Status: ${response.status}`);
+        throw new Error("Failed to fetch data.");
+      }
 
-  const handleSearch = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setSearchQuery(e.target.value);
-    setCurrentPage(1);
+      const text = await response.text();
+
+      if (text.trim() === "") {
+        setData([]);
+        setTotalItems(0);
+        return;
+      }
+
+      let result;
+      try {
+        result = JSON.parse(text);
+      } catch (error) {
+        console.error("Error parsing JSON response:", error);
+        setData([]);
+        setTotalItems(0);
+        return;
+      }
+
+      if (Array.isArray(result) && result.length > 0) {
+        setData(result);
+        setTotalItems(result.length);
+      } else {
+        setData([]);
+        setTotalItems(0);
+      }
+    } catch (error) {
+      console.error("Error fetching data:", error);
+      setData([]);
+      setTotalItems(0);
+    } finally {
+      setIsLoading(false);
+    }
   };
 
-  const toggleFilter = (filter: string) => {
-    setFilters((prev) =>
-      prev.includes(filter)
-        ? prev.filter((f) => f !== filter)
-        : [...prev, filter]
-    );
-    setCurrentPage(1);
+  useEffect(() => {
+    fetchData();
+  }, [currentPage, searchQuery, filters]);
+
+  const totalPages = Math.ceil(totalItems / itemsPerPage);
+
+  const handleDelete = (id: string | number) => {
+    setDeleteDialog({ open: true, id });
   };
 
-  const removeFilter = (filter: string) => {
-    setFilters((prev) => prev.filter((f) => f !== filter));
-    setCurrentPage(1);
+  const confirmDelete = async () => {
+    const id = deleteDialog.id;
+    if (!id) return;
+
+    try {
+      await onDelete(id);
+      setData((prev) => prev.filter((item) => item.id !== id));
+      setDeleteDialog({ open: false, id: null });
+      console.log("mentor is deleted with id ", id);
+    } catch (error) {
+      console.error("Error deleting data:", error);
+    }
   };
 
   return (
@@ -101,7 +158,10 @@ export function DataTable<T extends { id: string | number }>({
           <Input
             placeholder="Search"
             value={searchQuery}
-            onChange={handleSearch}
+            onChange={(e) => {
+              setSearchQuery(e.target.value);
+              setCurrentPage(1);
+            }}
             className="pl-10"
           />
         </div>
@@ -116,9 +176,21 @@ export function DataTable<T extends { id: string | number }>({
             <DropdownMenuContent>
               {filterOptions.map((option) => (
                 <DropdownMenuCheckboxItem
-                  key={option.label}
-                  checked={filters.includes(option.label)}
-                  onCheckedChange={() => toggleFilter(option.label)}
+                  key={`${String(option.key)}:${option.label}`}
+                  checked={filters.includes(
+                    `${String(option.key)}:${option.label}`
+                  )}
+                  onCheckedChange={() => {
+                    const filterString = `${String(option.key)}:${
+                      option.label
+                    }`;
+                    setFilters((prev) =>
+                      prev.includes(filterString)
+                        ? prev.filter((f) => f !== filterString)
+                        : [...prev, filterString]
+                    );
+                    setCurrentPage(1);
+                  }}
                 >
                   {option.label}
                 </DropdownMenuCheckboxItem>
@@ -128,9 +200,12 @@ export function DataTable<T extends { id: string | number }>({
         )}
         {filters.map((filter) => (
           <Badge key={filter} variant="secondary" className="gap-2">
-            {filter}
+            {filter.split(":")[1]}
             <button
-              onClick={() => removeFilter(filter)}
+              onClick={() => {
+                setFilters((prev) => prev.filter((f) => f !== filter));
+                setCurrentPage(1);
+              }}
               className="focus:outline-none"
             >
               <X className="h-3 w-3" />
@@ -144,31 +219,48 @@ export function DataTable<T extends { id: string | number }>({
           <TableHeader>
             <TableRow>
               {columns.map((column) => (
-                <TableHead key={column.key as string}>
-                  {column.header}
-                </TableHead>
+                <TableHead key={String(column.key)}>{column.header}</TableHead>
               ))}
+              <TableHead>Action</TableHead>
             </TableRow>
           </TableHeader>
           <TableBody>
-            {currentData.map((item) => (
-              <TableRow key={item.id}>
-                {columns.map((column) => (
-                  <TableCell key={column.key as string}>
-                    {column.render
-                      ? column.render(item)
-                      : String(item[column.key])}
-                  </TableCell>
-                ))}
+            {isLoading ? (
+              <TableRow>
+                <TableCell colSpan={columns.length + 1} className="text-center">
+                  Loading...
+                </TableCell>
               </TableRow>
-            ))}
+            ) : (
+              data?.map((item) => (
+                <TableRow key={item.id}>
+                  {columns.map((column) => (
+                    <TableCell key={String(column.key)}>
+                      {column.render
+                        ? column.render(item)
+                        : String(item[column.key])}
+                    </TableCell>
+                  ))}
+                  <TableCell>
+                    <Button
+                      variant="ghost"
+                      size="icon"
+                      onClick={() => handleDelete(item.id)}
+                      className="h-8 w-8"
+                    >
+                      <Trash2 className="h-4 w-4" />
+                    </Button>
+                  </TableCell>
+                </TableRow>
+              ))
+            )}
           </TableBody>
         </Table>
       </div>
 
       <div className="flex items-center justify-between">
         <p className="text-sm text-muted-foreground">
-          Showing {currentData.length} out of {filteredData.length} items
+          Showing {data.length} out of {totalItems} items
         </p>
         <div className="flex items-center gap-2">
           <Button
@@ -178,7 +270,6 @@ export function DataTable<T extends { id: string | number }>({
             disabled={currentPage === 1}
           >
             <ChevronLeft className="h-4 w-4" />
-            <span className="sr-only">Previous page</span>
           </Button>
           {Array.from({ length: Math.min(3, totalPages) }, (_, i) => (
             <Button
@@ -198,10 +289,35 @@ export function DataTable<T extends { id: string | number }>({
             disabled={currentPage === totalPages}
           >
             <ChevronRight className="h-4 w-4" />
-            <span className="sr-only">Next page</span>
           </Button>
         </div>
       </div>
+
+      <Dialog
+        open={deleteDialog.open}
+        onOpenChange={(open) => setDeleteDialog({ ...deleteDialog, open })}
+      >
+        <DialogContent>
+          <DialogHeader>
+            <DialogTitle>Confirm Delete</DialogTitle>
+            <DialogDescription>
+              Are you sure you want to delete this item? This action cannot be
+              undone.
+            </DialogDescription>
+          </DialogHeader>
+          <DialogFooter>
+            <Button
+              variant="outline"
+              onClick={() => setDeleteDialog({ open: false, id: null })}
+            >
+              Cancel
+            </Button>
+            <Button variant="destructive" onClick={confirmDelete}>
+              Delete
+            </Button>
+          </DialogFooter>
+        </DialogContent>
+      </Dialog>
     </div>
   );
 }

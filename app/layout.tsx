@@ -1,6 +1,7 @@
 import SessionWrapper from "@/context/providers/SessionWrapper";
 import "./globals.css";
 import { ThemeProvider } from "@/context/providers/ThemeProvider";
+import { AuthProvider } from "@/context/AuthContext";
 export default function RootLayout({
   children,
 }: Readonly<{
@@ -17,7 +18,10 @@ export default function RootLayout({
             enableSystem={false}
             storageKey="dashboard-theme"
           >
+            <AuthProvider>
+
             {children}
+            </AuthProvider>
           </ThemeProvider>
         </body>
       </html>

@@ -1,11 +1,8 @@
 'use client'
 import { AdminLayout } from "@/components/shared/layout/admin-layout";
+import { DashboardLayoutProps } from "@/types/admin";
 import { usePathname } from "next/navigation";
 
-
-interface DashboardLayoutProps {
-  children: React.ReactNode;
-}
 
 const DashboardLayout: React.FC<DashboardLayoutProps> =  ({ children }) => {
 
@@ -13,6 +10,14 @@ const DashboardLayout: React.FC<DashboardLayoutProps> =  ({ children }) => {
 
   // Get the last segment of the URL
   const lastSegment = pathname.split('/').filter(Boolean).pop();
+
+  // List of pages to exclude from this layout
+  const excludedRoutes = ["/admin/get-started", "/admin/create-org"];
+
+  if (excludedRoutes.includes(pathname)) {
+    return <>{children}</>; // Render without the layout
+  }
+
   return (
     <AdminLayout title={lastSegment?.toLocaleUpperCase() as string}>
     <div className="flex-1  bg-secondary dark:bg-gray-900">
