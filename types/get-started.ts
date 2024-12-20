@@ -153,8 +153,9 @@ export interface HourFieldProps {
   form: getStartedMentorFormValues | any | undefined;
 }
 
-export interface TimeFieldsProps {
+export interface AvailabilityFieldsProps {
   form: getStartedMentorFormValues | any | undefined;
+  control: any;
   errors: any;
 }
 
@@ -163,6 +164,18 @@ export interface GenderFieldProps {
   options: { label: string; value: string }[];
   className?: string;
 }
+
+export interface DayFieldProps {
+  control: any;
+  options: { label: string; value: string }[];
+}
+
+export interface TimeFieldsProps {
+  control: any;
+  errors: any;
+  form: getStartedMentorFormValues | any | undefined;
+}
+
 
 export interface GetStartedProps {
   type: "admin" | "mentor";
