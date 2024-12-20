@@ -19,7 +19,7 @@ import {
   DialogHeader,
   DialogTitle,
   DialogTrigger,
-} from "@/components/ui/dialog";
+} from "./TimeDialog";
 import { DayField } from "./DayFields";
 import { getStartedForm } from "@/data/get-started-data";
 import { TimeFields } from "./TimeFields";
@@ -38,7 +38,7 @@ export function AvailabilityFields({ form, errors, control }: AvailabilityFields
             <LuPlus className="w-12 h-auto" /> Add Date and Time
           </Button>
         </DialogTrigger>
-        <DialogContent className="min-w-[600px] p-8 rounded-[8px] border-4 border-red-500 space-y-8">
+        <DialogContent className="min-w-[680px] p-8 rounded-[8px] space-y-6">
           <DialogHeader className="text-start space-y-2">
             <DialogTitle className="text-2xl font-semibold">
               Add Availability Time
@@ -51,6 +51,7 @@ export function AvailabilityFields({ form, errors, control }: AvailabilityFields
             <DayField control={control} options={getStartedForm.DayOptions} />
             <TimeFields control={control} errors={errors} form={form} />
           </div>
+          <Button className="p-4 w-fit font-medium text-base">Add</Button>
         </DialogContent>
       </Dialog>
     </div>
