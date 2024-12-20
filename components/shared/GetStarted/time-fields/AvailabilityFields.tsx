@@ -49,7 +49,7 @@ export function AvailabilityFields({ form, errors, control }: AvailabilityFields
           </DialogHeader>
           <div className="space-y-6">
             <DayField control={control} options={getStartedForm.DayOptions} />
-            <TimeFields control={control} errors={errors} form={form} />
+            <TimeFields control={control} errors={errors} form={form} options={getStartedForm.DayOptions} />
           </div>
           <Button className="p-4 w-fit font-medium text-base">Add</Button>
         </DialogContent>

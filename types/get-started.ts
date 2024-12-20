@@ -174,6 +174,14 @@ export interface TimeFieldsProps {
   control: any;
   errors: any;
   form: getStartedMentorFormValues | any | undefined;
+  options: { label: string; value: string }[];
+}
+
+export interface TimeProp {
+  control: any;
+  errors: any;
+  form: getStartedMentorFormValues | any | undefined;
+  day: { label: string; value: string }
 }
 
 

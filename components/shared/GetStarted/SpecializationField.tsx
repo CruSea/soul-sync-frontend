@@ -19,7 +19,6 @@ export function SpecializationField({ control, options }: SpecializationFieldPro
                   key={option.value}
                   className="flex items-center"
                 >
-                  
                     <Checkbox
                       className="!bg-white !w-4 !h-4"
                       value={option.value}
@@ -33,8 +32,6 @@ export function SpecializationField({ control, options }: SpecializationFieldPro
 
                       }
                     />
-                  
-
                   <FormLabel className="ml-3 font-medium text-lg cursor-pointer">
                     {option.label}
                   </FormLabel>

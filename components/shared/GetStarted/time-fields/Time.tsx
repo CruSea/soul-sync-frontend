@@ -1,12 +1,12 @@
-import { TimeFieldsProps } from "@/types/get-started";
+import { TimeProp } from "@/types/get-started";
 import { HourField } from "../hourField";
 import { MinuteField } from "../MinuteField";
 import { DayPeriodField } from "../DayPeriod";
 
-export function Time({ control, errors, form }: TimeFieldsProps) {
+export function Time({ control, errors, form, day }: TimeProp) {
   return (
     <div className="flex flex-col gap-0.5">
-      <div className="font-medium font-sm">Monday</div>
+      <div className="font-medium font-sm">{day.label}</div>
       <div className="flex gap-4">
         <div className="flex gap-2 items-center">
           <div className="font-medium text-zinc-500 text-sm">Start Time</div>
