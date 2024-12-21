@@ -49,7 +49,7 @@ export function DayPeriodField({ control, type, form }: DayPeriodFieldProps) {
                     ? getStartedForm.dayPeriods.find(
                       (period) => period.value === field.value
                     )?.label
-                    : "Select period"}
+                    : ""}
                   <ChevronsUpDown className="ml-2 h-4 w-4 shrink-0 opacity-50" />
                 </Button>
               </FormControl>

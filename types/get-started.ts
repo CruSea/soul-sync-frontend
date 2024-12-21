@@ -21,10 +21,14 @@ const timeSchema = z.object({
   dayPeriod: z.enum(dayPeriodValues), // "AM" or "PM"
 });
 
-const dailyAvailabilitySchema = z.object({
+export const dailyAvailabilitySchema = z.object({
   startTime: timeSchema,
   endTime: timeSchema,
 });
+
+export type dailyAvailabilityType = z.infer<
+  typeof dailyAvailabilitySchema
+>;
 
 // the zod schema for the form One requirements
 export const getStartedMentorFormSchema = z

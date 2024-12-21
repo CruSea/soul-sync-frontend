@@ -49,7 +49,7 @@ export function MinuteField({ control, type, form }: MinuteFieldProps) {
                     ? getStartedForm.minutes.find(
                       (minute) => minute.value === field.value
                     )?.label
-                    : "Select minute"}
+                    : ""}
                   <ChevronsUpDown className="ml-2 h-4 w-4 shrink-0 opacity-50" />
                 </Button>
               </FormControl>

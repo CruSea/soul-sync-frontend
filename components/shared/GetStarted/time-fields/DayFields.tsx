@@ -6,15 +6,13 @@ import {
   FormMessage,
   FormLabel,
 } from "@/components/ui/form";
-import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
-import { cn } from "@/lib/utils";
 import { DayFieldProps } from "@/types/get-started";
 
 export function DayField({ control, options }: DayFieldProps) {
   return (
     <FormField
       control={control}
-      name="Gender"
+      name="availability"
       render={({ field }) => (
         <FormItem className="">
           <FormLabel className="text-lg font-semibold">Select Date</FormLabel>
@@ -25,7 +23,7 @@ export function DayField({ control, options }: DayFieldProps) {
                   <Checkbox
                     className="!bg-white !w-4 !h-4"
                     value={option.value}
-                    checked={field.value?.includes(option.value)}
+                    checked={Boolean(field.value[option.value])}
                   />
                   <FormLabel className="font-normal text-base cursor-pointer">
                     {option.label}

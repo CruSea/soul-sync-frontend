@@ -10,16 +10,6 @@ import { GenderField } from "./GenderField";
 import { getStartedForm } from "@/data/get-started-data";
 import { LocationField } from "./LocationField";
 import { SpecializationField } from "./SpecializationField";
-import {
-  FormField,
-  FormItem,
-  FormControl,
-  FormMessage,
-  FormLabel,
-} from "@/components/ui/form";
-import { HourField } from "./hourField";
-import { MinuteField } from "./MinuteField";
-import { DayPeriodField } from "./DayPeriod";
 import { useEffect } from "react";
 import { Button } from "@/components/ui/button";
 import { useRouter } from "next/navigation";
@@ -34,12 +24,15 @@ const GetStartedMentorForm = () => {
       gender: "male",
       location: "",
       specialization: ["marriageCounseling"],
-      startHour: "09",
-      startMinute: "00",
-      startDayPeriod: "AM",
-      endHour: "05",
-      endMinute: "00",
-      endDayPeriod: "PM",
+      availability: {
+        monday: getStartedForm.defaultAvailabilityTime,
+        tuesday: undefined,
+        wednesday: getStartedForm.defaultAvailabilityTime,
+        thursday: undefined,
+        friday: getStartedForm.defaultAvailabilityTime,
+        saturday: undefined,
+        sunday: undefined
+      }
     },
   });
 

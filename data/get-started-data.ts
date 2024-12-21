@@ -1,3 +1,4 @@
+import { dailyAvailabilityType } from "@/types/get-started";
 import { Value } from "@radix-ui/react-select";
 
 const genderOptions = [
@@ -52,6 +53,19 @@ const minutes = [
   { label: "55", value: "55" },
 ]
 
+const defaultAvailabilityTime: dailyAvailabilityType = {
+  startTime: {
+    hour: "09",
+    minute: "00",
+    dayPeriod: "AM"
+  },
+  endTime: {
+    hour: "05",
+    minute: "00",
+    dayPeriod: "PM"
+  }
+}
+
 const dayPeriods = [
   { label: "AM", value: "AM" },
   { label: "PM", value: "PM" },
@@ -63,5 +77,6 @@ export const getStartedForm = {
   hours,
   minutes,
   dayPeriods,
-  DayOptions
+  DayOptions,
+  defaultAvailabilityTime
 };
