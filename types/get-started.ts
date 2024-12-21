@@ -162,6 +162,7 @@ export interface DayPeriodFieldProps {
   control: any;
   type: "start" | "end";
   form: getStartedMentorFormValues | any | undefined;
+  day: { label: string; value: string };
 }
 
 export interface SpecializationFieldProps {
@@ -173,6 +174,7 @@ export interface MinuteFieldProps {
   control: any;
   type: "start" | "end";
   form: getStartedMentorFormValues | any | undefined;
+  day: { label: string; value: string };
 }
 
 export interface LocationFieldProps {
@@ -187,6 +189,7 @@ export interface HourFieldProps {
   control: any;
   type: "start" | "end";
   form: getStartedMentorFormValues | any | undefined;
+  day: { label: string; value: string };
 }
 
 export interface AvailabilityFieldsProps {

@@ -11,23 +11,23 @@ export function Time({ control, errors, form, day }: TimeProp) {
         <div className="flex gap-2 items-center">
           <div className="font-medium text-zinc-500 text-sm">Start Time</div>
           <div className="flex gap-2 items-center">
-            <HourField control={control} type="start" form={form} />
+            <HourField control={control} type="start" form={form} day={day} />
             <div className="text-2xl text-neutral-500 mb-1 ml-[-4px] mr-[-5px]">
               :
             </div>
-            <MinuteField control={control} type="start" form={form} />
-            <DayPeriodField control={control} type="start" form={form} />
+            <MinuteField control={control} type="start" form={form} day={day}/>
+            <DayPeriodField control={control} type="start" form={form} day={day}/>
           </div>
         </div>
         <div className="flex gap-2 items-center">
           <div className="font-medium text-zinc-500 text-sm">End Time</div>
           <div className="flex gap-2 items-center">
-            <HourField control={control} type="end" form={form} />
+            <HourField control={control} type="end" form={form} day={day}/>
             <div className="text-2xl text-neutral-500 mb-1 ml-[-4px] mr-[-5px]">
               :
             </div>
-            <MinuteField control={control} type="end" form={form} />
-            <DayPeriodField control={control} type="end" form={form} />
+            <MinuteField control={control} type="end" form={form} day={day}/>
+            <DayPeriodField control={control} type="end" form={form} day={day}/>
           </div>
         </div>
       </div>

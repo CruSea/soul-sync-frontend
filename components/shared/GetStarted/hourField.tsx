@@ -26,11 +26,11 @@ import { Check, ChevronsUpDown } from "lucide-react"
 import { getStartedForm } from "@/data/get-started-data";
 import { HourFieldProps } from "@/types/get-started";
 
-export function HourField({ control, type, form }: HourFieldProps) {
+export function HourField({ control, type, form, day }: HourFieldProps) {
   return (
     <FormField
       control={control}
-      name={type === "start" ? "startHour" : "endHour"}
+      name={`availability.${day.value}${type === "start" ? ".startTime.hour" : ".endTime.hour" }`}
       render={({ field }) => (
         <FormItem className="flex flex-col">
           <Popover>
@@ -44,11 +44,7 @@ export function HourField({ control, type, form }: HourFieldProps) {
                     !field.value && "text-muted-foreground"
                   )}
                 >
-                  {field.value
-                    ? getStartedForm.hours.find(
-                      (hour) => hour.value === field.value
-                    )?.label
-                    : ""}
+                  {field.value}
                   <ChevronsUpDown className="ml-2 h-4 w-4 shrink-0 opacity-50" />
                 </Button>
               </FormControl>
@@ -63,7 +59,7 @@ export function HourField({ control, type, form }: HourFieldProps) {
                         value={hour.label}
                         key={hour.value}
                         onSelect={() => {
-                          form.setValue(type === "start" ? "startHour" : "endHour", hour.value)
+                          form.setValue(`availability.${day.value}${type === "start" ? ".startTime.hour" : ".endTime.hour" }`,hour.value)
                         }}
                         className=" cursor-pointer"
                       >

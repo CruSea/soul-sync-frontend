@@ -27,11 +27,11 @@ import { getStartedForm } from "@/data/get-started-data";
 import { DayPeriodFieldProps } from "@/types/get-started";
 
 
-export function DayPeriodField({ control, type, form }: DayPeriodFieldProps) {
+export function DayPeriodField({ control, type, form, day }: DayPeriodFieldProps) {
   return (
     <FormField
       control={control}
-      name={type === "start" ? "startDayPeriod" : "endDayPeriod"}
+      name={`availability.${day.value}${type === "start" ? ".startTime.dayPeriod" : ".endTime.dayPeriod" }`}
       render={({ field }) => (
         <FormItem className="flex flex-col ml-[3px]">
           <Popover>
@@ -45,11 +45,7 @@ export function DayPeriodField({ control, type, form }: DayPeriodFieldProps) {
                     !field.value && "text-muted-foreground"
                   )}
                 >
-                  {field.value
-                    ? getStartedForm.dayPeriods.find(
-                      (period) => period.value === field.value
-                    )?.label
-                    : ""}
+                  {field.value}
                   <ChevronsUpDown className="ml-2 h-4 w-4 shrink-0 opacity-50" />
                 </Button>
               </FormControl>
@@ -59,20 +55,20 @@ export function DayPeriodField({ control, type, form }: DayPeriodFieldProps) {
                 <CommandList>
                   <CommandEmpty>No dayPeriod found.</CommandEmpty>
                   <CommandGroup>
-                    {getStartedForm.dayPeriods.map((period) => (
+                    {getStartedForm.dayPeriods.map((dayPeriod) => (
                       <CommandItem
-                        value={period.label}
-                        key={period.value}
+                        value={dayPeriod.label}
+                        key={dayPeriod.value}
                         onSelect={() => {
-                          form.setValue(type === "start" ? "startDayPeriod" : "endDayPeriod", period.value)
+                          form.setValue(`availability.${day.value}${type === "start" ? ".startTime.dayPeriod" : ".endTime.dayPeriod" }`,dayPeriod.value)
                         }}
                         className=" cursor-pointer"
                       >
-                        {period.label}
+                        {dayPeriod.label}
                         <Check
                           className={cn(
                             "ml-[-5px]",
-                            period.value === field.value
+                            dayPeriod.value === field.value
                               ? "opacity-100"
                               : "opacity-0"
                           )}
