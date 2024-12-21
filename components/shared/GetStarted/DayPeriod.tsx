@@ -46,7 +46,7 @@ export function DayPeriodField({ control, type, form }: DayPeriodFieldProps) {
                   )}
                 >
                   {field.value
-                    ? getStartedForm.dayPeriod.find(
+                    ? getStartedForm.dayPeriods.find(
                       (period) => period.value === field.value
                     )?.label
                     : "Select period"}
@@ -59,7 +59,7 @@ export function DayPeriodField({ control, type, form }: DayPeriodFieldProps) {
                 <CommandList>
                   <CommandEmpty>No dayPeriod found.</CommandEmpty>
                   <CommandGroup>
-                    {getStartedForm.dayPeriod.map((period) => (
+                    {getStartedForm.dayPeriods.map((period) => (
                       <CommandItem
                         value={period.label}
                         key={period.value}

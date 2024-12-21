@@ -1,5 +1,30 @@
+import { getStartedForm } from "@/data/get-started-data";
 import { UseFormReturn } from "react-hook-form";
 import { z } from "zod";
+
+const hourValues = getStartedForm.hours.map((hour) => hour.value) as [
+  string,
+  ...string[]
+]; // type assertion ensures that it is a tuple with atleast one string
+const minuteValues = getStartedForm.minutes.map((minute) => minute.value) as [
+  string,
+  ...string[]
+];
+const dayPeriodValues = getStartedForm.dayPeriods.map(
+  (period) => period.value
+) as [string, ...string[]];
+
+// Define the time object schema
+const timeSchema = z.object({
+  hour: z.enum(hourValues), // 00 - 12
+  minute: z.enum(minuteValues), // 00 | 05 | 10 ... || 55
+  dayPeriod: z.enum(dayPeriodValues), // "AM" or "PM"
+});
+
+const dailyAvailabilitySchema = z.object({
+  startTime: timeSchema,
+  endTime: timeSchema,
+});
 
 // the zod schema for the form One requirements
 export const getStartedMentorFormSchema = z
@@ -28,56 +53,64 @@ export const getStartedMentorFormSchema = z
         required_error: "You need to select at least one specialization",
       })
       .min(1, "You need to select at least one specialization"),
-    startHour: z.string({
-      required_error: "Please select hour time",
+    availability: z.object({
+      monday: z.union([dailyAvailabilitySchema, z.undefined()]),
+      tuesday: z.union([dailyAvailabilitySchema, z.undefined()]),
+      wednesday: z.union([dailyAvailabilitySchema, z.undefined()]),
+      thursday: z.union([dailyAvailabilitySchema, z.undefined()]),
+      friday: z.union([dailyAvailabilitySchema, z.undefined()]),
+      saturday: z.union([dailyAvailabilitySchema, z.undefined()]),
+      sunday: z.union([dailyAvailabilitySchema, z.undefined()]),
     }),
-    startMinute: z.string({
-      required_error: "Please select minute time",
-    }),
-    startDayPeriod: z.string({
-      required_error: "Please select day period time",
-    }),
-    endHour: z.string({
-      required_error: "Please select hour time",
-    }),
-    endMinute: z.string({
-      required_error: "Please select minute time",
-    }),
-    endDayPeriod: z.string({
-      required_error: "Please select day period time",
-    }),
+    // startHour: z.string({
+    //   required_error: "Please select hour time",
+    // }),
+    // startMinute: z.string({
+    //   required_error: "Please select minute time",
+    // }),
+    // startDayPeriod: z.string({
+    //   required_error: "Please select day period time",
+    // }),
+    // endHour: z.string({
+    //   required_error: "Please select hour time",
+    // }),
+    // endMinute: z.string({
+    //   required_error: "Please select minute time",
+    // }),
+    // endDayPeriod: z.string({
+    //   required_error: "Please select day period time",
+    // }),
   })
-  .refine(
-    (data) => {
-      const parseTime = (hour: string, minute: string, period: string) => {
-        const h = parseInt(hour, 10);
-        const m = parseInt(minute, 10);
-        return (period === "PM" ? (h % 12) + 12 : h % 12) * 60 + m;
-      };
+  // .refine(
+  //   (data) => {
+  //     const parseTime = (hour: string, minute: string, period: string) => {
+  //       const h = parseInt(hour, 10);
+  //       const m = parseInt(minute, 10);
+  //       return (period === "PM" ? (h % 12) + 12 : h % 12) * 60 + m;
+  //     };
 
-      const startTime = parseTime(
-        data.startHour,
-        data.startMinute,
-        data.startDayPeriod
-      );
-      const endTime = parseTime(
-        data.endHour,
-        data.endMinute,
-        data.endDayPeriod
-      );
+  //     const startTime = parseTime(
+  //       data.startHour,
+  //       data.startMinute,
+  //       data.startDayPeriod
+  //     );
+  //     const endTime = parseTime(
+  //       data.endHour,
+  //       data.endMinute,
+  //       data.endDayPeriod
+  //     );
 
-      return startTime < endTime;
-    },
-    {
-      message: "",
-      path: ["startHour"], // Attach to startHour or a relevant field
-    }
-  );
+  //     return startTime < endTime;
+  //   },
+  //   {
+  //     message: "",
+  //     path: ["startHour"], // Attach to startHour or a relevant field
+  //   }
+  // );
 
-  export type getStartedMentorFormValues = z.infer<
+export type getStartedMentorFormValues = z.infer<
   typeof getStartedMentorFormSchema
 >;
-
 
 export const getStartedAdminFormSchema = z.object({
   age: z.preprocess(
@@ -107,14 +140,13 @@ export const getStartedAdminFormSchema = z.object({
       }
     },
     {
-      message:
-        "Phone number is incorrect",
+      message: "Phone number is incorrect",
     }
   ),
 });
 
 export type getStartedAdminFormValues = z.infer<
-typeof getStartedAdminFormSchema
+  typeof getStartedAdminFormSchema
 >;
 
 export interface AgeFieldProps {
@@ -181,11 +213,9 @@ export interface TimeProp {
   control: any;
   errors: any;
   form: getStartedMentorFormValues | any | undefined;
-  day: { label: string; value: string }
+  day: { label: string; value: string };
 }
-
 
 export interface GetStartedProps {
   type: "admin" | "mentor";
 }
-

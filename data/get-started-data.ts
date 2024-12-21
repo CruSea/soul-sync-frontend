@@ -52,7 +52,7 @@ const minutes = [
   { label: "55", value: "55" },
 ]
 
-const dayPeriod = [
+const dayPeriods = [
   { label: "AM", value: "AM" },
   { label: "PM", value: "PM" },
 ]
@@ -62,6 +62,6 @@ export const getStartedForm = {
   specializationOptions,
   hours,
   minutes,
-  dayPeriod,
+  dayPeriods,
   DayOptions
 };
