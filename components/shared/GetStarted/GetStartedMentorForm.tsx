@@ -52,6 +52,7 @@ const GetStartedMentorForm = () => {
   useEffect(() => {
     console.log(errors);
   }, []);
+  
 
   return (
     <Form {...form}>

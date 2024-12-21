@@ -60,7 +60,7 @@ export function DayPeriodField({ control, type, form, day }: DayPeriodFieldProps
                         value={dayPeriod.label}
                         key={dayPeriod.value}
                         onSelect={() => {
-                          form.setValue(`availability.${day.value}${type === "start" ? ".startTime.dayPeriod" : ".endTime.dayPeriod" }`,dayPeriod.value)
+                          form.setValue(`availability.${day.value}${type === "start" ? ".startTime.dayPeriod" : ".endTime.dayPeriod" }`,dayPeriod.value)  // sets the name to the specific form data value
                         }}
                         className=" cursor-pointer"
                       >

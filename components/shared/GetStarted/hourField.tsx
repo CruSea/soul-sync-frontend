@@ -30,7 +30,7 @@ export function HourField({ control, type, form, day }: HourFieldProps) {
   return (
     <FormField
       control={control}
-      name={`availability.${day.value}${type === "start" ? ".startTime.hour" : ".endTime.hour" }`}
+      name={`availability.${day.value}${type === "start" ? ".startTime.hour" : ".endTime.hour" }`}  // sets the name to the specific form data value
       render={({ field }) => (
         <FormItem className="flex flex-col">
           <Popover>
@@ -59,7 +59,7 @@ export function HourField({ control, type, form, day }: HourFieldProps) {
                         value={hour.label}
                         key={hour.value}
                         onSelect={() => {
-                          form.setValue(`availability.${day.value}${type === "start" ? ".startTime.hour" : ".endTime.hour" }`,hour.value)
+                          form.setValue(`availability.${day.value}${type === "start" ? ".startTime.hour" : ".endTime.hour" }`,hour.value) // sets the hour value selected on the popout on the form
                         }}
                         className=" cursor-pointer"
                       >

@@ -31,7 +31,7 @@ export function MinuteField({ control, type, form, day}: MinuteFieldProps) {
   return (
     <FormField
       control={control}
-      name={`availability.${day.value}${type === "start" ? ".startTime.minute" : ".endTime.minute" }`}
+      name={`availability.${day.value}${type === "start" ? ".startTime.minute" : ".endTime.minute" }`}  // sets the name to the specific form data value
       render={({ field }) => (
         <FormItem className="flex flex-col">
           <Popover>
@@ -60,7 +60,7 @@ export function MinuteField({ control, type, form, day}: MinuteFieldProps) {
                         value={minute.label}
                         key={minute.value}
                         onSelect={() => {
-                          form.setValue(`availability.${day.value}${type === "start" ? ".startTime.minute" : ".endTime.minute" }`,minute.value)
+                          form.setValue(`availability.${day.value}${type === "start" ? ".startTime.minute" : ".endTime.minute" }`,minute.value)  // sets the minute value selected on the popout on the form
                         }}
                         className=" cursor-pointer"
                       >
