@@ -6,6 +6,7 @@ import {
   FormMessage,
   FormLabel,
 } from "@/components/ui/form";
+import { getStartedForm } from "@/data/get-started-data";
 import { DayFieldProps } from "@/types/get-started";
 
 export function DayField({ control, options }: DayFieldProps) {
@@ -24,6 +25,10 @@ export function DayField({ control, options }: DayFieldProps) {
                     className="!bg-white !w-4 !h-4"
                     value={option.value}
                     checked={Boolean(field.value[option.value])}
+                    onCheckedChange={(checked) => {
+                      const newValue = checked ? {...field.value, [option.value]: getStartedForm.defaultAvailabilityTime} : {...field.value, [option.value]: undefined }
+                      field.onChange(newValue)
+                    }}
                   />
                   <FormLabel className="font-normal text-base cursor-pointer">
                     {option.label}
