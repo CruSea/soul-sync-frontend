@@ -1,6 +1,4 @@
-
 import MentorContainer from "@/components/shared/Mentor/mentor-container";
-
 
 const MentorView = async () => {
   // Fetch users from the JSON Server
@@ -14,6 +12,8 @@ const MentorView = async () => {
   if (users.length === 0) {
     throw new Error("No users found");
   }
+
+  
   return (
     <>
       <MentorContainer users={users} />

@@ -19,6 +19,9 @@ import { Button } from "@/components/ui/button"
 import { useRouter } from "next/navigation";
 import { TimeFields } from "./TimeFields"
 
+const BASE_URL = process.env.NEXT_PUBLIC_API_BASE_URL;
+const USER_URL = process.env.NEXT_PUBLIC_API_ADMIN_URL;
+
 const GetStartedMentorForm = () => {
   const form = useForm<getStartedMentorFormValues>({
     resolver: zodResolver(getStartedMentorFormSchema),
@@ -42,30 +45,91 @@ const GetStartedMentorForm = () => {
   const onSubmit = (data: getStartedMentorFormValues) => {
     console.log("Mentor form data", data);
 
-    // Navigate to /mentor after form submission
-    router.push("/mentor");  // Use router.push for smooth navigation
-  };
+    const updateMentor = async () => {
+      try {
+      const user = localStorage.getItem("user");
+      const token = localStorage.getItem("token");
 
-  const { formState: { errors } } = form;
+      if (user && token) {
+        const userObj = JSON.parse(user);
+        const endPoint = `${BASE_URL}/${USER_URL}/${userObj.accounts[0].id}/user/${userObj.sub}`;
+        const reqBody = {
+          name: "nati",
+          age: 22,
+          location: "addis ababa",
+          expertise: ["marrige counseling", "spiritual"],
+          availability: {
+            monday: undefined,
+            tuesday: {
+              startTime: {
+                hour: "09",
+                minute: "00",
+                dayPeriod: "AM"
+              },
+              endTime: {
+                hour: "05",
+                minute: "00",
+                dayPeriod: "PM"
+              }
+            },
+            wednesday: undefined,
+            thursday: undefined,
+            friday: undefined,
+            saturday: undefined,
+            sunday: undefined,
+          }
+        }
+        
+        const response = await fetch(endPoint, {
+          method: "PATCH",
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${JSON.parse(token)}`,
+          },
+          body: JSON.stringify(reqBody)
+        });
 
-  useEffect(() => {
-    console.log(errors)
-  }, [])
+        if (!response.ok) {
+          console.error("Failed to patch the data", response);
+          throw new Error("Patch failed");
+        }
 
-  return (
-    <Form {...form}>
-      <form onSubmit={form.handleSubmit(onSubmit)} className="flex flex-col gap-5">
-        <div className="flex gap-16 w-full">
-          <AgeField control={form.control} />
-          <GenderField control={form.control} options={getStartedForm.genderOptions} />
-        </div>
-        <LocationField control={form.control} />
-        <SpecializationField control={form.control} options={getStartedForm.specializationOptions} />
-        <TimeFields form={form} errors={errors} />
-        <Button type="submit" className="w-4/5 mx-auto h-12 ">Submit</Button>
-      </form>
-    </Form>
-  )
+        router.push("/mentor")
+        
+      } else {
+        console.error("User or token not found");
+        router.push("/log-in");
+      }
+    } catch (error) {
+      console.error("Error: ", error);
+      router.push("/log-in");
+    }
+  }
+
+  // Navigate to /mentor after form submission
+  router.push("/mentor");  // Use router.push for smooth navigation
+};
+
+const { formState: { errors } } = form;
+
+useEffect(() => {
+  console.log(errors)
+}, [])
+
+return (
+  <Form {...form}>
+    <form onSubmit={form.handleSubmit(onSubmit)} className="flex flex-col gap-5">
+      <div className="flex gap-16 w-full">
+        <AgeField control={form.control} />
+        <GenderField control={form.control} options={getStartedForm.genderOptions} />
+      </div>
+      <LocationField control={form.control} />
+      <SpecializationField control={form.control} options={getStartedForm.specializationOptions} />
+      <TimeFields form={form} errors={errors} />
+      <Button type="submit" className="w-4/5 mx-auto h-12 ">Submit</Button>
+    </form>
+  </Form>
+)
 }
 
 export default GetStartedMentorForm
