@@ -1,6 +1,7 @@
 import Image from "next/image";
 import type { Channel } from "@/types/channel";
 import { AiOutlineDelete } from "react-icons/ai";
+import { useToast } from "@/hooks/use-toast";
 
 import {
   Dialog,
@@ -20,6 +21,7 @@ interface ChannelCardProps {
 
 export function ChannelCard({ channel, setChannel }: ChannelCardProps) {
   const [deleteId, setDeleteId] = useState<string | null>(null);
+  const { toast } = useToast();
   let iconURL = "";
   switch (channel.type) {
     case "Telegram Bot":
@@ -56,6 +58,10 @@ export function ChannelCard({ channel, setChannel }: ChannelCardProps) {
         .then((response) => {
           if (!response.ok) {
             throw new Error("Failed to update channel");
+            toast({
+              title: "Failed to delete channel",
+              description: "Your channel has not been deleted successfully",
+            });
           }
           // Update local state after successful update
           setChannel((prev) =>
@@ -65,6 +71,10 @@ export function ChannelCard({ channel, setChannel }: ChannelCardProps) {
                 )
               : null
           );
+          toast({
+            title: "Channel deleted successfully",
+            description: "Your channel has been deleted successfully",
+          });
         })
         .catch((error) => {
           console.error("Error updating channel:", error);
@@ -75,7 +85,7 @@ export function ChannelCard({ channel, setChannel }: ChannelCardProps) {
   const cancelDelete = () => {
     setDeleteId(null);
   };
-  
+
   return (
     <div className="h-[278px] w-full  flex flex-col items-center justify-between px-2.5 pt-1 pb-2 border rounded-xl bg-white hover:shadow-md hover:rounded-xl transition-shadow">
       <div className="h-10 px-1 py-2 rounded-tl-lg rounded-tr-lg justify-between items-center inline-flex w-full">
@@ -85,7 +95,9 @@ export function ChannelCard({ channel, setChannel }: ChannelCardProps) {
           </div>
         </div>
         <div
-          onClick={() => handleDelete(channel) }
+          onClick={() => {
+            handleDelete(channel);
+          }}
           className="w-6 h-6 px-[3px] py-[2.62px] justify-center rounded-xl hover:bg-[#f1f2f4] items-center cursor-pointer flex"
         >
           <AiOutlineDelete className="w-full h-full cursor-pointer  " />
