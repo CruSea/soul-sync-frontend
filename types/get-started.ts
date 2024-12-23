@@ -26,6 +26,8 @@ export const dailyAvailabilitySchema = z.object({
   endTime: timeSchema,
 });
 
+type timeType = z.infer<typeof timeSchema>
+
 export type dailyAvailabilityType = z.infer<
   typeof dailyAvailabilitySchema
 >;
@@ -65,7 +67,7 @@ export const getStartedMentorFormSchema = z
       friday: z.union([dailyAvailabilitySchema, z.undefined()]),
       saturday: z.union([dailyAvailabilitySchema, z.undefined()]),
       sunday: z.union([dailyAvailabilitySchema, z.undefined()]),
-    }),
+    })
     // startHour: z.string({
     //   required_error: "Please select hour time",
     // }),
@@ -84,7 +86,26 @@ export const getStartedMentorFormSchema = z
     // endDayPeriod: z.string({
     //   required_error: "Please select day period time",
     // }),
-  })
+  }).refine(
+    (data) => {
+      const parseTime = (time: timeType) => {
+        const hour = parseInt(time.hour, 10);
+        const minute = parseInt(time.minute, 10);
+        return (time.dayPeriod === "PM" ? (hour % 12) + 12 : hour % 12) * 60 + minute;
+      };
+
+      return Object.entries(data.availability).every(([day, times]) => {
+        if (!times) return true; // Skip days with no availability
+        const startTime = parseTime(times.startTime);
+        const endTime = parseTime(times.endTime);
+        return startTime < endTime;
+      });
+    },
+    {
+      message: "Start time must be earlier than end time for each day.",
+      path: ["availability"], // Highlight the `availability` field in errors
+    }
+  );
   // .refine(
   //   (data) => {
   //     const parseTime = (hour: string, minute: string, period: string) => {
@@ -113,6 +134,43 @@ export const getStartedMentorFormSchema = z
   // );
 
 export type getStartedMentorFormValues = z.infer<
+  typeof getStartedMentorFormSchema
+>;
+
+
+// for the Availability popup in the mentor form
+export const MentorAvailabilityFormSchema = z.object({
+  availability: z.object({
+    monday: z.union([dailyAvailabilitySchema, z.undefined()]),
+    tuesday: z.union([dailyAvailabilitySchema, z.undefined()]),
+    wednesday: z.union([dailyAvailabilitySchema, z.undefined()]),
+    thursday: z.union([dailyAvailabilitySchema, z.undefined()]),
+    friday: z.union([dailyAvailabilitySchema, z.undefined()]),
+    saturday: z.union([dailyAvailabilitySchema, z.undefined()]),
+    sunday: z.union([dailyAvailabilitySchema, z.undefined()]),
+  })
+}).refine(
+  (data) => {
+    const parseTime = (time: timeType) => {
+      const hour = parseInt(time.hour, 10);
+      const minute = parseInt(time.minute, 10);
+      return (time.dayPeriod === "PM" ? (hour % 12) + 12 : hour % 12) * 60 + minute;
+    };
+
+    return Object.entries(data.availability).every(([day, times]) => {
+      if (!times) return true; // Skip days with no availability
+      const startTime = parseTime(times.startTime);
+      const endTime = parseTime(times.endTime);
+      return startTime < endTime;
+    });
+  },
+  {
+    message: "Start time must be earlier than end time for each day.",
+    path: ["availability"], // Highlight the `availability` field in errors
+  }
+);
+
+export type MentorAvailabilityFormValues = z.infer<
   typeof getStartedMentorFormSchema
 >;
 
@@ -193,9 +251,7 @@ export interface HourFieldProps {
 }
 
 export interface AvailabilityFieldsProps {
-  form: getStartedMentorFormValues | any | undefined;
   control: any;
-  errors: any;
 }
 
 export interface GenderFieldProps {

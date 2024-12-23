@@ -25,11 +25,11 @@ const GetStartedMentorForm = () => {
       location: "",
       specialization: ["marriageCounseling"],
       availability: {
-        monday: getStartedForm.defaultAvailabilityTime,
+        monday: undefined,
         tuesday: undefined,
-        wednesday: getStartedForm.defaultAvailabilityTime,
+        wednesday: undefined,
         thursday: undefined,
-        friday: getStartedForm.defaultAvailabilityTime,
+        friday: undefined,
         saturday: undefined,
         sunday: undefined
       }
@@ -73,9 +73,6 @@ const GetStartedMentorForm = () => {
           options={getStartedForm.specializationOptions}
         />
         <AvailabilityFields
-          form={form}
-          errors={errors}
-          control={form.control}
         />
         <Button type="submit" className="w-4/5 mx-auto h-12 mt-8 ">
           Submit
