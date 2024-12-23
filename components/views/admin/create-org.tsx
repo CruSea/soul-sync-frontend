@@ -81,7 +81,6 @@ const CreateOrgView = () => {
       } else {
         console.error("Form Submission is wrong")
         setCurrentPage("first");
-        
       }
     }
   };
