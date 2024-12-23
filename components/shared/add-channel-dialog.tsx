@@ -31,7 +31,7 @@ import { Button } from "@/components/ui/button";
 import { Textarea } from "@/components/ui/textarea";
 import { Plus } from "lucide-react";
 import type { Channel } from "@/types/channel";
-
+import { useToast } from "@/hooks/use-toast";
 const formSchema = z.object({
   name: z.string().min(2, {
     message: "Channel name must be at least 2 characters.",
@@ -81,6 +81,8 @@ export function AddChannelDialog({ onAddChannel }: AddChannelDialogProps) {
     form.reset();
   }
 
+  const { toast } = useToast();
+  
   return (
     <Dialog open={open} onOpenChange={setOpen}>
       <DialogTrigger asChild>
@@ -180,7 +182,12 @@ export function AddChannelDialog({ onAddChannel }: AddChannelDialogProps) {
                 </FormItem>
               )}
             />
-            <Button type="submit" className="w-full">
+            <Button type="submit" className="w-full" onClick={() => {
+              toast({
+                title: "Channel added successfully",
+                description: "Your channel has been added successfully",
+              });
+            }}>
               Add channel
             </Button>
           </form>

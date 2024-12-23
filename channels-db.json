@@ -8,7 +8,7 @@
       "webhookUrl": "https://www.google.com",
       "customGreeting": "Welcome to our support bot!",
       "Date": "Dec 16, 2024",
-      "isDeleted": false,
+      "isDeleted": true,
       "icon": "/telegram-bot-icon.svg"
     },
     {
@@ -20,6 +20,17 @@
       "customGreeting": "Welcome to our support bot!",
       "Date": "Dec 16, 2024",
       "isDeleted": true,
+      "icon": "/telegram-bot-icon.svg"
+    },
+    {
+      "id": "83bbbd97-a8e0-4db0-8828-b6238a8349e9",
+      "name": "jhefksh",
+      "type": "Telegram Bot",
+      "apiKey": "sjdhfsdhfkjesf",
+      "webhookUrl": "https://www.google.com",
+      "customGreeting": "Welcome to our support bot!",
+      "Date": "Dec 23, 2024",
+      "isDeleted": false,
       "icon": "/telegram-bot-icon.svg"
     }
   ]

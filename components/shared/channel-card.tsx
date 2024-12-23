@@ -20,7 +20,6 @@ interface ChannelCardProps {
 
 export function ChannelCard({ channel, setChannel }: ChannelCardProps) {
   const [deleteId, setDeleteId] = useState<string | null>(null);
-
   let iconURL = "";
   switch (channel.type) {
     case "Telegram Bot":
@@ -86,7 +85,7 @@ export function ChannelCard({ channel, setChannel }: ChannelCardProps) {
           </div>
         </div>
         <div
-          onClick={() => handleDelete(channel)}
+          onClick={() => handleDelete(channel) }
           className="w-6 h-6 px-[3px] py-[2.62px] justify-center rounded-xl hover:bg-[#f1f2f4] items-center cursor-pointer flex"
         >
           <AiOutlineDelete className="w-full h-full cursor-pointer  " />
