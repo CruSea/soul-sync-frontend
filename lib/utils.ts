@@ -1,3 +1,4 @@
+import { timeType } from "@/types/get-started";
 import { Messages, Users } from "@/types/mentor";
 import { clsx, type ClassValue } from "clsx"
 import { twMerge } from "tailwind-merge"
@@ -53,3 +54,9 @@ export function sortUsers(users: Users) {
     (a, b) => new Date(b.lastUpdated).getTime() - new Date(a.lastUpdated).getTime()
   );
 }
+
+export const parseTime = (time: timeType) => {
+  const hour = parseInt(time.hour, 10);
+  const minute = parseInt(time.minute, 10);
+  return (time.dayPeriod === "PM" ? (hour % 12) + 12 : hour % 12) * 60 + minute;
+};

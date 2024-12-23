@@ -5,15 +5,15 @@ import { getStartedMentorFormSchema } from "@/types/get-started";
 import { getStartedMentorFormValues } from "@/types/get-started";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Form } from "@/components/ui/form";
-import { AgeField } from "./AgeField";
-import { GenderField } from "./GenderField";
+import { AgeField } from "../fields/AgeField";
+import { GenderField } from "../fields/GenderField";
 import { getStartedForm } from "@/data/get-started-data";
-import { LocationField } from "./LocationField";
-import { SpecializationField } from "./SpecializationField";
+import { LocationField } from "../fields/LocationField";
+import { SpecializationField } from "../fields/SpecializationField";
 import { useEffect } from "react";
 import { Button } from "@/components/ui/button";
 import { useRouter } from "next/navigation";
-import { AvailabilityFields } from "./time-fields/AvailabilityFields";
+import { AvailabilityFields } from "../time-fields/AvailabilityFields";
 
 const GetStartedMentorForm = () => {
   const form = useForm<getStartedMentorFormValues>({
@@ -31,8 +31,8 @@ const GetStartedMentorForm = () => {
         thursday: undefined,
         friday: undefined,
         saturday: undefined,
-        sunday: undefined
-      }
+        sunday: undefined,
+      },
     },
   });
 
@@ -52,7 +52,6 @@ const GetStartedMentorForm = () => {
   useEffect(() => {
     console.log(errors);
   }, []);
-  
 
   return (
     <Form {...form}>
@@ -72,8 +71,7 @@ const GetStartedMentorForm = () => {
           control={form.control}
           options={getStartedForm.specializationOptions}
         />
-        <AvailabilityFields
-        />
+        <AvailabilityFields />
         <Button type="submit" className="w-4/5 mx-auto h-12 mt-8 ">
           Submit
         </Button>

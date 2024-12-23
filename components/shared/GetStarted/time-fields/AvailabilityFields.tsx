@@ -13,9 +13,9 @@ import {
   MentorAvailabilityFormValues,
   MentorAvailabilityFormSchema,
 } from "@/types/get-started";
-import { HourField } from "../hourField";
-import { DayPeriodField } from "../DayPeriod";
-import { MinuteField } from "../MinuteField";
+import { HourField } from "./hourField";
+import { DayPeriodField } from "./DayPeriod";
+import { MinuteField } from "./MinuteField";
 import { Button } from "@/components/ui/button";
 import { LuPlus } from "react-icons/lu";
 import {
@@ -71,7 +71,7 @@ export function AvailabilityFields() {
           ) : (
             <div className="flex justify-between items-center px-3">
               <div className="flex gap-2 items-center">
-                <AiTwotoneCheckCircle size={20}/>
+                <AiTwotoneCheckCircle size={20} />
                 <div className="font-medium text-base">Date Added </div>
               </div>
               <DialogTrigger>

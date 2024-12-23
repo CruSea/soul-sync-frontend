@@ -26,7 +26,7 @@ export const dailyAvailabilitySchema = z.object({
   endTime: timeSchema,
 });
 
-type timeType = z.infer<typeof timeSchema>
+export type timeType = z.infer<typeof timeSchema>
 
 export type dailyAvailabilityType = z.infer<
   typeof dailyAvailabilitySchema
