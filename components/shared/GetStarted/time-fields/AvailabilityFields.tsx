@@ -30,10 +30,10 @@ import { DayField } from "./DayFields";
 import { getStartedForm } from "@/data/get-started-data";
 import { TimeFields } from "./TimeFields";
 import { useForm } from "react-hook-form";
+import { AiTwotoneCheckCircle } from "react-icons/ai";
 
 export function AvailabilityFields() {
-
-  const availabilityForm =  useForm<MentorAvailabilityFormValues>({
+  const availabilityForm = useForm<MentorAvailabilityFormValues>({
     resolver: zodResolver(MentorAvailabilityFormSchema),
     mode: "onChange",
     defaultValues: {
@@ -44,8 +44,8 @@ export function AvailabilityFields() {
         thursday: undefined,
         friday: undefined,
         saturday: undefined,
-        sunday: undefined
-      }
+        sunday: undefined,
+      },
     },
   });
 
@@ -60,18 +60,28 @@ export function AvailabilityFields() {
     <div className="space-y-4 flex flex-col justify-center items-center">
       <div className="font-medium text-xl mr-auto">Availability Time</div>
       <Dialog>
-        <DialogTrigger className="w-4/5">
-        {/* if the days of work are selected change the add button to edit */}
+        <div className="w-full">
+          {/* if the days of work are selected change the add button to edit */}
           {!isDaySelected() ? (
-            <div className="w-full h-14 text-base border border-input bg-background hover:bg-accent hover:text-accent-foreground inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-md font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 [&_svg]:pointer-events-none [&_svg]:size-4 [&_svg]:shrink-0">
-              <LuPlus className="w-12 h-auto" /> Add Date and Time
-            </div>
+            <DialogTrigger className="w-full">
+              <div className="w-4/5 h-14 text-base border border-input bg-background hover:bg-accent hover:text-accent-foreground inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-md font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 [&_svg]:pointer-events-none [&_svg]:size-4 [&_svg]:shrink-0">
+                <LuPlus className="w-12 h-auto" /> Add Date and Time
+              </div>
+            </DialogTrigger>
           ) : (
-            <div className="ml-auto flex justify-end text-blue-600 underline">
-              Edit
+            <div className="flex justify-between items-center px-3">
+              <div className="flex gap-2 items-center">
+                <AiTwotoneCheckCircle size={20}/>
+                <div className="font-medium text-base">Date Added </div>
+              </div>
+              <DialogTrigger>
+                <div className="ml-auto flex justify-end text-blue-600 text-base underline cursor-pointer">
+                  Edit
+                </div>
+              </DialogTrigger>
             </div>
           )}
-        </DialogTrigger>
+        </div>
         <DialogContent className="min-w-[680px] p-8 rounded-[8px] space-y-6">
           <DialogHeader className="text-start space-y-2">
             <DialogTitle className="text-2xl font-semibold">
@@ -82,7 +92,10 @@ export function AvailabilityFields() {
             </DialogDescription>
           </DialogHeader>
           <div className="space-y-6">
-            <DayField control={availabilityForm.control} options={getStartedForm.DayOptions} />
+            <DayField
+              control={availabilityForm.control}
+              options={getStartedForm.DayOptions}
+            />
             {isDaySelected() ? (
               <TimeFields
                 control={availabilityForm.control}
