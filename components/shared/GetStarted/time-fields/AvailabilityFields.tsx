@@ -58,17 +58,8 @@ export function AvailabilityFields() {
   const isDaySelected = () =>
     Object.values(availabilityForm.watch("availability")).some(Boolean); // gets the availabily array and checks if there is atleast one value truthy
 
-  useEffect(() => {
-    setInterval(() => {
-      console.log(availabilityForm.getValues(), "//////////...............")
-    }, 2000)
-
-  }, [])
-
   return (
     <FormProvider {...availabilityForm}>
-      <Form {...availabilityForm}>
-        <form>
           <div className="space-y-4 flex flex-col justify-center items-center">
             <div className="font-medium text-xl mr-auto">Availability Time</div>
             <Dialog>
@@ -113,7 +104,6 @@ export function AvailabilityFields() {
                   {isDaySelected() ? (
                     <TimeFields
                       control={availabilityForm.control}
-                      errors={errors}
                       form={availabilityForm}
                       options={getStartedForm.DayOptions}
                     />
@@ -123,8 +113,6 @@ export function AvailabilityFields() {
               </DialogContent>
             </Dialog>
           </div>
-        </form>
-      </Form>
     </FormProvider>
   );
 }
