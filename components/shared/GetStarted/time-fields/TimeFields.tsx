@@ -1,5 +1,6 @@
 import { TimeFieldsProps } from "@/types/get-started";
 import { Time } from "./Time";
+import { useFormContext } from "react-hook-form";
 
 export function TimeFields({
   control,
@@ -7,7 +8,8 @@ export function TimeFields({
   form,
   options,
 }: TimeFieldsProps) {
-  const availability = form.watch("availability");
+  const availability = useFormContext().getValues("availability")
+  
 
   return (
     <div className="space-y-4">

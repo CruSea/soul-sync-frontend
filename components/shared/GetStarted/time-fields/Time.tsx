@@ -52,9 +52,9 @@ export function Time({ control, errors, form, day }: TimeProp) {
           </div>
         </div>
       </div>
-      {timeError() && (
+      {/* {timeError() && (
         <p className="text-red-500">Start Time can't be less than End Time</p>
-      )}
+      )} */}
     </div>
   );
 }

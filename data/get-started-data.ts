@@ -53,7 +53,7 @@ const minutes = [
   { label: "55", value: "55" },
 ]
 
-const defaultAvailabilityTime: dailyAvailabilityType = {
+export const defaultAvailabilityTime: dailyAvailabilityType = {
   startTime: {
     hour: "09",
     minute: "00",

@@ -6,7 +6,8 @@ import {
   FormMessage,
   FormLabel,
 } from "@/components/ui/form";
-import { getStartedForm } from "@/data/get-started-data";
+import { defaultAvailabilityTime } from "@/data/get-started-data";
+
 import { DayFieldProps } from "@/types/get-started";
 
 export function DayField({ control, options }: DayFieldProps) {
@@ -26,7 +27,11 @@ export function DayField({ control, options }: DayFieldProps) {
                     value={option.value}
                     checked={Boolean(field.value[option.value])}
                     onCheckedChange={(checked) => {
-                      const newValue = checked ? {...field.value, [option.value]: getStartedForm.defaultAvailabilityTime} : {...field.value, [option.value]: undefined }
+                      {/* i had to json stringify and parse it because it was setting defaultAvailabilityTime to a the availability.day,
+                          so when i changed availability.day, defaultAvailabilityTime would also change. i created a deep copy to 
+                          make the two objects have different references in memory */}
+                      const newValue = checked ? {...field.value, [option.value]: JSON.parse(JSON.stringify(defaultAvailabilityTime))} : {...field.value, [option.value]: undefined }
+                      console.log("the new value", newValue, "opiton.value", option.value, "the DEFAULT values", defaultAvailabilityTime )
                       field.onChange(newValue)
                     }}
                   />

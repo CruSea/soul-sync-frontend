@@ -86,26 +86,27 @@ export const getStartedMentorFormSchema = z
     // endDayPeriod: z.string({
     //   required_error: "Please select day period time",
     // }),
-  }).refine(
-    (data) => {
-      const parseTime = (time: timeType) => {
-        const hour = parseInt(time.hour, 10);
-        const minute = parseInt(time.minute, 10);
-        return (time.dayPeriod === "PM" ? (hour % 12) + 12 : hour % 12) * 60 + minute;
-      };
+  })
+  // .refine(
+  //   (data) => {
+  //     const parseTime = (time: timeType) => {
+  //       const hour = parseInt(time.hour, 10);
+  //       const minute = parseInt(time.minute, 10);
+  //       return (time.dayPeriod === "PM" ? (hour % 12) + 12 : hour % 12) * 60 + minute;
+  //     };
 
-      return Object.entries(data.availability).every(([day, times]) => {
-        if (!times) return true; // Skip days with no availability
-        const startTime = parseTime(times.startTime);
-        const endTime = parseTime(times.endTime);
-        return startTime < endTime;
-      });
-    },
-    {
-      message: "Start time must be earlier than end time for each day.",
-      path: ["availability"], // Highlight the `availability` field in errors
-    }
-  );
+  //     return Object.entries(data.availability).every(([day, times]) => {
+  //       if (!times) return true; // Skip days with no availability
+  //       const startTime = parseTime(times.startTime);
+  //       const endTime = parseTime(times.endTime);
+  //       return startTime < endTime;
+  //     });
+  //   },
+  //   {
+  //     message: "Start time must be earlier than end time for each day.",
+  //     path: ["availability"], // Highlight the `availability` field in errors
+  //   }
+  // );
   // .refine(
   //   (data) => {
   //     const parseTime = (hour: string, minute: string, period: string) => {
@@ -149,29 +150,30 @@ export const MentorAvailabilityFormSchema = z.object({
     saturday: z.union([dailyAvailabilitySchema, z.undefined()]),
     sunday: z.union([dailyAvailabilitySchema, z.undefined()]),
   })
-}).refine(
-  (data) => {
-    const parseTime = (time: timeType) => {
-      const hour = parseInt(time.hour, 10);
-      const minute = parseInt(time.minute, 10);
-      return (time.dayPeriod === "PM" ? (hour % 12) + 12 : hour % 12) * 60 + minute;
-    };
+})
+// .refine(
+//   (data) => {
+//     const parseTime = (time: timeType) => {
+//       const hour = parseInt(time.hour, 10);
+//       const minute = parseInt(time.minute, 10);
+//       return (time.dayPeriod === "PM" ? (hour % 12) + 12 : hour % 12) * 60 + minute;
+//     };
 
-    return Object.entries(data.availability).every(([day, times]) => {
-      if (!times) return true; // Skip days with no availability
-      const startTime = parseTime(times.startTime);
-      const endTime = parseTime(times.endTime);
-      return startTime < endTime;
-    });
-  },
-  {
-    message: "Start time must be earlier than end time for each day.",
-    path: ["availability"], // Highlight the `availability` field in errors
-  }
-);
+//     return Object.entries(data.availability).every(([day, times]) => {
+//       if (!times) return true; // Skip days with no availability
+//       const startTime = parseTime(times.startTime);
+//       const endTime = parseTime(times.endTime);
+//       return startTime < endTime;
+//     });
+//   },
+//   {
+//     message: "Start time must be earlier than end time for each day.",
+//     path: ["availability"], // Highlight the `availability` field in errors
+//   }
+// );
 
 export type MentorAvailabilityFormValues = z.infer<
-  typeof getStartedMentorFormSchema
+  typeof MentorAvailabilityFormSchema
 >;
 
 export const getStartedAdminFormSchema = z.object({
