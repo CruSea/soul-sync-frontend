@@ -1,15 +1,14 @@
-'use client'
+"use client";
 import { AdminLayout } from "@/components/shared/layout/admin-layout";
+import { Toaster } from "@/components/ui/sonner";
 import { DashboardLayoutProps } from "@/types/admin";
 import { usePathname } from "next/navigation";
 
-
-const DashboardLayout: React.FC<DashboardLayoutProps> =  ({ children }) => {
-
+const DashboardLayout: React.FC<DashboardLayoutProps> = ({ children }) => {
   const pathname = usePathname();
 
   // Get the last segment of the URL
-  const lastSegment = pathname.split('/').filter(Boolean).pop();
+  const lastSegment = pathname.split("/").filter(Boolean).pop();
 
   // List of pages to exclude from this layout
   const excludedRoutes = ["/admin/get-started", "/admin/create-org"];
@@ -20,14 +19,11 @@ const DashboardLayout: React.FC<DashboardLayoutProps> =  ({ children }) => {
 
   return (
     <AdminLayout title={lastSegment?.toLocaleUpperCase() as string}>
-    <div className="flex-1  bg-secondary dark:bg-gray-900">
-      <div className="container mx-auto">
-      
-    {children}
+      <div className="flex-1  bg-secondary dark:bg-gray-900">
+        <div className="container mx-auto">{children}</div>
+        <Toaster />
       </div>
-    </div>
-  </AdminLayout>
-  
+    </AdminLayout>
   );
 };
 

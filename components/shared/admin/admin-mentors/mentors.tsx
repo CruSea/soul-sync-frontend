@@ -5,8 +5,9 @@ import { DataTable } from "@/components/shared/DataTable";
 import { Badge } from "@/components/ui/badge";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Column, FilterOption } from "@/types/data-table";
-import { toast } from "sonner";
+import { useToast } from "@/hooks/use-toast";
 import { InviteMentorDialog } from "./invite-mentor-dialog";
+import { toast } from "sonner";
 
 const BASE_URL = process.env.NEXT_PUBLIC_API_BASE_URL;
 const MENTORS_URL = process.env.NEXT_PUBLIC_API_ADMIN_MENTORS_URL;
@@ -78,8 +79,11 @@ const MentorsTable: React.FC = () => {
         },
       });
       if (!response.ok) {
+        toast("Error deleting");
+
         throw new Error("Failed to delete the mentor.");
       }
+      toast("Mentor has been deleted.");
     } catch (error) {
       console.error("Error deleting mentor:", error);
       throw error;
