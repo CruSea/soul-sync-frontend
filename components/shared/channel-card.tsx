@@ -57,11 +57,11 @@ export function ChannelCard({ channel, setChannel }: ChannelCardProps) {
       })
         .then((response) => {
           if (!response.ok) {
-            throw new Error("Failed to update channel");
             toast({
               title: "Failed to delete channel",
               description: "Your channel has not been deleted successfully",
             });
+            throw new Error("Failed to update channel");
           }
           // Update local state after successful update
           setChannel((prev) =>

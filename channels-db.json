@@ -30,7 +30,29 @@
       "webhookUrl": "https://www.google.com",
       "customGreeting": "Welcome to our support bot!",
       "Date": "Dec 23, 2024",
+      "isDeleted": false,
+      "icon": "/telegram-bot-icon.svg"
+    },
+    {
+      "id": "b26497ba-ed00-4be5-8afd-d86aa1c4c0d7",
+      "name": "Naty",
+      "type": "Telegram Bot",
+      "apiKey": "shfsdhjdsfhdkj",
+      "webhookUrl": "https://www.google.com",
+      "customGreeting": "Welcome to our support bot!",
+      "Date": "Dec 24, 2024",
       "isDeleted": true,
+      "icon": "/telegram-bot-icon.svg"
+    },
+    {
+      "id": "a56a3490-3e57-4b1d-924a-beb1d0192ea0",
+      "name": "Beti",
+      "type": "Telegram Bot",
+      "apiKey": "jsdfhskjfhdjksdfkj",
+      "webhookUrl": "https://www.google.com",
+      "customGreeting": "Welcome to our support bot!",
+      "Date": "Dec 24, 2024",
+      "isDeleted": false,
       "icon": "/telegram-bot-icon.svg"
     }
   ]
