@@ -1,8 +1,8 @@
 "use client";
 
 import { useState } from "react";
-import { AddChannelDialog } from "@/components/shared/add-channel-dialog";
-import { ChannelCard } from "@/components/shared/channel-card";
+import { AddChannelDialog } from "@/components/shared/Channel/add-channel-dialog";
+import { ChannelCard } from "@/components/shared/Channel/channel-card";
 import type { Channel } from "@/types/channel";
 import { ChevronDown } from "lucide-react";
 import { Button } from "@/components/ui/button";
