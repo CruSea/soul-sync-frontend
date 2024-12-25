@@ -28,23 +28,10 @@ import {
 } from "@/components/ui/select";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
-import { Textarea } from "@/components/ui/textarea";
 import { Plus } from "lucide-react";
-import type { Channel} from "@/types/channel";
-
-const formSchema = z.object({
-  name: z.string().min(2, {
-    message: "Channel name must be at least 2 characters.",
-  }),
-  type: z.enum(["Telegram Bot", "WhatsApp", "Negarit", "Facebook", "Twilio"]),
-  apiKey: z.string().min(1, {
-    message: "API Key is required.",
-  }),
-  webhookUrl: z.string().url({
-    message: "Please enter a valid URL.",
-  }),
-  customGreeting: z.string(),
-});
+import type { Channel } from "@/types/channel";
+import ChannelNameForm from "./channel-name-form";
+import { formSchema } from "@/types/channel";
 
 interface AddChannelDialogProps {
   onAddChannel: (channel: Omit<Channel, "id" | "icon">) => void;
@@ -64,15 +51,12 @@ export function AddChannelDialog({ onAddChannel }: AddChannelDialogProps) {
       name: "",
       type: "Telegram Bot",
       apiKey: "",
-      webhookUrl: "",
-      customGreeting: "Welcome to our support bot!",
     },
   });
 
   function onSubmit(values: z.infer<typeof formSchema>) {
-    const date = new Date().toLocaleDateString("en-US", format)
+    const date = new Date().toLocaleDateString("en-US", format);
     onAddChannel({ ...values, Date: date });
-
     setOpen(false);
     form.reset();
   }
@@ -91,19 +75,7 @@ export function AddChannelDialog({ onAddChannel }: AddChannelDialogProps) {
         </DialogHeader>
         <Form {...form}>
           <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4">
-            <FormField
-              control={form.control}
-              name="name"
-              render={({ field }) => (
-                <FormItem>
-                  <FormLabel>Channel Name</FormLabel>
-                  <FormControl>
-                    <Input placeholder="Pedro Duarte" {...field} />
-                  </FormControl>
-                  <FormMessage />
-                </FormItem>
-              )}
-            />
+            <ChannelNameForm form={form} />
             <FormField
               control={form.control}
               name="type"
@@ -139,38 +111,6 @@ export function AddChannelDialog({ onAddChannel }: AddChannelDialogProps) {
                   <FormLabel>API Key</FormLabel>
                   <FormControl>
                     <Input placeholder="Aef35jhjsf48Hfe" {...field} />
-                  </FormControl>
-                  <FormMessage />
-                </FormItem>
-              )}
-            />
-            <FormField
-              control={form.control}
-              name="webhookUrl"
-              render={({ field }) => (
-                <FormItem>
-                  <FormLabel>Webhook URL</FormLabel>
-                  <FormControl>
-                    <Input
-                      placeholder="https://example.com/telegram/webhook"
-                      {...field}
-                    />
-                  </FormControl>
-                  <FormMessage />
-                </FormItem>
-              )}
-            />
-            <FormField
-              control={form.control}
-              name="customGreeting"
-              render={({ field }) => (
-                <FormItem>
-                  <FormLabel>Custom Greeting Message</FormLabel>
-                  <FormControl>
-                    <Textarea
-                      placeholder="Welcome to our support bot!"
-                      {...field}
-                    />
                   </FormControl>
                   <FormMessage />
                 </FormItem>
