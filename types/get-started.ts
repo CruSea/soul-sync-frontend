@@ -167,4 +167,3 @@ export interface GenderFieldProps {
 export interface GetStartedProps {
   type: "admin" | "mentor";
 }
-
