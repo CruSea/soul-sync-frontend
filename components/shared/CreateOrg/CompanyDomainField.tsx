@@ -1,8 +1,10 @@
 import { FormField, FormItem, FormLabel, FormControl, FormMessage } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
+import { createOrgFormOneValues } from "@/types/create-org";
+import { Control } from "react-hook-form";
 
 interface CompanyDomainFieldProps {
-  control: any;
+  control: Control<createOrgFormOneValues>;
 }
 
 export function CompanyDomainField({ control }: CompanyDomainFieldProps) {

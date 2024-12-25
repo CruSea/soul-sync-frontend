@@ -1,4 +1,4 @@
-import { UseFormReturn } from "react-hook-form";
+import { Control, FieldErrors, UseFormReturn } from "react-hook-form";
 import { z } from "zod";
 
 // the zod schema for the form One requirements
@@ -118,48 +118,48 @@ typeof getStartedAdminFormSchema
 >;
 
 export interface AgeFieldProps {
-  control: any;
+  control: Control<getStartedMentorFormValues> | Control<getStartedAdminFormValues>;
   className?: string;
 }
 
 export interface DayPeriodFieldProps {
-  control: any;
+  control: Control<getStartedMentorFormValues>;
   type: "start" | "end";
-  form: getStartedMentorFormValues | any | undefined;
+  form: UseFormReturn<getStartedMentorFormValues>;
 }
 
 export interface SpecializationFieldProps {
-  control: any;
+  control: Control<getStartedMentorFormValues>;
   options: { label: string; value: string }[];
 }
 
 export interface MinuteFieldProps {
-  control: any;
+  control: Control<getStartedMentorFormValues>;
   type: "start" | "end";
-  form: getStartedMentorFormValues | any | undefined;
+  form: UseFormReturn<getStartedMentorFormValues>;
 }
 
 export interface LocationFieldProps {
-  control: any;
+  control: Control<getStartedMentorFormValues> | Control<getStartedAdminFormValues>;
 }
 
 export interface PhoneNumberFieldProps {
-  control: any;
+  control: Control<getStartedAdminFormValues> ;
 }
 
 export interface HourFieldProps {
-  control: any;
+  control: Control<getStartedMentorFormValues>;
   type: "start" | "end";
-  form: getStartedMentorFormValues | any | undefined;
+  form: UseFormReturn<getStartedMentorFormValues>;
 }
 
 export interface TimeFieldsProps {
-  form: getStartedMentorFormValues | any | undefined;
-  errors: any;
+  form: UseFormReturn<getStartedMentorFormValues>;
+  errors: FieldErrors<getStartedMentorFormValues>;
 }
 
 export interface GenderFieldProps {
-  control: any;
+  control: Control<getStartedMentorFormValues> | Control<getStartedAdminFormValues>;
   options: { label: string; value: string }[];
   className?: string;
 }
