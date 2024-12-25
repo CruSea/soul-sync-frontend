@@ -1,5 +1,3 @@
-"use client";
-
 import React from "react";
 import { DataTable } from "@/components/shared/DataTable";
 import { Badge } from "@/components/ui/badge";
