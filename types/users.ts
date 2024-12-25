@@ -3,8 +3,11 @@ export interface User {
     name: string;
     email: string;
     phoneNumber: string;
-    joinedDate: string;
+    joinedDate?: string;
     location: string;
+    platform: string;
+    avatar: string;
+    date: string;
   }
   
   export type SortField = 'name' | 'email' | 'joinedDate' | 'location';
