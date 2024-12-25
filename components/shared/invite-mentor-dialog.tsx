@@ -40,7 +40,7 @@ export function InviteMentorDialog() {
 
       setFormData({ name: "", email: "" });
       setIsOpen(false);
-    } catch (error) {
+    } catch{
       toast({
         title: "Error",
         description: "Failed to send invitation. Please try again.",
