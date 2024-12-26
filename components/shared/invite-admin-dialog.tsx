@@ -14,14 +14,14 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { useToast } from "@/hooks/use-toast";
 
-interface InviteMentorFormData {
+interface InviteAdminFormData {
   name: string;
   email: string;
 }
 
-export function InviteMentorDialog() {
+export function InviteAdminDialog() {
   const [isOpen, setIsOpen] = useState(false);
-  const [formData, setFormData] = useState<InviteMentorFormData>({
+  const [formData, setFormData] = useState<InviteAdminFormData>({
     name: "",
     email: "",
   });
@@ -58,12 +58,12 @@ export function InviteMentorDialog() {
     <Dialog open={isOpen} onOpenChange={setIsOpen}>
       <DialogTrigger asChild>
         <Button variant={"outline"}>
-          <span className="mr-1">+</span> Invite a Mentor
+          <span className="mr-1">+</span> Invite an Admin
         </Button>
       </DialogTrigger>
       <DialogContent className="sm:max-w-[425px]">
         <DialogHeader>
-          <DialogTitle>Invite A mentor</DialogTitle>
+          <DialogTitle>Invite An Admin</DialogTitle>
           <DialogDescription>
             Send an invitation link through their email
           </DialogDescription>
