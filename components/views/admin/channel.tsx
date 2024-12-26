@@ -138,7 +138,8 @@ export default function ChannelsPage() {
                         <ChannelCard
                           key={channel.id}
                           channel={channel}
-                          setChannels={setChannels}
+                          setChannels={setChannels} 
+                          toast={toast}
                         />
                       </CommandItem>
                     )

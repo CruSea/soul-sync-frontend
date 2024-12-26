@@ -16,11 +16,15 @@ import { useState } from "react";
 interface ChannelCardProps {
   channel: Channel;
   setChannels: React.Dispatch<React.SetStateAction<Channel[]>>;
+  toast: (props: {
+    title: string;
+    description: string;
+    duration?: number;
+  }) => void;
 }
 
-export function ChannelCard({ channel, setChannels }: ChannelCardProps) {
+export function ChannelCard({ channel, setChannels, toast }: ChannelCardProps) {
   const [deleteId, setDeleteId] = useState<string | null>(null);
-
   let iconURL = "";
   switch (channel.type) {
     case "Telegram Bot":
@@ -44,7 +48,6 @@ export function ChannelCard({ channel, setChannels }: ChannelCardProps) {
   }
   const handleDelete = (channel: Channel) => {
     setDeleteId(channel.id);
-    
   };
   const confirmDelete = () => {
     if (deleteId !== null) {
@@ -53,6 +56,10 @@ export function ChannelCard({ channel, setChannels }: ChannelCardProps) {
       );
       setDeleteId(null);
     }
+    toast({
+      title: "Channel deleted successfully",
+      description: "The channel has been deleted from the list",
+    });
   };
   const cancelDelete = () => {
     setDeleteId(null);
@@ -137,15 +144,26 @@ export function ChannelCard({ channel, setChannels }: ChannelCardProps) {
           <DialogHeader>
             <DialogTitle className="mb-2">Confirm Deletion</DialogTitle>
             <DialogDescription>
-              Are you sure you want to delete? <span className="font-bold text-black inline">{channel.name} | {channel.type}</span> action cannot
-              be undone.
+              Are you sure you want to delete?{" "}
+              <span className="font-bold text-black inline">
+                {channel.name} | {channel.type}
+              </span>{" "}
+              action cannot be undone.
             </DialogDescription>
           </DialogHeader>
           <DialogFooter>
-            <Button variant="secondary" onClick={cancelDelete} className="hover:bg-slate-200">
+            <Button
+              variant="secondary"
+              onClick={cancelDelete}
+              className="hover:bg-slate-200"
+            >
               Cancel
             </Button>
-            <Button variant="destructive" onClick={confirmDelete} className="hover:bg-[#c83a3a]">
+            <Button
+              variant="destructive"
+              onClick={confirmDelete}
+              className="hover:bg-[#c83a3a]"
+            >
               Confirm
             </Button>
           </DialogFooter>
