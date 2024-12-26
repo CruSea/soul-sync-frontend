@@ -10,6 +10,7 @@ import Message from "./Message";
 import { ChatProps, threadType } from "@/types/mentor";
 import { transformChatData } from "@/lib/utils";
 import InputArea from "./InputArea";
+import { jsonServer } from "@/data/end-points";
 
 const Chat = ({ userMessages, toggleDrawer, userDetails, setUserMessages }: ChatProps) => {
   // text is where the text box saves what the mentor writes
@@ -42,7 +43,7 @@ const Chat = ({ userMessages, toggleDrawer, userDetails, setUserMessages }: Chat
       const updatedMessages = [...userMessages.messages, newMessage];
 
       // Update the backend
-      const patchResponse = await fetch(`http://localhost:3001/userMessages/${userMessages.id}`, {
+      const patchResponse = await fetch(`${jsonServer.baseUrl}/${jsonServer.messages}/${userMessages.id}`, {
         method: "PATCH",
         headers: {
           "Content-Type": "application/json",
