@@ -19,19 +19,13 @@ import {
   FormLabel,
   FormMessage,
 } from "@/components/ui/form";
-import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from "@/components/ui/select";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { Plus } from "lucide-react";
 import type { Channel } from "@/types/channel";
 import ChannelNameForm from "./channel-name-form";
 import { formSchema } from "@/types/channel";
+import ChannelTypeForm from "./channel-type-form";
 
 interface AddChannelDialogProps {
   onAddChannel: (channel: Omit<Channel, "id" | "icon">) => void;
@@ -76,33 +70,7 @@ export function AddChannelDialog({ onAddChannel }: AddChannelDialogProps) {
         <Form {...form}>
           <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4">
             <ChannelNameForm form={form} />
-            <FormField
-              control={form.control}
-              name="type"
-              render={({ field }) => (
-                <FormItem>
-                  <FormLabel>Channel Type</FormLabel>
-                  <Select
-                    onValueChange={field.onChange}
-                    defaultValue={field.value}
-                  >
-                    <FormControl>
-                      <SelectTrigger>
-                        <SelectValue placeholder="Select a channel type" />
-                      </SelectTrigger>
-                    </FormControl>
-                    <SelectContent>
-                      <SelectItem value="Telegram Bot">Telegram Bot</SelectItem>
-                      <SelectItem value="WhatsApp">WhatsApp</SelectItem>
-                      <SelectItem value="Negarit">Negarit</SelectItem>
-                      <SelectItem value="Facebook">Facebook</SelectItem>
-                      <SelectItem value="Twilio">Twilio</SelectItem>
-                    </SelectContent>
-                  </Select>
-                  <FormMessage />
-                </FormItem>
-              )}
-            />
+            <ChannelTypeForm form={form} />
             <FormField
               control={form.control}
               name="apiKey"
