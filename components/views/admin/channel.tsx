@@ -1,8 +1,8 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { AddChannelDialog } from "@/components/shared/add-channel-dialog";
-import { ChannelCard } from "@/components/shared/channel-card";
+import { AddChannelDialog } from "@/components/shared/Channel/add-channel-dialog";
+import { ChannelCard } from "@/components/shared/Channel/channel-card";
 import type { Channel } from "@/types/channel";
 import { ChevronDown } from "lucide-react";
 import { Button } from "@/components/ui/button";
@@ -23,7 +23,7 @@ import {
 } from "@/components/ui/dropdown-menu";
 
 export default function ChannelsPage() {
-  const [channels, setChannels] = useState<Channel[] | null>([]);
+  const [channels, setChannels] = useState<Channel[]>([]);
   const [search, setSearch] = useState("");
   const [selectedCategory, setSelectedCategory] = useState("All");
   const categories = [
@@ -129,7 +129,7 @@ export default function ChannelsPage() {
                         <ChannelCard
                           key={channel.id}
                           channel={channel}
-                          setChannel={setChannels}
+                          setChannels={setChannels}
                         />
                       </CommandItem>
                     )
