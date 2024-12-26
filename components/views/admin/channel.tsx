@@ -143,12 +143,3 @@ export default function ChannelsPage() {
     </div>
   );
 }
-
-{
-  /* <div className="grid grid-cols- sm:grid-cols-1 md:grid-cols-3 md:gap-10 lg:grid-cols-5 lg:gap-2">
-  {channels.map((channel) => (
-    <ChannelCard key={channel.id} channel={channel} />
-  ))}
-  <AddChannelDialog onAddChannel={handleAddChannel} />
-</div>; */
-}
