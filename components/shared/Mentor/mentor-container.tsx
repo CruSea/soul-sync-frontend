@@ -5,6 +5,7 @@ import Chat from "./Chat";
 import Profile from "./Profile";
 import { useEffect, useState } from "react";
 import UsersList from "./users-list";
+import { jsonServer } from "@/data/end-points";
 
 const MentorContainer = ({ users }: MentorContainerProps) => {
   const [currentUser, setCurrentUser] = useState<User>(users[0]);
@@ -18,7 +19,7 @@ const MentorContainer = ({ users }: MentorContainerProps) => {
       try {
         // fetches the userDetails from db
         const response = await fetch(
-          `http://localhost:3001/userDetails?id=${currentUser.id}`
+          `${jsonServer.baseUrl}/${jsonServer.userDetails}?id=${currentUser.id}`
         );
 
         if (!response.ok) {
@@ -39,7 +40,7 @@ const MentorContainer = ({ users }: MentorContainerProps) => {
     const fetchUserMesages = async () => {
       try {
         const response = await fetch(
-          `http://localhost:3001/userMessages?id=${currentUser.id}`
+          `${jsonServer.baseUrl}/${jsonServer.messages}?id=${currentUser.id}`
         );
 
         if (!response.ok) {
