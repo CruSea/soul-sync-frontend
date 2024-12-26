@@ -1,7 +1,9 @@
+import { jsonServer } from "@/data/end-points";
+
 export async function GET(req: Request) {
   try {
     // Fetch users from the JSON Server
-    const response = await fetch("http://localhost:3001/users");
+    const response = await fetch(`${jsonServer.baseUrl}/${jsonServer.users}`);
     if (!response.ok) {
       throw new Error("Failed to fetch users from JSON Server");
     }

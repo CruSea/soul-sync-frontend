@@ -8,9 +8,7 @@ import UsersList from "./users-list";
 import { Drawer, DrawerContent } from "./ProfileDrawer";
 import { Sheet } from "lucide-react";
 import { useRouter } from "next/navigation";
-
-const BASE_URL = process.env.NEXT_PUBLIC_API_BASE_URL;
-const MENTOR_ID = process.env.NEXT_PUBLIC_API_MENTORS_ID;
+import { jsonServer } from "@/data/end-points";
 
 const MentorContainer = ({ users }: MentorContainerProps) => {
   const [currentUser, setCurrentUser] = useState<User>(users[0]);
@@ -25,7 +23,7 @@ const MentorContainer = ({ users }: MentorContainerProps) => {
       try {
         // fetches the userDetails from db
         const response = await fetch(
-          `http://localhost:3001/userDetails?userId=${currentUser.userId}`
+          `${jsonServer.baseUrl}/${jsonServer.userDetails}?id=${currentUser.id}`
         );
 
         if (!response.ok) {
@@ -46,7 +44,8 @@ const MentorContainer = ({ users }: MentorContainerProps) => {
     const fetchUserMesages = async () => {
       try {
         const response = await fetch(
-          `http://localhost:3001/userMessages?userId=${currentUser.userId}`
+
+          `${jsonServer.baseUrl}/${jsonServer.messages}?id=${currentUser.id}`
         );
 
         if (!response.ok) {
