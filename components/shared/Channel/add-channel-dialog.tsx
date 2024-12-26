@@ -2,7 +2,7 @@
 
 import { useState } from "react";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { Form, useForm } from "react-hook-form";
+import { useForm } from "react-hook-form";
 import * as z from "zod";
 import {
   Dialog,
@@ -19,6 +19,7 @@ import ChannelNameForm from "./channel-name-form";
 import { formSchema } from "@/types/channel";
 import ChannelTypeForm from "./channel-type-form";
 import ChannelConfigForm from "./channel-config-form";
+import { Form } from "@/components/ui/form";
 
 interface AddChannelDialogProps {
   onAddChannel: (channel: Omit<Channel, "id" | "icon">) => void;
