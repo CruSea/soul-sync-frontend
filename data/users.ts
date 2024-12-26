@@ -29,7 +29,8 @@ const users: User[] = [
     location: "Jinja",
     platform: "Telegram",
     date: "23/01/2024",
-   },
+    avatar: ""
+  },
   {
     id: "4",
     name: "Rayna Tuff",
@@ -159,6 +160,7 @@ const users: User[] = [
     joinedDate: "2024-04-28",
     avatar: "/placeholder.svg",
     email: "placeholder@gmail.com",
+    date: ""
   },
   {
     id: "8",
@@ -169,6 +171,7 @@ const users: User[] = [
     joinedDate: "2024-05-03",
     avatar: "/placeholder.svg",
     email: "placeholder@gmail.com",
+    date: ""
   },
   {
     id: "9",
@@ -179,6 +182,7 @@ const users: User[] = [
     joinedDate: "2024-05-05",
     avatar: "/placeholder.svg",
     email: "placeholder@gmail.com",
+    date: ""
   },
   {
     id: "10",
@@ -189,6 +193,7 @@ const users: User[] = [
     joinedDate: "2024-05-08",
     avatar: "/placeholder.svg",
     email: "placeholder@gmail.com",
+    date: ""
   },
   {
     id: "11",
@@ -199,6 +204,7 @@ const users: User[] = [
     joinedDate: "2024-05-10",
     avatar: "/placeholder.svg",
     email: "placeholder@gmail.com",
+    date: ""
   },
   {
     id: "12",
@@ -209,6 +215,7 @@ const users: User[] = [
     joinedDate: "2024-05-12",
     avatar: "/placeholder.svg",
     email: "placeholder@gmail.com",
+    date: ""
   },
   {
     id: "13",
@@ -219,6 +226,7 @@ const users: User[] = [
     joinedDate: "2024-05-15",
     avatar: "/placeholder.svg",
     email: "placeholder@gmail.com",
+    date: ""
   },
   {
     id: "14",
@@ -229,6 +237,7 @@ const users: User[] = [
     joinedDate: "2024-05-18",
     avatar: "/placeholder.svg",
     email: "placeholder@gmail.com",
+    date: ""
   },
   {
     id: "15",
@@ -239,6 +248,7 @@ const users: User[] = [
     joinedDate: "2024-05-20",
     avatar: "/placeholder.svg",
     email: "placeholder@gmail.com",
+    date: ""
   },
 ];
 
