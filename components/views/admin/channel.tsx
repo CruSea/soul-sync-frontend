@@ -1,8 +1,8 @@
 "use client";
 
 import { useState } from "react";
-import { AddChannelDialog } from "@/components/shared/add-channel-dialog";
-import { ChannelCard } from "@/components/shared/channel-card";
+import { AddChannelDialog } from "@/components/shared/Channel/add-channel-dialog";
+import { ChannelCard } from "@/components/shared/Channel/channel-card";
 import type { Channel } from "@/types/channel";
 import { ChevronDown } from "lucide-react";
 import { Button } from "@/components/ui/button";
@@ -27,28 +27,22 @@ const initialChannels: Channel[] = [
     name: "My SMS",
     type: "Negarit",
     apiKey: "key1",
-    webhookUrl: "https://example.com/webhook1",
-    customGreeting: "Welcome!",
     icon: "/negarit.png",
     Date: "Jan 16,2024",
   },
   {
     id: "2",
-    name: "Soul Sync Bot",
+    name: "Soul Sync Bot", 
     type: "Telegram Bot",
     apiKey: "key2",
-    webhookUrl: "https://example.com/webhook2",
-    customGreeting: "Welcome!",
     icon: "/telegram.png",
     Date: "Jan 16,2024",
   },
   {
     id: "3",
     name: "Soul Sync",
-    type: "WhatsApp",
+    type: "WhatsApp", 
     apiKey: "key3",
-    webhookUrl: "https://example.com/webhook3",
-    customGreeting: "Welcome!",
     icon: "/Whatsapp.png",
     Date: "Jan 16,2024",
   },
@@ -152,13 +146,4 @@ export default function ChannelsPage() {
       </div>
     </div>
   );
-}
-
-{
-  /* <div className="grid grid-cols- sm:grid-cols-1 md:grid-cols-3 md:gap-10 lg:grid-cols-5 lg:gap-2">
-  {channels.map((channel) => (
-    <ChannelCard key={channel.id} channel={channel} />
-  ))}
-  <AddChannelDialog onAddChannel={handleAddChannel} />
-</div>; */
 }
