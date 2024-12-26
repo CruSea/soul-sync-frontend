@@ -3,19 +3,7 @@
 import { DataTable } from "@/components/shared/DataTable";
 import type { User } from "@/types/users";
 import { Column, FilterOption } from "@/types/data-table";
-
-const USERS_DATA: User[] = Array.from({ length: 50 }, (_, i) => ({
-  id: `user-${i + 1}`,
-  name: `User ${i + 1}`,
-  email: `user${i + 1}@example.com`,
-  phoneNumber: `+1${Math.floor(1000000000 + Math.random() * 9000000000)}`,
-  joinedDate: new Date(
-    Date.now() - Math.floor(Math.random() * 10000000000)
-  ).toLocaleDateString(),
-  location: ["New York", "London", "Tokyo", "Paris", "Sydney"][
-    Math.floor(Math.random() * 5)
-  ],
-}));
+import { USERS_DATA } from "@/data/users";
 
 const columns: Column<User>[] = [
   { key: "name", header: "Name" },

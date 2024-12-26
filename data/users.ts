@@ -10,7 +10,7 @@ const users: User[] = [
     platform: "Telegram",
     date: "21/01/2024",
     avatar: "/placeholder.svg",
-},
+  },
   {
     id: "2",
     name: "Nayan Baptista",
@@ -29,7 +29,7 @@ const users: User[] = [
     location: "Jinja",
     platform: "Telegram",
     date: "23/01/2024",
-    avatar: ""
+    avatar: "",
   },
   {
     id: "4",
@@ -50,7 +50,7 @@ const users: User[] = [
     platform: "Telegram",
     date: "25/01/2024",
     avatar: "/placeholder.svg",
-},
+  },
   {
     id: "6",
     name: "tur",
@@ -160,7 +160,7 @@ const users: User[] = [
     joinedDate: "2024-04-28",
     avatar: "/placeholder.svg",
     email: "placeholder@gmail.com",
-    date: ""
+    date: "",
   },
   {
     id: "8",
@@ -171,7 +171,7 @@ const users: User[] = [
     joinedDate: "2024-05-03",
     avatar: "/placeholder.svg",
     email: "placeholder@gmail.com",
-    date: ""
+    date: "",
   },
   {
     id: "9",
@@ -182,7 +182,7 @@ const users: User[] = [
     joinedDate: "2024-05-05",
     avatar: "/placeholder.svg",
     email: "placeholder@gmail.com",
-    date: ""
+    date: "",
   },
   {
     id: "10",
@@ -193,7 +193,7 @@ const users: User[] = [
     joinedDate: "2024-05-08",
     avatar: "/placeholder.svg",
     email: "placeholder@gmail.com",
-    date: ""
+    date: "",
   },
   {
     id: "11",
@@ -204,7 +204,7 @@ const users: User[] = [
     joinedDate: "2024-05-10",
     avatar: "/placeholder.svg",
     email: "placeholder@gmail.com",
-    date: ""
+    date: "",
   },
   {
     id: "12",
@@ -215,7 +215,7 @@ const users: User[] = [
     joinedDate: "2024-05-12",
     avatar: "/placeholder.svg",
     email: "placeholder@gmail.com",
-    date: ""
+    date: "",
   },
   {
     id: "13",
@@ -226,7 +226,7 @@ const users: User[] = [
     joinedDate: "2024-05-15",
     avatar: "/placeholder.svg",
     email: "placeholder@gmail.com",
-    date: ""
+    date: "",
   },
   {
     id: "14",
@@ -237,7 +237,7 @@ const users: User[] = [
     joinedDate: "2024-05-18",
     avatar: "/placeholder.svg",
     email: "placeholder@gmail.com",
-    date: ""
+    date: "",
   },
   {
     id: "15",
@@ -248,8 +248,20 @@ const users: User[] = [
     joinedDate: "2024-05-20",
     avatar: "/placeholder.svg",
     email: "placeholder@gmail.com",
-    date: ""
+    date: "",
   },
 ];
+const USERS_DATA: User[] = Array.from({ length: 50 }, (_, i) => ({
+  id: `user-${i + 1}`,
+  name: `User ${i + 1}`,
+  email: `user${i + 1}@example.com`,
+  phoneNumber: `+1${Math.floor(1000000000 + Math.random() * 9000000000)}`,
+  joinedDate: new Date(
+    Date.now() - Math.floor(Math.random() * 10000000000)
+  ).toLocaleDateString(),
+  location: ["New York", "London", "Tokyo", "Paris", "Sydney"][
+    Math.floor(Math.random() * 5)
+  ],
+}));
 
-export default users;
+export { users };
