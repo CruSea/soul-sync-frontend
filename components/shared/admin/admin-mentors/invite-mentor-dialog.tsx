@@ -15,9 +15,9 @@ import { Label } from "@/components/ui/label";
 import { useToast } from "@/hooks/use-toast";
 import { useAuth } from "@/context/AuthContext";
 import handler from "@/app/api/[...params]/route";
+import { endPoints, jsonServer } from "@/data/end-points";
 
 const BASE_URL = process.env.NEXT_PUBLIC_API_BASE_URL
-const MENTORS_URL = process.env.NEXT_PUBLIC_API_ADMIN_MENTORS_URL
 
 interface InviteMentorFormData {
   name: string;
@@ -40,7 +40,7 @@ export function InviteMentorDialog() {
       const token = localStorage.getItem("token");
 
       if (user && token) {
-        const endPoint = `${BASE_URL}/${MENTORS_URL}`  // move base to env
+        const endPoint = `${BASE_URL}/${endPoints.adminMentors}`  // move base to env
         const userObj = JSON.parse(user)
         const requestBody = {
           accountId: userObj.accounts[0].id,

@@ -4,11 +4,11 @@ import { GrowthChart } from "@/components/shared/admin/dashboard/GrowthChart";
 import { MentorsChart } from "@/components/shared/admin/dashboard/MentorsChart";
 import { StatsCards } from "@/components/shared/admin/dashboard/StatCard";
 import { UsersTable } from "@/components/shared/admin/dashboard/UserTable";
+import { endPoints } from "@/data/end-points";
 import { useRouter } from "next/navigation";
 import { useEffect } from "react";
 
 const BASE_URL = process.env.NEXT_PUBLIC_API_BASE_URL;
-const ACCOUNT_URL = process.env.NEXT_PUBLIC_API_ACCOUNT_URL;
 
 export default function AdminView() {
   const router = useRouter();
@@ -21,7 +21,7 @@ export default function AdminView() {
 
         if (user && token) {
           const userObj = JSON.parse(user);
-          const endPoint = `${BASE_URL}/${ACCOUNT_URL}/${userObj.accounts[0].id}`;
+          const endPoint = `${BASE_URL}/${endPoints.adminAccount}/${userObj.accounts[0].id}`;
           const response = await fetch(endPoint, {
             method: "GET",
             headers: {

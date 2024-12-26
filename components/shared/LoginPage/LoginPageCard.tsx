@@ -11,9 +11,9 @@ import {
 import { useRouter, useSearchParams } from "next/navigation"
 import { useEffect } from "react"
 import { decodeToken } from "@/lib/utils"
+import { endPoints } from "@/data/end-points"
 
 const BASE_URL = process.env.NEXT_PUBLIC_API_BASE_URL
-const AUTH_URL= process.env.NEXT_PUBLIC_API_AUTH_URL
 
 const LoginPageCard = () => {
   const router = useRouter();
@@ -33,7 +33,7 @@ const LoginPageCard = () => {
   }, [searchParams]);
 
   const handleLogin = () => {
-   router.push(`${BASE_URL}/${AUTH_URL}`)
+   router.push(`${BASE_URL}/${endPoints.auth}`)
   };
 
 

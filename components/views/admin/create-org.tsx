@@ -9,9 +9,9 @@ import { useForm } from "react-hook-form";
 import CreateOrgSidebar from "@/components/shared/admin/CreateOrg/CreateOrgSidebar";
 import CreateOrgForm from "@/components/shared/admin/CreateOrg/CreateOrgForm";
 import { useRouter } from 'next/navigation';
+import { endPoints } from "@/data/end-points";
 
 const BASE_URL = process.env.NEXT_PUBLIC_API_BASE_URL
-const ACCOUNT_URL= process.env.NEXT_PUBLIC_API_ACCOUNT_URL
 
 const CreateOrgView = () => {
   const [currentPage, setCurrentPage] = useState<Page>("first");
@@ -66,7 +66,7 @@ const CreateOrgView = () => {
 
       const AccountId = userData.accounts[0].id
 
-      const response = await fetch(`${BASE_URL}/${ACCOUNT_URL}/${AccountId}`,
+      const response = await fetch(`${BASE_URL}/${endPoints.adminAccount}/${AccountId}`,
         {
           method: "PATCH", // Specify PATCH as the method
           headers: {

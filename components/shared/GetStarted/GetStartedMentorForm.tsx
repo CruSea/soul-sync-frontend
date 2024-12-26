@@ -24,9 +24,10 @@ import { useEffect } from "react";
 import { Button } from "@/components/ui/button";
 import { useRouter } from "next/navigation";
 import { TimeFields } from "./TimeFields";
+import { endPoints } from "@/data/end-points";
 
 const BASE_URL = process.env.NEXT_PUBLIC_API_BASE_URL;
-const MENTOR_ID = process.env.NEXT_PUBLIC_API_MENTORS_ID;
+
 
 const GetStartedMentorForm = () => {
   const form = useForm<getStartedMentorFormValues>({
@@ -58,7 +59,7 @@ const GetStartedMentorForm = () => {
         if (user && token) {
           const userObj = JSON.parse(user);
           // const endPoint = `${BASE_URL}/${USER_URL}/${userObj.accounts[0].id}/user/${userObj.sub}`;
-          const endPoint = `${BASE_URL}/${MENTOR_ID}/${userObj.sub}`;
+          const endPoint = `${BASE_URL}/${endPoints.mentor}/${userObj.sub}`;
           const reqBody = {
             age: data.age,
             location: data.location,

@@ -17,8 +17,6 @@ import { Button } from "@/components/ui/button";
 import { useRouter } from "next/navigation";
 import { PhoneNumberField } from "./PhoneNumberField";
 
-const BASE_URL = process.env.NEXT_PUBLIC_API_BASE_URL;
-const ACCOUNT_URL = process.env.NEXT_PUBLIC_API_ACCOUNT_URL;
 
 const GetStartedAdminForm = () => {
   const form = useForm<getStartedAdminFormValues>({
