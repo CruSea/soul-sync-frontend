@@ -24,7 +24,7 @@ import {
 import { cn } from "@/lib/utils";
 import { Check, ChevronsUpDown } from "lucide-react"
 import { getStartedForm } from "@/data/get-started-data";
-import { DayPeriodFieldProps } from "@/types/create-org";
+import { DayPeriodFieldProps } from "@/types/get-started";
 
 
 export function DayPeriodField({ control, type, form }: DayPeriodFieldProps) {

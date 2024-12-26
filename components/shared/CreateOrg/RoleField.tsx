@@ -1,9 +1,11 @@
 import { FormField, FormItem, FormControl, FormMessage, FormLabel } from "@/components/ui/form";
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
 import { Input } from "@/components/ui/input"
+import { createOrgFormTwoValues } from "@/types/create-org";
+import { Control } from "react-hook-form";
 
 interface RoleFieldProps {
-  control: any;
+  control: Control<createOrgFormTwoValues>;
   options: { label: string; value: string }[];
 }
 

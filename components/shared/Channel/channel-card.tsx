@@ -1,7 +1,6 @@
 import Image from "next/image";
 import type { Channel } from "@/types/channel";
 import { AiOutlineDelete } from "react-icons/ai";
-import { useToast } from "@/hooks/use-toast";
 
 import {
   Dialog,
@@ -11,17 +10,17 @@ import {
   DialogHeader,
   DialogTitle,
 } from "@/components/ui/dialog";
-import { Button } from "../ui/button";
+import { Button } from "@/components/ui/button";
 import { useState } from "react";
 
 interface ChannelCardProps {
   channel: Channel;
-  setChannel: React.Dispatch<React.SetStateAction<Channel[] | null>>;
+  setChannels: React.Dispatch<React.SetStateAction<Channel[]>>;
 }
 
-export function ChannelCard({ channel, setChannel }: ChannelCardProps) {
+export function ChannelCard({ channel, setChannels }: ChannelCardProps) {
   const [deleteId, setDeleteId] = useState<string | null>(null);
-  const { toast } = useToast();
+
   let iconURL = "";
   switch (channel.type) {
     case "Telegram Bot":
@@ -45,46 +44,23 @@ export function ChannelCard({ channel, setChannel }: ChannelCardProps) {
   }
   const handleDelete = (channel: Channel) => {
     setDeleteId(channel.id);
+    
   };
   const confirmDelete = () => {
     if (deleteId !== null) {
-      fetch(`http://localhost:3001/channels/${deleteId}`, {
-        method: "PATCH",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({ isDeleted: true }),
-      })
-        .then((response) => {
-          if (!response.ok) {
-            toast({
-              title: "Failed to delete channel",
-              description: "Your channel has not been deleted successfully",
-            });
-            throw new Error("Failed to update channel");
-          }
-          // Update local state after successful update
-          setChannel((prev) =>
-            prev
-              ? prev.map((ch) =>
-                  ch.id === deleteId ? { ...ch, isDeleted: true } : ch
-                )
-              : null
-          );
-          toast({
-            title: "Channel deleted successfully",
-            description: "Your channel has been deleted successfully",
-          });
-        })
-        .catch((error) => {
-          console.error("Error updating channel:", error);
-        });
+      setChannels((prevItems) =>
+        prevItems.filter((item) => item.id !== deleteId)
+      );
       setDeleteId(null);
     }
   };
   const cancelDelete = () => {
     setDeleteId(null);
   };
+
+  // const handleDeleteChannel = (id: string) => {
+  //   setChannel((prevItems) => prevItems.filter((item) => item.id !== id));
+  // };
 
   return (
     <div className="h-[278px] w-full  flex flex-col items-center justify-between px-2.5 pt-1 pb-2 border rounded-xl bg-white hover:shadow-md hover:rounded-xl transition-shadow">
@@ -95,9 +71,7 @@ export function ChannelCard({ channel, setChannel }: ChannelCardProps) {
           </div>
         </div>
         <div
-          onClick={() => {
-            handleDelete(channel);
-          }}
+          onClick={() => handleDelete(channel)}
           className="w-6 h-6 px-[3px] py-[2.62px] justify-center rounded-xl hover:bg-[#f1f2f4] items-center cursor-pointer flex"
         >
           <AiOutlineDelete className="w-full h-full cursor-pointer  " />
@@ -120,7 +94,7 @@ export function ChannelCard({ channel, setChannel }: ChannelCardProps) {
             </div>
           </div>
           <div className="grow shrink basis-0 text-gray-900 text-xs font-bold font-['Manrope'] leading-tight tracking-tight text-wrap ">
-            <p className="w-full">{channel.name}</p>
+            {channel.name}
           </div>
         </div>
         <div className="self-stretch justify-between items-center inline-flex gap-3">
@@ -163,26 +137,15 @@ export function ChannelCard({ channel, setChannel }: ChannelCardProps) {
           <DialogHeader>
             <DialogTitle className="mb-2">Confirm Deletion</DialogTitle>
             <DialogDescription>
-              Are you sure you want to delete?{" "}
-              <p className="font-bold text-black inline">
-                {channel.name} | {channel.type}
-              </p>{" "}
-              action cannot be undone.
+              Are you sure you want to delete? <span className="font-bold text-black inline">{channel.name} | {channel.type}</span> action cannot
+              be undone.
             </DialogDescription>
           </DialogHeader>
           <DialogFooter>
-            <Button
-              variant="secondary"
-              onClick={cancelDelete}
-              className="hover:bg-slate-200"
-            >
+            <Button variant="secondary" onClick={cancelDelete} className="hover:bg-slate-200">
               Cancel
             </Button>
-            <Button
-              variant="destructive"
-              onClick={confirmDelete}
-              className="hover:bg-[#c83a3a]"
-            >
+            <Button variant="destructive" onClick={confirmDelete} className="hover:bg-[#c83a3a]">
               Confirm
             </Button>
           </DialogFooter>

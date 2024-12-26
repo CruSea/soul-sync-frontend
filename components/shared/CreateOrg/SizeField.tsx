@@ -1,8 +1,10 @@
 import { FormField, FormItem, FormControl, FormMessage, FormLabel } from "@/components/ui/form";
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
+import { createOrgFormOneValues } from "@/types/create-org";
+import { Control } from "react-hook-form";
 
 interface SizeFieldProps {
-  control: any;
+  control: Control<createOrgFormOneValues>;
   options: { label: string; value: string }[];
 }
 
