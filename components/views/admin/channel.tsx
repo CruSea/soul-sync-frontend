@@ -23,7 +23,6 @@ import {
 } from "@/components/ui/dropdown-menu";
 import { useToast } from "@/hooks/use-toast";
 
-
 export default function ChannelsPage() {
   const [channels, setChannels] = useState<Channel[]>([]);
   const [search, setSearch] = useState("");
@@ -74,8 +73,6 @@ export default function ChannelsPage() {
         "Content-Type": "application/json",
       },
       body: JSON.stringify(channelWithId),
-
-
     })
       .then((response) => response.json())
       .catch((error) => {
@@ -84,9 +81,9 @@ export default function ChannelsPage() {
     toast({
       title: "Channel added successfully",
       description: "The channel has been added to the list",
+      duration: 3000,
     });
   };
-
 
   return (
     <div className="h-fit min-h-screen container mx-auto p-10 ">
@@ -138,7 +135,7 @@ export default function ChannelsPage() {
                         <ChannelCard
                           key={channel.id}
                           channel={channel}
-                          setChannels={setChannels} 
+                          setChannels={setChannels}
                           toast={toast}
                         />
                       </CommandItem>

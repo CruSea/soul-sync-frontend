@@ -59,6 +59,7 @@ export function ChannelCard({ channel, setChannels, toast }: ChannelCardProps) {
     toast({
       title: "Channel deleted successfully",
       description: "The channel has been deleted from the list",
+      duration: 3000,
     });
   };
   const cancelDelete = () => {
