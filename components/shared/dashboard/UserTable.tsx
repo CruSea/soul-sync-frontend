@@ -18,7 +18,7 @@ interface UsersTableProps {
   title?: string;
 }
 const UsersTable = ({ limit, title }: UsersTableProps) => {
-  const sortedUsers: Users[] = [...users].sort(
+  const sortedUsers: Usesr[] = [...users].sort(
     (a, b) => new Date(b.date).getTime() - new Date(a.date).getTime()
   );
 

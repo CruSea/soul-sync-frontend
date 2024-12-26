@@ -130,7 +130,11 @@ export default function ChannelsPage() {
                       key={channel.id}
                       className="w-auto flex flex-col items-center justify-center h-full min-h-[100px] rounded-xl"
                     >
-                      <ChannelCard key={channel.id} channel={channel} />
+                      <ChannelCard
+                        setChannel={setChannels}
+                        key={channel.id}
+                        channel={channel}
+                      />
                     </CommandItem>
                   ))}
                   <AddChannelDialog onAddChannel={handleAddChannel} />
