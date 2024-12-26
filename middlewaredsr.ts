@@ -6,6 +6,7 @@ const storedUser = localStorage.getItem('user');
       
   // Define the restricted route
   const protectedPath = "/temp";
+
   // Check if the user is accessing the protected route
   if (req.nextUrl.pathname.startsWith(protectedPath)) {
     // If no valid token, redirect to the sign-in page

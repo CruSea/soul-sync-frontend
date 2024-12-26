@@ -4,7 +4,7 @@ import withAuth from "@/context/withAuth";
  function Channels() {
   return (
     <>
- channels
+      <ChannelsPage />
     </>
   );
 }
