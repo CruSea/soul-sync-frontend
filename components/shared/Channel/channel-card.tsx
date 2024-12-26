@@ -15,10 +15,10 @@ import { useState } from "react";
 
 interface ChannelCardProps {
   channel: Channel;
-  setChannel: React.Dispatch<React.SetStateAction<Channel[]>>;
+  setChannels: React.Dispatch<React.SetStateAction<Channel[]>>;
 }
 
-export function ChannelCard({ channel, setChannel }: ChannelCardProps) {
+export function ChannelCard({ channel, setChannels }: ChannelCardProps) {
   const [deleteId, setDeleteId] = useState<string | null>(null);
 
   let iconURL = "";
@@ -48,7 +48,7 @@ export function ChannelCard({ channel, setChannel }: ChannelCardProps) {
   };
   const confirmDelete = () => {
     if (deleteId !== null) {
-      setChannel((prevItems) =>
+      setChannels((prevItems) =>
         prevItems.filter((item) => item.id !== deleteId)
       );
       setDeleteId(null);

@@ -15,6 +15,7 @@ export interface Channel {
   apiKey: string;
   icon: string;
   Date: string;
+  isDeleted: boolean;
 }
 
 

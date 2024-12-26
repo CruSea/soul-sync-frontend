@@ -1,0 +1,26 @@
+{
+  "channels": [
+    {
+      "id": "7adb3741-c647-4479-972b-09404776fa96",
+      "name": "Soul sync - bot",
+      "type": "Telegram Bot",
+      "apiKey": "sfdfsfsdfs",
+      "webhookUrl": "https://www.google.com",
+      "customGreeting": "Welcome to our support bot!",
+      "Date": "Dec 16, 2024",
+      "isDeleted": false,
+      "icon": "/telegram-bot-icon.svg"
+    },
+    {
+      "id": "f5135374-1e6b-4f0e-bf77-0379363b5c48",
+      "name": "Naty ",
+      "type": "Telegram Bot",
+      "apiKey": "sfdjkhjksjkfdhjksf",
+      "webhookUrl": "https://www.google.com",
+      "customGreeting": "Welcome to our support bot!",
+      "Date": "Dec 16, 2024",
+      "isDeleted": true,
+      "icon": "/telegram-bot-icon.svg"
+    }
+  ]
+}

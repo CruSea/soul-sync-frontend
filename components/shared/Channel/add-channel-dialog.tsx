@@ -44,7 +44,11 @@ export function AddChannelDialog({ onAddChannel }: AddChannelDialogProps) {
 
   function onSubmit(values: z.infer<typeof formSchema>) {
     const date = new Date().toLocaleDateString("en-US", format);
-    onAddChannel({ ...values, Date: date });
+    onAddChannel({
+      ...values,
+      Date: date,
+      isDeleted: false,
+    });
     setOpen(false);
     form.reset();
   }
