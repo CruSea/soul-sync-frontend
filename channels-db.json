@@ -8,7 +8,7 @@
       "webhookUrl": "https://www.google.com",
       "customGreeting": "Welcome to our support bot!",
       "Date": "Dec 16, 2024",
-      "isDeleted": false,
+      "isDeleted": true,
       "icon": "/telegram-bot-icon.svg"
     },
     {
@@ -20,6 +20,66 @@
       "customGreeting": "Welcome to our support bot!",
       "Date": "Dec 16, 2024",
       "isDeleted": true,
+      "icon": "/telegram-bot-icon.svg"
+    },
+    {
+      "id": "83bbbd97-a8e0-4db0-8828-b6238a8349e9",
+      "name": "jhefksh",
+      "type": "Telegram Bot",
+      "apiKey": "sjdhfsdhfkjesf",
+      "webhookUrl": "https://www.google.com",
+      "customGreeting": "Welcome to our support bot!",
+      "Date": "Dec 23, 2024",
+      "isDeleted": false,
+      "icon": "/telegram-bot-icon.svg"
+    },
+    {
+      "id": "b26497ba-ed00-4be5-8afd-d86aa1c4c0d7",
+      "name": "Naty",
+      "type": "Telegram Bot",
+      "apiKey": "shfsdhjdsfhdkj",
+      "webhookUrl": "https://www.google.com",
+      "customGreeting": "Welcome to our support bot!",
+      "Date": "Dec 24, 2024",
+      "isDeleted": true,
+      "icon": "/telegram-bot-icon.svg"
+    },
+    {
+      "id": "a56a3490-3e57-4b1d-924a-beb1d0192ea0",
+      "name": "Beti",
+      "type": "Telegram Bot",
+      "apiKey": "jsdfhskjfhdjksdfkj",
+      "webhookUrl": "https://www.google.com",
+      "customGreeting": "Welcome to our support bot!",
+      "Date": "Dec 24, 2024",
+      "isDeleted": false,
+      "icon": "/telegram-bot-icon.svg"
+    },
+    {
+      "id": "818294e1-303b-4459-9353-ceddbefc3d0f",
+      "name": "Eyosi",
+      "type": "Telegram Bot",
+      "apiKey": "hfdsjhfdksj",
+      "Date": "Dec 26, 2024",
+      "isDeleted": false,
+      "icon": "/telegram-bot-icon.svg"
+    },
+    {
+      "id": "f7436aa8-3051-4fb3-9394-42a9817214d1",
+      "name": "Eyosias Solomon",
+      "type": "Telegram Bot",
+      "apiKey": "hfdsjhfdksj",
+      "Date": "Dec 26, 2024",
+      "isDeleted": false,
+      "icon": "/telegram-bot-icon.svg"
+    },
+    {
+      "id": "d94b9758-3815-426e-bc6a-516e5bb25099",
+      "name": "Eyosias Solomon Lale",
+      "type": "Telegram Bot",
+      "apiKey": "sdnfjshfj",
+      "Date": "Dec 26, 2024",
+      "isDeleted": false,
       "icon": "/telegram-bot-icon.svg"
     }
   ]

@@ -21,11 +21,13 @@ import {
   DropdownMenuItem,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
+import { useToast } from "@/hooks/use-toast";
 
 export default function ChannelsPage() {
   const [channels, setChannels] = useState<Channel[]>([]);
   const [search, setSearch] = useState("");
   const [selectedCategory, setSelectedCategory] = useState("All");
+  const { toast } = useToast();
   const categories = [
     "All",
     "Telegram Bot",
@@ -76,7 +78,11 @@ export default function ChannelsPage() {
       .catch((error) => {
         console.error("Error adding channel:", error);
       });
-    console.log(channelWithId); // send this to back end
+    toast({
+      title: "Channel added successfully",
+      description: "The channel has been added to the list",
+      duration: 3000,
+    });
   };
 
   return (
@@ -130,6 +136,7 @@ export default function ChannelsPage() {
                           key={channel.id}
                           channel={channel}
                           setChannels={setChannels}
+                          toast={toast}
                         />
                       </CommandItem>
                     )
