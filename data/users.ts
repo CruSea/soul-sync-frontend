@@ -264,4 +264,4 @@ const USERS_DATA: User[] = Array.from({ length: 50 }, (_, i) => ({
   ],
 }));
 
-export { users };
+export { users, USERS_DATA };
