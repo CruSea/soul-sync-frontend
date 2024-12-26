@@ -1,6 +1,6 @@
 import { FormField, FormItem, FormControl, FormMessage, FormLabel } from "@/components/ui/form";
 import { Checkbox } from "@/components/ui/checkbox";
-import { SpecializationFieldProps } from "@/types/create-org";
+import { SpecializationFieldProps } from "@/types/get-started";
 
 
 

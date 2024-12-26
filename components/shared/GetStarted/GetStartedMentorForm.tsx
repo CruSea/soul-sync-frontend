@@ -1,8 +1,8 @@
 "use client"
 
 import { useForm } from "react-hook-form"
-import { getStartedFormSchema } from "@/types/get-started"
-import { getStartedFormValues } from "@/types/get-started"
+import { getStartedMentorFormSchema } from "@/types/get-started"
+import { getStartedMentorFormValues } from "@/types/get-started"
 import { zodResolver } from "@hookform/resolvers/zod"
 import { Form } from "@/components/ui/form"
 import { AgeField } from "./AgeField"
@@ -17,10 +17,11 @@ import { DayPeriodField } from "./DayPeriod"
 import { useEffect } from "react"
 import { Button } from "@/components/ui/button"
 import { useRouter } from "next/navigation";
+import { TimeFields } from "./TimeFields"
 
-const GetStartedForm = () => {
-  const form = useForm<getStartedFormValues>({
-    resolver: zodResolver(getStartedFormSchema),
+const GetStartedMentorForm = () => {
+  const form = useForm<getStartedMentorFormValues>({
+    resolver: zodResolver(getStartedMentorFormSchema),
     mode: "onChange",
     defaultValues: {
       age: 29,
@@ -38,9 +39,9 @@ const GetStartedForm = () => {
 
   const router = useRouter();  // Initialize the useRouter hook
 
-  const onSubmit = (data: getStartedFormValues) => {
+  const onSubmit = (data: getStartedMentorFormValues) => {
     console.log("Mentor form data", data);
-    
+
     // Navigate to /mentor after form submission
     router.push("/mentor");  // Use router.push for smooth navigation
   };
@@ -60,34 +61,11 @@ const GetStartedForm = () => {
         </div>
         <LocationField control={form.control} />
         <SpecializationField control={form.control} options={getStartedForm.specializationOptions} />
-        <div className="space-y-2">
-          <div className="font-medium text-xl">Availability Time</div>
-          <div className="flex gap-6">
-            <div className="space-y-2">
-              <div className="font-medium text-zinc-500 font-base">Start Time</div>
-              <div className="flex gap-2 items-center">
-                <HourField control={form.control} type="start" form={form} />
-                <div className="text-2xl text-neutral-500 mb-1 ml-[-4px] mr-[-5px]">:</div>
-                <MinuteField control={form.control} type="start" form={form} />
-                <DayPeriodField control={form.control} type="start" form={form}/>
-              </div>
-            </div>
-            <div className="space-y-2">
-              <div className="font-medium text-zinc-500 font-base">End Time</div>
-              <div className="flex gap-2 items-center">
-                <HourField control={form.control} type="end" form={form} />
-                <div className="text-2xl text-neutral-500 mb-1 ml-[-4px] mr-[-5px]">:</div>
-                <MinuteField control={form.control} type="end" form={form} />
-                <DayPeriodField control={form.control} type="end" form={form}/>
-              </div>
-            </div>
-          </div>
-          {errors.startHour && <p className="text-red-500">Start Time can't be less than End Time</p>}
-        </div>
+        <TimeFields form={form} errors={errors} />
         <Button type="submit" className="w-4/5 mx-auto h-12 ">Submit</Button>
       </form>
     </Form>
   )
 }
 
-export default GetStartedForm
+export default GetStartedMentorForm
