@@ -10,7 +10,7 @@ import {
   DialogHeader,
   DialogTitle,
 } from "@/components/ui/dialog";
-import { Button } from "../ui/button";
+import { Button } from "@/components/ui/button";
 import { useState } from "react";
 
 interface ChannelCardProps {
@@ -94,7 +94,7 @@ export function ChannelCard({ channel, setChannel }: ChannelCardProps) {
             </div>
           </div>
           <div className="grow shrink basis-0 text-gray-900 text-xs font-bold font-['Manrope'] leading-tight tracking-tight text-wrap ">
-            <p className="w-full">{channel.name}</p>
+            {channel.name}
           </div>
         </div>
         <div className="self-stretch justify-between items-center inline-flex gap-3">
@@ -137,7 +137,7 @@ export function ChannelCard({ channel, setChannel }: ChannelCardProps) {
           <DialogHeader>
             <DialogTitle className="mb-2">Confirm Deletion</DialogTitle>
             <DialogDescription>
-              Are you sure you want to delete? <p className="font-bold text-black inline">{channel.name} | {channel.type}</p> action cannot
+              Are you sure you want to delete? <span className="font-bold text-black inline">{channel.name} | {channel.type}</span> action cannot
               be undone.
             </DialogDescription>
           </DialogHeader>

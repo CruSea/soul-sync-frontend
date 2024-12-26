@@ -2,8 +2,6 @@
 
 import React, { useState, useMemo } from "react";
 import {
-  ChevronDown,
-  ChevronUp,
   Search,
   Filter,
   X,
@@ -129,12 +127,12 @@ export function DataTable<T extends { id: string | number }>({
         {filters.map((filter) => (
           <Badge key={filter} variant="secondary" className="gap-2">
             {filter}
-            <button
+            <Button
               onClick={() => removeFilter(filter)}
               className="focus:outline-none"
             >
               <X className="h-3 w-3" />
-            </button>
+            </Button>
           </Badge>
         ))}
       </div>
