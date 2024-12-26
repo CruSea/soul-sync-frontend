@@ -21,11 +21,14 @@ import {
   DropdownMenuItem,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
+import { useToast } from "@/hooks/use-toast";
+
 
 export default function ChannelsPage() {
   const [channels, setChannels] = useState<Channel[]>([]);
   const [search, setSearch] = useState("");
   const [selectedCategory, setSelectedCategory] = useState("All");
+  const { toast } = useToast();
   const categories = [
     "All",
     "Telegram Bot",
@@ -71,13 +74,19 @@ export default function ChannelsPage() {
         "Content-Type": "application/json",
       },
       body: JSON.stringify(channelWithId),
+
+
     })
       .then((response) => response.json())
       .catch((error) => {
         console.error("Error adding channel:", error);
       });
-    console.log(channelWithId); // send this to back end
+    toast({
+      title: "Channel added successfully",
+      description: "The channel has been added to the list",
+    });
   };
+
 
   return (
     <div className="h-fit min-h-screen container mx-auto p-10 ">

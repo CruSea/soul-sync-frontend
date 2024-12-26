@@ -54,6 +54,33 @@
       "Date": "Dec 24, 2024",
       "isDeleted": false,
       "icon": "/telegram-bot-icon.svg"
+    },
+    {
+      "id": "818294e1-303b-4459-9353-ceddbefc3d0f",
+      "name": "Eyosi",
+      "type": "Telegram Bot",
+      "apiKey": "hfdsjhfdksj",
+      "Date": "Dec 26, 2024",
+      "isDeleted": false,
+      "icon": "/telegram-bot-icon.svg"
+    },
+    {
+      "id": "f7436aa8-3051-4fb3-9394-42a9817214d1",
+      "name": "Eyosias Solomon",
+      "type": "Telegram Bot",
+      "apiKey": "hfdsjhfdksj",
+      "Date": "Dec 26, 2024",
+      "isDeleted": false,
+      "icon": "/telegram-bot-icon.svg"
+    },
+    {
+      "id": "d94b9758-3815-426e-bc6a-516e5bb25099",
+      "name": "Eyosias Solomon Lale",
+      "type": "Telegram Bot",
+      "apiKey": "sdnfjshfj",
+      "Date": "Dec 26, 2024",
+      "isDeleted": false,
+      "icon": "/telegram-bot-icon.svg"
     }
   ]
 }
