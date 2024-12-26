@@ -2,7 +2,7 @@
 
 import { useState } from "react";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { useForm } from "react-hook-form";
+import { Form, useForm } from "react-hook-form";
 import * as z from "zod";
 import {
   Dialog,
@@ -11,21 +11,14 @@ import {
   DialogTitle,
   DialogTrigger,
 } from "@/components/ui/dialog";
-import {
-  Form,
-  FormControl,
-  FormField,
-  FormItem,
-  FormLabel,
-  FormMessage,
-} from "@/components/ui/form";
-import { Input } from "@/components/ui/input";
+
 import { Button } from "@/components/ui/button";
 import { Plus } from "lucide-react";
 import type { Channel } from "@/types/channel";
 import ChannelNameForm from "./channel-name-form";
 import { formSchema } from "@/types/channel";
 import ChannelTypeForm from "./channel-type-form";
+import ChannelConfigForm from "./channel-config-form";
 
 interface AddChannelDialogProps {
   onAddChannel: (channel: Omit<Channel, "id" | "icon">) => void;
@@ -71,19 +64,7 @@ export function AddChannelDialog({ onAddChannel }: AddChannelDialogProps) {
           <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4">
             <ChannelNameForm form={form} />
             <ChannelTypeForm form={form} />
-            <FormField
-              control={form.control}
-              name="apiKey"
-              render={({ field }) => (
-                <FormItem>
-                  <FormLabel>API Key</FormLabel>
-                  <FormControl>
-                    <Input placeholder="Aef35jhjsf48Hfe" {...field} />
-                  </FormControl>
-                  <FormMessage />
-                </FormItem>
-              )}
-            />
+            <ChannelConfigForm form={form} />
             <Button type="submit" className="w-full">
               Add channel
             </Button>
