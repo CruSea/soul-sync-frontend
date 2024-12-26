@@ -10,7 +10,7 @@ import { Sheet } from "lucide-react";
 import { useRouter } from "next/navigation";
 
 const BASE_URL = process.env.NEXT_PUBLIC_API_BASE_URL;
-const USER_URL = process.env.NEXT_PUBLIC_API_ADMIN_URL;
+const MENTOR_ID = process.env.NEXT_PUBLIC_API_MENTORS_ID;
 
 const MentorContainer = ({ users }: MentorContainerProps) => {
   const [currentUser, setCurrentUser] = useState<User>(users[0]);
@@ -79,7 +79,8 @@ const MentorContainer = ({ users }: MentorContainerProps) => {
 
         if (user && token) {
           const userObj = JSON.parse(user);
-          const endPoint = `${BASE_URL}/${USER_URL}/${userObj.accounts[0].id}/user/${userObj.sub}`;
+          // const endPoint = `${BASE_URL}/${USER_URL}/${userObj.accounts[0].id}/user/${userObj.sub}`;
+          const endPoint = `${BASE_URL}/${MENTOR_ID}/${userObj.sub}`
           const response = await fetch(endPoint, {
             method: "GET",
             headers: {
@@ -87,6 +88,7 @@ const MentorContainer = ({ users }: MentorContainerProps) => {
               Authorization: `Bearer ${JSON.parse(token)}`,
             },
           });
+
 
           if (!response.ok) {
             console.error("Failed to fetch user info", response);
@@ -100,12 +102,9 @@ const MentorContainer = ({ users }: MentorContainerProps) => {
             throw new Error("userInfo not found");
           }
 
-          if (!userInfo.location) {
-            console.log("Redirecitng to mentor get started page");
+          if (!userInfo.mentors[0].location) {
             router.push("/mentor/get-started")
           }
-
-          console.log("User exists: ", user);
         } else {
           console.error("User or token not found");
           router.push("/log-in");

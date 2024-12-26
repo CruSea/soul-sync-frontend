@@ -29,6 +29,7 @@ export default function AdminView() {
               Authorization: `Bearer ${JSON.parse(token)}`,
             },
           });
+          
 
           if (!response.ok) {
             console.error("Failed to fetch account info", response);
@@ -46,8 +47,6 @@ export default function AdminView() {
             console.log("Redirecting new user to create org page");
             router.push("/admin/create-org");
           }
-
-          console.log("account exists: ", accountInfo);
         } else {
           console.error("User or token not found");
           router.push("/log-in");

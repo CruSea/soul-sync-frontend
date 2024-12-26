@@ -10,12 +10,9 @@ const LogInView = () => {
   const { user } = useAuth();
   const router = useRouter();
   useEffect(() => {
-    console.log("found useEffect")
     if (user) {
       const userObj = JSON.parse(user);
-      console.log("found user")
       if (userObj.roles.includes("OWNER")) {
-        console.log("found owner")
         router.push("/admin"); // make it go to owner create page then info page,
       }
       if (userObj.roles.includes("MENTOR")) {
