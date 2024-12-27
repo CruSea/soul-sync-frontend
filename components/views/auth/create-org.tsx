@@ -34,7 +34,6 @@ const CreateOrgView = () => {
   })
 
   const onSubmit = (data: createOrgFormTwoValues | createOrgFormOneValues) => {
-    console.log("onSubmit is called")
     setOrgData((prevOrgData) => {
       const updatedData = { ...prevOrgData, ...data };
       return updatedData;
@@ -45,7 +44,6 @@ const CreateOrgView = () => {
     let isValid = true;  // Initialize a flag for validation
 
     if (currentPage === "first") {
-      console.log("first page confirmation");
 
       try {
         // Await the form submission and validation
@@ -53,7 +51,6 @@ const CreateOrgView = () => {
           onSubmit,
           (errors) => {
             // Handle validation failure
-            console.log("Form One validation failed:", errors);
             isValid = false;  // Set to false if validation fails
           }
         )();
@@ -89,7 +86,6 @@ const CreateOrgView = () => {
         orgData?.focus &&
         orgData?.role &&
         orgData?.otherRole) {
-        console.log("Sending org Data to backend:", orgData);
           // add sending functionallity to backend
       } else {
         console.log("organization data has missing values ")

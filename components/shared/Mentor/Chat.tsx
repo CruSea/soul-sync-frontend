@@ -50,9 +50,6 @@ const Chat = ({ userMessages, toggleDrawer, userDetails, setUserMessages }: Chat
         },
         body: JSON.stringify({ messages: updatedMessages }),
       });
-
-      console.log("the patch response", patchResponse)
-
       
       if (textBox.current) textBox.current.value = ""; // Reset input field
 

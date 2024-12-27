@@ -69,24 +69,6 @@ export const getStartedMentorFormSchema = z
       saturday: z.union([dailyAvailabilitySchema, z.undefined()]),
       sunday: z.union([dailyAvailabilitySchema, z.undefined()]),
     })
-    // startHour: z.string({
-    //   required_error: "Please select hour time",
-    // }),
-    // startMinute: z.string({
-    //   required_error: "Please select minute time",
-    // }),
-    // startDayPeriod: z.string({
-    //   required_error: "Please select day period time",
-    // }),
-    // endHour: z.string({
-    //   required_error: "Please select hour time",
-    // }),
-    // endMinute: z.string({
-    //   required_error: "Please select minute time",
-    // }),
-    // endDayPeriod: z.string({
-    //   required_error: "Please select day period time",
-    // }),
   })
   // .refine(
   //   (data) => {
@@ -139,6 +121,10 @@ export type getStartedMentorFormValues = z.infer<
   typeof getStartedMentorFormSchema
 >;
 
+export type availabilityType = z.infer<
+  typeof getStartedMentorFormSchema
+>;
+
 
 // for the Availability popup in the mentor form
 export const MentorAvailabilityFormSchema = z.object({
@@ -175,6 +161,10 @@ export const MentorAvailabilityFormSchema = z.object({
 
 export type MentorAvailabilityFormValues = z.infer<
   typeof MentorAvailabilityFormSchema
+>;
+
+export type AvailabilityType = z.infer<
+  typeof getStartedMentorFormSchema.shape.availability
 >;
 
 export const getStartedAdminFormSchema = z.object({
@@ -303,8 +293,18 @@ export interface AvailabilityDialogContentType {
   errorWhileAdd: boolean;
   setErrorWhileAdd: Dispatch<SetStateAction<boolean>>;
   setIsOpen: Dispatch<SetStateAction<boolean>>;
+  prevAvailability: AvailabilityType;
+  setPrevAvailability: Dispatch<SetStateAction<AvailabilityType>>;
 }
 
 export interface AvailabilityTypes {
+  form: UseFormReturn<getStartedMentorFormValues>;
+}
+
+export interface ConfirmExitType {
+  isConfirmExit: boolean;
+  setIsConfirmExit: Dispatch<SetStateAction<boolean>>;
+  setIsOpen: Dispatch<SetStateAction<boolean>>;
+  prevAvailability: AvailabilityType;
   form: UseFormReturn<getStartedMentorFormValues>;
 }

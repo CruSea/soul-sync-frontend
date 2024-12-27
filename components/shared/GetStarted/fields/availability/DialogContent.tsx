@@ -14,6 +14,8 @@ import { TimeFields } from "./TimeFields";
 import ErrorMessage from "./ErrorHandling";
 import { useFormContext } from "react-hook-form";
 import { LuX } from "react-icons/lu";
+import ConfirmExit from "./comfirmExit";
+import { useState } from "react";
 
 export default function AvailabilityDialogContent({
   form,
@@ -23,15 +25,35 @@ export default function AvailabilityDialogContent({
   errorWhileAdd,
   setErrorWhileAdd,
   setIsOpen,
+  prevAvailability,
+  setPrevAvailability,
 }: AvailabilityDialogContentType) {
-  const hasError = isErrorStates.some((isError) => isError);
+  const [isConfirmExit, setIsConfirmExit] = useState(false);   // are we in the exit dialog
+  const hasError = isErrorStates.some((isError) => isError);    // checks if any of the days have errors
 
   const availability = useFormContext().getValues("availability");
+  const AddAvailability = () => {
+    // when addinf, if there is an error show text if not close
+    if (hasError) {
+      setErrorWhileAdd(true);
+    } else {
+      setIsOpen(false);
+    }
+
+    setPrevAvailability(availability);  
+     // we set the confirmed availability that the user has set as the default we will return to 
+     // in the future if we discard changes on the availability dialog
+
+  };
 
   return (
     <DialogContent className="min-w-[680px] p-8 rounded-[8px] space-y-6">
       <DialogHeader className="relative text-start space-y-2">
-        <LuX className="absolute right-[-15px] top-[-15px] cursor-pointer" size={20} onClick={() => setIsOpen(false)}/>
+        <LuX
+          className="absolute right-[-15px] top-[-15px] cursor-pointer"
+          size={20}
+          onClick={() => setIsConfirmExit(true)}
+        />
         <DialogTitle className="text-2xl font-semibold">
           Add Availability Time
         </DialogTitle>
@@ -54,12 +76,19 @@ export default function AvailabilityDialogContent({
       <div className="flex gap-6 items-center">
         <Button
           className="p-4 w-fit font-medium text-base"
-          onClick={() => (hasError ? setErrorWhileAdd(true) : setIsOpen(false))}
+          onClick={AddAvailability}
         >
           Add
         </Button>
         <ErrorMessage hasError={errorWhileAdd} />
       </div>
+      <ConfirmExit
+        isConfirmExit={isConfirmExit}
+        setIsConfirmExit={setIsConfirmExit}
+        setIsOpen={setIsOpen}
+        prevAvailability={prevAvailability}
+        form={form}
+      />
     </DialogContent>
   );
 }

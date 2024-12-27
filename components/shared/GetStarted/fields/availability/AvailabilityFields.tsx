@@ -1,6 +1,7 @@
 "use client";
 
 import {
+  AvailabilityType,
   AvailabilityTypes,
 } from "@/types/get-started";
 import { useEffect, useState } from "react";
@@ -21,6 +22,10 @@ export function AvailabilityFields({form}: AvailabilityTypes) {
     false,
     false,
   ]); // gives us the error state for each day
+
+  const [prevAvailability, setPrevAvailability] = useState<AvailabilityType>(form.getValues("availability"))   
+  // holds the previouse availability data before the dialog was opened
+  // useful if we decard changes and go back to old data
 
   const [isOpen, setIsOpen] = useState(false);  // is the dailog open
 
@@ -50,8 +55,10 @@ export function AvailabilityFields({form}: AvailabilityTypes) {
             setIsErrorStatesAction={setIsErrorStatesAction}
             isErrorStates={isErrorStates}
             errorWhileAdd={errorWhileAdd}
+            prevAvailability={prevAvailability}
             setErrorWhileAdd={setErrorWhileAdd}
             setIsOpen={setIsOpen}
+            setPrevAvailability={setPrevAvailability}
           />
         </Dialog>
       </div>
