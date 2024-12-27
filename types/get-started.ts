@@ -296,10 +296,14 @@ export interface GetStartedProps {
 export interface AvailabilityHeaderTypes { isDaySelected: boolean }
 
 export interface AvailabilityDialogContentType {
-  availabilityForm: UseFormReturn<MentorAvailabilityFormValues>;
+  form: UseFormReturn<getStartedMentorFormValues>;
   isDaySelected: boolean;
   setIsErrorStatesAction: Dispatch<SetStateAction<boolean[]>>;
   isErrorStates: boolean[];
   errorWhileAdd: boolean;
   setErrorWhileAdd: Dispatch<SetStateAction<boolean>>;
+}
+
+export interface AvailabilityTypes {
+  form: UseFormReturn<getStartedMentorFormValues>;
 }

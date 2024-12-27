@@ -15,9 +15,10 @@ import { DayField } from "./DayFields";
 import { getStartedForm } from "@/data/get-started-data";
 import { TimeFields } from "./TimeFields";
 import ErrorMessage from "./ErrorHandling";
+import { useFormContext } from "react-hook-form";
 
 export default function AvailabilityDialogContent({
-  availabilityForm,
+  form,
   isDaySelected,
   setIsErrorStatesAction,
   isErrorStates,
@@ -25,6 +26,8 @@ export default function AvailabilityDialogContent({
   setErrorWhileAdd,
 }: AvailabilityDialogContentType ) {
   const hasError = isErrorStates.some((isError) => isError);
+
+  const availability = useFormContext().getValues("availability");
 
   return (
     <DialogContent className="min-w-[680px] p-8 rounded-[8px] space-y-6">
@@ -38,13 +41,13 @@ export default function AvailabilityDialogContent({
       </DialogHeader>
       <div className="space-y-6">
         <DayField
-          control={availabilityForm.control}
+          control={form.control}
           options={getStartedForm.DayOptions}
         />
         {isDaySelected && (
           <TimeFields
-            control={availabilityForm.control}
-            form={availabilityForm}
+            control={form.control}
+            form={form}
             options={getStartedForm.DayOptions}
             setIsErrorStatesAction={setIsErrorStatesAction}
             isErrorStates={isErrorStates}
@@ -54,7 +57,7 @@ export default function AvailabilityDialogContent({
       <div className="flex gap-6 items-center">
         <Button
           className="p-4 w-fit font-medium text-base"
-          onClick={() => (hasError ? setErrorWhileAdd(true) : null)}
+          onClick={() => (hasError ? setErrorWhileAdd(true) : console.log("the availability is", availability))}
         >
           Add
         </Button>

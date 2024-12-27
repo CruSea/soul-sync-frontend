@@ -71,7 +71,7 @@ const GetStartedMentorForm = () => {
           control={form.control}
           options={getStartedForm.specializationOptions}
         />
-        <AvailabilityFields />
+        <AvailabilityFields form={form}/>
         <Button type="submit" className="w-4/5 mx-auto h-12 mt-8 ">
           Submit
         </Button>

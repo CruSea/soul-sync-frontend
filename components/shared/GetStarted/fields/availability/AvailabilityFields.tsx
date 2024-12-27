@@ -1,35 +1,17 @@
 "use client";
 
 import {
-  MentorAvailabilityFormSchema,
-  MentorAvailabilityFormValues,
+  AvailabilityTypes,
 } from "@/types/get-started";
-import { zodResolver } from "@hookform/resolvers/zod";
 import { useEffect, useState } from "react";
-import { FormProvider, useForm } from "react-hook-form";
+import { FormProvider } from "react-hook-form";
 import AvailabilityHeader from "./AvailabilityHeader";
 import AvailabilityDialogContent from "./DialogContent";
 import {
   Dialog
 } from "./TimeDialog";
 
-export function AvailabilityFields() {
-  const availabilityForm = useForm<MentorAvailabilityFormValues>({
-    resolver: zodResolver(MentorAvailabilityFormSchema),
-    mode: "onChange",
-    defaultValues: {
-      availability: {
-        monday: undefined,
-        tuesday: undefined,
-        wednesday: undefined,
-        thursday: undefined,
-        friday: undefined,
-        saturday: undefined,
-        sunday: undefined,
-      },
-    },
-  });
-
+export function AvailabilityFields({form}: AvailabilityTypes) {
   const [isErrorStates, setIsErrorStatesAction] = useState<boolean[]>([
     false,
     false,
@@ -52,16 +34,16 @@ export function AvailabilityFields() {
   }, [isErrorStates]);
 
   const isDaySelected = () =>
-    Object.values(availabilityForm.watch("availability")).some(Boolean); // gets the availabily array and checks if there is atleast one value truthy
+    Object.values(form.watch("availability")).some(Boolean); // gets the availabily array and checks if there is atleast one value truthy
 
   return (
-    <FormProvider {...availabilityForm}>
+    <FormProvider {...form}>
       <div className="space-y-4 flex flex-col justify-center items-center">
         <div className="font-medium text-xl mr-auto">Availability Time</div>
         <Dialog>
           <AvailabilityHeader isDaySelected={isDaySelected()} />
           <AvailabilityDialogContent
-            availabilityForm={availabilityForm}
+            form={form}
             isDaySelected={isDaySelected()}
             setIsErrorStatesAction={setIsErrorStatesAction}
             isErrorStates={isErrorStates}
