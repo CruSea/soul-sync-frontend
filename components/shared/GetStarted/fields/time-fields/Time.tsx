@@ -7,16 +7,14 @@ import { DayPeriodField } from "./DayPeriod";
 import { parseTime } from "@/lib/utils";
 import { useState } from "react";
 
-export function Time({ control, errors, form, day }: TimeProp) {
+export function Time({ control, form, day, setIsErrorAction, isError }: TimeProp) {
   const dayAvailability = form.watch(`availability.${day.value}`);
-
-  const [isError, setIsError] = useState(false);
 
   const timeError = () => {
     if (!dayAvailability) return true; // Skip days with no availability
     const startTime = parseTime(dayAvailability.startTime);
     const endTime = parseTime(dayAvailability.endTime);
-    setIsError(startTime >= endTime);
+    setIsErrorAction(startTime >= endTime);
   };
 
   return (
@@ -83,7 +81,7 @@ export function Time({ control, errors, form, day }: TimeProp) {
         </div>
       </div>
       {isError && (
-        <p className="text-red-500">Start Time can't be less than End Time</p>
+        <p className="text-red-500">Start Time can't be more than End Time</p>
       )}
     </div>
   );

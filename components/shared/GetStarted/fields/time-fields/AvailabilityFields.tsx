@@ -1,22 +1,10 @@
-import {
-  FormField,
-  FormItem,
-  FormControl,
-  FormMessage,
-  FormLabel,
-  Form,
-} from "@/components/ui/form";
-import { Checkbox } from "@/components/ui/checkbox";
+"use client";
+
 import { zodResolver } from "@hookform/resolvers/zod";
 import {
-  SpecializationFieldProps,
-  AvailabilityFieldsProps,
   MentorAvailabilityFormValues,
   MentorAvailabilityFormSchema,
 } from "@/types/get-started";
-import { HourField } from "./hourField";
-import { DayPeriodField } from "./DayPeriod";
-import { MinuteField } from "./MinuteField";
 import { Button } from "@/components/ui/button";
 import { LuPlus } from "react-icons/lu";
 import {
@@ -32,7 +20,7 @@ import { getStartedForm } from "@/data/get-started-data";
 import { TimeFields } from "./TimeFields";
 import { FormProvider, useForm } from "react-hook-form";
 import { AiTwotoneCheckCircle } from "react-icons/ai";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 
 export function AvailabilityFields() {
   const availabilityForm = useForm<MentorAvailabilityFormValues>({
@@ -51,9 +39,26 @@ export function AvailabilityFields() {
     },
   });
 
-  const {
-    formState: { errors },
-  } = availabilityForm;
+  const [isErrorStates, setIsErrorStatesAction] = useState<boolean[]>([
+    false,
+    false,
+    false,
+    false,
+    false,
+    false,
+    false,
+  ]); // gives us the error state for each day
+
+  const [errorWhileAdd, setErrorWhileAdd] = useState(false);   // shows an error next to the add button if there are incorrect timefields
+
+  const hasError = isErrorStates.some((isError) => isError);   // checks if there are errors in the tiemFields
+
+  useEffect(() => {      
+    // hides the error next to add when all errors are fixed
+    if (!hasError) {
+      setErrorWhileAdd(false);
+    }
+  }, [isErrorStates]);
 
   const isDaySelected = () =>
     Object.values(availabilityForm.watch("availability")).some(Boolean); // gets the availabily array and checks if there is atleast one value truthy
@@ -106,10 +111,24 @@ export function AvailabilityFields() {
                   control={availabilityForm.control}
                   form={availabilityForm}
                   options={getStartedForm.DayOptions}
+                  setIsErrorStatesAction={setIsErrorStatesAction}
+                  isErrorStates={isErrorStates}
                 />
               ) : null}
             </div>
-            <Button className="p-4 w-fit font-medium text-base">Add</Button>
+            <div className="flex gap-6 items-center">
+              <Button
+                className="p-4 w-fit font-medium text-base"
+                onClick={() => (hasError ? setErrorWhileAdd(true) : null)}
+              >
+                Add
+              </Button>
+              {errorWhileAdd && (
+                <span className=" text-red-500">
+                  Please ensure all times are properly set
+                </span>
+              )}
+            </div>
           </DialogContent>
         </Dialog>
       </div>

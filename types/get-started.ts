@@ -273,16 +273,19 @@ export interface DayFieldProps {
 
 export interface TimeFieldsProps {
   control: any;
-  errors: any;
   form: getStartedMentorFormValues | any | undefined;
   options: { label: string; value: string }[];
+  setIsErrorStatesAction: React.Dispatch<React.SetStateAction<boolean[]>>
+  isErrorStates: boolean[]
 }
 
 export interface TimeProp {
   control: any;
-  errors: any;
   form: getStartedMentorFormValues | any | undefined;
   day: { label: string; value: string };
+  isError: boolean;
+  setIsErrorAction: (value: boolean) => void;
+
 }
 
 export interface GetStartedProps {
