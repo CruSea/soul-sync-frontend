@@ -8,8 +8,6 @@ import {
 import { AiTwotoneCheckCircle } from "react-icons/ai";
 import { AvailabilityHeaderTypes } from "@/types/get-started";
 
-
-
 export default function AvailabilityHeader({ isDaySelected }: AvailabilityHeaderTypes) {
   return (
     <div className="w-full">

@@ -1,21 +1,19 @@
 "use client";
 
-import {
-  AvailabilityDialogContentType,
-} from "@/types/get-started";
+import { AvailabilityDialogContentType } from "@/types/get-started";
 import { Button } from "@/components/ui/button";
 import {
   DialogContent,
   DialogDescription,
   DialogHeader,
   DialogTitle,
-
 } from "./TimeDialog";
 import { DayField } from "./DayFields";
 import { getStartedForm } from "@/data/get-started-data";
 import { TimeFields } from "./TimeFields";
 import ErrorMessage from "./ErrorHandling";
 import { useFormContext } from "react-hook-form";
+import { LuX } from "react-icons/lu";
 
 export default function AvailabilityDialogContent({
   form,
@@ -24,19 +22,16 @@ export default function AvailabilityDialogContent({
   isErrorStates,
   errorWhileAdd,
   setErrorWhileAdd,
-  setIsOpen
-}: AvailabilityDialogContentType ) {
+  setIsOpen,
+}: AvailabilityDialogContentType) {
   const hasError = isErrorStates.some((isError) => isError);
 
   const availability = useFormContext().getValues("availability");
 
-  const closeDialog = () => {
-    setIsOpen(false);
-  }
-
   return (
     <DialogContent className="min-w-[680px] p-8 rounded-[8px] space-y-6">
-      <DialogHeader className="text-start space-y-2">
+      <DialogHeader className="relative text-start space-y-2">
+        <LuX className="absolute right-[-15px] top-[-15px] cursor-pointer" size={20} onClick={() => setIsOpen(false)}/>
         <DialogTitle className="text-2xl font-semibold">
           Add Availability Time
         </DialogTitle>
@@ -45,10 +40,7 @@ export default function AvailabilityDialogContent({
         </DialogDescription>
       </DialogHeader>
       <div className="space-y-6">
-        <DayField
-          control={form.control}
-          options={getStartedForm.DayOptions}
-        />
+        <DayField control={form.control} options={getStartedForm.DayOptions} />
         {isDaySelected && (
           <TimeFields
             control={form.control}
@@ -62,7 +54,7 @@ export default function AvailabilityDialogContent({
       <div className="flex gap-6 items-center">
         <Button
           className="p-4 w-fit font-medium text-base"
-          onClick={() => (hasError ? setErrorWhileAdd(true) : closeDialog())}
+          onClick={() => (hasError ? setErrorWhileAdd(true) : setIsOpen(false))}
         >
           Add
         </Button>
