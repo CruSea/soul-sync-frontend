@@ -218,23 +218,9 @@ export interface AgeFieldProps {
   className?: string;
 }
 
-export interface DayPeriodFieldProps {
-  control: any;
-  type: "start" | "end";
-  form: getStartedMentorFormValues | any | undefined;
-  day: { label: string; value: string };
-}
-
 export interface SpecializationFieldProps {
   control: any;
   options: { label: string; value: string }[];
-}
-
-export interface MinuteFieldProps {
-  control: any;
-  type: "start" | "end";
-  form: getStartedMentorFormValues | any | undefined;
-  day: { label: string; value: string };
 }
 
 export interface LocationFieldProps {
@@ -250,6 +236,24 @@ export interface HourFieldProps {
   type: "start" | "end";
   form: getStartedMentorFormValues | any | undefined;
   day: { label: string; value: string };
+  timeError: () => void;
+
+}
+
+export interface MinuteFieldProps {
+  control: any;
+  type: "start" | "end";
+  form: getStartedMentorFormValues | any | undefined;
+  day: { label: string; value: string };
+  timeError: () => void;
+}
+
+export interface DayPeriodFieldProps {
+  control: any;
+  type: "start" | "end";
+  form: getStartedMentorFormValues | any | undefined;
+  day: { label: string; value: string };
+  timeError: () => void;
 }
 
 export interface AvailabilityFieldsProps {

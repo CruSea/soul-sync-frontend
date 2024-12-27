@@ -13,7 +13,7 @@ import { SpecializationField } from "../fields/SpecializationField";
 import { useEffect } from "react";
 import { Button } from "@/components/ui/button";
 import { useRouter } from "next/navigation";
-import { AvailabilityFields } from "../time-fields/AvailabilityFields";
+import { AvailabilityFields } from "../fields/time-fields/AvailabilityFields";
 
 const GetStartedMentorForm = () => {
   const form = useForm<getStartedMentorFormValues>({

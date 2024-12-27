@@ -10,7 +10,6 @@ export function TimeFields({
 }: TimeFieldsProps) {
   const availability = useFormContext().getValues("availability")
   
-
   return (
     <div className="space-y-4">
       <div className="text-lg font-semibold">Select Time:</div>
