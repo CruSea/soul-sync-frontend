@@ -302,6 +302,7 @@ export interface AvailabilityDialogContentType {
   isErrorStates: boolean[];
   errorWhileAdd: boolean;
   setErrorWhileAdd: Dispatch<SetStateAction<boolean>>;
+  setIsOpen: Dispatch<SetStateAction<boolean>>;
 }
 
 export interface AvailabilityTypes {

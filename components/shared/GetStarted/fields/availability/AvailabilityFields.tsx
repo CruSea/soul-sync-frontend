@@ -22,6 +22,8 @@ export function AvailabilityFields({form}: AvailabilityTypes) {
     false,
   ]); // gives us the error state for each day
 
+  const [isOpen, setIsOpen] = useState(false);  // is the dailog open
+
   const [errorWhileAdd, setErrorWhileAdd] = useState(false); // shows an error next to the add button if there are incorrect timefields
 
   const hasError = isErrorStates.some((isError) => isError); // checks if there are errors in the tiemFields
@@ -40,7 +42,7 @@ export function AvailabilityFields({form}: AvailabilityTypes) {
     <FormProvider {...form}>
       <div className="space-y-4 flex flex-col justify-center items-center">
         <div className="font-medium text-xl mr-auto">Availability Time</div>
-        <Dialog>
+        <Dialog open={isOpen} onOpenChange={setIsOpen} modal>
           <AvailabilityHeader isDaySelected={isDaySelected()} />
           <AvailabilityDialogContent
             form={form}
@@ -49,6 +51,7 @@ export function AvailabilityFields({form}: AvailabilityTypes) {
             isErrorStates={isErrorStates}
             errorWhileAdd={errorWhileAdd}
             setErrorWhileAdd={setErrorWhileAdd}
+            setIsOpen={setIsOpen}
           />
         </Dialog>
       </div>

@@ -24,10 +24,15 @@ export default function AvailabilityDialogContent({
   isErrorStates,
   errorWhileAdd,
   setErrorWhileAdd,
+  setIsOpen
 }: AvailabilityDialogContentType ) {
   const hasError = isErrorStates.some((isError) => isError);
 
   const availability = useFormContext().getValues("availability");
+
+  const closeDialog = () => {
+    setIsOpen(false);
+  }
 
   return (
     <DialogContent className="min-w-[680px] p-8 rounded-[8px] space-y-6">
@@ -57,7 +62,7 @@ export default function AvailabilityDialogContent({
       <div className="flex gap-6 items-center">
         <Button
           className="p-4 w-fit font-medium text-base"
-          onClick={() => (hasError ? setErrorWhileAdd(true) : console.log("the availability is", availability))}
+          onClick={() => (hasError ? setErrorWhileAdd(true) : closeDialog())}
         >
           Add
         </Button>
