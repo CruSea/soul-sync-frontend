@@ -1,4 +1,5 @@
 import { getStartedForm } from "@/data/get-started-data";
+import { Dispatch, SetStateAction } from "react";
 import { UseFormReturn } from "react-hook-form";
 import { z } from "zod";
 
@@ -290,4 +291,15 @@ export interface TimeProp {
 
 export interface GetStartedProps {
   type: "admin" | "mentor";
+}
+
+export interface AvailabilityHeaderTypes { isDaySelected: boolean }
+
+export interface AvailabilityDialogContentType {
+  availabilityForm: UseFormReturn<MentorAvailabilityFormValues>;
+  isDaySelected: boolean;
+  setIsErrorStatesAction: Dispatch<SetStateAction<boolean[]>>;
+  isErrorStates: boolean[];
+  errorWhileAdd: boolean;
+  setErrorWhileAdd: Dispatch<SetStateAction<boolean>>;
 }
