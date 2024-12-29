@@ -43,7 +43,7 @@ export default function ChannelsPage() {
     const fetchedChannels = async () => {
       const response = await fetch("http://localhost:3001/channels");
       const data = await response.json();
-      setChannels(data); // Access the channels array from the response
+      setChannels(data);
     };
     fetchedChannels();
   }, []);
@@ -65,9 +65,6 @@ export default function ChannelsPage() {
     const channelWithId: Channel = {
       ...newChannel,
       id: `${uuidv4().toString()}`,
-      // icon: `/${newChannel.Metadata.type
-      //   .toLowerCase()
-      //   .replace(" ", "-")}-icon.svg`,
       Date: `${new Date().toLocaleDateString("en-US", format)}`,
     };
     setChannels(channels ? [...channels, channelWithId] : [channelWithId]);

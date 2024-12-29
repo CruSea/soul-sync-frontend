@@ -35,8 +35,8 @@ export default function ChannelNameForm({
             <FormLabel>Channel Type</FormLabel>
             <Select
               onValueChange={(value) => {
-                field.onChange(value); // Updates the form field value
-                setSelectedChannel(value); // Updates the external selected channel state
+                field.onChange(value);
+                setSelectedChannel(value);
               }}
               defaultValue={field.value}
             >

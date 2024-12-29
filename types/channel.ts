@@ -18,7 +18,7 @@ export interface Channel {
     apiKey: string;
     campaignId: string;
   };
-  Date:string;
+  Date: string;
   // icon: string;
 }
 
@@ -41,7 +41,7 @@ export const formSchema = z
   .superRefine((channel, ctx) => {
     if (channel.type === "Telegram Bot" && !channel.apiKey) {
       ctx.addIssue({
-        code: "custom", // Specify the issue type
+        code: "custom",
         path: ["apiKey"],
         message: "API Key is required for Telegram Bot.",
       });

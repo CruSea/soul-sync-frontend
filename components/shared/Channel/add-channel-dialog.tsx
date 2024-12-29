@@ -115,9 +115,3 @@ export function AddChannelDialog({ onAddChannel,selectedChannel,setSelectedChann
     </Dialog>
   );
 }
-
-{
-  /* <ChannelApiForm form={form} />
-<ChannelTokenform form={form} />
-<ChannelCampIdform form={form} /> */
-}
