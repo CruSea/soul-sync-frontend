@@ -84,40 +84,40 @@ export function ChannelCard({ channel, setChannels, toast }: ChannelCardProps) {
     switch (channel.Metadata.type) {
       case "Telegram Bot":
         return (
-          <div className="self-stretch justify-between items-center inline-flex gap-9">
-            <div className="h-[19px] justify-start items-center gap-2 flex">
+          <div className="w-full justify-between items-center flex ">
+            <div className="h-auto w-fit gap-2 items-center flex  justify-between">
               <div className="w-2.5 h-2.5 bg-[#27a376] rounded-[50px]" />
               <div className="text-[#677488] text-xs font-medium font-['Manrope'] leading-tight">
                 ApiKey
               </div>
             </div>
-            <div className="grow shrink basis-0 text-gray-900 text-xs font-bold font-['Manrope'] leading-[18px] tracking-wide">
+            <div className="text-gray-900 text-xs font-bold font-['Manrope'] ">
               {channel.Config.apiKey}
             </div>
           </div>
         );
       case "Negarit SMS":
         return (
-          <div>
-            <div className="self-stretch justify-between items-center inline-flex gap-9">
-              <div className="h-[19px] justify-start items-center gap-2 flex">
+          <div className="w-full">
+            <div className="w-full justify-between items-center flex ">
+              <div className="h-auto w-fit gap-2 items-center flex  justify-between">
                 <div className="w-2.5 h-2.5 bg-[#27a376] rounded-[50px]" />
                 <div className="text-[#677488] text-xs font-medium font-['Manrope'] leading-tight">
                   Token
                 </div>
               </div>
-              <div className="grow shrink basis-0 text-gray-900 text-xs font-bold font-['Manrope'] leading-[18px] tracking-wide">
+              <div className="text-gray-900 text-xs font-bold font-['Manrope'] ">
                 {channel.Config.token}
               </div>
             </div>
-            <div className="self-stretch justify-between items-center inline-flex gap-9">
-              <div className="h-[19px] justify-start items-center gap-2 flex">
+            <div className="justify-between items-center flex  w-full ">
+              <div className="h-auto justify-start items-center gap-2 flex">
                 <div className="w-2.5 h-2.5 bg-[#27a376] rounded-[50px]" />
                 <div className="text-[#677488] text-xs font-medium font-['Manrope'] leading-tight">
                   Campaign ID
                 </div>
               </div>
-              <div className="grow shrink basis-0 text-gray-900 text-xs font-bold font-['Manrope'] leading-[18px] tracking-wide">
+              <div className="text-gray-900 text-xs font-bold font-['Manrope']">
                 {channel.Config.campaignId}
               </div>
             </div>
@@ -132,61 +132,62 @@ export function ChannelCard({ channel, setChannels, toast }: ChannelCardProps) {
   };
 
   return (
-    <div className="h-[278px] w-full  flex flex-col items-center justify-between px-2.5 pt-1 pb-2 border rounded-xl bg-white hover:shadow-md hover:rounded-xl transition-shadow">
-      <div className="h-10 px-1 py-2 rounded-tl-lg rounded-tr-lg justify-between items-center inline-flex w-full">
+    <div className="h-full w-full  gap-4  pb-5 flex flex-col items-center justify-between px-2.5 pt-1 border rounded-xl bg-white hover:shadow-md hover:rounded-xl transition-shadow ">
+      <div className="h-auto px-1 py-2 rounded-tl-lg rounded-tr-lg justify-between items-center inline-flex w-full">
         <div className="px-1.5 py-0.5 rounded-xl border border-zinc-500 justify-center items-center gap-2.5 flex">
-          <div className="w-[31px] h-3 text-center text-zinc-500 text-[8px] font-bold font-['Inter'] leading-3 tracking-wide">
+          <div className="w-auto h-3 text-center text-zinc-500 text-[8px] font-bold font-['Inter'] leading-3 tracking-wide">
             Active
           </div>
         </div>
         <div
           onClick={() => handleDelete(channel)}
-          className="w-6 h-6 px-[3px] py-[2.62px] justify-center rounded-xl hover:bg-[#f1f2f4] items-center cursor-pointer flex"
+          className="w-8 h-8 px-[3px] py-[2.62px] justify-center rounded-xl hover:bg-[#f1f2f4] items-center cursor-pointer flex"
         >
-          <AiOutlineDelete className="w-full h-full cursor-pointer  " />
+          <AiOutlineDelete className="w-8 h-8 cursor-pointer" />
         </div>
       </div>
-      <div className="relative w-16 h-16 mb-2">
+      <div className="w-auto mb-2 h-auto">
         <Image
           src={iconURL}
           alt={channel.Metadata.type}
-          fill
+          width={80}
+          height={80}
+
           className="object-contain"
         />
       </div>
-      <div className="h-[98px] w-full p-1 flex-col justify-center items-start gap-0.5 inline-flex">
-        <div className="self-stretch w-full justify-between items-center inline-flex gap-7 text-wrap">
-          <div className="h-[19px] justify-start items-center gap-2 flex">
+      <div className="h-full w-full  flex-col justify-start items-start  inline-flex ">
+        <div className="w-full h-auto justify-between items-center flex text-wrap gap-2">
+          <div className="h-auto justify-between items-center gap-2 flex">
             <div className="w-2.5 h-2.5 bg-[#27a376] rounded-[50px]" />
             <div className="text-[#677488] text-xs font-medium font-['Manrope'] leading-tight">
               Name
             </div>
           </div>
-          <div className="grow shrink basis-0 text-gray-900 text-xs font-bold font-['Manrope'] leading-tight tracking-tight text-wrap ">
+          <div className="text-gray-900 text-xs font-bold font-['Manrope'] ">
             {channel.name}
           </div>
         </div>
-        <div className="self-stretch justify-between items-center inline-flex gap-3">
-          <div className="h-[19px] justify-start items-center gap-2 flex">
+        <div className="w-full h-auto justify-between items-center flex text-wrap">
+          <div className="h-auto justify-between items-center gap-2 flex">
             <div className="w-2.5 h-2.5 bg-[#27a376] rounded-[50px]" />
             <div className="text-[#677488] text-xs font-medium font-['Manrope'] leading-tight">
-              Channel
+              Type
             </div>
           </div>
-          <div className="grow shrink basis-0 text-gray-900 text-xs font-bold font-['Manrope'] leading-tight tracking-tight">
+          <div className="text-gray-900 text-xs font-bold font-['Manrope'] ">
             {channel.Metadata.type}
           </div>
         </div>
-        <div className="self-stretch justify-between items-center inline-flex gap-8">
-          <div className="h-[19px] justify-start items-center gap-2 flex">
+        <div className="w-full h-auto justify-between items-center flex text-wrap ">
+          <div className="h-auto justify-between items-center gap-2 flex">
             <div className="w-2.5 h-2.5 bg-[#27a376] rounded-[50px]" />
             <div className="text-[#677488] text-xs font-medium font-['Manrope'] leading-tight">
               Date
             </div>
           </div>
-          <div className="grow shrink basis-0 text-gray-900 text-xs font-bold font-['Manrope'] leading-tight tracking-tight">
-            {/* Jan 16,2024 */}
-            randomDate
+          <div className="text-gray-900 text-xs font-bold font-['Manrope'] ">
+            {channel.Date}
           </div>
         </div>
         {channelChange(channel)}
