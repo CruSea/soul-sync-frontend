@@ -60,11 +60,12 @@ export default function ChannelsPage() {
   const handleAddChannel = (
     newChannel: Omit<Channel, "id" | "icon" | "Date">
   ) => {
-  
     const channelWithId: Channel = {
       ...newChannel,
       id: `${uuidv4().toString()}`,
-      icon: `/${newChannel.Metadata.type.toLowerCase().replace(" ", "-")}-icon.svg`,
+      icon: `/${newChannel.Metadata.type
+        .toLowerCase()
+        .replace(" ", "-")}-icon.svg`,
       Date: `${new Date().toLocaleDateString("en-US", format)}`,
     };
     setChannels(channels ? [...channels, channelWithId] : [channelWithId]);
@@ -127,21 +128,19 @@ export default function ChannelsPage() {
               <CommandEmpty>No results found.</CommandEmpty>
               <CommandGroup className="h-full">
                 <div className="grid lg:grid-cols-4 md:grid-cols-3 grid-cols-[repeat(auto-fit,minmax(min-content,1fr))] gap-4 p-4 h-full">
-                  {filteredChannel?.map((channel) =>
-                    channel.isDeleted ? null : (
-                      <CommandItem
+                  {filteredChannel?.map((channel) => (
+                    <CommandItem
+                      key={channel.id}
+                      className="w-auto flex flex-col items-center justify-center h-full min-h-[100px] rounded-xl"
+                    >
+                      <ChannelCard
                         key={channel.id}
-                        className="w-auto flex flex-col items-center justify-center h-full min-h-[100px] rounded-xl"
-                      >
-                        <ChannelCard
-                          key={channel.id}
-                          channel={channel}
-                          setChannels={setChannels}
-                          toast={toast}
-                        />
-                      </CommandItem>
-                    )
-                  )}
+                        channel={channel}
+                        setChannels={setChannels}
+                        toast={toast}
+                      />
+                    </CommandItem>
+                  ))}
                   <AddChannelDialog onAddChannel={handleAddChannel} />
                 </div>
               </CommandGroup>

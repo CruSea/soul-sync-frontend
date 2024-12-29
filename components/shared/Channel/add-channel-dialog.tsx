@@ -76,7 +76,6 @@ export function AddChannelDialog({ onAddChannel }: AddChannelDialogProps) {
         campaignId: values.campaignId || "",
       },
       Date:date,
-      isDeleted : false
     };
     console.log(transformedData);
 

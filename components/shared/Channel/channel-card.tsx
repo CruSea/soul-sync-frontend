@@ -47,28 +47,45 @@ export function ChannelCard({ channel, setChannels, toast }: ChannelCardProps) {
       break;
   }
   const handleDelete = (channel: Channel) => {
-    setDeleteId(channel.id);
+    setDeleteId(channel.id); 
   };
+
   const confirmDelete = () => {
     if (deleteId !== null) {
       setChannels((prevItems) =>
         prevItems.filter((item) => item.id !== deleteId)
       );
-      setDeleteId(null);
+      fetch(`http://localhost:3001/channels/${deleteId}`, {
+        method: "DELETE",
+      })
+        .then((response) => response.json())
+        .then((data) => {
+          console.log("Deleted channel:", data);
+          // Show toast notification after successful deletion
+          toast({
+            title: "Channel deleted successfully",
+            description: "The channel has been deleted from the list",
+            duration: 3000,
+          });
+        })
+        .catch((error) => {
+          console.error("Error:", error);
+          toast({
+            title: "Error deleting channel",
+            description: "An error occurred while deleting the channel.",
+            duration: 3000,
+          });
+        });
+
+      setDeleteId(null); 
     }
-    toast({
-      title: "Channel deleted successfully",
-      description: "The channel has been deleted from the list",
-      duration: 3000,
-    });
-  };
-  const cancelDelete = () => {
-    setDeleteId(null);
   };
 
-  // const handleDeleteChannel = (id: string) => {
-  //   setChannel((prevItems) => prevItems.filter((item) => item.id !== id));
-  // };
+  const cancelDelete = () => {
+    setDeleteId(null); 
+  };
+
+
 
   return (
     <div className="h-[278px] w-full  flex flex-col items-center justify-between px-2.5 pt-1 pb-2 border rounded-xl bg-white hover:shadow-md hover:rounded-xl transition-shadow">

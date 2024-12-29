@@ -1,19 +1,3 @@
 {
-  "channels": [
-    {
-      "id": "f5ec735d-18a7-419c-a0ca-4199bbc1baa4",
-      "name": "Eyosi",
-      "Metadata": {
-        "type": "Telegram Bot"
-      },
-      "Config": {
-        "token": "",
-        "apiKey": "sdnfjshfj",
-        "campaignId": ""
-      },
-      "Date": "Dec 29, 2024",
-      "isDeleted": false,
-      "icon": "/telegram-bot-icon.svg"
-    }
-  ]
+  "channels": []
 }

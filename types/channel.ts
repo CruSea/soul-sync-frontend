@@ -20,7 +20,6 @@ export interface Channel {
   };
   Date:string;
   icon: string;
-  isDeleted: boolean;
 }
 
 export const formSchema = z
