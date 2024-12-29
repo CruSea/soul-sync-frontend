@@ -26,11 +26,11 @@ interface ChannelCardProps {
 export function ChannelCard({ channel, setChannels, toast }: ChannelCardProps) {
   const [deleteId, setDeleteId] = useState<string | null>(null);
   let iconURL = "";
-  switch (channel.type) {
+  switch (channel.Metadata.type) {
     case "Telegram Bot":
       iconURL = "/telegram.png";
       break;
-    case "Negarit":
+    case "Negarit SMS":
       iconURL = "/negarit.png";
       break;
     case "WhatsApp":
@@ -88,7 +88,7 @@ export function ChannelCard({ channel, setChannels, toast }: ChannelCardProps) {
       <div className="relative w-16 h-16 mb-2">
         <Image
           src={iconURL}
-          alt={channel.type}
+          alt={channel.Metadata.type}
           fill
           className="object-contain"
         />
@@ -113,7 +113,7 @@ export function ChannelCard({ channel, setChannels, toast }: ChannelCardProps) {
             </div>
           </div>
           <div className="grow shrink basis-0 text-gray-900 text-xs font-bold font-['Manrope'] leading-tight tracking-tight">
-            {channel.type}
+            {channel.Metadata.type}
           </div>
         </div>
         <div className="self-stretch justify-between items-center inline-flex gap-8">
@@ -125,7 +125,7 @@ export function ChannelCard({ channel, setChannels, toast }: ChannelCardProps) {
           </div>
           <div className="grow shrink basis-0 text-gray-900 text-xs font-bold font-['Manrope'] leading-tight tracking-tight">
             {/* Jan 16,2024 */}
-            {channel.Date}
+            randomDate
           </div>
         </div>
         <div className="self-stretch justify-between items-center inline-flex gap-9">
@@ -147,7 +147,7 @@ export function ChannelCard({ channel, setChannels, toast }: ChannelCardProps) {
             <DialogDescription>
               Are you sure you want to delete?{" "}
               <span className="font-bold text-black inline">
-                {channel.name} | {channel.type}
+                {channel.name} | {channel.Metadata.type}
               </span>{" "}
               action cannot be undone.
             </DialogDescription>

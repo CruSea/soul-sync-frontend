@@ -32,7 +32,7 @@ export default function ChannelsPage() {
     "All",
     "Telegram Bot",
     "WhatsApp",
-    "Negarit",
+    "Negarit SMS",
     "Facebook",
     "Twilio",
   ];
@@ -48,7 +48,7 @@ export default function ChannelsPage() {
 
   const filteredChannel = channels?.filter(
     (item) =>
-      (selectedCategory === "All" || item.type === selectedCategory) &&
+      (selectedCategory === "All" || item.Metadata.type === selectedCategory) &&
       item.name.toLowerCase().includes(search.toLowerCase())
   );
   const format: Intl.DateTimeFormatOptions = {
@@ -60,10 +60,11 @@ export default function ChannelsPage() {
   const handleAddChannel = (
     newChannel: Omit<Channel, "id" | "icon" | "Date">
   ) => {
+  
     const channelWithId: Channel = {
       ...newChannel,
       id: `${uuidv4().toString()}`,
-      icon: `/${newChannel.type.toLowerCase().replace(" ", "-")}-icon.svg`,
+      icon: `/${newChannel.Metadata.type.toLowerCase().replace(" ", "-")}-icon.svg`,
       Date: `${new Date().toLocaleDateString("en-US", format)}`,
     };
     setChannels(channels ? [...channels, channelWithId] : [channelWithId]);
