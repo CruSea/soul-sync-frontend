@@ -19,7 +19,7 @@ export interface Channel {
     campaignId: string;
   };
   Date:string;
-  icon: string;
+  // icon: string;
 }
 
 export const formSchema = z

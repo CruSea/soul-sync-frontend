@@ -25,17 +25,18 @@ import { Form } from "@/components/ui/form";
 
 interface AddChannelDialogProps {
   onAddChannel: (channel: Omit<Channel, "id" | "icon">) => void;
+  selectedChannel : string;
+  setSelectedChannel: React.Dispatch<React.SetStateAction<string>>;
 }
 
-export function AddChannelDialog({ onAddChannel }: AddChannelDialogProps) {
+export function AddChannelDialog({ onAddChannel,selectedChannel,setSelectedChannel }: AddChannelDialogProps) {
   const [open, setOpen] = useState(false);
   const format: Intl.DateTimeFormatOptions = {
     year: "numeric",
     month: "short",
     day: "numeric",
   };
-  const [selectedChannel, setSelectedChannel] =
-    useState<string>("Telegram Bot");
+  
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {

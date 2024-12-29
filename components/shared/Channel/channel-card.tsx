@@ -47,7 +47,7 @@ export function ChannelCard({ channel, setChannels, toast }: ChannelCardProps) {
       break;
   }
   const handleDelete = (channel: Channel) => {
-    setDeleteId(channel.id); 
+    setDeleteId(channel.id);
   };
 
   const confirmDelete = () => {
@@ -77,15 +77,59 @@ export function ChannelCard({ channel, setChannels, toast }: ChannelCardProps) {
           });
         });
 
-      setDeleteId(null); 
+      setDeleteId(null);
     }
   };
-
-  const cancelDelete = () => {
-    setDeleteId(null); 
+  const channelChange = (channel: Channel) => {
+    switch (channel.Metadata.type) {
+      case "Telegram Bot":
+        return (
+          <div className="self-stretch justify-between items-center inline-flex gap-9">
+            <div className="h-[19px] justify-start items-center gap-2 flex">
+              <div className="w-2.5 h-2.5 bg-[#27a376] rounded-[50px]" />
+              <div className="text-[#677488] text-xs font-medium font-['Manrope'] leading-tight">
+                ApiKey
+              </div>
+            </div>
+            <div className="grow shrink basis-0 text-gray-900 text-xs font-bold font-['Manrope'] leading-[18px] tracking-wide">
+              {channel.Config.apiKey}
+            </div>
+          </div>
+        );
+      case "Negarit SMS":
+        return (
+          <div>
+            <div className="self-stretch justify-between items-center inline-flex gap-9">
+              <div className="h-[19px] justify-start items-center gap-2 flex">
+                <div className="w-2.5 h-2.5 bg-[#27a376] rounded-[50px]" />
+                <div className="text-[#677488] text-xs font-medium font-['Manrope'] leading-tight">
+                  Token
+                </div>
+              </div>
+              <div className="grow shrink basis-0 text-gray-900 text-xs font-bold font-['Manrope'] leading-[18px] tracking-wide">
+                {channel.Config.token}
+              </div>
+            </div>
+            <div className="self-stretch justify-between items-center inline-flex gap-9">
+              <div className="h-[19px] justify-start items-center gap-2 flex">
+                <div className="w-2.5 h-2.5 bg-[#27a376] rounded-[50px]" />
+                <div className="text-[#677488] text-xs font-medium font-['Manrope'] leading-tight">
+                  Campaign ID
+                </div>
+              </div>
+              <div className="grow shrink basis-0 text-gray-900 text-xs font-bold font-['Manrope'] leading-[18px] tracking-wide">
+                {channel.Config.campaignId}
+              </div>
+            </div>
+          </div>
+        );
+      default:
+        return <p>Has not been set yet</p>;
+    }
   };
-
-
+  const cancelDelete = () => {
+    setDeleteId(null);
+  };
 
   return (
     <div className="h-[278px] w-full  flex flex-col items-center justify-between px-2.5 pt-1 pb-2 border rounded-xl bg-white hover:shadow-md hover:rounded-xl transition-shadow">
@@ -145,17 +189,7 @@ export function ChannelCard({ channel, setChannels, toast }: ChannelCardProps) {
             randomDate
           </div>
         </div>
-        <div className="self-stretch justify-between items-center inline-flex gap-9">
-          <div className="h-[19px] justify-start items-center gap-2 flex">
-            <div className="w-2.5 h-2.5 bg-[#27a376] rounded-[50px]" />
-            <div className="text-[#677488] text-xs font-medium font-['Manrope'] leading-tight">
-              Port
-            </div>
-          </div>
-          <div className="grow shrink basis-0 text-gray-900 text-xs font-bold font-['Manrope'] leading-[18px] tracking-wide">
-            OXXFTHRZA7
-          </div>
-        </div>
+        {channelChange(channel)}
       </div>
       <Dialog open={deleteId !== null} onOpenChange={cancelDelete}>
         <DialogContent className="w-[400px] flex flex-col gap-y-4">

@@ -28,6 +28,8 @@ export default function ChannelsPage() {
   const [search, setSearch] = useState("");
   const [selectedCategory, setSelectedCategory] = useState("All");
   const { toast } = useToast();
+  const [selectedChannel, setSelectedChannel] =
+    useState<string>("Telegram Bot");
   const categories = [
     "All",
     "Telegram Bot",
@@ -63,9 +65,9 @@ export default function ChannelsPage() {
     const channelWithId: Channel = {
       ...newChannel,
       id: `${uuidv4().toString()}`,
-      icon: `/${newChannel.Metadata.type
-        .toLowerCase()
-        .replace(" ", "-")}-icon.svg`,
+      // icon: `/${newChannel.Metadata.type
+      //   .toLowerCase()
+      //   .replace(" ", "-")}-icon.svg`,
       Date: `${new Date().toLocaleDateString("en-US", format)}`,
     };
     setChannels(channels ? [...channels, channelWithId] : [channelWithId]);
@@ -141,7 +143,11 @@ export default function ChannelsPage() {
                       />
                     </CommandItem>
                   ))}
-                  <AddChannelDialog onAddChannel={handleAddChannel} />
+                  <AddChannelDialog
+                    onAddChannel={handleAddChannel}
+                    setSelectedChannel={setSelectedChannel}
+                    selectedChannel={selectedChannel}
+                  />
                 </div>
               </CommandGroup>
             </CommandList>
