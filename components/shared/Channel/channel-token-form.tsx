@@ -24,7 +24,7 @@ import {
             <FormItem>
               <FormLabel>Token</FormLabel>
               <FormControl>
-                <Input placeholder="Aef35jhjsf48Hfe" {...field} />
+                <Input placeholder="Please insert the Token" {...field} />
               </FormControl>
               <FormMessage />
             </FormItem>

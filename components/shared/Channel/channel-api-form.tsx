@@ -24,7 +24,7 @@ export default function ChannelNameForm({ form }: ChannelNameFormProps) {
           <FormItem>
             <FormLabel>API Key</FormLabel>
             <FormControl>
-              <Input placeholder="Aef35jhjsf48Hfe" {...field} />
+              <Input placeholder="Please Insert the API Key" {...field} />
             </FormControl>
             <FormMessage />
           </FormItem>

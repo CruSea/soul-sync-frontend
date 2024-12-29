@@ -24,7 +24,7 @@ import {
             <FormItem>
               <FormLabel>campaign Id</FormLabel>
               <FormControl>
-                <Input placeholder="Aef35jhjsf48Hfe" {...field} />
+                <Input placeholder="Please Insert the Campaign Id" {...field} />
               </FormControl>
               <FormMessage />
             </FormItem>
