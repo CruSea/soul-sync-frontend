@@ -1,17 +1,17 @@
-import React from "react";
-import { DataTable } from "@/components/shared/DataTable";
-import { Badge } from "@/components/ui/badge";
-import { Button } from "@/components/ui/button";
-import { MessageCircle } from "lucide-react";
-import type { Message } from "@/types/message";
-import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
-import { Column, FilterOption } from "@/types/data-table";
-import { MESSAGE_DATA } from "@/data/message_data";
+import React from 'react';
+import { DataTable } from '@/components/shared/DataTable';
+import { Badge } from '@/components/ui/badge';
+import { Button } from '@/components/ui/button';
+import { MessageCircle } from 'lucide-react';
+import type { Message } from '@/types/message';
+import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
+import { Column, FilterOption } from '@/types/data-table';
+import { MESSAGE_DATA } from '@/data/message_data';
 
 const columns: Array<Column<Message>> = [
   {
-    key: "mentorName",
-    header: "Mentor Name",
+    key: 'mentorName',
+    header: 'Mentor Name',
     render: (mentor) => (
       <div className="flex items-center gap-2">
         <Avatar className="h-8 w-8">
@@ -26,8 +26,8 @@ const columns: Array<Column<Message>> = [
     ),
   },
   {
-    key: "menteeName",
-    header: "Mentee Name",
+    key: 'menteeName',
+    header: 'Mentee Name',
     render: (mentee) => (
       <div className="flex items-center gap-2">
         <Avatar className="h-8 w-8">
@@ -41,22 +41,22 @@ const columns: Array<Column<Message>> = [
       </div>
     ),
   },
-  { key: "startDate", header: "Start Date" },
-  { key: "startTime", header: "Start Time" },
+  { key: 'startDate', header: 'Start Date' },
+  { key: 'startTime', header: 'Start Time' },
   {
-    key: "status",
-    header: "Status",
+    key: 'status',
+    header: 'Status',
     render: (message) => (
-      <Badge variant={message.status === "On Going" ? "default" : "secondary"}>
+      <Badge variant={message.status === 'On Going' ? 'default' : 'secondary'}>
         {message.status}
       </Badge>
     ),
   },
-  { key: "endDate", header: "End Date" },
-  { key: "endTime", header: "End Time" },
+  { key: 'endDate', header: 'End Date' },
+  { key: 'endTime', header: 'End Time' },
   {
-    key: "id",
-    header: "Action",
+    key: 'id',
+    header: 'Action',
     render: () => (
       <Button variant="ghost" size="sm" className="flex items-center gap-2">
         <MessageCircle className="h-4 w-4" />
@@ -67,8 +67,8 @@ const columns: Array<Column<Message>> = [
 ];
 
 const filterOptions: Array<FilterOption<Message>> = [
-  { key: "status", label: "On Going" },
-  { key: "status", label: "Ended" },
+  { key: 'status', label: 'On Going' },
+  { key: 'status', label: 'Ended' },
 ];
 
 export function MessageTable() {
@@ -79,7 +79,7 @@ export function MessageTable() {
         <DataTable
           data={MESSAGE_DATA}
           columns={columns}
-          searchFields={["mentorName", "menteeName", "status"]}
+          searchFields={['mentorName', 'menteeName', 'status']}
           filterOptions={filterOptions}
           itemsPerPage={10}
         />

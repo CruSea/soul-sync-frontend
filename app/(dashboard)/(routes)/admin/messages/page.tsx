@@ -1,12 +1,8 @@
-'use client'
-import withAuth from "@/context/withAuth";
-
- function Message() {
+export default function Mentor() {
   return (
     <>
-      
+      <div>Messages</div>
+      {/* <MessageTable /> */}
     </>
   );
 }
-
-export default withAuth(Message)

@@ -1,37 +1,37 @@
-"use client";
+'use client';
 
-import * as React from "react";
-import { Label, Pie, PieChart } from "recharts";
+import * as React from 'react';
+import { Label, Pie, PieChart } from 'recharts';
 
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import {
   ChartConfig,
   ChartContainer,
   ChartTooltip,
   ChartTooltipContent,
-} from "@/components/ui/chart";
+} from '@/components/ui/chart';
 
 const chartData = [
-  { category: "Marriage Counseling", mentors: 650, fill: "#6B7280" },
-  { category: "Discipleship", mentors: 270, fill: "#E5E7EB" },
-  { category: "Spiritual Life", mentors: 230, fill: "#D1D5DB" },
+  { category: 'Marriage Counseling', mentors: 650, fill: '#6B7280' },
+  { category: 'Discipleship', mentors: 270, fill: '#E5E7EB' },
+  { category: 'Spiritual Life', mentors: 230, fill: '#D1D5DB' },
 ];
 
 const chartConfig = {
   mentors: {
-    label: "Mentors",
+    label: 'Mentors',
   },
-  "Marriage Counseling": {
-    label: "Marriage Counseling",
-    color: "#6B7280",
+  'Marriage Counseling': {
+    label: 'Marriage Counseling',
+    color: '#6B7280',
   },
   Discipleship: {
-    label: "Discipleship",
-    color: "#E5E7EB",
+    label: 'Discipleship',
+    color: '#E5E7EB',
   },
-  "Spiritual Life": {
-    label: "Spiritual Life",
-    color: "#D1D5DB",
+  'Spiritual Life': {
+    label: 'Spiritual Life',
+    color: '#D1D5DB',
   },
 } satisfies ChartConfig;
 
@@ -64,7 +64,7 @@ export function MentorsChart() {
             >
               <Label
                 content={({ viewBox }) => {
-                  if (viewBox && "cx" in viewBox && "cy" in viewBox) {
+                  if (viewBox && 'cx' in viewBox && 'cy' in viewBox) {
                     return (
                       <text
                         x={viewBox.cx}

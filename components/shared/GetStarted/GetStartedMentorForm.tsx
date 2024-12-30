@@ -32,7 +32,7 @@ const BASE_URL = process.env.NEXT_PUBLIC_API_BASE_URL;
 const GetStartedMentorForm = () => {
   const form = useForm<getStartedMentorFormValues>({
     resolver: zodResolver(getStartedMentorFormSchema),
-    mode: "onChange",
+    mode: 'onChange',
     defaultValues: {
       age: 29,
       gender: "male",

@@ -21,7 +21,7 @@ import { PhoneNumberField } from "./PhoneNumberField";
 const GetStartedAdminForm = () => {
   const form = useForm<getStartedAdminFormValues>({
     resolver: zodResolver(getStartedAdminFormSchema),
-    mode: "onSubmit",
+    mode: 'onSubmit',
     defaultValues: {
       age: undefined,
       gender: "male",
@@ -33,7 +33,7 @@ const GetStartedAdminForm = () => {
   const router = useRouter(); // Initialize the useRouter hook
 
   const onSubmit = (data: getStartedAdminFormValues) => {
-    console.log("Admin form data", data);
+    console.log('Admin form data', data);
 
 
     // Navigate to /mentor after form submission
