@@ -1,4 +1,4 @@
-"use client";
+'use client';
 
 import React from "react";
 import { DataTable } from "@/components/shared/DataTable";
@@ -14,26 +14,26 @@ const ALL_MENTORS: Mentor[] = Array.from({ length: 50 }, (_, i) => ({
   id: `mentor-${i + 1}`,
   name: `Mentor ${i + 1}`,
   age: 25 + Math.floor(Math.random() * 30),
-  gender: Math.random() > 0.5 ? "Male" : "Female",
+  gender: Math.random() > 0.5 ? 'Male' : 'Female',
   email: `mentor${i + 1}@example.com`,
   phoneNumber: `+1${Math.floor(1000000000 + Math.random() * 9000000000)}`,
   specialization: [
-    "Marriage Counseling",
-    "Career Guidance",
-    "Life Coaching",
-    "Financial Advice",
+    'Marriage Counseling',
+    'Career Guidance',
+    'Life Coaching',
+    'Financial Advice',
   ][Math.floor(Math.random() * 4)],
-  location: ["Addis Ababa", "New York", "London", "Tokyo", "Sydney"][
+  location: ['Addis Ababa', 'New York', 'London', 'Tokyo', 'Sydney'][
     Math.floor(Math.random() * 5)
   ],
-  status: ["Joined", "Pending", "Inactive"][Math.floor(Math.random() * 3)],
+  status: ['Joined', 'Pending', 'Inactive'][Math.floor(Math.random() * 3)],
   profileImage: `/placeholder.svg?height=40&width=40`,
 }));
 
 const columns: Array<Column<Mentor>> = [
   {
-    key: "name",
-    header: "Name",
+    key: 'name',
+    header: 'Name',
     render: (mentor) => (
       <div className="flex items-center gap-2">
         <Avatar className="h-8 w-8">
@@ -44,20 +44,20 @@ const columns: Array<Column<Mentor>> = [
       </div>
     ),
   },
-  { key: "age", header: "Age" },
-  { key: "gender", header: "Gender" },
-  { key: "email", header: "Email" },
-  { key: "phoneNumber", header: "Phone Number" },
-  { key: "specialization", header: "Specialization" },
-  { key: "location", header: "Location" },
+  { key: 'age', header: 'Age' },
+  { key: 'gender', header: 'Gender' },
+  { key: 'email', header: 'Email' },
+  { key: 'phoneNumber', header: 'Phone Number' },
+  { key: 'specialization', header: 'Specialization' },
+  { key: 'location', header: 'Location' },
   {
-    key: "status",
-    header: "Status",
+    key: 'status',
+    header: 'Status',
     render: (mentor) => <Badge variant="secondary">{mentor.status}</Badge>,
   },
   {
-    key: "id",
-    header: "Action",
+    key: 'id',
+    header: 'Action',
     render: () => (
       <div className="flex items-center gap-2">
         <Button variant="ghost" size="icon" className="h-8 w-8">
@@ -70,10 +70,10 @@ const columns: Array<Column<Mentor>> = [
 ];
 
 const filterOptions: Array<FilterOption<Mentor>> = [
-  { key: "specialization", label: "Marriage Counseling" },
-  { key: "specialization", label: "Career Guidance" },
-  { key: "specialization", label: "Life Coaching" },
-  { key: "specialization", label: "Financial Advice" },
+  { key: 'specialization', label: 'Marriage Counseling' },
+  { key: 'specialization', label: 'Career Guidance' },
+  { key: 'specialization', label: 'Life Coaching' },
+  { key: 'specialization', label: 'Financial Advice' },
 ];
 
 export function MentorsTable() {
@@ -88,13 +88,13 @@ export function MentorsTable() {
           data={ALL_MENTORS}
           columns={columns}
           searchFields={[
-            "name",
-            "email",
-            "specialization",
-            "location",
-            "age",
-            "gender",
-            "status",
+            'name',
+            'email',
+            'specialization',
+            'location',
+            'age',
+            'gender',
+            'status',
           ]}
           filterOptions={filterOptions}
           itemsPerPage={10}

@@ -1,11 +1,11 @@
-"use client";
+'use client';
 
-import Chat from "@/components/shared/Mentor/Chat";
-import { AdminLayout } from "@/components/shared/layout/admin-layout";
-import Profile from "@/components/shared/Mentor/Profile";
-import Search from "@/components/shared/Mentor/users-list";
-import { cn } from "@/lib/utils";
-import { useState } from "react";
+import Chat from '@/components/shared/Chat';
+import { AdminLayout } from '@/components/shared/layout/admin-layout';
+import Profile from '@/components/shared/Profile';
+import Search from '@/components/shared/Search';
+import { cn } from '@/lib/utils';
+import { useState } from 'react';
 
 export default function MessagesView() {
   const [profileInView, setProfileInView] = useState<boolean>(false);

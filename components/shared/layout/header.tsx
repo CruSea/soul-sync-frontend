@@ -1,5 +1,6 @@
-import { FiBell } from "react-icons/fi";
-import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
+import { FiBell } from 'react-icons/fi';
+
+import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 
 export function Header({ title }: HeaderProps) {
   return (

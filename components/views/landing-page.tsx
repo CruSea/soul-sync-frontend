@@ -13,4 +13,4 @@ const LandingPageView = () => {
   );
 };
 
-export default LandingPageView
+export default LandingPageView;

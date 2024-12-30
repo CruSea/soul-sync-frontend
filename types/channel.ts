@@ -1,12 +1,11 @@
-import * as z from "zod";
-
+import * as z from 'zod';
 
 export type ChannelType =
-  | "Telegram Bot"
-  | "WhatsApp"
-  | "Negarit"
-  | "Facebook"
-  | "Twilio";
+  | 'Telegram Bot'
+  | 'WhatsApp'
+  | 'Negarit'
+  | 'Facebook'
+  | 'Twilio';
 
 export interface Channel {
   id: string;
@@ -18,15 +17,14 @@ export interface Channel {
   isDeleted: boolean;
 }
 
-
 export const formSchema = z.object({
   name: z.string().min(2, {
-    message: "Channel name must be at least 2 characters.",
+    message: 'Channel name must be at least 2 characters.',
   }),
-  type: z.enum(["Telegram Bot", "WhatsApp", "Negarit", "Facebook", "Twilio"]),
+  type: z.enum(['Telegram Bot', 'WhatsApp', 'Negarit', 'Facebook', 'Twilio']),
   apiKey: z.string().min(1, {
-    message: "API Key is required.",
+    message: 'API Key is required.',
   }),
 });
 
-export type formSchemaType = z.infer<typeof formSchema>
+export type formSchemaType = z.infer<typeof formSchema>;
