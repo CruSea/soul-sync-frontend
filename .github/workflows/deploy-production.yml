@@ -18,7 +18,7 @@ jobs:
       - name: Connecting Server
         uses: JimCronqvist/action-ssh@master
         with:
-          hosts: 'admin@134.122.71.215'
+          hosts: 'root@134.122.71.215'
           privateKey: ${{ secrets.SSH_PRIVATE_KEY }}
           debug: true
           command: |
