@@ -1,9 +1,8 @@
-import Main from "@/components/shared/Main";
-
-export default function Default() {
+export default function Mentor() {
   return (
     <>
-       <Main page="mentor"/>
+      <div>Messages</div>
+      {/* <MessageTable /> */}
     </>
   );
 }

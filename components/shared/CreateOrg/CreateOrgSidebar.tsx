@@ -1,11 +1,11 @@
 import { Button } from "../../ui/button"
 import { useRouter } from 'next/navigation';
-import { CreateOrgSidebarProps, Page, SidebarPage } from "@/types/create-org";
+import { CreateOrgSidebarProps } from "@/types/create-org";
 import { cn } from "@/lib/utils";
 import { CreateOrgPage } from "@/content/page";
 
 
-const CreateOrgSidebar: React.FC<CreateOrgSidebarProps> = ({ handleSubmit, currentPage, handleSetCurrentPage, orgData }) => {
+const CreateOrgSidebar: React.FC<CreateOrgSidebarProps> = ({ handleSubmit, currentPage, handleSetCurrentPage }) => {
 
   const router = useRouter();
 
@@ -20,7 +20,7 @@ const CreateOrgSidebar: React.FC<CreateOrgSidebarProps> = ({ handleSubmit, curre
 
   // Function to handle the second button click
   const handleSecondButton = async () => {
-    let isValid = await handleSubmit(); // checks validation for page 
+    const isValid = await handleSubmit(); // checks validation for page 
 
     if (isValid) {
       if (currentPage === "first") {

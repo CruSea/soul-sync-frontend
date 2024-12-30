@@ -7,10 +7,9 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-
-    <SessionWrapper>
-      <html lang="en">
-        <body className="font-general">
+    <html lang="en">
+      <body className="font-general">
+        <SessionWrapper>
           <ThemeProvider
             attribute="class"
             defaultTheme="light"
@@ -19,9 +18,8 @@ export default function RootLayout({
           >
             {children}
           </ThemeProvider>
-        </body>
-      </html>
-    </SessionWrapper>
-
+        </SessionWrapper>
+      </body>
+    </html>
   );
 }

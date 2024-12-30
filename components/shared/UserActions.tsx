@@ -1,34 +1,25 @@
-"use client"
+"use client";
 
-import BellIcon from "@/components/shared/Icons/BellIcon";
+import { icon } from "@/components/shared/Icons/BellIcon";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
-import { useSession, signIn, signOut } from "next-auth/react";
-import { useEffect } from "react"
-import { useRouter } from "next/navigation";
+import { signOut } from "next-auth/react";
 import {
   DropdownMenu,
   DropdownMenuContent,
-  DropdownMenuItem,
   DropdownMenuLabel,
-  DropdownMenuSeparator,
   DropdownMenuTrigger,
-} from "@/components/ui/dropdown-menu"
-
-
+} from "@/components/ui/dropdown-menu";
 
 const UserActions = () => {
-  const { data: session } = useSession();
-  const router = useRouter();
-
   const handleSignOut = () => {
-    signOut()
-  }
+    signOut();
+  };
 
   return (
     <div className="ml-auto flex gap-5 items-center">
-      <BellIcon size={30} hasNotification={true} />
+      <icon.BellIcon size={30} hasNotification={true} />
       <DropdownMenu>
-        <DropdownMenuTrigger >
+        <DropdownMenuTrigger>
           <Avatar className="w-[60px] h-[60px] cursor-pointer">
             <AvatarImage
               src="/assets/avatars/woman1.png"
@@ -41,7 +32,12 @@ const UserActions = () => {
         </DropdownMenuTrigger>
         <DropdownMenuContent>
           {/* Sign out button */}
-          <DropdownMenuLabel className="cursor-pointer" onClick={() => handleSignOut()}>Sign out</DropdownMenuLabel>
+          <DropdownMenuLabel
+            className="cursor-pointer"
+            onClick={() => handleSignOut()}
+          >
+            Sign out
+          </DropdownMenuLabel>
         </DropdownMenuContent>
       </DropdownMenu>
     </div>

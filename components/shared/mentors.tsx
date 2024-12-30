@@ -5,7 +5,7 @@ import { DataTable } from "@/components/shared/DataTable";
 import { Badge } from "@/components/ui/badge";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Button } from "@/components/ui/button";
-import { Pencil, Trash2 } from "lucide-react";
+import { Trash2 } from "lucide-react";
 import { InviteMentorDialog } from "./invite-mentor-dialog";
 import type { Mentor } from "@/types/mentor";
 import { Column, FilterOption } from "@/types/data-table";
@@ -60,10 +60,6 @@ const columns: Array<Column<Mentor>> = [
     header: "Action",
     render: () => (
       <div className="flex items-center gap-2">
-        <Button variant="ghost" size="icon" className="h-8 w-8">
-          <Pencil className="h-4 w-4" />
-          <span className="sr-only">Edit</span>
-        </Button>
         <Button variant="ghost" size="icon" className="h-8 w-8">
           <Trash2 className="h-4 w-4" />
           <span className="sr-only">Delete</span>
