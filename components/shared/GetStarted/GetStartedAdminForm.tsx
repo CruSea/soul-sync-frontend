@@ -1,8 +1,7 @@
 "use client"
 
 import { useForm } from "react-hook-form"
-import { getStartedAdminFormSchema, getStartedAdminFormValues, getStartedMentorFormSchema } from "@/types/get-started"
-import { getStartedMentorFormValues } from "@/types/get-started"
+import { getStartedAdminFormSchema, getStartedAdminFormValues } from "@/types/get-started"
 import { zodResolver } from "@hookform/resolvers/zod"
 import { Form } from "@/components/ui/form"
 import { AgeField } from "./AgeField"
@@ -49,7 +48,7 @@ const GetStartedAdminForm = () => {
           <GenderField control={form.control} options={getStartedForm.genderOptions} />
         </div>
         <PhoneNumberField control={form.control} />
-        <LocationField control={form.control} />
+        <LocationField />
         <Button type="submit" className="w-4/5 mx-auto h-12 ">Submit</Button>
       </form>
     </Form>

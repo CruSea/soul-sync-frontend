@@ -3,26 +3,18 @@ import {
   Command,
   CommandEmpty,
   CommandGroup,
-  CommandInput,
   CommandItem,
   CommandList,
-} from "./TimeCommand"
+} from "./TimeCommand";
 import {
-  Form,
   FormControl,
-  FormDescription,
   FormField,
   FormItem,
-  FormLabel,
   FormMessage,
-} from "@/components/ui/form"
-import {
-  Popover,
-  PopoverContent,
-  PopoverTrigger,
-} from "./TimePopover"
+} from "@/components/ui/form";
+import { Popover, PopoverContent, PopoverTrigger } from "./TimePopover";
 import { cn } from "@/lib/utils";
-import { Check, ChevronsUpDown } from "lucide-react"
+import { Check, ChevronsUpDown } from "lucide-react";
 import { getStartedForm } from "@/data/get-started-data";
 import { HourFieldProps } from "@/types/get-started";
 
@@ -46,8 +38,8 @@ export function HourField({ control, type, form }: HourFieldProps) {
                 >
                   {field.value
                     ? getStartedForm.hours.find(
-                      (hour) => hour.value === field.value
-                    )?.label
+                        (hour) => hour.value === field.value
+                      )?.label
                     : "Select hour"}
                   <ChevronsUpDown className="ml-2 h-4 w-4 shrink-0 opacity-50" />
                 </Button>
@@ -63,7 +55,10 @@ export function HourField({ control, type, form }: HourFieldProps) {
                         value={hour.label}
                         key={hour.value}
                         onSelect={() => {
-                          form.setValue(type === "start" ? "startHour" : "endHour", hour.value)
+                          form.setValue(
+                            type === "start" ? "startHour" : "endHour",
+                            hour.value
+                          );
                         }}
                         className=" cursor-pointer"
                       >

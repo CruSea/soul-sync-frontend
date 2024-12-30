@@ -1,0 +1,32 @@
+name: Deploy
+
+on:
+  push:
+    branches:
+      - 'release-*'
+
+jobs:
+  deploy:
+    name: Preparing Server
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v3
+        with:
+          fetch-depth: 0
+
+      - name: Connecting Server
+        uses: JimCronqvist/action-ssh@master
+        with:
+          hosts: 'admin@134.122.71.215'
+          privateKey: ${{ secrets.SSH_PRIVATE_KEY }}
+          debug: true
+          command: |
+            cd ~/soul-sync/production/soul-sync-frontend
+            git stash
+            git clean -f -d
+            git pull
+            pnpm install
+            pnpm run build
+            pm2 delete dev-soul-sync-web
+            PORT=5100 pm2 start pnpm --name dev-soul-sync-web -- start

@@ -7,19 +7,16 @@ import {
   TableRow,
 } from "@/components/ui/table";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
-// import { Button } from "@/components/ui/button";
-// import Link from "next/link";
-// import { RiDeleteBin6Line } from "react-icons/ri";
-import users from "@/data/users";
-import { Users } from "@/types/users";
+import { users } from "@/data/users";
+import { User } from "@/types/users";
 
 interface UsersTableProps {
   limit?: number;
   title?: string;
 }
 const UsersTable = ({ limit, title }: UsersTableProps) => {
-  const sortedUsers: Usesr[] = [...users].sort(
-    (a, b) => new Date(b.date).getTime() - new Date(a.date).getTime()
+  const sortedUsers: User[] = [...users].sort(
+    (a, b) => new Date(b.date ?? 0).getTime() - new Date(a.date ?? 0).getTime()
   );
 
   const filteredUsers = limit ? sortedUsers.slice(0, limit) : sortedUsers;
@@ -52,8 +49,8 @@ const UsersTable = ({ limit, title }: UsersTableProps) => {
                 <Avatar className="h-8 w-8">
                   <AvatarImage src={user.avatar} alt={user.username} />
                   <AvatarFallback>
-                    {user.username
-                      .split(" ")
+                    {user
+                      .username!.split(" ")
                       .map((n) => n[0])
                       .join("")}
                   </AvatarFallback>
