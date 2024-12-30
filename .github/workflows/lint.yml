@@ -16,13 +16,13 @@ jobs:
         uses: actions/setup-node@v3
         with:
           node-version: '20.x'
-          cache: 'npm'
+          cache: 'yarn'
 
       - name: Install Dependencies
-        run: npm install
+        run: yarn install
 
       - name: Run ESLint
-        run: npm run lint
+        run: yarn lint
       
       - name: Format Check
-        run: npm run format:check
+        run: yarn format:check
