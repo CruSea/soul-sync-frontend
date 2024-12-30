@@ -26,13 +26,13 @@ interface ChannelCardProps {
 
 export function ChannelCard({ channel, setChannels, toast }: ChannelCardProps) {
   const [deleteId, setDeleteId] = useState<string | null>(null);
-  let iconURL = "";
+  let iconURL = '';
   switch (channel.Metadata.type) {
-    case "Telegram Bot":
-      iconURL = "/telegram.png";
+    case 'Telegram Bot':
+      iconURL = '/telegram.png';
       break;
-    case "Negarit SMS":
-      iconURL = "/negarit.png";
+    case 'Negarit SMS':
+      iconURL = '/negarit.png';
       break;
     case 'WhatsApp':
       iconURL = '/Whatsapp.png';
@@ -57,23 +57,23 @@ export function ChannelCard({ channel, setChannels, toast }: ChannelCardProps) {
         prevItems.filter((item) => item.id !== deleteId)
       );
       fetch(`http://localhost:3001/channels/${deleteId}`, {
-        method: "DELETE",
+        method: 'DELETE',
       })
         .then((response) => response.json())
         .then((data) => {
-          console.log("Deleted channel:", data);
+          console.log('Deleted channel:', data);
           // Show toast notification after successful deletion
           toast({
-            title: "Channel deleted successfully",
-            description: "The channel has been deleted from the list",
+            title: 'Channel deleted successfully',
+            description: 'The channel has been deleted from the list',
             duration: 3000,
           });
         })
         .catch((error) => {
-          console.error("Error:", error);
+          console.error('Error:', error);
           toast({
-            title: "Error deleting channel",
-            description: "An error occurred while deleting the channel.",
+            title: 'Error deleting channel',
+            description: 'An error occurred while deleting the channel.',
             duration: 3000,
           });
         });
@@ -83,7 +83,7 @@ export function ChannelCard({ channel, setChannels, toast }: ChannelCardProps) {
   };
   const channelChange = (channel: Channel) => {
     switch (channel.Metadata.type) {
-      case "Telegram Bot":
+      case 'Telegram Bot':
         return (
           <div className="self-stretch justify-between items-center inline-flex gap-9">
             <div className="h-[19px] justify-start items-center gap-2 flex">
@@ -97,7 +97,7 @@ export function ChannelCard({ channel, setChannels, toast }: ChannelCardProps) {
             </div>
           </div>
         );
-      case "Negarit SMS":
+      case 'Negarit SMS':
         return (
           <div>
             <div className="self-stretch justify-between items-center inline-flex gap-9">
@@ -200,7 +200,7 @@ export function ChannelCard({ channel, setChannels, toast }: ChannelCardProps) {
               Are you sure you want to delete?{' '}
               <span className="font-bold text-black inline">
                 {channel.name} | {channel.Metadata.type}
-              </span>{" "}
+              </span>{' '}
               action cannot be undone.
             </DialogDescription>
           </DialogHeader>
