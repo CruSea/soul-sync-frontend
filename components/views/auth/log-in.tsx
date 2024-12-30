@@ -1,4 +1,4 @@
-"use client";
+'use client';
 
 import LoginPageCard from "@/components/shared/LoginPage/LoginPageCard";
 import LoginPageSidebar from "@/components/shared/LoginPage/LoginPageSidebar";

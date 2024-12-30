@@ -1,15 +1,9 @@
-"use client";
+'use client';
 
-import React, { useState, useMemo } from "react";
-import {
-  Search,
-  Filter,
-  X,
-  ChevronLeft,
-  ChevronRight,
-} from "lucide-react";
-import { Input } from "@/components/ui/input";
-import { Button } from "@/components/ui/button";
+import React, { useState, useMemo } from 'react';
+import { Search, Filter, X, ChevronLeft, ChevronRight } from 'lucide-react';
+import { Input } from '@/components/ui/input';
+import { Button } from '@/components/ui/button';
 import {
   Table,
   TableBody,
@@ -17,15 +11,15 @@ import {
   TableHead,
   TableHeader,
   TableRow,
-} from "@/components/ui/table";
-import { Badge } from "@/components/ui/badge";
+} from '@/components/ui/table';
+import { Badge } from '@/components/ui/badge';
 import {
   DropdownMenu,
   DropdownMenuCheckboxItem,
   DropdownMenuContent,
   DropdownMenuTrigger,
-} from "@/components/ui/dropdown-menu";
-import { Column, FilterOption } from "@/types/data-table";
+} from '@/components/ui/dropdown-menu';
+import { Column, FilterOption } from '@/types/data-table';
 
 interface DataTableProps<T> {
   data: T[];
@@ -42,7 +36,7 @@ export function DataTable<T extends { id: string | number }>({
   filterOptions = [],
   itemsPerPage = 10,
 }: DataTableProps<T>) {
-  const [searchQuery, setSearchQuery] = useState("");
+  const [searchQuery, setSearchQuery] = useState('');
   const [currentPage, setCurrentPage] = useState(1);
   const [filters, setFilters] = useState<string[]>([]);
 
@@ -181,7 +175,7 @@ export function DataTable<T extends { id: string | number }>({
           {Array.from({ length: Math.min(3, totalPages) }, (_, i) => (
             <Button
               key={i + 1}
-              variant={currentPage === i + 1 ? "default" : "outline"}
+              variant={currentPage === i + 1 ? 'default' : 'outline'}
               size="icon"
               onClick={() => setCurrentPage(i + 1)}
             >

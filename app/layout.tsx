@@ -1,7 +1,9 @@
-import SessionWrapper from "@/context/providers/SessionWrapper";
-import "./globals.css";
-import { ThemeProvider } from "@/context/providers/ThemeProvider";
-import { AuthProvider } from "@/context/AuthContext";
+import SessionWrapper from '@/context/providers/SessionWrapper';
+import './globals.css';
+import { ThemeProvider } from '@/context/providers/ThemeProvider';
+import React from 'react';
+import { AuthProvider } from '@/context/AuthContext';
+
 export default function RootLayout({
   children,
 }: Readonly<{

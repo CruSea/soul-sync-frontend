@@ -1,7 +1,7 @@
 
-import LandingPageBody from "../shared/LandingPage/LandingPageBody";
-import LandingPageFooter from "../shared/LandingPage/LandingPageFooter";
-import LandingPageHeader from "../shared/LandingPage/LandingPageHeader";
+import LandingPageBody from '../shared/LandingPage/LandingPageBody';
+import LandingPageFooter from '../shared/LandingPage/LandingPageFooter';
+import LandingPageHeader from '../shared/LandingPage/LandingPageHeader';
 
 
 const LandingPageView = () => {
@@ -15,4 +15,4 @@ const LandingPageView = () => {
   );
 };
 
-export default LandingPageView
+export default LandingPageView;

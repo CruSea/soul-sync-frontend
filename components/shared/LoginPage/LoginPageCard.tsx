@@ -51,7 +51,7 @@ const LoginPageCard = () => {
         <Button className="w-96 h-10 font-medium text-sm" variant="default" onClick={handleLogin}>Login with Google</Button>
       </CardContent>
     </Card>
-  )
-}
+  );
+};
 
-export default LoginPageCard
+export default LoginPageCard;
