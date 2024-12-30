@@ -4,17 +4,17 @@ import {
   FormItem,
   FormLabel,
   FormMessage,
-} from "@/components/ui/form";
-import React from "react";
-import { UseFormReturn } from "react-hook-form";
-import { formSchemaType } from "@/types/channel";
+} from '@/components/ui/form';
+import React from 'react';
+import { UseFormReturn } from 'react-hook-form';
+import { formSchemaType } from '@/types/channel';
 import {
   Select,
   SelectContent,
   SelectItem,
   SelectTrigger,
   SelectValue,
-} from "@/components/ui/select";
+} from '@/components/ui/select';
 
 type ChannelTypeFormProps = {
   form: UseFormReturn<formSchemaType>;

@@ -1,24 +1,24 @@
-"use client";
+'use client';
 
-import { DataTable } from "@/components/shared/DataTable";
-import type { User } from "@/types/users";
-import { Column, FilterOption } from "@/types/data-table";
-import { USERS_DATA } from "@/data/users";
+import { DataTable } from '@/components/shared/DataTable';
+import type { User } from '@/types/users';
+import { Column, FilterOption } from '@/types/data-table';
+import { USERS_DATA } from '@/data/users';
 
 const columns: Column<User>[] = [
-  { key: "name", header: "Name" },
-  { key: "email", header: "Email" },
-  { key: "phoneNumber", header: "Phone Number" },
-  { key: "joinedDate", header: "Joined Date" },
-  { key: "location", header: "Location" },
+  { key: 'name', header: 'Name' },
+  { key: 'email', header: 'Email' },
+  { key: 'phoneNumber', header: 'Phone Number' },
+  { key: 'joinedDate', header: 'Joined Date' },
+  { key: 'location', header: 'Location' },
 ];
 
 const filterOptions: FilterOption<User>[] = [
-  { key: "location", label: "New York" },
-  { key: "location", label: "London" },
-  { key: "location", label: "Tokyo" },
-  { key: "location", label: "Paris" },
-  { key: "location", label: "Sydney" },
+  { key: 'location', label: 'New York' },
+  { key: 'location', label: 'London' },
+  { key: 'location', label: 'Tokyo' },
+  { key: 'location', label: 'Paris' },
+  { key: 'location', label: 'Sydney' },
 ];
 
 export function UsersTable() {
@@ -28,7 +28,7 @@ export function UsersTable() {
       <DataTable
         data={USERS_DATA}
         columns={columns}
-        searchFields={["name", "email", "location"]}
+        searchFields={['name', 'email', 'location']}
         filterOptions={filterOptions}
         itemsPerPage={6}
       />

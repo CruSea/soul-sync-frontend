@@ -1,4 +1,4 @@
-import { MentorsTable } from "@/components/shared/mentors";
+import { MentorsTable } from '@/components/shared/mentors';
 
 export default function Mentor() {
   return (

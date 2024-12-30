@@ -1,11 +1,11 @@
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { FiUsers, FiActivity } from "react-icons/fi";
+import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
+import { FiUsers, FiActivity } from 'react-icons/fi';
 
 interface StatsCardProps {
   title: string;
   value: string;
   change: string;
-  icon: "users" | "activity";
+  icon: 'users' | 'activity';
 }
 
 function StatsCard({ title, value, change, icon }: StatsCardProps) {
@@ -15,7 +15,7 @@ function StatsCard({ title, value, change, icon }: StatsCardProps) {
         <CardTitle className="text-sm font-medium text-gray-600">
           {title}
         </CardTitle>
-        {icon === "users" ? (
+        {icon === 'users' ? (
           <FiUsers className="h-4 w-4 text-gray-400" />
         ) : (
           <FiActivity className="h-4 w-4 text-gray-400" />
