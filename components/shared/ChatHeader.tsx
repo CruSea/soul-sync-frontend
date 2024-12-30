@@ -1,17 +1,11 @@
-import {
-  Card,
-  CardContent,
-  CardDescription,
-  CardFooter,
-  CardHeader,
-  CardTitle,
-} from "@/components/ui/card"
+import { CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 
-import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
-import { Button } from "../ui/button";
+import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
+import { Button } from '../ui/button';
+import React from 'react';
 
 interface ChatHeaderProps {
-  toggleProfileInView: () => void
+  toggleProfileInView: () => void;
 }
 
 const ChatHeader: React.FC<ChatHeaderProps> = ({ toggleProfileInView }) => {
@@ -29,15 +23,22 @@ const ChatHeader: React.FC<ChatHeaderProps> = ({ toggleProfileInView }) => {
         </Avatar>
 
         <div className="flex flex-col gap-0">
-          <CardTitle className="font-bold text-2xl mb-[-5px]">Jennie Doe</CardTitle>
-          <CardDescription className="font-bold text-xs text-neutral-500 ">JennieDoe@example.com</CardDescription>
+          <CardTitle className="font-bold text-2xl mb-[-5px]">
+            Jennie Doe
+          </CardTitle>
+          <CardDescription className="font-bold text-xs text-neutral-500 ">
+            JennieDoe@example.com
+          </CardDescription>
         </div>
       </div>
-      <Button className="bg-white text-black font-medium text-sm hover:bg-white hover:opacity-80 " onClick={toggleProfileInView}>
+      <Button
+        className="bg-white text-black font-medium text-sm hover:bg-white hover:opacity-80 "
+        onClick={toggleProfileInView}
+      >
         View Profile
       </Button>
     </CardHeader>
-  )
-}
+  );
+};
 
-export default ChatHeader
+export default ChatHeader;

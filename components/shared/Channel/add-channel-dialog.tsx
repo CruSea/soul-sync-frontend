@@ -1,16 +1,17 @@
-"use client";
+'use client';
 
-import { useState } from "react";
-import { zodResolver } from "@hookform/resolvers/zod";
-import { useForm } from "react-hook-form";
-import * as z from "zod";
+import { useState } from 'react';
+import { zodResolver } from '@hookform/resolvers/zod';
+import { useForm } from 'react-hook-form';
+import * as z from 'zod';
 import {
   Dialog,
   DialogContent,
   DialogHeader,
   DialogTitle,
   DialogTrigger,
-} from "@/components/ui/dialog";
+} from '@/components/ui/dialog';
+import React from 'react';
 
 import { Button } from "@/components/ui/button";
 import { Plus } from "lucide-react";
@@ -32,9 +33,9 @@ interface AddChannelDialogProps {
 export function AddChannelDialog({ onAddChannel,selectedChannel,setSelectedChannel }: AddChannelDialogProps) {
   const [open, setOpen] = useState(false);
   const format: Intl.DateTimeFormatOptions = {
-    year: "numeric",
-    month: "short",
-    day: "numeric",
+    year: 'numeric',
+    month: 'short',
+    day: 'numeric',
   };
   
   const form = useForm<z.infer<typeof formSchema>>({

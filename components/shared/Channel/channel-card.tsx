@@ -35,17 +35,17 @@ export function ChannelCard({ channel, setChannels, toast }: ChannelCardProps) {
     case "Negarit SMS":
       iconURL = "/negarit.png";
       break;
-    case "WhatsApp":
-      iconURL = "/Whatsapp.png";
+    case 'WhatsApp':
+      iconURL = '/Whatsapp.png';
       break;
-    case "Facebook":
-      iconURL = "/Facebook.svg";
+    case 'Facebook':
+      iconURL = '/Facebook.svg';
       break;
-    case "Twilio":
-      iconURL = "/Twilio.png";
+    case 'Twilio':
+      iconURL = '/Twilio.png';
       break;
     default:
-      iconURL = "";
+      iconURL = '';
       break;
   }
   const handleDelete = (channel: Channel) => {
@@ -163,7 +163,7 @@ export function ChannelCard({ channel, setChannels, toast }: ChannelCardProps) {
           <DialogHeader>
             <DialogTitle className="mb-2">Confirm Deletion</DialogTitle>
             <DialogDescription>
-              Are you sure you want to delete?{" "}
+              Are you sure you want to delete?{' '}
               <span className="font-bold text-black inline">
                 {channel.name} | {channel.Metadata.type}
               </span>{" "}
