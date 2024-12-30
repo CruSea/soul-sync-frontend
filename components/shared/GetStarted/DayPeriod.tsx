@@ -1,33 +1,28 @@
-import { Button } from "@/components/ui/button";
+import { Button } from '@/components/ui/button';
 import {
   Command,
   CommandEmpty,
   CommandGroup,
   CommandItem,
   CommandList,
-} from "./TimeCommand"
+} from './TimeCommand';
 import {
   FormControl,
   FormField,
   FormItem,
   FormMessage,
-} from "@/components/ui/form"
-import {
-  Popover,
-  PopoverContent,
-  PopoverTrigger,
-} from "./TimePopover"
-import { cn } from "@/lib/utils";
-import { Check, ChevronsUpDown } from "lucide-react"
-import { getStartedForm } from "@/data/get-started-data";
-import { DayPeriodFieldProps } from "@/types/get-started";
-
+} from '@/components/ui/form';
+import { Popover, PopoverContent, PopoverTrigger } from './TimePopover';
+import { cn } from '@/lib/utils';
+import { Check, ChevronsUpDown } from 'lucide-react';
+import { getStartedForm } from '@/data/get-started-data';
+import { DayPeriodFieldProps } from '@/types/get-started';
 
 export function DayPeriodField({ control, type, form }: DayPeriodFieldProps) {
   return (
     <FormField
       control={control}
-      name={type === "start" ? "startDayPeriod" : "endDayPeriod"}
+      name={type === 'start' ? 'startDayPeriod' : 'endDayPeriod'}
       render={({ field }) => (
         <FormItem className="flex flex-col ml-[3px]">
           <Popover>
@@ -37,15 +32,15 @@ export function DayPeriodField({ control, type, form }: DayPeriodFieldProps) {
                   variant="outline"
                   role="combobox"
                   className={cn(
-                    " w-16 px-2 gap-0",
-                    !field.value && "text-muted-foreground"
+                    ' w-16 px-2 gap-0',
+                    !field.value && 'text-muted-foreground'
                   )}
                 >
                   {field.value
                     ? getStartedForm.dayPeriod.find(
-                      (period) => period.value === field.value
-                    )?.label
-                    : "Select period"}
+                        (period) => period.value === field.value
+                      )?.label
+                    : 'Select period'}
                   <ChevronsUpDown className="ml-2 h-4 w-4 shrink-0 opacity-50" />
                 </Button>
               </FormControl>
@@ -60,17 +55,22 @@ export function DayPeriodField({ control, type, form }: DayPeriodFieldProps) {
                         value={period.label}
                         key={period.value}
                         onSelect={() => {
-                          form.setValue(type === "start" ? "startDayPeriod" : "endDayPeriod", period.value)
+                          form.setValue(
+                            type === 'start'
+                              ? 'startDayPeriod'
+                              : 'endDayPeriod',
+                            period.value
+                          );
                         }}
                         className=" cursor-pointer"
                       >
                         {period.label}
                         <Check
                           className={cn(
-                            "ml-[-5px]",
+                            'ml-[-5px]',
                             period.value === field.value
-                              ? "opacity-100"
-                              : "opacity-0"
+                              ? 'opacity-100'
+                              : 'opacity-0'
                           )}
                         />
                       </CommandItem>

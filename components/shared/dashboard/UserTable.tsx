@@ -5,10 +5,10 @@ import {
   TableHead,
   TableHeader,
   TableRow,
-} from "@/components/ui/table";
-import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
-import { users } from "@/data/users";
-import { User } from "@/types/users";
+} from '@/components/ui/table';
+import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
+import { users } from '@/data/users';
+import { User } from '@/types/users';
 
 interface UsersTableProps {
   limit?: number;
@@ -23,7 +23,7 @@ const UsersTable = ({ limit, title }: UsersTableProps) => {
   return (
     <div className="rounded-md border bg-white dark:bg-black p-5">
       <h3 className="text-2xl mb-4 font-semibold pl-4">
-        {title ? title : "Users"}
+        {title ? title : 'Users'}
       </h3>
       <Table>
         <TableHeader>
@@ -50,9 +50,9 @@ const UsersTable = ({ limit, title }: UsersTableProps) => {
                   <AvatarImage src={user.avatar} alt={user.username} />
                   <AvatarFallback>
                     {user
-                      .username!.split(" ")
+                      .username!.split(' ')
                       .map((n) => n[0])
-                      .join("")}
+                      .join('')}
                   </AvatarFallback>
                 </Avatar>
                 {user.username}

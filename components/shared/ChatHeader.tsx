@@ -1,7 +1,8 @@
-import { CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
+import { CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 
-import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
-import { Button } from "../ui/button";
+import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
+import { Button } from '../ui/button';
+import React from 'react';
 
 interface ChatHeaderProps {
   toggleProfileInView: () => void;

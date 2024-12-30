@@ -1,30 +1,33 @@
-import { Button } from "../../ui/button"
+import { Button } from '../../ui/button';
 import { useRouter } from 'next/navigation';
-import { CreateOrgSidebarProps } from "@/types/create-org";
-import { cn } from "@/lib/utils";
-import { CreateOrgPage } from "@/content/page";
+import { CreateOrgSidebarProps } from '@/types/create-org';
+import { cn } from '@/lib/utils';
+import { CreateOrgPage } from '@/content/page';
+import React from 'react';
 
-
-const CreateOrgSidebar: React.FC<CreateOrgSidebarProps> = ({ handleSubmit, currentPage, handleSetCurrentPage }) => {
-
+const CreateOrgSidebar: React.FC<CreateOrgSidebarProps> = ({
+  handleSubmit,
+  currentPage,
+  handleSetCurrentPage,
+}) => {
   const router = useRouter();
 
   // Function to handle the first button click
   const handleFirstButton = () => {
-    if (currentPage == "first") {
-      router.push('/log-in');   // Navigate to the login page if on the first page
+    if (currentPage == 'first') {
+      router.push('/log-in'); // Navigate to the login page if on the first page
     } else {
-      handleSetCurrentPage("first")
+      handleSetCurrentPage('first');
     }
   };
 
   // Function to handle the second button click
   const handleSecondButton = async () => {
-    const isValid = await handleSubmit(); // checks validation for page 
+    const isValid = await handleSubmit(); // checks validation for page
 
     if (isValid) {
-      if (currentPage === "first") {
-        handleSetCurrentPage("second")
+      if (currentPage === 'first') {
+        handleSetCurrentPage('second');
       } else {
         router.push('/admin');
       }
@@ -39,10 +42,16 @@ const CreateOrgSidebar: React.FC<CreateOrgSidebarProps> = ({ handleSubmit, curre
         <div className="flex flex-col gap-1">
           <div className="flex gap-2">
             <div className="bg-gray-900 h-6 w-6 rounded-[3px]"></div>
-            <div className={cn("bg-neutral-300 h-6 w-6 rounded-[3px]", currentPage === "second" ? "bg-gray-900" : "")}></div>
+            <div
+              className={cn(
+                'bg-neutral-300 h-6 w-6 rounded-[3px]',
+                currentPage === 'second' ? 'bg-gray-900' : ''
+              )}
+            ></div>
           </div>
           <div className="text-base font-bold text-slate-400">
-            STEP {CreateOrgPage[currentPage].step} OF 2  {/* Display current step */}
+            STEP {CreateOrgPage[currentPage].step} OF 2{' '}
+            {/* Display current step */}
           </div>
         </div>
 
@@ -55,17 +64,25 @@ const CreateOrgSidebar: React.FC<CreateOrgSidebarProps> = ({ handleSubmit, curre
             {CreateOrgPage[currentPage].description}
           </div>
           <div className="flex gap-4">
-            <Button className="w-32 h-11 border-gray-900" variant="outline" onClick={handleFirstButton}>
+            <Button
+              className="w-32 h-11 border-gray-900"
+              variant="outline"
+              onClick={handleFirstButton}
+            >
               {CreateOrgPage[currentPage].button1Text}
             </Button>
-            <Button className="w-32 h-11" variant="default" onClick={handleSecondButton} >
+            <Button
+              className="w-32 h-11"
+              variant="default"
+              onClick={handleSecondButton}
+            >
               {CreateOrgPage[currentPage].button2Text}
             </Button>
           </div>
         </div>
       </div>
     </div>
-  )
-}
+  );
+};
 
-export default CreateOrgSidebar
+export default CreateOrgSidebar;

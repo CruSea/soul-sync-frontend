@@ -1,16 +1,17 @@
-"use client";
+'use client';
 
-import { useState } from "react";
-import { zodResolver } from "@hookform/resolvers/zod";
-import { useForm } from "react-hook-form";
-import * as z from "zod";
+import { useState } from 'react';
+import { zodResolver } from '@hookform/resolvers/zod';
+import { useForm } from 'react-hook-form';
+import React from 'react';
+import * as z from 'zod';
 import {
   Dialog,
   DialogContent,
   DialogHeader,
   DialogTitle,
   DialogTrigger,
-} from "@/components/ui/dialog";
+} from '@/components/ui/dialog';
 import {
   Form,
   FormControl,
@@ -18,59 +19,59 @@ import {
   FormItem,
   FormLabel,
   FormMessage,
-} from "@/components/ui/form";
+} from '@/components/ui/form';
 import {
   Select,
   SelectContent,
   SelectItem,
   SelectTrigger,
   SelectValue,
-} from "@/components/ui/select";
-import { Input } from "@/components/ui/input";
-import { Button } from "@/components/ui/button";
-import { Textarea } from "@/components/ui/textarea";
-import { Plus } from "lucide-react";
-import type { Channel } from "@/types/channel";
-import { useToast } from "@/hooks/use-toast";
+} from '@/components/ui/select';
+import { Input } from '@/components/ui/input';
+import { Button } from '@/components/ui/button';
+import { Textarea } from '@/components/ui/textarea';
+import { Plus } from 'lucide-react';
+import type { Channel } from '@/types/channel';
+import { useToast } from '@/hooks/use-toast';
 const formSchema = z.object({
   name: z.string().min(2, {
-    message: "Channel name must be at least 2 characters.",
+    message: 'Channel name must be at least 2 characters.',
   }),
-  type: z.enum(["Telegram Bot", "WhatsApp", "Negarit", "Facebook", "Twilio"]),
+  type: z.enum(['Telegram Bot', 'WhatsApp', 'Negarit', 'Facebook', 'Twilio']),
   apiKey: z.string().min(1, {
-    message: "API Key is required.",
+    message: 'API Key is required.',
   }),
   webhookUrl: z.string().url({
-    message: "Please enter a valid URL.",
+    message: 'Please enter a valid URL.',
   }),
   customGreeting: z.string(),
 });
 
 interface AddChannelDialogProps {
-  onAddChannel: (channel: Omit<Channel, "id" | "icon">) => void;
+  onAddChannel: (channel: Omit<Channel, 'id' | 'icon'>) => void;
 }
 
 export function AddChannelDialog({ onAddChannel }: AddChannelDialogProps) {
   const [open, setOpen] = useState(false);
   const format: Intl.DateTimeFormatOptions = {
-    year: "numeric",
-    month: "short",
-    day: "numeric",
+    year: 'numeric',
+    month: 'short',
+    day: 'numeric',
   };
 
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
-      name: "",
-      type: "Telegram Bot",
-      apiKey: "",
-      webhookUrl: "",
-      customGreeting: "Welcome to our support bot!",
+      name: '',
+      type: 'Telegram Bot',
+      apiKey: '',
+      webhookUrl: '',
+      customGreeting: 'Welcome to our support bot!',
     },
   });
 
   function onSubmit(values: z.infer<typeof formSchema>) {
-    const date = new Date().toLocaleDateString("en-US", format);
+    const date = new Date().toLocaleDateString('en-US', format);
     onAddChannel({
       ...values,
       Date: date,
@@ -82,7 +83,7 @@ export function AddChannelDialog({ onAddChannel }: AddChannelDialogProps) {
   }
 
   const { toast } = useToast();
-  
+
   return (
     <Dialog open={open} onOpenChange={setOpen}>
       <DialogTrigger asChild>
@@ -182,12 +183,16 @@ export function AddChannelDialog({ onAddChannel }: AddChannelDialogProps) {
                 </FormItem>
               )}
             />
-            <Button type="submit" className="w-full" onClick={() => {
-              toast({
-                title: "Channel added successfully",
-                description: "Your channel has been added successfully",
-              });
-            }}>
+            <Button
+              type="submit"
+              className="w-full"
+              onClick={() => {
+                toast({
+                  title: 'Channel added successfully',
+                  description: 'Your channel has been added successfully',
+                });
+              }}
+            >
               Add channel
             </Button>
           </form>

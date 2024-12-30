@@ -1,14 +1,14 @@
-"use client";
+'use client';
 
-import { icon } from "@/components/shared/Icons/BellIcon";
-import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
-import { signOut } from "next-auth/react";
+import { icon } from '@/components/shared/Icons/BellIcon';
+import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
+import { signOut } from 'next-auth/react';
 import {
   DropdownMenu,
   DropdownMenuContent,
   DropdownMenuLabel,
   DropdownMenuTrigger,
-} from "@/components/ui/dropdown-menu";
+} from '@/components/ui/dropdown-menu';
 
 const UserActions = () => {
   const handleSignOut = () => {

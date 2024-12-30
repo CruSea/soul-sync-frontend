@@ -1,8 +1,9 @@
-"use client";
+'use client';
 
-import NavMenu from "./NavMenu";
-import UserActions from "./UserActions";
-import Dropdown from "./Dropdown";
+import NavMenu from './NavMenu';
+import UserActions from './UserActions';
+import Dropdown from './Dropdown';
+import React from 'react';
 
 interface HeaderProps {
   page: string;

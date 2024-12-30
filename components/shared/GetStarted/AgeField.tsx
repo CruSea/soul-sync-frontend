@@ -4,10 +4,10 @@ import {
   FormControl,
   FormMessage,
   FormLabel,
-} from "@/components/ui/form";
-import { Input } from "@/components/ui/input";
-import { cn } from "@/lib/utils";
-import { AgeFieldProps } from "@/types/get-started";
+} from '@/components/ui/form';
+import { Input } from '@/components/ui/input';
+import { cn } from '@/lib/utils';
+import { AgeFieldProps } from '@/types/get-started';
 
 export function AgeField({ className }: AgeFieldProps) {
   return (
@@ -19,7 +19,7 @@ export function AgeField({ className }: AgeFieldProps) {
           <FormControl>
             <Input
               type="number"
-              className={cn("text-sm h-14 w-28", className)}
+              className={cn('text-sm h-14 w-28', className)}
               {...field}
             />
           </FormControl>

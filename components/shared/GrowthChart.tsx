@@ -1,6 +1,6 @@
-"use client";
+'use client';
 
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import {
   BarChart,
   Bar,
@@ -9,7 +9,7 @@ import {
   CartesianGrid,
   Tooltip,
   ResponsiveContainer,
-} from "recharts";
+} from 'recharts';
 
 type DataPoint = {
   name: string;
@@ -17,18 +17,18 @@ type DataPoint = {
 };
 
 const data: DataPoint[] = [
-  { name: "Jan", users: 500 },
-  { name: "Feb", users: 800 },
-  { name: "Mar", users: 1200 },
-  { name: "Apr", users: 1400 },
-  { name: "May", users: 1300 },
-  { name: "Jun", users: 1350 },
-  { name: "Jul", users: 800 },
-  { name: "Aug", users: 1600 },
-  { name: "Sep", users: 1200 },
-  { name: "Oct", users: 1400 },
-  { name: "Nov", users: 1800 },
-  { name: "Dec", users: 1100 },
+  { name: 'Jan', users: 500 },
+  { name: 'Feb', users: 800 },
+  { name: 'Mar', users: 1200 },
+  { name: 'Apr', users: 1400 },
+  { name: 'May', users: 1300 },
+  { name: 'Jun', users: 1350 },
+  { name: 'Jul', users: 800 },
+  { name: 'Aug', users: 1600 },
+  { name: 'Sep', users: 1200 },
+  { name: 'Oct', users: 1400 },
+  { name: 'Nov', users: 1800 },
+  { name: 'Dec', users: 1100 },
 ];
 
 export function GrowthChart() {
@@ -48,12 +48,12 @@ export function GrowthChart() {
                 dataKey="name"
                 axisLine={false}
                 tickLine={false}
-                tick={{ fill: "#888888", fontSize: 12 }}
+                tick={{ fill: '#888888', fontSize: 12 }}
               />
               <YAxis
                 axisLine={false}
                 tickLine={false}
-                tick={{ fill: "#888888", fontSize: 12 }}
+                tick={{ fill: '#888888', fontSize: 12 }}
                 tickFormatter={(value) => `${value}`}
               />
               <Tooltip />

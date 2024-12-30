@@ -1,7 +1,7 @@
-import { TimeFieldsProps } from "@/types/get-started";
-import { HourField } from "./hourField";
-import { DayPeriodField } from "./DayPeriod";
-import { MinuteField } from "./MinuteField";
+import { TimeFieldsProps } from '@/types/get-started';
+import { HourField } from './hourField';
+import { DayPeriodField } from './DayPeriod';
+import { MinuteField } from './MinuteField';
 
 export function TimeFields({ form, errors }: TimeFieldsProps) {
   return (
@@ -32,7 +32,9 @@ export function TimeFields({ form, errors }: TimeFieldsProps) {
         </div>
       </div>
       {errors.startHour && (
-        <p className="text-red-500">Start Time can&apos;t be less than End Time</p>
+        <p className="text-red-500">
+          Start Time can&apos;t be less than End Time
+        </p>
       )}
     </div>
   );

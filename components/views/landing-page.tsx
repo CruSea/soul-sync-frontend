@@ -1,14 +1,12 @@
-"use client"
+'use client';
 
-import LandingPageBody from "../shared/LandingPage/LandingPageBody";
-import LandingPageFooter from "../shared/LandingPage/LandingPageFooter";
-import LandingPageHeader from "../shared/LandingPage/LandingPageHeader";
+import LandingPageBody from '../shared/LandingPage/LandingPageBody';
+import LandingPageFooter from '../shared/LandingPage/LandingPageFooter';
+import LandingPageHeader from '../shared/LandingPage/LandingPageHeader';
 
 import { useRouter } from 'next/navigation';
 
-
 const LandingPageView = () => {
-
   const router = useRouter();
 
   const handleGetStarted = () => {
@@ -24,4 +22,4 @@ const LandingPageView = () => {
   );
 };
 
-export default LandingPageView
+export default LandingPageView;
