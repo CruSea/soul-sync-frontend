@@ -47,7 +47,7 @@ export function Sidebar() {
               isCollapsed && 'justify-center'
             )}
           >
-            <item.icon className="h-5 w-5 shrink-0" />
+          <item.icon className="h-5 w-5 shrink-0" />
             {!isCollapsed && <span>{item.label}</span>}
           </Link>
         ))}
