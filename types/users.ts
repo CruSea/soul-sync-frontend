@@ -9,7 +9,7 @@ export interface User {
   location: string;
   platform?: string;
   avatar?: string;
-  date?: string
+  date?: string;
 }
 
-export type SortField = "name" | "email" | "joinedDate" | "location";
+export type SortField = 'name' | 'email' | 'joinedDate' | 'location';

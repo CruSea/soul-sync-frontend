@@ -1,6 +1,6 @@
-"use client";
+'use client';
 
-import { Button } from "@/components/ui/button";
+import { Button } from '@/components/ui/button';
 import {
   Form,
   FormControl,
@@ -8,25 +8,25 @@ import {
   FormItem,
   FormLabel,
   FormMessage,
-} from "@/components/ui/form";
-import { Input } from "@/components/ui/input";
+} from '@/components/ui/form';
+import { Input } from '@/components/ui/input';
 
-import { z } from "zod";
-import { zodResolver } from "@hookform/resolvers/zod";
-import { useForm } from "react-hook-form";
+import { z } from 'zod';
+import { zodResolver } from '@hookform/resolvers/zod';
+import { useForm } from 'react-hook-form';
 
 // the schema for how the form should be
 const formSchema = z.object({
   email: z
     .string({
-      required_error: "Please select an email to display.",
+      required_error: 'Please select an email to display.',
     })
     .email(),
   password: z
     .string({
-      required_error: "Please enter a password.",
+      required_error: 'Please enter a password.',
     })
-    .min(6, "Password must be at least 6 characters long."),
+    .min(6, 'Password must be at least 6 characters long.'),
 });
 
 const SignInForm = () => {
@@ -34,8 +34,8 @@ const SignInForm = () => {
     // Define your form.
     resolver: zodResolver(formSchema),
     defaultValues: {
-      email: "",
-      password: "",
+      email: '',
+      password: '',
     },
   });
 

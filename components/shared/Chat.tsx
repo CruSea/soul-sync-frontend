@@ -1,15 +1,16 @@
-"use client";
+'use client';
 
-import { useState, useRef, useEffect } from "react";
-import { v4 as uuidv4 } from "uuid";
+import { useState, useRef, useEffect } from 'react';
+import { v4 as uuidv4 } from 'uuid';
 
-import { Card } from "@/components/ui/card";
-import { ScrollArea } from "@/components/ui/scroll-area";
-import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
+import { Card } from '@/components/ui/card';
+import { ScrollArea } from '@/components/ui/scroll-area';
+import { Button } from '@/components/ui/button';
+import { Input } from '@/components/ui/input';
 
-import ChatHeader from "./ChatHeader";
-import Message from "./Message";
+import ChatHeader from './ChatHeader';
+import Message from './Message';
+import React from 'react';
 
 // type for the group of message threads between user and mentor
 interface threadType {
@@ -26,71 +27,71 @@ interface ChatProps {
 
 const Chat: React.FC<ChatProps> = ({ toggleProfileInView }) => {
   // text is where the text box saves what the mentor writes
-  const [text, setText] = useState<string>("");
+  const [text, setText] = useState<string>('');
 
   // a list of messages between the user and mentor
   const [thread, setThread] = useState<threadType[]>([
     {
       isUser: true,
-      text: "Hi, How are you?",
-      time: "2:43 PM",
-      newDay: "November 14, 2024",
+      text: 'Hi, How are you?',
+      time: '2:43 PM',
+      newDay: 'November 14, 2024',
       id: uuidv4(),
     },
     {
       isUser: false,
-      text: "Hi Jennie, I am fine what about you?",
-      time: "2:43 PM",
-      newDay: "",
+      text: 'Hi Jennie, I am fine what about you?',
+      time: '2:43 PM',
+      newDay: '',
       id: uuidv4(),
     },
     {
       isUser: true,
-      text: "Lorem ipsum odor? todor? huodor hjhkhask aamet, consectetuer adipiscing elit. Sed eros nullam fermentum viverra ante amet justo. Facilisi justo bibendum mus ante augue sem. Malesuada natoque urna ornare primis neque mattis. Dictum volutpat fames tempus taciti pellentesque amet amet primis neque mattis. Dictum volutpat fames tempus taciti.",
-      time: "2:44 PM",
-      newDay: "",
+      text: 'Lorem ipsum odor? todor? huodor hjhkhask aamet, consectetuer adipiscing elit. Sed eros nullam fermentum viverra ante amet justo. Facilisi justo bibendum mus ante augue sem. Malesuada natoque urna ornare primis neque mattis. Dictum volutpat fames tempus taciti pellentesque amet amet primis neque mattis. Dictum volutpat fames tempus taciti.',
+      time: '2:44 PM',
+      newDay: '',
       id: uuidv4(),
     },
     {
       isUser: false,
-      text: "Hi Jennie, I am fine what about you?",
-      time: "2:43 PM",
-      newDay: "",
+      text: 'Hi Jennie, I am fine what about you?',
+      time: '2:43 PM',
+      newDay: '',
       id: uuidv4(),
     },
     {
       isUser: true,
-      text: "Lorem ipsum odor? todor? huodor hjhkhask aamet, consectetuer adipiscing elit. Sed eros nullam fermentum viverra ante amet justo. Facilisi justo bibendum mus ante augue sem. Malesuada natoque urna ornare primis neque mattis. Dictum volutpat fames tempus taciti pellentesque amet amet primis neque mattis. Dictum volutpat fames tempus taciti.",
-      time: "2:44 PM",
-      newDay: "",
+      text: 'Lorem ipsum odor? todor? huodor hjhkhask aamet, consectetuer adipiscing elit. Sed eros nullam fermentum viverra ante amet justo. Facilisi justo bibendum mus ante augue sem. Malesuada natoque urna ornare primis neque mattis. Dictum volutpat fames tempus taciti pellentesque amet amet primis neque mattis. Dictum volutpat fames tempus taciti.',
+      time: '2:44 PM',
+      newDay: '',
       id: uuidv4(),
     },
     {
       isUser: false,
-      text: "Hi Jennie, I am fine what about you?",
-      time: "2:43 PM",
-      newDay: "",
+      text: 'Hi Jennie, I am fine what about you?',
+      time: '2:43 PM',
+      newDay: '',
       id: uuidv4(),
     },
     {
       isUser: true,
-      text: "Lorem ipsum odor? todor? huodor hjhkhask aamet, consectetuer adipiscing elit. Sed eros nullam fermentum viverra ante amet justo. Facilisi justo bibendum mus ante augue sem. Malesuada natoque urna ornare primis neque mattis. Dictum volutpat fames tempus taciti pellentesque amet amet primis neque mattis. Dictum volutpat fames tempus taciti.",
-      time: "2:44 PM",
-      newDay: "",
+      text: 'Lorem ipsum odor? todor? huodor hjhkhask aamet, consectetuer adipiscing elit. Sed eros nullam fermentum viverra ante amet justo. Facilisi justo bibendum mus ante augue sem. Malesuada natoque urna ornare primis neque mattis. Dictum volutpat fames tempus taciti pellentesque amet amet primis neque mattis. Dictum volutpat fames tempus taciti.',
+      time: '2:44 PM',
+      newDay: '',
       id: uuidv4(),
     },
     {
       isUser: false,
-      text: "Lorem ipsum odor amet amet amet amet, consectetuer adipiscing elit. Sed eros nullam fermentum viverra ante amet justo. Facilisi justo bibendum mus ante augue sem. Malesuada natoque urna ornare primis neque mattis. Dictum volutpat fames ues wei ccr tempus taciti pellentesque amet amet. Aenean facilisis lacus mi interdum lacinia proin.",
-      time: "2:44 PM",
-      newDay: "",
+      text: 'Lorem ipsum odor amet amet amet amet, consectetuer adipiscing elit. Sed eros nullam fermentum viverra ante amet justo. Facilisi justo bibendum mus ante augue sem. Malesuada natoque urna ornare primis neque mattis. Dictum volutpat fames ues wei ccr tempus taciti pellentesque amet amet. Aenean facilisis lacus mi interdum lacinia proin.',
+      time: '2:44 PM',
+      newDay: '',
       id: uuidv4(),
     },
     {
       isUser: true,
-      text: "Lorem ipsum odor amet amet amet amet, consectetuer adipiscing elit. Sed eros nullam fermentum viverra ante amet justo. Facilisi justo bibendum mus ante augue sem. Malesuada natoque urna ornare primis neque mattis. Dictum volutpat fames ues wei ccr tempus taciti pellentesque amet amet. Aenean facilisis lacus mi interdum lacinia proin.",
-      time: "2:44 PM",
-      newDay: "November 15, 2024",
+      text: 'Lorem ipsum odor amet amet amet amet, consectetuer adipiscing elit. Sed eros nullam fermentum viverra ante amet justo. Facilisi justo bibendum mus ante augue sem. Malesuada natoque urna ornare primis neque mattis. Dictum volutpat fames ues wei ccr tempus taciti pellentesque amet amet. Aenean facilisis lacus mi interdum lacinia proin.',
+      time: '2:44 PM',
+      newDay: 'November 15, 2024',
       id: uuidv4(),
     },
   ]);
@@ -104,7 +105,7 @@ const Chat: React.FC<ChatProps> = ({ toggleProfileInView }) => {
   useEffect(() => {
     // Scroll to the bottom whenever `thread` changes
     if (bottomOfPanelRef.current) {
-      bottomOfPanelRef.current.scrollIntoView({ behavior: "smooth" }); // Optional: Add smooth scrolling
+      bottomOfPanelRef.current.scrollIntoView({ behavior: 'smooth' }); // Optional: Add smooth scrolling
     }
   }, [thread]);
 
@@ -116,14 +117,14 @@ const Chat: React.FC<ChatProps> = ({ toggleProfileInView }) => {
       {
         isUser: false,
         text: messageText,
-        time: "2:44 PM",
-        newDay: "",
+        time: '2:44 PM',
+        newDay: '',
         id: uuidv4(),
       },
     ]);
 
     if (textBox.current) {
-      textBox.current.value = "";
+      textBox.current.value = '';
     }
   };
 
@@ -154,7 +155,7 @@ const Chat: React.FC<ChatProps> = ({ toggleProfileInView }) => {
           }}
           onKeyDown={(e) => {
             // sends the text value when pressing enter
-            if (e.key === "Enter") {
+            if (e.key === 'Enter') {
               e.preventDefault(); // Prevents newline on enter in the textarea
               sendText(text);
             }

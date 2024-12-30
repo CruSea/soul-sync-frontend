@@ -1,6 +1,7 @@
-import { cn } from "@/lib/utils";
+import { cn } from '@/lib/utils';
+import React from 'react';
 
-import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
+import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 
 interface MessageProps {
   text: string;
@@ -13,9 +14,9 @@ const Message: React.FC<MessageProps> = ({ text, isUser, time, newDay }) => {
   return (
     <div
       className={cn(
-        "relative flex gap-2 items-end",
-        !isUser ? "ml-auto flex-row-reverse" : "flex",
-        newDay !== "" ? "pt-6" : ""
+        'relative flex gap-2 items-end',
+        !isUser ? 'ml-auto flex-row-reverse' : 'flex',
+        newDay !== '' ? 'pt-6' : ''
       )}
     >
       {/* if it is a user the account icon will be on the right side instead of left.
@@ -23,7 +24,7 @@ const Message: React.FC<MessageProps> = ({ text, isUser, time, newDay }) => {
           if it is the first message of the day and the first message of the message thread give an extra padding for the text at top 
       
       */}
-      {newDay !== "" && (
+      {newDay !== '' && (
         <div className="absolute z-40 top-[-3px] left-1/2 transform translate-x-[-50%] font-normal text-xs text-neutral-400">
           {newDay}
         </div>
@@ -32,7 +33,7 @@ const Message: React.FC<MessageProps> = ({ text, isUser, time, newDay }) => {
       {/*dummy avatar man for the user and woman for the mentor*/}
       <Avatar className="w-[50px] h-[50px]">
         <AvatarImage
-          src={`/assets/avatars/${isUser ? "man1" : "woman1"}.png`}
+          src={`/assets/avatars/${isUser ? 'man1' : 'woman1'}.png`}
           className="w-full h-full object-cover"
         />
         <AvatarFallback className="w-full h-full flex items-center justify-center text-xl">
@@ -47,8 +48,8 @@ const Message: React.FC<MessageProps> = ({ text, isUser, time, newDay }) => {
 
       <div
         className={cn(
-          "absolute bottom-[-15px] min-w-[45px] font-normal text-[9px] text-neutral-400",
-          isUser ? "left-[53px]" : "right-[53px]"
+          'absolute bottom-[-15px] min-w-[45px] font-normal text-[9px] text-neutral-400',
+          isUser ? 'left-[53px]' : 'right-[53px]'
         )}
       >
         {/* make the time text directly under the text */}

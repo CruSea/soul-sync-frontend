@@ -1,12 +1,12 @@
-"use client";
+'use client';
 
-import { useEffect, useState } from "react";
-import { AddChannelDialog } from "@/components/shared/Channel/add-channel-dialog";
-import { ChannelCard } from "@/components/shared/Channel/channel-card";
-import type { Channel } from "@/types/channel";
-import { ChevronDown } from "lucide-react";
-import { Button } from "@/components/ui/button";
-import { v4 as uuidv4 } from "uuid";
+import { useEffect, useState } from 'react';
+import { AddChannelDialog } from '@/components/shared/Channel/add-channel-dialog';
+import { ChannelCard } from '@/components/shared/Channel/channel-card';
+import type { Channel } from '@/types/channel';
+import { ChevronDown } from 'lucide-react';
+import { Button } from '@/components/ui/button';
+import { v4 as uuidv4 } from 'uuid';
 import {
   Command,
   CommandEmpty,
@@ -14,32 +14,32 @@ import {
   CommandInput,
   CommandItem,
   CommandList,
-} from "@/components/ui/command";
+} from '@/components/ui/command';
 import {
   DropdownMenu,
   DropdownMenuContent,
   DropdownMenuItem,
   DropdownMenuTrigger,
-} from "@/components/ui/dropdown-menu";
-import { useToast } from "@/hooks/use-toast";
+} from '@/components/ui/dropdown-menu';
+import { useToast } from '@/hooks/use-toast';
 
 export default function ChannelsPage() {
   const [channels, setChannels] = useState<Channel[]>([]);
-  const [search, setSearch] = useState("");
-  const [selectedCategory, setSelectedCategory] = useState("All");
+  const [search, setSearch] = useState('');
+  const [selectedCategory, setSelectedCategory] = useState('All');
   const { toast } = useToast();
   const categories = [
-    "All",
-    "Telegram Bot",
-    "WhatsApp",
-    "Negarit",
-    "Facebook",
-    "Twilio",
+    'All',
+    'Telegram Bot',
+    'WhatsApp',
+    'Negarit',
+    'Facebook',
+    'Twilio',
   ];
 
   useEffect(() => {
     const fetchedChannels = async () => {
-      const response = await fetch("http://localhost:3001/channels");
+      const response = await fetch('http://localhost:3001/channels');
       const data = await response.json();
       setChannels(data); // Access the channels array from the response
     };
@@ -48,39 +48,39 @@ export default function ChannelsPage() {
 
   const filteredChannel = channels?.filter(
     (item) =>
-      (selectedCategory === "All" || item.type === selectedCategory) &&
+      (selectedCategory === 'All' || item.type === selectedCategory) &&
       item.name.toLowerCase().includes(search.toLowerCase())
   );
   const format: Intl.DateTimeFormatOptions = {
-    year: "numeric",
-    month: "short",
-    day: "numeric",
+    year: 'numeric',
+    month: 'short',
+    day: 'numeric',
   };
 
   const handleAddChannel = (
-    newChannel: Omit<Channel, "id" | "icon" | "Date">
+    newChannel: Omit<Channel, 'id' | 'icon' | 'Date'>
   ) => {
     const channelWithId: Channel = {
       ...newChannel,
       id: `${uuidv4().toString()}`,
-      icon: `/${newChannel.type.toLowerCase().replace(" ", "-")}-icon.svg`,
-      Date: `${new Date().toLocaleDateString("en-US", format)}`,
+      icon: `/${newChannel.type.toLowerCase().replace(' ', '-')}-icon.svg`,
+      Date: `${new Date().toLocaleDateString('en-US', format)}`,
     };
     setChannels(channels ? [...channels, channelWithId] : [channelWithId]);
-    fetch("http://localhost:3001/channels", {
-      method: "POST",
+    fetch('http://localhost:3001/channels', {
+      method: 'POST',
       headers: {
-        "Content-Type": "application/json",
+        'Content-Type': 'application/json',
       },
       body: JSON.stringify(channelWithId),
     })
       .then((response) => response.json())
       .catch((error) => {
-        console.error("Error adding channel:", error);
+        console.error('Error adding channel:', error);
       });
     toast({
-      title: "Channel added successfully",
-      description: "The channel has been added to the list",
+      title: 'Channel added successfully',
+      description: 'The channel has been added to the list',
       duration: 3000,
     });
   };

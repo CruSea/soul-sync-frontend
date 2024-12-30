@@ -4,9 +4,9 @@ import {
   FormControl,
   FormMessage,
   FormLabel,
-} from "@/components/ui/form";
-import { Checkbox } from "@/components/ui/checkbox";
-import { SpecializationFieldProps } from "@/types/get-started";
+} from '@/components/ui/form';
+import { Checkbox } from '@/components/ui/checkbox';
+import { SpecializationFieldProps } from '@/types/get-started';
 
 export function SpecializationField({
   control,
@@ -30,9 +30,9 @@ export function SpecializationField({
                     value={option.value}
                     checked={field.value?.includes(
                       option.value as
-                        | "marriageCounseling"
-                        | "discipleship"
-                        | "spritual"
+                        | 'marriageCounseling'
+                        | 'discipleship'
+                        | 'spritual'
                     )}
                     onCheckedChange={(checked) => {
                       const newValue = checked

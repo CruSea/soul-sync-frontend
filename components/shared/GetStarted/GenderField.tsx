@@ -4,9 +4,9 @@ import {
   FormControl,
   FormMessage,
   FormLabel,
-} from "@/components/ui/form";
-import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
-import { GenderFieldProps } from "@/types/get-started";
+} from '@/components/ui/form';
+import { RadioGroup, RadioGroupItem } from '@/components/ui/radio-group';
+import { GenderFieldProps } from '@/types/get-started';
 
 export function GenderField({ options }: GenderFieldProps) {
   return (

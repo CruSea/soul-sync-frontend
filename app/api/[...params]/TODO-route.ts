@@ -1,6 +1,6 @@
-import apiRequest from "@/actions/base-api-request/apiRequest";
-import { NextApiRequest } from "next";
-import { NextResponse } from "next/server";
+import apiRequest from '@/actions/base-api-request/apiRequest';
+import { NextApiRequest } from 'next';
+import { NextResponse } from 'next/server';
 
 async function handler(req: NextApiRequest) {
   const {
@@ -12,18 +12,18 @@ async function handler(req: NextApiRequest) {
   try {
     const getdata = await apiRequest(
       method as string,
-      "",
+      '',
       body,
       Array.isArray(params) ? params : [params]
     );
-    console.log("GET Response:", getdata);
+    console.log('GET Response:', getdata);
     return NextResponse.json(
-      { message: "GET request successful", getdata },
+      { message: 'GET request successful', getdata },
       { status: 200 }
     );
   } catch (error: unknown) {
     return NextResponse.json(
-      { message: "Internal Server Error", error: error },
+      { message: 'Internal Server Error', error: error },
       { status: 500 }
     );
   }
