@@ -1,5 +1,4 @@
-import React from "react";
-import type { Channel } from "@/types/channel";
+import type { Channel } from '@/types/channel';
 
 type NegaritProp = {
   channel: Channel;

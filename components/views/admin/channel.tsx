@@ -29,14 +29,14 @@ export default function ChannelsPage() {
   const [selectedCategory, setSelectedCategory] = useState('All');
   const { toast } = useToast();
   const [selectedChannel, setSelectedChannel] =
-    useState<string>("Telegram Bot");
+    useState<string>('Telegram Bot');
   const categories = [
-    "All",
-    "Telegram Bot",
-    "WhatsApp",
-    "Negarit SMS",
-    "Facebook",
-    "Twilio",
+    'All',
+    'Telegram Bot',
+    'WhatsApp',
+    'Negarit SMS',
+    'Facebook',
+    'Twilio',
   ];
 
   useEffect(() => {
@@ -50,7 +50,7 @@ export default function ChannelsPage() {
 
   const filteredChannel = channels?.filter(
     (item) =>
-      (selectedCategory === "All" || item.Metadata.type === selectedCategory) &&
+      (selectedCategory === 'All' || item.Metadata.type === selectedCategory) &&
       item.name.toLowerCase().includes(search.toLowerCase())
   );
   const format: Intl.DateTimeFormatOptions = {
@@ -65,7 +65,7 @@ export default function ChannelsPage() {
     const channelWithId: Channel = {
       ...newChannel,
       id: `${uuidv4().toString()}`,
-      Date: `${new Date().toLocaleDateString("en-US", format)}`,
+      Date: `${new Date().toLocaleDateString('en-US', format)}`,
     };
     setChannels(channels ? [...channels, channelWithId] : [channelWithId]);
     fetch('http://localhost:3001/channels', {

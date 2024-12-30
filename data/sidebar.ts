@@ -4,7 +4,7 @@ import {
   LuMessagesSquare,
   LuArrowDown,
   LuLibrary,
-  LuUserCog 
+  LuUserCog,
 } from 'react-icons/lu';
 import { RxLinkNone2 } from 'react-icons/rx';
 import { FiHelpCircle } from 'react-icons/fi';

@@ -1,10 +1,10 @@
-import React from "react";
-import type { Channel } from "@/types/channel";
+import React from 'react';
+import type { Channel } from '@/types/channel';
 
 type TwilioProp = {
   channel: Channel;
 };
-// it will be changed later when the it is scaled for whatsapp now its just a placeholder 
+// it will be changed later when the it is scaled for whatsapp now its just a placeholder
 function Twilio({ channel }: TwilioProp) {
   return (
     <div>

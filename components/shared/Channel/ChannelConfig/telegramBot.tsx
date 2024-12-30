@@ -1,11 +1,10 @@
-import React from "react";
-import type { Channel } from "@/types/channel";
+import type { Channel } from '@/types/channel';
 
 type telegramProp = {
-    channel: Channel;
-}
+  channel: Channel;
+};
 
-function telegramBot({channel}:telegramProp) {
+function telegramBot({ channel }: telegramProp) {
   return (
     <div className="w-full justify-between items-center flex ">
       <div className="h-auto w-fit gap-2 items-center flex  justify-between">
