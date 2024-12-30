@@ -6,7 +6,7 @@ on:
 
 jobs:
   lint:
-    name: Run ESLint 
+    name: Run ESLint
     runs-on: ubuntu-latest
     steps:
       - name: Checkout Repository
@@ -19,7 +19,7 @@ jobs:
           cache: 'pnpm'
 
       - name: Install pnpm
-        run: npm install -g pnpm
+        run: corepack enable && corepack prepare pnpm@latest --activate
 
       - name: Install Dependencies
         run: pnpm install
