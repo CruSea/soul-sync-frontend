@@ -4,9 +4,9 @@ import {
   FormControl,
   FormMessage,
   FormLabel,
-} from "@/components/ui/form";
-import { Checkbox } from "@/components/ui/checkbox";
-import { SpecializationFieldProps } from "@/types/get-started";
+} from '@/components/ui/form';
+import { Checkbox } from '@/components/ui/checkbox';
+import { SpecializationFieldProps } from '@/types/get-started';
 
 export function SpecializationField({
   control,
@@ -28,7 +28,12 @@ export function SpecializationField({
                   <Checkbox
                     className="!bg-white !w-4 !h-4"
                     value={option.value}
-                    checked={field.value?.includes(option.value)}
+                    checked={field.value?.includes(
+                      option.value as
+                        | 'marriageCounseling'
+                        | 'discipleship'
+                        | 'spritual'
+                    )}
                     onCheckedChange={(checked) => {
                       const newValue = checked
                         ? [...(field.value || []), option.value]
@@ -39,7 +44,7 @@ export function SpecializationField({
                     }}
                   />
 
-                  <FormLabel className="ml-3 cursor-pointer text-base">
+                  <FormLabel className="ml-3 font-medium text-lg cursor-pointer">
                     {option.label}
                   </FormLabel>
                 </div>

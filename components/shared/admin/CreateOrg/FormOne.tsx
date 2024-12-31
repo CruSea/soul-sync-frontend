@@ -1,10 +1,9 @@
-import { SizeField } from "./SizeField"
-import { CompanyNameField } from "./CompanyNameField"
-import { CompanyDomainField } from "./CompanyDomainField"
-import { HiOutlineExclamationCircle } from "react-icons/hi2"
-import { formOptions } from "@/data/create-org"
-import { FormOneProps } from "@/types/create-org"
-
+import { SizeField } from './SizeField';
+import { CompanyNameField } from './CompanyNameField';
+import { CompanyDomainField } from './CompanyDomainField';
+import { HiOutlineExclamationCircle } from 'react-icons/hi2';
+import { formOptions } from '@/data/create-org';
+import { FormOneProps } from '@/types/create-org';
 
 const FormOne = ({ formOne }: FormOneProps) => {
   return (
@@ -19,15 +18,21 @@ const FormOne = ({ formOne }: FormOneProps) => {
           </div>
         </div>
         <div className="flex items-center gap-1 text-slate-500 font-medium text-xs">
-          <HiOutlineExclamationCircle size={20} /> We will create a unique company URL for you to log into Turumba
+          <HiOutlineExclamationCircle size={20} /> We will create a unique
+          company URL for you to log into Turumba
         </div>
       </div>
       <div className="space-y-4">
-        <div className="font-bold text-xl">What is the size of Mentors of your company</div>
-        <SizeField control={formOne.control} options={formOptions.sizeOptions} />
+        <div className="font-bold text-xl">
+          What is the size of Mentors of your company
+        </div>
+        <SizeField
+          control={formOne.control}
+          options={formOptions.sizeOptions}
+        />
       </div>
     </div>
-  )
-}
+  );
+};
 
-export default FormOne
+export default FormOne;

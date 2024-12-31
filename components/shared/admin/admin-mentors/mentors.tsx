@@ -1,4 +1,4 @@
-"use client";
+'use client';
 
 import React, { useEffect, useState } from "react";
 import { DataTable } from "@/components/shared/DataTable";
@@ -27,8 +27,8 @@ interface Mentors {
 
 const columns: Column<Mentors>[] = [
   {
-    key: "name",
-    header: "Name",
+    key: 'name',
+    header: 'Name',
     render: (mentor) => (
       <div className="flex items-center gap-2">
         <Avatar className="h-8 w-8">

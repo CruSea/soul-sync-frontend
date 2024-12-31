@@ -1,6 +1,7 @@
-import { Header } from "@/components/shared/layout/header";
-import { Sidebar } from "@/components/shared/layout/sidebar";
-import { Toaster } from "@/components/ui/toaster";
+import { Header } from '@/components/shared/layout/header';
+import { Sidebar } from '@/components/shared/layout/sidebar';
+import { Toaster } from '@/components/ui/toaster';
+import React from 'react';
 
 interface AdminLayoutProps {
   children: React.ReactNode;

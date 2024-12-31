@@ -5,15 +5,14 @@ import {
   CommandInput,
   CommandItem,
   CommandList,
-} from "@/components/ui/command";
+} from '@/components/ui/command';
 
-import { ScrollArea } from "@/components/ui/scroll-area";
-import { cn, getFallBack } from "@/lib/utils";
-import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
-import { UsersListProps } from "@/types/mentor";
+import { ScrollArea } from '@/components/ui/scroll-area';
+import { cn, getFallBack } from '@/lib/utils';
+import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
+import { UsersListProps } from '@/types/mentor';
 
 const UsersList = ({ users, currentUser, setCurrentUser }: UsersListProps) => {
-
   return (
     <div className="w-80 overflow-y-auto bg-white rounded-[10px] py-4 shadow-sidebar">
       <Command className="px-0">
@@ -31,12 +30,10 @@ const UsersList = ({ users, currentUser, setCurrentUser }: UsersListProps) => {
               {/* a an individual user */}
               {users.map((user) => (
                 <CommandItem
-                  key={user.userId}
+                  key={user.id}
                   className={cn(
-                    "flex px-2.5 gap-3.5 items-center h-[70px] outline-none rounded-lg cursor-pointer",
-                    user.userId === currentUser.userId
-                      ? "!bg-gray-300"
-                      : "bg-white"
+                    'flex px-2.5 gap-3.5 items-center h-[70px] outline-none rounded-lg cursor-pointer',
+                    user.id === currentUser.id ? '!bg-gray-300' : 'bg-white'
                   )} // if user is selected sets the background to gry
                   onSelect={() => setCurrentUser(user)} // sets the chosen user to the index of the selected item
                 >

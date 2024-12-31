@@ -1,57 +1,50 @@
-"use client";
+'use client';
 
-import { useForm } from "react-hook-form";
-import { getStartedMentorFormSchema } from "@/types/get-started";
-import { getStartedMentorFormValues } from "@/types/get-started";
-import { zodResolver } from "@hookform/resolvers/zod";
-import { Form } from "@/components/ui/form";
-import { AgeField } from "./AgeField";
-import { GenderField } from "./GenderField";
-import { getStartedForm } from "@/data/get-started-data";
-import { LocationField } from "./LocationField";
-import { SpecializationField } from "./SpecializationField";
-import { useEffect } from "react";
-import { Button } from "@/components/ui/button";
-import { useRouter } from "next/navigation";
-import { TimeFields } from "./TimeFields";
-import { Label } from "@/components/ui/label";
-import { Input } from "@/components/ui/input";
-import { AvailabilityField } from "./availability-time/AvailabilityField";
+import { useForm } from 'react-hook-form';
+import { getStartedMentorFormSchema } from '@/types/get-started';
+import { getStartedMentorFormValues } from '@/types/get-started';
+import { zodResolver } from '@hookform/resolvers/zod';
+import { Form } from '@/components/ui/form';
+import { AgeField } from './AgeField';
+import { GenderField } from './GenderField';
+import { getStartedForm } from '@/data/get-started-data';
+import { LocationField } from './LocationField';
+import { SpecializationField } from './SpecializationField';
+import { useEffect } from 'react';
+import { Button } from '@/components/ui/button';
+import { useRouter } from 'next/navigation';
+import { TimeFields } from './TimeFields';
 
 const GetStartedMentorForm = () => {
   const form = useForm<getStartedMentorFormValues>({
     resolver: zodResolver(getStartedMentorFormSchema),
-    mode: "onChange",
+    mode: 'onChange',
     defaultValues: {
       age: 29,
-      gender: "male",
-      location: "",
-      specialization: ["marriageCounseling"],
-      startHour: "09",
-      startMinute: "00",
-      startDayPeriod: "AM",
-      endHour: "05",
-      endMinute: "00",
-      endDayPeriod: "PM",
+      gender: 'male',
+      location: '',
+      specialization: ['marriageCounseling'],
+      startHour: '09',
+      startMinute: '00',
+      startDayPeriod: 'AM',
+      endHour: '05',
+      endMinute: '00',
+      endDayPeriod: 'PM',
     },
   });
 
   const router = useRouter(); // Initialize the useRouter hook
 
   const onSubmit = (data: getStartedMentorFormValues) => {
-    console.log("Mentor form data", data);
+    console.log('Mentor form data', data);
 
     // Navigate to /mentor after form submission
-    router.push("/mentor"); // Use router.push for smooth navigation
+    router.push('/mentor'); // Use router.push for smooth navigation
   };
 
   const {
     formState: { errors },
   } = form;
-
-  useEffect(() => {
-    console.log(errors);
-  }, []);
 
   return (
     <Form {...form}>
@@ -66,14 +59,12 @@ const GetStartedMentorForm = () => {
             options={getStartedForm.genderOptions}
           />
         </div>
-        <LocationField control={form.control} />
+        <LocationField />
         <SpecializationField
           control={form.control}
           options={getStartedForm.specializationOptions}
         />
-        <div className="text-lg font-semibold">Availability Time</div>
-        {/* <TimeFields form={form} errors={errors} /> */}
-        <AvailabilityField control={form.control} options={getStartedForm.genderOptions} />
+        <TimeFields form={form} errors={errors} />
         <Button type="submit" className="w-4/5 mx-auto h-12 ">
           Submit
         </Button>

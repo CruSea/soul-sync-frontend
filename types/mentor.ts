@@ -1,4 +1,4 @@
-import { colors } from "@/components/shared/Mentor/Info";
+import { colors } from '@/components/shared/Mentor/Info';
 
 export interface Mentor {
   id: string;
@@ -23,9 +23,10 @@ export interface MentorLayoutProps {
 }
 
 export type User = {
-  userId: string;
+  id: string;
   fullName: string;
   imageUrl: string;
+  lastUpdated: string;
 };
 
 export type Users = User[];
@@ -62,21 +63,24 @@ export interface UsersListProps {
 }
 
 export type UserMessages = {
-  userId: string;
+  id: string;
   messages: Messages;
   email: string;
   imageUrl: string;
   fullName: string;
-}
+};
 
 export interface ChatProps {
-  userMessages: UserMessages | null;
-  userDetails: UserDetails | null;
+  userMessages: UserMessages | undefined;
+  userDetails: UserDetails | undefined;
+  setUserMessages: React.Dispatch<
+    React.SetStateAction<UserMessages | undefined>
+  >;
   toggleDrawer: () => void;
 }
 
 export interface ProfileProps {
-  userDetails: UserDetails | null;
+  userDetails: UserDetails | undefined;
 }
 
 // type for the group of message threads between user and mentor
@@ -107,11 +111,11 @@ export interface ChatHeaderProps {
   fullName: string;
   email: string;
   toggleDrawer: () => void;
-  userDetails: UserDetails | null;
+  userDetails: UserDetails | undefined;
 }
 
 export interface InfoProps {
-  title: string | undefined ;
+  title: string | undefined;
   value: string | undefined;
   color: keyof typeof colors;
 }

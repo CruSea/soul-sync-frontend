@@ -1,33 +1,31 @@
-"use client";
-
-import React from "react";
-import { DataTable } from "@/components/shared/DataTable";
-import { Badge } from "@/components/ui/badge";
-import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
-import { Button } from "@/components/ui/button";
-import { Trash2 } from "lucide-react";
-import { InviteAdminDialog } from "./invite-admin-dialog";
-import type { Admin } from "@/types/admin";
-import { Column, FilterOption } from "@/types/data-table";
+import React from 'react';
+import { DataTable } from '@/components/shared/DataTable';
+import { Badge } from '@/components/ui/badge';
+import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
+import { Button } from '@/components/ui/button';
+import { Trash2 } from 'lucide-react';
+import { InviteAdminDialog } from './invite-admin-dialog';
+import type { Admin } from '@/types/admin';
+import { Column, FilterOption } from '@/types/data-table';
 
 const ALL_ADMINS: Admin[] = Array.from({ length: 50 }, (_, i) => ({
   id: `admin-${i + 1}`,
   name: `Admin ${i + 1}`,
   age: 25 + Math.floor(Math.random() * 30),
-  gender: Math.random() > 0.5 ? "Male" : "Female",
+  gender: Math.random() > 0.5 ? 'Male' : 'Female',
   email: `admin${i + 1}@example.com`,
   phoneNumber: `+1${Math.floor(1000000000 + Math.random() * 9000000000)}`,
-  location: ["Addis Ababa", "New York", "London", "Tokyo", "Sydney"][
+  location: ['Addis Ababa', 'New York', 'London', 'Tokyo', 'Sydney'][
     Math.floor(Math.random() * 5)
   ],
-  status: ["Joined", "Pending", "Inactive"][Math.floor(Math.random() * 3)],
+  status: ['Joined', 'Pending', 'Inactive'][Math.floor(Math.random() * 3)],
   profileImage: `/placeholder.svg?height=40&width=40`,
 }));
 
 const columns: Array<Column<Admin>> = [
   {
-    key: "name",
-    header: "Name",
+    key: 'name',
+    header: 'Name',
     render: (admin) => (
       <div className="flex items-center gap-2">
         <Avatar className="h-8 w-8">
@@ -38,19 +36,19 @@ const columns: Array<Column<Admin>> = [
       </div>
     ),
   },
-  { key: "age", header: "Age" },
-  { key: "gender", header: "Gender" },
-  { key: "email", header: "Email" },
-  { key: "phoneNumber", header: "Phone Number" },
-  { key: "location", header: "Location" },
+  { key: 'age', header: 'Age' },
+  { key: 'gender', header: 'Gender' },
+  { key: 'email', header: 'Email' },
+  { key: 'phoneNumber', header: 'Phone Number' },
+  { key: 'location', header: 'Location' },
   {
-    key: "status",
-    header: "Status",
+    key: 'status',
+    header: 'Status',
     render: (admin) => <Badge variant="secondary">{admin.status}</Badge>,
   },
   {
-    key: "id",
-    header: "Action",
+    key: 'id',
+    header: 'Action',
     render: () => (
       <div className="flex items-center gap-2">
         <Button variant="ghost" size="icon" className="h-8 w-8">
@@ -63,9 +61,9 @@ const columns: Array<Column<Admin>> = [
 ];
 
 const filterOptions: Array<FilterOption<Admin>> = [
-  { key: "status", label: "Joined" },
-  { key: "status", label: "Pending" },
-  { key: "status", label: "Inactive" },
+  { key: 'status', label: 'Joined' },
+  { key: 'status', label: 'Pending' },
+  { key: 'status', label: 'Inactive' },
 ];
 
 export function AdminsTable() {
@@ -80,12 +78,12 @@ export function AdminsTable() {
           data={ALL_ADMINS}
           columns={columns}
           searchFields={[
-            "name",
-            "email",
-            "status",
-            "location",
-            "age",
-            "gender",
+            'name',
+            'email',
+            'status',
+            'location',
+            'age',
+            'gender',
           ]}
           filterOptions={filterOptions}
           itemsPerPage={10}

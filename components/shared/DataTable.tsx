@@ -1,4 +1,4 @@
-"use client";
+'use client';
 
 import React, { useState, useEffect } from "react";
 import {
@@ -28,15 +28,15 @@ import {
   TableHead,
   TableHeader,
   TableRow,
-} from "@/components/ui/table";
-import { Badge } from "@/components/ui/badge";
+} from '@/components/ui/table';
+import { Badge } from '@/components/ui/badge';
 import {
   DropdownMenu,
   DropdownMenuCheckboxItem,
   DropdownMenuContent,
   DropdownMenuTrigger,
-} from "@/components/ui/dropdown-menu";
-import { Column, FilterOption } from "@/types/data-table";
+} from '@/components/ui/dropdown-menu';
+import { Column, FilterOption } from '@/types/data-table';
 
 interface DataTableProps<T> {
   apiUrl: string;
@@ -215,15 +215,14 @@ export function DataTable<T extends { id: string | number }>({
         {filters.map((filter) => (
           <Badge key={filter} variant="secondary" className="gap-2">
             {filter.split(":")[1]}
-            <button
+            <Button
               onClick={() => {
                 setFilters((prev) => prev.filter((f) => f !== filter));
                 setCurrentPage(1);
               }}
-              className="focus:outline-none"
-            >
+              className="focus:outline-none" >
               <X className="h-3 w-3" />
-            </button>
+            </Button>
           </Badge>
         ))}
       </div>

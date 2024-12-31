@@ -3,6 +3,8 @@ import { AdminLayout } from "@/components/shared/layout/admin-layout";
 import { Toaster } from "@/components/ui/sonner";
 import { DashboardLayoutProps } from "@/types/admin";
 import { usePathname } from "next/navigation";
+import React from 'react';
+
 
 const DashboardLayout: React.FC<DashboardLayoutProps> = ({ children }) => {
   const pathname = usePathname();

@@ -1,6 +1,6 @@
-"use client";
+'use client';
 
-import { useState } from "react";
+import { useState } from 'react';
 import {
   Dialog,
   DialogContent,
@@ -8,11 +8,12 @@ import {
   DialogTitle,
   DialogDescription,
   DialogTrigger,
-} from "@/components/ui/dialog";
-import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
-import { Label } from "@/components/ui/label";
-import { useToast } from "@/hooks/use-toast";
+} from '@/components/ui/dialog';
+import { Button } from '@/components/ui/button';
+import { Input } from '@/components/ui/input';
+import { Label } from '@/components/ui/label';
+import { useToast } from '@/hooks/use-toast';
+import React from 'react';
 
 interface InviteAdminFormData {
   name: string;
@@ -22,8 +23,8 @@ interface InviteAdminFormData {
 export function InviteAdminDialog() {
   const [isOpen, setIsOpen] = useState(false);
   const [formData, setFormData] = useState<InviteAdminFormData>({
-    name: "",
-    email: "",
+    name: '',
+    email: '',
   });
   const { toast } = useToast();
 
@@ -34,17 +35,17 @@ export function InviteAdminDialog() {
       await new Promise((resolve) => setTimeout(resolve, 1000));
 
       toast({
-        title: "Invitation sent",
+        title: 'Invitation sent',
         description: `Invitation has been sent to ${formData.email}`,
       });
 
-      setFormData({ name: "", email: "" });
+      setFormData({ name: '', email: '' });
       setIsOpen(false);
-    } catch (error) {
+    } catch {
       toast({
-        title: "Error",
-        description: "Failed to send invitation. Please try again.",
-        variant: "destructive",
+        title: 'Error',
+        description: 'Failed to send invitation. Please try again.',
+        variant: 'destructive',
       });
     }
   };
@@ -57,7 +58,7 @@ export function InviteAdminDialog() {
   return (
     <Dialog open={isOpen} onOpenChange={setIsOpen}>
       <DialogTrigger asChild>
-        <Button variant={"outline"}>
+        <Button variant={'outline'}>
           <span className="mr-1">+</span> Invite an Admin
         </Button>
       </DialogTrigger>

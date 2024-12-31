@@ -1,6 +1,6 @@
-"use client";
+'use client';
 
-import { useState } from "react";
+import { useState } from 'react';
 import {
   Dialog,
   DialogContent,
@@ -15,7 +15,7 @@ import { Label } from "@/components/ui/label";
 import { useToast } from "@/hooks/use-toast";
 import { toast } from "sonner";
 import { useAuth } from "@/context/AuthContext";
-import handler from "@/app/api/[...params]/route";
+//import handler from "@/app/api/[...params]/route";
 
 const BASE_URL = process.env.NEXT_PUBLIC_API_BASE_URL;
 const MENTORS_URL = process.env.NEXT_PUBLIC_API_ADMIN_MENTORS_URL;
@@ -28,8 +28,8 @@ interface InviteMentorFormData {
 export function InviteMentorDialog() {
   const [isOpen, setIsOpen] = useState(false);
   const [formData, setFormData] = useState<InviteMentorFormData>({
-    name: "",
-    email: "",
+    name: '',
+    email: '',
   });
 
   const handleSubmit = async (e: React.FormEvent) => {
@@ -96,7 +96,7 @@ export function InviteMentorDialog() {
   return (
     <Dialog open={isOpen} onOpenChange={setIsOpen}>
       <DialogTrigger asChild>
-        <Button variant={"outline"}>
+        <Button variant={'outline'}>
           <span className="mr-1">+</span> Invite a Mentor
         </Button>
       </DialogTrigger>

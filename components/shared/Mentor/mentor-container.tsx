@@ -1,17 +1,21 @@
-"use client";
+'use client';
 
-import { MentorContainerProps, User } from "@/types/mentor";
-import Chat from "./Chat";
-import Profile from "./Profile";
-import { useEffect, useState } from "react";
-import UsersList from "./users-list";
-import { Drawer, DrawerContent } from "./ProfileDrawer";
-import { Sheet } from "lucide-react";
+import {
+  MentorContainerProps,
+  User,
+  UserDetails,
+  UserMessages,
+} from '@/types/mentor';
+import Chat from './Chat';
+import Profile from './Profile';
+import { useEffect, useState } from 'react';
+import UsersList from './users-list';
+import { jsonServer } from '@/data/end-points';
 
 const MentorContainer = ({ users }: MentorContainerProps) => {
   const [currentUser, setCurrentUser] = useState<User>(users[0]);
-  const [userDetails, setUserDetails] = useState(null);
-  const [userMessages, setUserMessages] = useState(null);
+  const [userDetails, setUserDetails] = useState<UserDetails>();
+  const [userMessages, setUserMessages] = useState<UserMessages>();
 
   const [isDrawerOpen, setIsDrawerOpen] = useState<boolean>(false);
 
@@ -20,32 +24,32 @@ const MentorContainer = ({ users }: MentorContainerProps) => {
       try {
         // fetches the userDetails from db
         const response = await fetch(
-          `http://localhost:3001/userDetails?userId=${currentUser.userId}`
+          `${jsonServer.baseUrl}/${jsonServer.userDetails}?id=${currentUser.id}`
         );
 
         if (!response.ok) {
-          throw new Error("Network response was not ok");
+          throw new Error('Network response was not ok');
         }
         const data = await response.json();
 
         if (Array.isArray(data) && data.length > 0) {
           setUserDetails(data[0]); // Assuming you want the first item
         } else {
-          console.warn("No user details found");
+          console.warn('No user details found');
         }
       } catch (error) {
-        console.error("Failed to fetch user details:", error);
+        console.error('Failed to fetch user details:', error);
       }
     };
 
     const fetchUserMesages = async () => {
       try {
         const response = await fetch(
-          `http://localhost:3001/userMessages?userId=${currentUser.userId}`
+          `${jsonServer.baseUrl}/${jsonServer.messages}?id=${currentUser.id}`
         );
 
         if (!response.ok) {
-          throw new Error("Network response was not ok");
+          throw new Error('Network response was not ok');
         }
 
         const data = await response.json();
@@ -53,15 +57,15 @@ const MentorContainer = ({ users }: MentorContainerProps) => {
         if (Array.isArray(data) && data.length > 0) {
           setUserMessages(data[0]); // Assuming you want the first item
         } else {
-          console.warn("No user details found");
+          console.warn('No user details found');
         }
-        console.log("the userMessages", data[0]);
+        console.log('the userMessages', data[0]);
       } catch (error) {
-        console.error("Failed to fetch user Messages:", error);
+        console.error('Failed to fetch user Messages:', error);
       }
     };
 
-    if (currentUser && currentUser.userId) {
+    if (currentUser && currentUser.id) {
       fetchUserMesages();
       fetchUserDetails();
     }
@@ -78,9 +82,10 @@ const MentorContainer = ({ users }: MentorContainerProps) => {
         userMessages={userMessages}
         toggleDrawer={() => setIsDrawerOpen(!isDrawerOpen)}
         userDetails={userDetails}
+        setUserMessages={setUserMessages}
       />
       <div className="hidden 3xl:block">
-        <Profile userDetails={userDetails}/>
+        <Profile userDetails={userDetails} />
       </div>
     </>
   );

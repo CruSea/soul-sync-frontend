@@ -1,5 +1,5 @@
-import { Header } from "@/components/shared/layout/header";
-import { MentorLayoutProps } from "@/types/mentor";
+import { Header } from '@/components/shared/layout/header';
+import { MentorLayoutProps } from '@/types/mentor';
 
 export default function MentorLayout({ children, title }: MentorLayoutProps) {
   return (
