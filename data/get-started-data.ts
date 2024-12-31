@@ -9,7 +9,10 @@ const genderOptions = [
 const specializationOptions = [
   { label: "Marriage Counseling", value: "marriageCounseling" },
   { label: "Discipleship", value: "discipleship" },
-  { label: "Spiritual", value: "spritual" },
+  { label: "Spiritual Life", value: "spritual" },
+  { label: "Day to Day", value: "dayToDay" },
+  { label: "Life Coach", value: "lifeCoach" },
+  { label: "Psychology", value: "psychology" },
 ];
 
 const DayOptions = [

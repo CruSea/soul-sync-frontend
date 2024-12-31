@@ -26,26 +26,26 @@ const BasicInfo = () => {
             <div className="space-y-4 flex-1">
               <div className="space-y-2 font-medium">
                 <div>Name</div>
-                <Input className="w-full border-[#E2E0F0]"></Input>
+                <Input className="w-full border-[#E2E0F0]  max-w-[450px]"></Input>
               </div>
               <div className="space-y-2 font-medium">
                 <div>Age</div>
-                <Input className="w-full border-[#E2E0F0]"></Input>
+                <Input className="w-full border-[#E2E0F0]  max-w-[450px]"></Input>
               </div>
             </div>
           </div>
           <div className="space-y-4 flex-1">
             <div className="space-y-2 font-medium">
               <div>Email</div>
-              <Input className="w-full border-[#E2E0F0]"></Input>
+              <Input className="w-full border-[#E2E0F0]  max-w-[450px]"></Input>
             </div>
             <div className="space-y-2 font-medium">
               <div>Phone Number</div>
-              <Input className="w-full border-[#E2E0F0]"></Input>
+              <Input className="w-full border-[#E2E0F0]  max-w-[450px]"></Input>
             </div>
             <div className="space-y-2 font-medium">
               <div>Location</div>
-              <Input className="w-full border-[#E2E0F0]"></Input>
+              <Input className="w-full border-[#E2E0F0]  max-w-[450px]"></Input>
             </div>
           </div>
         </div>
