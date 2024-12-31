@@ -1,22 +1,24 @@
 'use client';
 
-import { zodResolver } from "@hookform/resolvers/zod"
+import { zodResolver } from '@hookform/resolvers/zod';
 
-import LandingPageHeader from "@/components/shared/LandingPage/LandingPageHeader"
-import { createOrgFormOneSchema, createOrgFormOneValues, createOrgFormTwoSchema, createOrgFormTwoValues, OrgDataValues, Page } from "@/types/create-org";
-import { useState, useRef, useEffect } from "react"
-import { useForm } from "react-hook-form";
-import CreateOrgSidebar from "@/components/shared/admin/CreateOrg/CreateOrgSidebar";
-import CreateOrgForm from "@/components/shared/admin/CreateOrg/CreateOrgForm";
-import { useRouter } from 'next/navigation';
-import { endPoints } from "@/data/end-points";
-
-const BASE_URL = process.env.NEXT_PUBLIC_API_BASE_URL
+import LandingPageHeader from '@/components/shared/LandingPage/LandingPageHeader';
+import {
+  createOrgFormOneSchema,
+  createOrgFormOneValues,
+  createOrgFormTwoSchema,
+  createOrgFormTwoValues,
+  OrgDataValues,
+  Page,
+} from '@/types/create-org';
+import { useState, useRef, useEffect } from 'react';
+import { useForm } from 'react-hook-form';
+import CreateOrgSidebar from '@/components/shared/admin/CreateOrg/CreateOrgSidebar';
+import CreateOrgForm from '@/components/shared/admin/CreateOrg/CreateOrgForm';
 
 const CreateOrgView = () => {
   const [currentPage, setCurrentPage] = useState<Page>("first");
   const [orgData, setOrgData] = useState<OrgDataValues>({});
-  const router = useRouter();
 
   const formOne = useForm<createOrgFormOneValues>({
     resolver: zodResolver(createOrgFormOneSchema),

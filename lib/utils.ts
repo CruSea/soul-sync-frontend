@@ -1,9 +1,7 @@
-import { Messages } from "@/types/mentor";
-import { clsx, type ClassValue } from "clsx"
-import { twMerge } from "tailwind-merge"
-import { jwtDecode } from "jwt-decode"
-import { v4 as uuidv4 } from "uuid";
-
+import { Messages, Users } from '@/types/mentor';
+import { clsx, type ClassValue } from 'clsx';
+import { twMerge } from 'tailwind-merge';
+import { v4 as uuidv4 } from 'uuid';
 
 export function cn(...inputs: ClassValue[]) {
   return twMerge(clsx(inputs));
@@ -19,8 +17,11 @@ export function decodeToken(token: string) {
 }
 export function getFallBack(fullName: string) {
   // takes in a name and returns its initals
-	return fullName.split(" ").map(word => word.charAt(0).toUpperCase()).join("")
-} 
+  return fullName
+    .split(' ')
+    .map((word) => word.charAt(0).toUpperCase())
+    .join('');
+}
 
 export function transformChatData(input: Messages | undefined) {
   if (!input) {
@@ -56,4 +57,11 @@ export function transformChatData(input: Messages | undefined) {
       id: uuidv4(),
     };
   });
+}
+
+export function sortUsers(users: Users) {
+  return users.sort(
+    (a, b) =>
+      new Date(b.lastUpdated).getTime() - new Date(a.lastUpdated).getTime()
+  );
 }

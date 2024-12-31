@@ -1,9 +1,9 @@
-import { CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
+import { CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 
-import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
-import { Button } from "../../ui/button";
-import { getFallBack } from "@/lib/utils";
-import { ChatHeaderProps } from "@/types/mentor";
+import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
+import { Button } from '../../ui/button';
+import { getFallBack } from '@/lib/utils';
+import { ChatHeaderProps } from '@/types/mentor';
 import {
   Sheet,
   SheetContent,
@@ -11,8 +11,8 @@ import {
   SheetHeader,
   SheetTitle,
   SheetTrigger,
-} from "./metor-sheet";
-import Profile from "./Profile";
+} from './metor-sheet';
+import Profile from './Profile';
 
 const ChatHeader = ({
   imageUrl,
@@ -41,7 +41,7 @@ const ChatHeader = ({
         </div>
       </div>
       <Sheet>
-        <SheetTrigger className="3xl:hidden">
+        <SheetTrigger asChild className="3xl:hidden">
           <Button
             className="bg-white text-black font-medium text-sm hover:bg-white hover:opacity-80 "
             onClick={toggleDrawer}

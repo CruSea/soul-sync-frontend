@@ -9,9 +9,9 @@ export default {
     './app/**/*.{js,ts,jsx,tsx,mdx}',
   ],
   theme: {
-		screens: {
-			'3xl': '1650px'
-		},
+    screens: {
+      '3xl': '1650px',
+    },
     extend: {
       fontFamily: {
         general: ['Inter', 'sans-serif'],

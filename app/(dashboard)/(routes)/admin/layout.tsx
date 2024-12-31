@@ -1,11 +1,13 @@
-'use client'
-import { AdminLayout } from "@/components/shared/layout/admin-layout";
-import { DashboardLayoutProps } from "@/types/admin";
-import { usePathname } from "next/navigation";
+'use client';
+import { AdminLayout } from '@/components/shared/layout/admin-layout';
+import { usePathname } from 'next/navigation';
+import React from 'react';
 
+interface DashboardLayoutProps {
+  children: React.ReactNode;
+}
 
-const DashboardLayout: React.FC<DashboardLayoutProps> =  ({ children }) => {
-
+const DashboardLayout: React.FC<DashboardLayoutProps> = ({ children }) => {
   const pathname = usePathname();
 
   // Get the last segment of the URL
