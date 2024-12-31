@@ -153,7 +153,7 @@ export function ChannelCard({ channel, setChannels, toast }: ChannelCardProps) {
             </div>
           </div>
           <div className="text-gray-900 text-xs font-bold font-['Manrope'] ">
-            {channel.Date}
+            {channel.date}
           </div>
         </div>
         {channelChange(channel)}

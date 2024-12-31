@@ -1,96 +1,48 @@
 {
   "channels": [
     {
-      "id": "cabc81e2-3a33-4fe9-842d-49cff38c22f5",
-      "name": "Eyosi",
-      "metaData": {
-        "channelType": "Telegram Bot",
-        "channelToken": "daskjdlkajld",
-        "apiKey": "",
-        "campaignId": ""
-      },
-      "Date": "Dec 31, 2024"
-    },
-    {
-      "id": "fa91cc24-1081-4fdc-b3e2-20c140bf031d",
-      "name": "Eyosi",
-      "metaData": {
-        "channelType": "Negarit SMS",
-        "channelToken": "",
-        "apiKey": "hfdsjhfdksj",
-        "campaignId": "jsdalkjdlksa"
-      },
-      "Date": "Dec 31, 2024"
-    },
-    {
-      "id": "0a765311-932d-4c20-88b3-f95401465b26",
-      "name": "Eyosi",
-      "metaData": {
-        "channelType": "Negarit SMS",
-        "channelToken": "",
-        "apiKey": "hfdsjhfdksj",
-        "campaignId": "jsdalkjdlksa"
-      },
-      "Date": "Dec 31, 2024"
-    },
-    {
-      "id": "be70a8cf-9d7b-4b83-9988-e89d29138f64",
-      "name": "Eyosi",
-      "metaData": {
-        "channelType": "Negarit SMS",
-        "channelToken": "daskjdlkajld",
-        "apiKey": "hfdsjhfdksj",
-        "campaignId": "jsdalkjdlksa"
-      },
-      "Date": "Dec 31, 2024"
-    },
-    {
-      "id": "9e275ff4-98ba-4e8a-b2ad-a0a9ac861005",
-      "name": "Eyosias Solomon",
-      "metaData": {
-        "channelType": "Negarit SMS",
-        "channelToken": "daskjdlkajld",
-        "apiKey": "hfdsjhfdksj",
-        "campaignId": "jsdalkjdlksa"
-      },
-      "date": "Dec 31, 2024",
-      "Date": "Dec 31, 2024"
-    },
-    {
-      "id": "b706d2ff-d70c-418b-a7ad-9de2bfdb1c10",
-      "name": "Eyosi",
-      "metaData": {
-        "channelType": "Negarit SMS",
-        "channelToken": "daskjdlkajld",
-        "apiKey": "hfdsjhfdksj",
-        "campaignId": "jsdalkjdlksa"
-      },
-      "date": "Dec 31, 2024",
-      "Date": "Dec 31, 2024"
-    },
-    {
-      "id": "1e5c553c-d666-4bc0-b468-fe93794e9eee",
-      "name": "Eyosi",
+      "id": "bbbb286b-48ed-45f0-ab45-9758ad4d9e82",
+      "name": "Soul sync - bot",
       "metaData": {
         "channelType": "Telegram Bot",
         "channelToken": "Telegram Token",
         "apiKey": "",
         "campaignId": ""
       },
-      "date": "Dec 31, 2024",
-      "Date": "Dec 31, 2024"
+      "date": "Dec 31, 2024"
     },
     {
-      "id": "50c0b366-2c92-4990-ad38-fd47ec21b6b8",
-      "name": "Eyosi",
+      "id": "2ab90d33-f1ef-4612-b4f3-73b4e1877dc0",
+      "name": "Soul Sync ",
       "metaData": {
         "channelType": "Negarit SMS",
         "channelToken": "",
         "apiKey": "Negarit API",
         "campaignId": "Negarit Camp"
       },
-      "date": "Dec 31, 2024",
-      "Date": "Dec 31, 2024"
+      "date": "Dec 31, 2024"
+    },
+    {
+      "id": "167cb7af-62d8-43d7-ac38-204594442015",
+      "name": "Soul sync - bot 2",
+      "metaData": {
+        "channelType": "Telegram Bot",
+        "channelToken": "Telegram Token 2",
+        "apiKey": "",
+        "campaignId": ""
+      },
+      "date": "Dec 31, 2024"
+    },
+    {
+      "id": "9597fb30-f8e5-4819-ba41-5732b39efaf7",
+      "name": "Soul Sync ",
+      "metaData": {
+        "channelType": "Telegram Bot",
+        "channelToken": "Telegram Token 3",
+        "apiKey": "",
+        "campaignId": ""
+      },
+      "date": "Dec 31, 2024"
     }
   ]
 }

@@ -80,7 +80,6 @@ export function AddChannelDialog({
           apiKey: watchedValues.apiKey || '',
           campaignId: watchedValues.campaignId || '',
         },
-        date: new Date().toLocaleDateString('en-US', format),
       };
 
       setCurrentChannel(transformedData);
@@ -108,7 +107,14 @@ export function AddChannelDialog({
 
   function onSubmit(values: z.infer<typeof formSchema>) {
     const date = new Date().toLocaleDateString('en-US', format);
-    onAddChannel(currentChannel);
+    if (currentChannel.metaData.channelType === 'Negarit SMS') {
+      currentChannel.metaData.channelToken = '';
+      onAddChannel(currentChannel);
+    } else if (currentChannel.metaData.channelType === 'Telegram Bot') {
+      currentChannel.metaData.apiKey = '';
+      currentChannel.metaData.campaignId = '';
+      onAddChannel(currentChannel);
+    }
     setSelectedChannel('Telegram Bot');
     form.reset();
     setOpen(false);
