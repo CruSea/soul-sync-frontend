@@ -16,8 +16,7 @@ export interface Channel {
     apiKey: string;
     campaignId: string;
   };
-  date: string;
-  // icon: string;
+  date: string,
 }
 
 export const formSchema = z
