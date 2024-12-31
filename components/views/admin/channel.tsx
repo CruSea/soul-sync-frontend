@@ -28,11 +28,13 @@ export default function ChannelsPage() {
   const [search, setSearch] = useState('');
   const [selectedCategory, setSelectedCategory] = useState('All');
   const { toast } = useToast();
+  const [selectedChannel, setSelectedChannel] =
+    useState<string>('Telegram Bot');
   const categories = [
     'All',
     'Telegram Bot',
     'WhatsApp',
-    'Negarit',
+    'Negarit SMS',
     'Facebook',
     'Twilio',
   ];
@@ -41,14 +43,14 @@ export default function ChannelsPage() {
     const fetchedChannels = async () => {
       const response = await fetch('http://localhost:3001/channels');
       const data = await response.json();
-      setChannels(data); // Access the channels array from the response
+      setChannels(data);
     };
     fetchedChannels();
   }, []);
 
   const filteredChannel = channels?.filter(
     (item) =>
-      (selectedCategory === 'All' || item.type === selectedCategory) &&
+      (selectedCategory === 'All' || item.Metadata.type === selectedCategory) &&
       item.name.toLowerCase().includes(search.toLowerCase())
   );
   const format: Intl.DateTimeFormatOptions = {
@@ -63,7 +65,6 @@ export default function ChannelsPage() {
     const channelWithId: Channel = {
       ...newChannel,
       id: `${uuidv4().toString()}`,
-      icon: `/${newChannel.type.toLowerCase().replace(' ', '-')}-icon.svg`,
       Date: `${new Date().toLocaleDateString('en-US', format)}`,
     };
     setChannels(channels ? [...channels, channelWithId] : [channelWithId]);
@@ -126,22 +127,24 @@ export default function ChannelsPage() {
               <CommandEmpty>No results found.</CommandEmpty>
               <CommandGroup className="h-full">
                 <div className="grid lg:grid-cols-4 md:grid-cols-3 grid-cols-[repeat(auto-fit,minmax(min-content,1fr))] gap-4 p-4 h-full">
-                  {filteredChannel?.map((channel) =>
-                    channel.isDeleted ? null : (
-                      <CommandItem
+                  {filteredChannel?.map((channel) => (
+                    <CommandItem
+                      key={channel.id}
+                      className="w-auto flex flex-col items-center justify-center h-full min-h-[100px] rounded-xl"
+                    >
+                      <ChannelCard
                         key={channel.id}
-                        className="w-auto flex flex-col items-center justify-center h-full min-h-[100px] rounded-xl"
-                      >
-                        <ChannelCard
-                          key={channel.id}
-                          channel={channel}
-                          setChannels={setChannels}
-                          toast={toast}
-                        />
-                      </CommandItem>
-                    )
-                  )}
-                  <AddChannelDialog onAddChannel={handleAddChannel} />
+                        channel={channel}
+                        setChannels={setChannels}
+                        toast={toast}
+                      />
+                    </CommandItem>
+                  ))}
+                  <AddChannelDialog
+                    onAddChannel={handleAddChannel}
+                    setSelectedChannel={setSelectedChannel}
+                    selectedChannel={selectedChannel}
+                  />
                 </div>
               </CommandGroup>
             </CommandList>
