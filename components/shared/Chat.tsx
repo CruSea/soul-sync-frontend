@@ -2,7 +2,7 @@
 
 import { useState, useRef, useEffect } from 'react';
 import { v4 as uuidv4 } from 'uuid';
-
+import Image from 'next/image';
 import { Card } from '@/components/ui/card';
 import { ScrollArea } from '@/components/ui/scroll-area';
 import { Button } from '@/components/ui/button';
@@ -169,7 +169,7 @@ const Chat: React.FC<ChatProps> = ({ toggleProfileInView }) => {
             sendText(text);
           }}
         >
-          <img src="/assets/send.svg" />
+          <Image src="/assets/send.svg" alt="send" />
         </Button>
       </div>
     </Card>
