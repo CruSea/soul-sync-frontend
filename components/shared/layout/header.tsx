@@ -10,6 +10,7 @@ import {
 } from "./accountDialog";
 import { LuUser } from "react-icons/lu";
 import { LuLogOut } from "react-icons/lu";
+import Link from "next/link";
 
 export function Header({ title }: HeaderProps) {
   return (
@@ -39,8 +40,8 @@ export function Header({ title }: HeaderProps) {
               </DialogDescription>
             </DialogHeader>
             <div className="flex flex-col">
-              <div className="flex gap-2 text-lg py-2 border border-y-slate-200 border-x-0 px-4 cursor-pointer hover:bg-slate-100"><LuUser size={25} /> Profile</div>
-              <div className="flex gap-2 text-lg py-2 px-4 cursor-pointer hover:bg-slate-100"><LuLogOut size={25}/> Logout</div>
+              <Link href="/mentor/profile" className="flex gap-2 text-lg py-2 border border-y-slate-200 border-x-0 px-4 cursor-pointer hover:bg-slate-50"><LuUser size={25} /> Profile</Link>
+              <div className="flex gap-2 text-lg py-2 px-4 cursor-pointer hover:bg-slate-50"><LuLogOut size={25}/> Logout</div>
             </div>
           </DialogContent>
         </Dialog>
