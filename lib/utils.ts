@@ -2,8 +2,7 @@ import { Messages, Users } from '@/types/mentor';
 import { clsx, type ClassValue } from 'clsx';
 import { twMerge } from 'tailwind-merge';
 import { v4 as uuidv4 } from 'uuid';
-import { jwtDecode } from "jwt-decode";
-
+import { jwtDecode } from 'jwt-decode';
 
 export function cn(...inputs: ClassValue[]) {
   return twMerge(clsx(inputs));

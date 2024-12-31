@@ -1,11 +1,7 @@
-'use client'
-import withAuth from "@/context/withAuth";
+'use client';
+import withAuth from '@/context/withAuth';
 
- function User() {
-  return (
-    <>
-    all user
-    </>
-  );
+function User() {
+  return <>all user</>;
 }
-export default withAuth(User)
+export default withAuth(User);

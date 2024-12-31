@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useCallback } from 'react';
 import {
   ChevronDown,
   ChevronUp,
@@ -10,7 +10,7 @@ import {
   ChevronLeft,
   ChevronRight,
   Trash2,
-} from "lucide-react";
+} from 'lucide-react';
 import {
   Dialog,
   DialogContent,
@@ -18,9 +18,9 @@ import {
   DialogFooter,
   DialogHeader,
   DialogTitle,
-} from "@/components/ui/dialog";
-import { Input } from "@/components/ui/input";
-import { Button } from "@/components/ui/button";
+} from '@/components/ui/dialog';
+import { Input } from '@/components/ui/input';
+import { Button } from '@/components/ui/button';
 import {
   Table,
   TableBody,
@@ -65,7 +65,7 @@ export function DataTable<T extends { id: string | number }>({
 }: DataTableProps<T>) {
   const [data, setData] = useState<T[]>([]);
   const [totalItems, setTotalItems] = useState(0);
-  const [searchQuery, setSearchQuery] = useState("");
+  const [searchQuery, setSearchQuery] = useState('');
   const [currentPage, setCurrentPage] = useState(1);
   const [filters, setFilters] = useState<string[]>([]);
   const [isLoading, setIsLoading] = useState(false);
@@ -74,18 +74,19 @@ export function DataTable<T extends { id: string | number }>({
     id: string | number | null;
   }>({ open: false, id: null });
 
-  const fetchData = async () => {
+  // Memoized fetchData function
+  const fetchData = useCallback(async () => {
     setIsLoading(true);
     try {
-      const token = localStorage.getItem("token");
+      const token = localStorage.getItem('token');
 
-      console.log("Fetching data from:", apiUrl);
+      console.log('Fetching data from:', apiUrl);
 
       const response = await fetch(apiUrl, {
-        method: "GET",
+        method: 'GET',
         headers: {
-          "Content-Type": "application/json",
-          Authorization: token ? `Bearer ${JSON.parse(token)}` : "",
+          'Content-Type': 'application/json',
+          Authorization: token ? `Bearer ${JSON.parse(token)}` : '',
         },
       });
 
@@ -94,7 +95,7 @@ export function DataTable<T extends { id: string | number }>({
       }
 
       const result = await response.json();
-      console.log("API response:", result);
+      console.log('API response:', result);
 
       let processedData: T[];
       if (Array.isArray(result)) {
@@ -102,7 +103,7 @@ export function DataTable<T extends { id: string | number }>({
       } else if (result.data && Array.isArray(result.data)) {
         processedData = result.data;
       } else {
-        throw new Error("Unexpected data format received from API");
+        throw new Error('Unexpected data format received from API');
       }
 
       if (onDataFetched) {
@@ -112,20 +113,21 @@ export function DataTable<T extends { id: string | number }>({
       setData(processedData);
       setTotalItems(processedData.length);
     } catch (error) {
-      console.error("Error fetching data:", error);
+      console.error('Error fetching data:', error);
       onError?.(
-        error instanceof Error ? error.message : "An unknown error occurred"
+        error instanceof Error ? error.message : 'An unknown error occurred'
       );
       setData([]);
       setTotalItems(0);
     } finally {
       setIsLoading(false);
     }
-  };
+  }, [apiUrl, onDataFetched, onError]);
 
+  // useEffect with dependencies
   useEffect(() => {
     fetchData();
-  }, []);
+  }, [fetchData]);
 
   const filteredData = data.filter((item) =>
     searchFields.some((field) =>
@@ -155,11 +157,11 @@ export function DataTable<T extends { id: string | number }>({
       setData((prev) => prev.filter((item) => item.id !== id));
       setDeleteDialog({ open: false, id: null });
     } catch (error) {
-      console.error("Error deleting data:", error);
+      console.error('Error deleting data:', error);
       onError?.(
         error instanceof Error
           ? error.message
-          : "An error occurred while deleting"
+          : 'An error occurred while deleting'
       );
     }
   };
@@ -214,13 +216,14 @@ export function DataTable<T extends { id: string | number }>({
         )}
         {filters.map((filter) => (
           <Badge key={filter} variant="secondary" className="gap-2">
-            {filter.split(":")[1]}
+            {filter.split(':')[1]}
             <Button
               onClick={() => {
                 setFilters((prev) => prev.filter((f) => f !== filter));
                 setCurrentPage(1);
               }}
-              className="focus:outline-none" >
+              className="focus:outline-none"
+            >
               <X className="h-3 w-3" />
             </Button>
           </Badge>
@@ -302,7 +305,7 @@ export function DataTable<T extends { id: string | number }>({
             {Array.from({ length: Math.min(3, totalPages) }, (_, i) => (
               <Button
                 key={i + 1}
-                variant={currentPage === i + 1 ? "default" : "outline"}
+                variant={currentPage === i + 1 ? 'default' : 'outline'}
                 size="icon"
                 onClick={() => setCurrentPage(i + 1)}
               >

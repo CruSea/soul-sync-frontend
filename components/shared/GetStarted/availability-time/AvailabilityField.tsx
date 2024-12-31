@@ -1,5 +1,4 @@
-
-import { LuPlus } from "react-icons/lu";
+import { LuPlus } from 'react-icons/lu';
 import {
   Dialog,
   DialogContent,
@@ -8,11 +7,11 @@ import {
   DialogHeader,
   DialogTitle,
   DialogTrigger,
-} from "@/components/ui/dialog";
-import { AvailabilityFieldProps } from "@/types/get-started";
-import { Button } from "@/components/ui/button";
-import { getStartedForm } from "@/data/get-started-data";
-import { DayFields } from "./DayFields";
+} from '@/components/ui/dialog';
+import { AvailabilityFieldProps } from '@/types/get-started';
+import { Button } from '@/components/ui/button';
+import { getStartedForm } from '@/data/get-started-data';
+import { DayFields } from './DayFields';
 
 export function AvailabilityField({
   control,
@@ -36,7 +35,7 @@ export function AvailabilityField({
           </DialogDescription>
         </DialogHeader>
         <div className="space-y-4 py-4">
-            <DayFields control={control} options={getStartedForm.dayOptions}/>
+          <DayFields control={control} options={getStartedForm.dayOptions} />
         </div>
         <DialogFooter>
           <Button type="submit">Save changes</Button>

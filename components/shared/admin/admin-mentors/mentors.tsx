@@ -1,13 +1,13 @@
 'use client';
 
-import React, { useEffect, useState } from "react";
-import { DataTable } from "@/components/shared/DataTable";
-import { Badge } from "@/components/ui/badge";
-import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
-import { Column, FilterOption } from "@/types/data-table";
-import { useToast } from "@/hooks/use-toast";
-import { InviteMentorDialog } from "./invite-mentor-dialog";
-import { toast } from "sonner";
+import React, { useEffect, useState } from 'react';
+import { DataTable } from '@/components/shared/DataTable';
+import { Badge } from '@/components/ui/badge';
+import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
+import { Column, FilterOption } from '@/types/data-table';
+import { useToast } from '@/hooks/use-toast';
+import { InviteMentorDialog } from './invite-mentor-dialog';
+import { toast } from 'sonner';
 
 const BASE_URL = process.env.NEXT_PUBLIC_API_BASE_URL;
 const MENTORS_URL = process.env.NEXT_PUBLIC_API_ADMIN_MENTORS_URL;
@@ -39,31 +39,31 @@ const columns: Column<Mentors>[] = [
       </div>
     ),
   },
-  { key: "age", header: "Age" },
-  { key: "gender", header: "Gender" },
-  { key: "expertise", header: "Expertise" },
+  { key: 'age', header: 'Age' },
+  { key: 'gender', header: 'Gender' },
+  { key: 'expertise', header: 'Expertise' },
   {
-    key: "availability",
-    header: "Availability",
+    key: 'availability',
+    header: 'Availability',
     render: (mentor) => mentor.availability.startDate,
   },
-  { key: "location", header: "Location" },
+  { key: 'location', header: 'Location' },
   {
-    key: "isActive",
-    header: "Is Active",
+    key: 'isActive',
+    header: 'Is Active',
     render: (mentor) => (
-      <Badge variant="secondary">{mentor.isActive ? "Yes" : "No"}</Badge>
+      <Badge variant="secondary">{mentor.isActive ? 'Yes' : 'No'}</Badge>
     ),
   },
 ];
 
 const filterOptions: FilterOption<Mentors>[] = [
-  { key: "location", label: "Addis Ababa" },
+  { key: 'location', label: 'Addis Ababa' },
 ];
-const search = ["name", "age", "gender", "location", "isActive"];
+const search = ['name', 'age', 'gender', 'location', 'isActive'];
 const MentorsTable: React.FC = () => {
-  const user = localStorage.getItem("user");
-  const token = localStorage.getItem("token");
+  const user = localStorage.getItem('user');
+  const token = localStorage.getItem('token');
   const userObj = JSON.parse(user || '""');
   const accountId = String(userObj.accounts[0].id);
   const endPoint = `${BASE_URL}/${MENTORS_URL}/${accountId}`;
@@ -72,20 +72,20 @@ const MentorsTable: React.FC = () => {
   const handleDelete = async (id: string | number) => {
     try {
       const response = await fetch(`${endPointToDelete}/${id}`, {
-        method: "DELETE",
+        method: 'DELETE',
         headers: {
-          "Content-Type": "application/json",
+          'Content-Type': 'application/json',
           Authorization: `Bearer ${JSON.parse(token || '""')}`,
         },
       });
       if (!response.ok) {
-        toast("Error deleting");
+        toast('Error deleting');
 
-        throw new Error("Failed to delete the mentor.");
+        throw new Error('Failed to delete the mentor.');
       }
-      toast("Mentor has been deleted.");
+      toast('Mentor has been deleted.');
     } catch (error) {
-      console.error("Error deleting mentor:", error);
+      console.error('Error deleting mentor:', error);
       throw error;
     }
   };

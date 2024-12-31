@@ -1,30 +1,30 @@
-"use client";
+'use client';
 
-import React, { useState } from "react";
-import { DataTable } from "@/components/shared/DataTable";
-import { Badge } from "@/components/ui/badge";
-import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
-import { Column, FilterOption } from "@/types/data-table";
-import { toast } from "sonner";
+import React, { useState } from 'react';
+import { DataTable } from '@/components/shared/DataTable';
+import { Badge } from '@/components/ui/badge';
+import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
+import { Column, FilterOption } from '@/types/data-table';
+import { toast } from 'sonner';
 
 interface Mentee {
   id: string | number;
   name: string;
   age: number;
-  gender: "Male" | "Female";
+  gender: 'Male' | 'Female';
   email: string;
-  platform: "Negarit" | "Telegram Bot" | "WhatsApp" | "Facebook";
+  platform: 'Negarit' | 'Telegram Bot' | 'WhatsApp' | 'Facebook';
   phoneNumber: string;
   location: string;
-  status: "Joined" | "Pending" | "Left";
+  status: 'Joined' | 'Pending' | 'Left';
   imageUrl: string;
   joinedDate?: string;
 }
 
 const columns: Column<Mentee>[] = [
   {
-    key: "name",
-    header: "Name",
+    key: 'name',
+    header: 'Name',
     render: (mentee) => (
       <div className="flex items-center gap-2">
         <Avatar className="h-8 w-8">
@@ -35,23 +35,23 @@ const columns: Column<Mentee>[] = [
       </div>
     ),
   },
-  { key: "age", header: "Age" },
-  { key: "gender", header: "Gender" },
-  { key: "email", header: "Email" },
-  { key: "platform", header: "Platform" },
-  { key: "phoneNumber", header: "Phone Number" },
-  { key: "location", header: "Location" },
+  { key: 'age', header: 'Age' },
+  { key: 'gender', header: 'Gender' },
+  { key: 'email', header: 'Email' },
+  { key: 'platform', header: 'Platform' },
+  { key: 'phoneNumber', header: 'Phone Number' },
+  { key: 'location', header: 'Location' },
   {
-    key: "status",
-    header: "Status",
+    key: 'status',
+    header: 'Status',
     render: (mentee) => (
       <Badge
         variant={
-          mentee.status === "Joined"
-            ? "default"
-            : mentee.status === "Pending"
-            ? "secondary"
-            : "destructive"
+          mentee.status === 'Joined'
+            ? 'default'
+            : mentee.status === 'Pending'
+              ? 'secondary'
+              : 'destructive'
         }
       >
         {mentee.status}
@@ -59,46 +59,46 @@ const columns: Column<Mentee>[] = [
     ),
   },
   {
-    key: "joinedDate",
-    header: "Joined Date",
+    key: 'joinedDate',
+    header: 'Joined Date',
     render: (mentee) =>
       mentee.joinedDate
         ? new Date(mentee.joinedDate).toLocaleDateString()
-        : "-",
+        : '-',
   },
 ];
 
 const filterOptions: FilterOption<Mentee>[] = [
-  { key: "platform", label: "Negarit" },
-  { key: "platform", label: "Telegram Bot" },
-  { key: "platform", label: "WhatsApp" },
-  { key: "platform", label: "Facebook" },
-  { key: "status", label: "Joined" },
-  { key: "status", label: "Pending" },
-  { key: "status", label: "Left" },
+  { key: 'platform', label: 'Negarit' },
+  { key: 'platform', label: 'Telegram Bot' },
+  { key: 'platform', label: 'WhatsApp' },
+  { key: 'platform', label: 'Facebook' },
+  { key: 'status', label: 'Joined' },
+  { key: 'status', label: 'Pending' },
+  { key: 'status', label: 'Left' },
 ];
 
-const search = ["name", "age", "gender", "location", "status", "platform"];
+const search = ['name', 'age', 'gender', 'location', 'status', 'platform'];
 
 const MenteesTable: React.FC = () => {
   const [error, setError] = useState<string | null>(null);
-  const endPoint = "http://localhost:3500/mentees";
+  const endPoint = 'http://localhost:3500/mentees';
 
   const handleDelete = async (id: string | number) => {
     try {
       const response = await fetch(`${endPoint}/${id}`, {
-        method: "DELETE",
+        method: 'DELETE',
         headers: {
-          "Content-Type": "application/json",
+          'Content-Type': 'application/json',
         },
       });
       if (!response.ok) {
-        throw new Error("Failed to delete the mentee.");
+        throw new Error('Failed to delete the mentee.');
       }
-      toast.success("Mentee has been deleted.");
+      toast.success('Mentee has been deleted.');
     } catch (error) {
-      console.error("Error deleting mentee:", error);
-      toast.error("Failed to delete mentee");
+      console.error('Error deleting mentee:', error);
+      toast.error('Failed to delete mentee');
       throw error;
     }
   };
@@ -123,7 +123,7 @@ const MenteesTable: React.FC = () => {
             enablePagination={true}
             onError={(errorMessage) => {
               setError(errorMessage);
-              console.error("DataTable error:", errorMessage);
+              console.error('DataTable error:', errorMessage);
             }}
           />
         )}

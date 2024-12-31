@@ -5,26 +5,26 @@ import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import { FiChevronLeft, FiHelpCircle } from 'react-icons/fi';
 
-import { LuUser, LuMessagesSquare, LuMic2, LuLibrary } from "react-icons/lu";
-import { RxLinkNone2 } from "react-icons/rx";
-import { CiSettings } from "react-icons/ci";
-import { LayoutDashboardIcon as LuLayoutDashboard } from "lucide-react";
-import { cn } from "@/lib/utils";
-import { Button } from "@/components/ui/button";
+import { LuUser, LuMessagesSquare, LuMic2, LuLibrary } from 'react-icons/lu';
+import { RxLinkNone2 } from 'react-icons/rx';
+import { CiSettings } from 'react-icons/ci';
+import { LayoutDashboardIcon as LuLayoutDashboard } from 'lucide-react';
+import { cn } from '@/lib/utils';
+import { Button } from '@/components/ui/button';
 
 const menuItems = [
-  { icon: LuLayoutDashboard, label: "Dashboard", href: "/admin" },
-  { icon: LuUser, label: "Mentors", href: "/admin/mentors" },
-  { icon: LuUser, label: "Mentees", href: "/admin/mentees" },
-  { icon: LuMessagesSquare, label: "Messages", href: "/admin/messages" },
-  { icon: RxLinkNone2, label: "Channels", href: "/admin/channels" },
-  { icon: LuMic2, label: "Admins", href: "/admin/admins" },
-  { icon: LuLibrary, label: "Agents", href: "/admin/agents" },
+  { icon: LuLayoutDashboard, label: 'Dashboard', href: '/admin' },
+  { icon: LuUser, label: 'Mentors', href: '/admin/mentors' },
+  { icon: LuUser, label: 'Mentees', href: '/admin/mentees' },
+  { icon: LuMessagesSquare, label: 'Messages', href: '/admin/messages' },
+  { icon: RxLinkNone2, label: 'Channels', href: '/admin/channels' },
+  { icon: LuMic2, label: 'Admins', href: '/admin/admins' },
+  { icon: LuLibrary, label: 'Agents', href: '/admin/agents' },
 ];
 
 const footerItems = [
-  { icon: FiHelpCircle, label: "Help and Support", href: "/support" },
-  { icon: CiSettings, label: "Setting", href: "/settings" },
+  { icon: FiHelpCircle, label: 'Help and Support', href: '/support' },
+  { icon: CiSettings, label: 'Setting', href: '/settings' },
 ];
 
 export function Sidebar() {

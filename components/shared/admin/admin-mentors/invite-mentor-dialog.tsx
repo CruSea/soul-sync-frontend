@@ -73,13 +73,13 @@ export function InviteMentorDialog() {
           });
         toast(`Invitation has been sent to ${formData.email}`);
 
-        setFormData({ name: "", email: "" });
+        setFormData({ name: '', email: '' });
         setIsOpen(false);
       } else {
-        console.error("user not found");
+        console.error('user not found');
       }
     } catch (error) {
-      toast("Failed to send invitation. Please try again.");
+      toast('Failed to send invitation. Please try again.');
     }
   };
 

@@ -178,7 +178,6 @@ export interface AvailabilityFieldProps {
   options: { label: string; value: string }[];
 }
 
-
 export interface GetStartedProps {
   type: 'admin' | 'mentor';
 }

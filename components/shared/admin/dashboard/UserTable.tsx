@@ -1,10 +1,10 @@
 'use client';
 
-import React, { useState, useMemo } from "react";
-import { DataTable } from "@/components/shared/DataTable";
-import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
-import { Column, FilterOption } from "@/types/data-table";
-import { Badge } from "@/components/ui/badge";
+import React, { useState, useMemo } from 'react';
+import { DataTable } from '@/components/shared/DataTable';
+import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
+import { Column, FilterOption } from '@/types/data-table';
+import { Badge } from '@/components/ui/badge';
 
 interface Mentee {
   id: string | number;
@@ -12,15 +12,15 @@ interface Mentee {
   phoneNumber: string;
   platform: string;
   location: string;
-  status: "Joined" | "Pending";
+  status: 'Joined' | 'Pending';
   imageUrl: string;
   joinedDate?: string;
 }
 
 const columns: Column<Mentee>[] = [
   {
-    key: "name",
-    header: "Name",
+    key: 'name',
+    header: 'Name',
     render: (mentee) => (
       <div className="flex items-center gap-2">
         <Avatar className="h-8 w-8">
@@ -31,38 +31,38 @@ const columns: Column<Mentee>[] = [
       </div>
     ),
   },
-  { key: "phoneNumber", header: "Phone Number" },
-  { key: "platform", header: "Platform" },
-  { key: "location", header: "Location" },
+  { key: 'phoneNumber', header: 'Phone Number' },
+  { key: 'platform', header: 'Platform' },
+  { key: 'location', header: 'Location' },
   {
-    key: "status",
-    header: "Status",
+    key: 'status',
+    header: 'Status',
     render: (mentee) => (
-      <Badge variant={mentee.status === "Joined" ? "default" : "secondary"}>
+      <Badge variant={mentee.status === 'Joined' ? 'default' : 'secondary'}>
         {mentee.status}
       </Badge>
     ),
   },
   {
-    key: "joinedDate",
-    header: "Joined Date",
+    key: 'joinedDate',
+    header: 'Joined Date',
     render: (mentee) =>
       mentee.joinedDate
         ? new Date(mentee.joinedDate).toLocaleDateString()
-        : "-",
+        : '-',
   },
 ];
 
 const filterOptions: FilterOption<Mentee>[] = [
-  { key: "status", label: "Joined" },
-  { key: "status", label: "Pending" },
+  { key: 'status', label: 'Joined' },
+  { key: 'status', label: 'Pending' },
 ];
-const search = ["name", "location", "platform"];
+const search = ['name', 'location', 'platform'];
 
 const UserTable: React.FC = () => {
   const [error, setError] = useState<string | null>(null);
   const [allMentees, setAllMentees] = useState<Mentee[]>([]);
-  const endPoint = "http://localhost:3500/mentees";
+  const endPoint = 'http://localhost:3500/mentees';
 
   const onDataFetched = (data: Mentee[]) => {
     const sortedMentees = data
@@ -99,7 +99,7 @@ const UserTable: React.FC = () => {
             enablePagination={false}
             onError={(errorMessage) => {
               setError(errorMessage);
-              console.error("DataTable error:", errorMessage);
+              console.error('DataTable error:', errorMessage);
             }}
             onDataFetched={onDataFetched}
           />
