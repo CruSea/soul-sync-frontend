@@ -1,5 +1,5 @@
 'use client';
-
+import Image from 'next/image';
 import { useState, useRef, useEffect } from 'react';
 import { v4 as uuidv4 } from 'uuid';
 
@@ -169,7 +169,7 @@ const Chat: React.FC<ChatProps> = ({ toggleProfileInView }) => {
             sendText(text);
           }}
         >
-          <img src="/assets/send.svg" />
+          <Image src="/assets/send.svg" alt="send" />
         </Button>
       </div>
     </Card>
