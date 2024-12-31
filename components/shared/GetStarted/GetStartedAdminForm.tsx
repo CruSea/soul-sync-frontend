@@ -1,4 +1,4 @@
-"use client";
+'use client';
 
 import { useForm } from 'react-hook-form';
 import {
@@ -23,9 +23,9 @@ const GetStartedAdminForm = () => {
     mode: 'onSubmit',
     defaultValues: {
       age: undefined,
-      gender: "male",
-      location: "",
-      phoneNumber: "",
+      gender: 'male',
+      location: '',
+      phoneNumber: '',
     },
   });
 
@@ -34,9 +34,8 @@ const GetStartedAdminForm = () => {
   const onSubmit = (data: getStartedAdminFormValues) => {
     console.log('Admin form data', data);
 
-
     // Navigate to /mentor after form submission
-    router.push("/admin"); // Use router.push for smooth navigation
+    router.push('/admin'); // Use router.push for smooth navigation
   };
 
   const {

@@ -1,12 +1,12 @@
-"use client"
+'use client';
 
-import { GrowthChart } from "@/components/shared/admin/dashboard/GrowthChart";
-import { MentorsChart } from "@/components/shared/admin/dashboard/MentorsChart";
-import { StatsCards } from "@/components/shared/admin/dashboard/StatCard";
-import { UsersTable } from "@/components/shared/admin/dashboard/UserTable";
-import { endPoints } from "@/data/end-points";
-import { useRouter } from "next/navigation";
-import { useEffect } from "react";
+import { GrowthChart } from '@/components/shared/admin/dashboard/GrowthChart';
+import { MentorsChart } from '@/components/shared/admin/dashboard/MentorsChart';
+import { StatsCards } from '@/components/shared/admin/dashboard/StatCard';
+import { UsersTable } from '@/components/shared/admin/dashboard/UserTable';
+import { endPoints } from '@/data/end-points';
+import { useRouter } from 'next/navigation';
+import { useEffect } from 'react';
 
 const BASE_URL = process.env.NEXT_PUBLIC_API_BASE_URL;
 
@@ -16,44 +16,43 @@ export default function AdminView() {
   useEffect(() => {
     const checkAccount = async () => {
       try {
-        const user = localStorage.getItem("user");
-        const token = localStorage.getItem("token");
+        const user = localStorage.getItem('user');
+        const token = localStorage.getItem('token');
 
         if (user && token) {
           const userObj = JSON.parse(user);
           const endPoint = `${BASE_URL}/${endPoints.adminAccount}/${userObj.accounts[0].id}`;
           const response = await fetch(endPoint, {
-            method: "GET",
+            method: 'GET',
             headers: {
-              "Content-Type": "application/json",
+              'Content-Type': 'application/json',
               Authorization: `Bearer ${JSON.parse(token)}`,
             },
           });
-          
 
           if (!response.ok) {
-            console.error("Failed to fetch account info", response);
-            throw new Error("Fetch failed");
+            console.error('Failed to fetch account info', response);
+            throw new Error('Fetch failed');
           }
 
           const accountInfo = await response.json();
 
           if (!accountInfo) {
-            console.error("AccountInfo doesn't exist",);
-            throw new Error("Account info not found");
+            console.error("AccountInfo doesn't exist");
+            throw new Error('Account info not found');
           }
 
           if (!accountInfo.domain) {
-            console.log("Redirecting new user to create org page");
-            router.push("/admin/create-org");
+            console.log('Redirecting new user to create org page');
+            router.push('/admin/create-org');
           }
         } else {
-          console.error("User or token not found");
-          router.push("/log-in");
+          console.error('User or token not found');
+          router.push('/log-in');
         }
       } catch (error) {
-        console.error("Error: ", error);
-        router.push("/log-in");
+        console.error('Error: ', error);
+        router.push('/log-in');
       }
     };
 

@@ -1,33 +1,32 @@
-"use client";
+'use client';
 
-import { useForm } from "react-hook-form";
-import { getStartedMentorFormSchema } from "@/types/get-started";
-import { getStartedMentorFormValues } from "@/types/get-started";
-import { zodResolver } from "@hookform/resolvers/zod";
-import { Form } from "@/components/ui/form";
-import { AgeField } from "./AgeField";
-import { GenderField } from "./GenderField";
-import { getStartedForm } from "@/data/get-started-data";
-import { LocationField } from "./LocationField";
-import { SpecializationField } from "./SpecializationField";
+import { useForm } from 'react-hook-form';
+import { getStartedMentorFormSchema } from '@/types/get-started';
+import { getStartedMentorFormValues } from '@/types/get-started';
+import { zodResolver } from '@hookform/resolvers/zod';
+import { Form } from '@/components/ui/form';
+import { AgeField } from './AgeField';
+import { GenderField } from './GenderField';
+import { getStartedForm } from '@/data/get-started-data';
+import { LocationField } from './LocationField';
+import { SpecializationField } from './SpecializationField';
 import {
   FormField,
   FormItem,
   FormControl,
   FormMessage,
   FormLabel,
-} from "@/components/ui/form";
-import { HourField } from "./hourField";
-import { MinuteField } from "./MinuteField";
-import { DayPeriodField } from "./DayPeriod";
-import { useEffect } from "react";
-import { Button } from "@/components/ui/button";
-import { useRouter } from "next/navigation";
-import { TimeFields } from "./TimeFields";
-import { endPoints } from "@/data/end-points";
+} from '@/components/ui/form';
+import { HourField } from './hourField';
+import { MinuteField } from './MinuteField';
+import { DayPeriodField } from './DayPeriod';
+import { useEffect } from 'react';
+import { Button } from '@/components/ui/button';
+import { useRouter } from 'next/navigation';
+import { TimeFields } from './TimeFields';
+import { endPoints } from '@/data/end-points';
 
 const BASE_URL = process.env.NEXT_PUBLIC_API_BASE_URL;
-
 
 const GetStartedMentorForm = () => {
   const form = useForm<getStartedMentorFormValues>({
@@ -35,26 +34,25 @@ const GetStartedMentorForm = () => {
     mode: 'onChange',
     defaultValues: {
       age: 29,
-      gender: "male",
-      location: "",
-      specialization: ["marriageCounseling"],
-      startHour: "09",
-      startMinute: "00",
-      startDayPeriod: "AM",
-      endHour: "05",
-      endMinute: "00",
-      endDayPeriod: "PM",
+      gender: 'male',
+      location: '',
+      specialization: ['marriageCounseling'],
+      startHour: '09',
+      startMinute: '00',
+      startDayPeriod: 'AM',
+      endHour: '05',
+      endMinute: '00',
+      endDayPeriod: 'PM',
     },
   });
 
   const router = useRouter(); // Initialize the useRouter hook
 
   const onSubmit = (data: getStartedMentorFormValues) => {
-
     const updateMentor = async () => {
       try {
-        const user = localStorage.getItem("user");
-        const token = localStorage.getItem("token");
+        const user = localStorage.getItem('user');
+        const token = localStorage.getItem('token');
 
         if (user && token) {
           const userObj = JSON.parse(user);
@@ -88,27 +86,27 @@ const GetStartedMentorForm = () => {
           };
 
           const response = await fetch(endPoint, {
-            method: "PATCH",
+            method: 'PATCH',
             headers: {
-              "Content-Type": "application/json",
+              'Content-Type': 'application/json',
               Authorization: `Bearer ${JSON.parse(token)}`,
             },
             body: JSON.stringify(reqBody),
           });
 
           if (!response.ok) {
-            console.error("Failed to patch the data", response);
-            throw new Error("Patch failed");
+            console.error('Failed to patch the data', response);
+            throw new Error('Patch failed');
           }
 
-          router.push("/mentor");
+          router.push('/mentor');
         } else {
-          console.error("User or token not found");
-          router.push("/log-in");
+          console.error('User or token not found');
+          router.push('/log-in');
         }
       } catch (error) {
-        console.error("Error: ", error);
-        router.push("/log-in");
+        console.error('Error: ', error);
+        router.push('/log-in');
       }
     };
 

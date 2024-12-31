@@ -33,7 +33,7 @@ const Chat = ({
     if (!messageText.trim()) return; // Don't send empty messages
 
     const newMessage = {
-      sender: "mentor",
+      sender: 'mentor',
       dateTime: new Date().toISOString(), // Get current time
       content: messageText.trim(),
     };

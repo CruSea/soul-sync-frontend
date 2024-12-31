@@ -14,6 +14,7 @@ import { jsonServer } from '@/data/end-points';
 import { useRouter } from 'next/navigation';
 
 const BASE_URL = process.env.NEXT_PUBLIC_API_BASE_URL;
+const USER_URL = process.env.NEXT_PUBLIC_API_ADMIN_URL;
 
 const MentorContainer = ({ users }: MentorContainerProps) => {
   const [currentUser, setCurrentUser] = useState<User>(users[0]);
@@ -78,49 +79,48 @@ const MentorContainer = ({ users }: MentorContainerProps) => {
   useEffect(() => {
     const checkUser = async () => {
       try {
-        const user = localStorage.getItem("user");
-        const token = localStorage.getItem("token");
+        const user = localStorage.getItem('user');
+        const token = localStorage.getItem('token');
 
         if (user && token) {
           const userObj = JSON.parse(user);
           // const endPoint = `${BASE_URL}/${USER_URL}/${userObj.accounts[0].id}/user/${userObj.sub}`;
-          const endPoint = `${BASE_URL}/${MENTOR_ID}/${userObj.sub}`
+          const endPoint = `${BASE_URL}/${USER_URL}/${userObj.sub}`;
           const response = await fetch(endPoint, {
-            method: "GET",
+            method: 'GET',
             headers: {
-              "Content-Type": "application/json",
+              'Content-Type': 'application/json',
               Authorization: `Bearer ${JSON.parse(token)}`,
             },
           });
 
-
           if (!response.ok) {
-            console.error("Failed to fetch user info", response);
-            throw new Error("Fetch failed");
+            console.error('Failed to fetch user info', response);
+            throw new Error('Fetch failed');
           }
 
           const userInfo = await response.json();
 
           if (!userInfo) {
-            console.error("userInfo doesn't exist",);
-            throw new Error("userInfo not found");
+            console.error("userInfo doesn't exist");
+            throw new Error('userInfo not found');
           }
 
           if (!userInfo.mentors[0].location) {
-            router.push("/mentor/get-started")
+            router.push('/mentor/get-started');
           }
         } else {
-          console.error("User or token not found");
-          router.push("/log-in");
+          console.error('User or token not found');
+          router.push('/log-in');
         }
       } catch (error) {
-        console.error("Error: ", error);
-        router.push("/log-in");
+        console.error('Error: ', error);
+        router.push('/log-in');
       }
     };
 
     checkUser();
-  }, [router])
+  }, [router]);
 
   return (
     <>

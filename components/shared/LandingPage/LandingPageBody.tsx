@@ -15,7 +15,11 @@ const LandingPageBody = () => {
           a journey with an Automation
         </div>
         <Link href="/log-in" className="mx-auto">
-          <Button variant="default" className="rounded-[20px] w-min gap-2 p-3 " size="lg">
+          <Button
+            variant="default"
+            className="rounded-[20px] w-min gap-2 p-3 "
+            size="lg"
+          >
             Get Started
             <LuArrowRight />
           </Button>

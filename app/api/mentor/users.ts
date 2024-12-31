@@ -1,4 +1,4 @@
-import { jsonServer } from "@/data/end-points";
+import { jsonServer } from '@/data/end-points';
 
 export async function GET(req: Request) {
   try {

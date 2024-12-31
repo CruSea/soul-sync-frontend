@@ -8,16 +8,17 @@ import {
   DialogTitle,
   DialogDescription,
   DialogTrigger,
-} from "@/components/ui/dialog";
-import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
-import { Label } from "@/components/ui/label";
-import { useToast } from "@/hooks/use-toast";
-import { useAuth } from "@/context/AuthContext";
-import handler from "@/app/api/[...params]/route";
-import { endPoints, jsonServer } from "@/data/end-points";
+} from '@/components/ui/dialog';
+import { Button } from '@/components/ui/button';
+import { Input } from '@/components/ui/input';
+import { Label } from '@/components/ui/label';
+import { useToast } from '@/hooks/use-toast';
+import { useAuth } from '@/context/AuthContext';
+import handler from '@/app/api/[...params]/route';
+import { endPoints, jsonServer } from '@/data/end-points';
+import React from 'react';
 
-const BASE_URL = process.env.NEXT_PUBLIC_API_BASE_URL
+const BASE_URL = process.env.NEXT_PUBLIC_API_BASE_URL;
 
 interface InviteMentorFormData {
   name: string;
@@ -36,24 +37,23 @@ export function InviteMentorDialog() {
     e.preventDefault();
 
     try {
-      const user = localStorage.getItem("user");
-      const token = localStorage.getItem("token");
+      const user = localStorage.getItem('user');
+      const token = localStorage.getItem('token');
 
       if (user && token) {
-        const endPoint = `${BASE_URL}/${endPoints.adminMentors}`  // move base to env
-        const userObj = JSON.parse(user)
+        const endPoint = `${BASE_URL}/${endPoints.adminMentors}`; // move base to env
+        const userObj = JSON.parse(user);
         const requestBody = {
           accountId: userObj.accounts[0].id,
           name: userObj.accounts[0].name,
           email: formData.email,
         };
-    
 
         fetch(endPoint, {
-          method: "POST",
+          method: 'POST',
           headers: {
-            "Content-Type": "application/json",
-            "Authorization": `Bearer ${JSON.parse(token)}`,
+            'Content-Type': 'application/json',
+            Authorization: `Bearer ${JSON.parse(token)}`,
           },
           body: JSON.stringify(requestBody),
         })
@@ -66,24 +66,22 @@ export function InviteMentorDialog() {
             return response.json();
           })
           .then((data) => {
-            console.log("Response from server:", data);
+            console.log('Response from server:', data);
           })
           .catch((error) => {
-            console.error("Error making POST request:", error);
+            console.error('Error making POST request:', error);
           });
-        
+
         toast({
-          title: "Invitation sent",
+          title: 'Invitation sent',
           description: `Invitation has been sent to ${formData.email}`,
         });
-  
-        setFormData({ name: "", email: "" });
+
+        setFormData({ name: '', email: '' });
         setIsOpen(false);
       } else {
-        console.error("user not found")
+        console.error('user not found');
       }
-
-    
     } catch (error) {
       toast({
         title: 'Error',
