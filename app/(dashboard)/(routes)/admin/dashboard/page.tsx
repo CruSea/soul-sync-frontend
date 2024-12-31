@@ -1,12 +1,10 @@
 'use client';
 import AdminView from '@/components/views/admin/dashboard';
 import withAuth from '@/context/withAuth';
+import React from 'react';
 
-function UserPage() {
-  return (
-    <>
-      <AdminView />
-    </>
-  );
+function Admin() {
+  return <AdminView />;
 }
-export default withAuth(UserPage);
+
+export default withAuth(Admin);

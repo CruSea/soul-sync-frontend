@@ -15,6 +15,9 @@ import { useState, useRef, useEffect } from 'react';
 import { useForm } from 'react-hook-form';
 import CreateOrgSidebar from '@/components/shared/admin/CreateOrg/CreateOrgSidebar';
 import CreateOrgForm from '@/components/shared/admin/CreateOrg/CreateOrgForm';
+import { endPoints } from '@/data/end-points';
+
+const BASE_URL = process.env.NEXT_PUBLIC_API_BASE_URL;
 
 const CreateOrgView = () => {
   const [currentPage, setCurrentPage] = useState<Page>('first');
@@ -40,20 +43,60 @@ const CreateOrgView = () => {
     },
   });
 
-  const onSubmit = (data: createOrgFormTwoValues | createOrgFormOneValues) => {
-    console.log('onSubmit is called');
+  const onSubmit = async (
+    data: createOrgFormTwoValues | createOrgFormOneValues
+  ) => {
     setOrgData((prevOrgData) => {
       const updatedData = { ...prevOrgData, ...data };
       return updatedData;
     });
+
+    if (currentPage === 'second') {
+      const user = localStorage.getItem('user');
+      const token = localStorage.getItem('token');
+      if (!user) {
+        console.error('user not found');
+        return;
+      }
+
+      if (!token) {
+        console.error('token not found');
+        return;
+      }
+
+      const userData = JSON.parse(user);
+
+      const reqBody = {
+        name: orgData.companyName,
+        domain: orgData.companyDomain,
+      };
+
+      const AccountId = userData.accounts[0].id;
+
+      const response = await fetch(
+        `${BASE_URL}/${endPoints.adminAccount}/${AccountId}`,
+        {
+          method: 'PATCH', // Specify PATCH as the method
+          headers: {
+            'Content-Type': 'application/json', // Ensure JSON content
+            Authorization: `Bearer ${JSON.parse(token)}`, // Optional: Include token if required
+          },
+          body: JSON.stringify(reqBody), // Stringify the request body
+        }
+      );
+      if (response.ok) {
+        console.log('successfull submission');
+      } else {
+        console.error('Form Submission is wrong');
+        setCurrentPage('first');
+      }
+    }
   };
 
   const handleSubmit = async () => {
     let isValid = true; // Initialize a flag for validation
 
     if (currentPage === 'first') {
-      console.log('first page confirmation');
-
       try {
         // Await the form submission and validation
         await formOne.handleSubmit(onSubmit, (errors) => {

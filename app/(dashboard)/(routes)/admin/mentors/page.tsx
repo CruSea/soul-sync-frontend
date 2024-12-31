@@ -1,9 +1,12 @@
+'use client';
+import withAuth from '@/context/withAuth';
 import { MentorsTable } from '@/components/shared/admin/admin-mentors/mentors';
 
-export default function Mentor() {
+function Mentor() {
   return (
     <>
       <MentorsTable />
     </>
   );
 }
+export default withAuth(Mentor);
