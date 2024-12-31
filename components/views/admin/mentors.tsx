@@ -1,5 +1,5 @@
-import { AdminLayout } from "@/components/shared/layout/admin-layout";
-import { Mentors } from "@/components/shared/admin/admin-mentors/mentors";
+import { AdminLayout } from '@/components/shared/layout/admin-layout';
+import  Mentors  from '@/components/shared/admin/admin-mentors/mentors';
 
 export default function AdminViewMentors() {
   return (

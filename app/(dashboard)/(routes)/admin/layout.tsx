@@ -13,7 +13,7 @@ const DashboardLayout: React.FC<DashboardLayoutProps> = ({ children }) => {
   const lastSegment = pathname.split("/").filter(Boolean).pop();
 
   // List of pages to exclude from this layout
-  const excludedRoutes = ["/admin/get-started", "/admin/create-org"];
+  const excludedRoutes = ['/admin/get-started', '/admin/create-org'];
 
   if (excludedRoutes.includes(pathname)) {
     return <>{children}</>; // Render without the layout

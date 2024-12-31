@@ -8,17 +8,18 @@ import {
   DialogTitle,
   DialogDescription,
   DialogTrigger,
-} from "@/components/ui/dialog";
-import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
-import { Label } from "@/components/ui/label";
-import { useToast } from "@/hooks/use-toast";
-import { toast } from "sonner";
-import { useAuth } from "@/context/AuthContext";
-//import handler from "@/app/api/[...params]/route";
+} from '@/components/ui/dialog';
+import { Button } from '@/components/ui/button';
+import { Input } from '@/components/ui/input';
+import { Label } from '@/components/ui/label';
+import { useToast } from '@/hooks/use-toast';
+import { useAuth } from '@/context/AuthContext';
+//import handler from '@/app/api/[...params]/route';
+import { endPoints, jsonServer } from '@/data/end-points';
+import React from 'react';
+import { toast } from 'sonner';
 
 const BASE_URL = process.env.NEXT_PUBLIC_API_BASE_URL;
-const MENTORS_URL = process.env.NEXT_PUBLIC_API_ADMIN_MENTORS_URL;
 
 interface InviteMentorFormData {
   name: string;
@@ -35,16 +36,12 @@ export function InviteMentorDialog() {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
 
-    console.log("handle submit called");
-
     try {
-      const user = localStorage.getItem("user");
-      const token = localStorage.getItem("token");
-
-      console.log(user, "user is");
+      const user = localStorage.getItem('user');
+      const token = localStorage.getItem('token');
 
       if (user && token) {
-        const endPoint = `${BASE_URL}/${MENTORS_URL}`; // move base to env
+        const endPoint = `${BASE_URL}/${endPoints.adminMentors}`; // move base to env
         const userObj = JSON.parse(user);
         const requestBody = {
           accountId: userObj.accounts[0].id,
@@ -52,12 +49,10 @@ export function InviteMentorDialog() {
           email: formData.email,
         };
 
-        console.log("all data", endPoint, userObj, requestBody, token);
-
         fetch(endPoint, {
-          method: "POST",
+          method: 'POST',
           headers: {
-            "Content-Type": "application/json",
+            'Content-Type': 'application/json',
             Authorization: `Bearer ${JSON.parse(token)}`,
           },
           body: JSON.stringify(requestBody),
@@ -71,10 +66,10 @@ export function InviteMentorDialog() {
             return response.json();
           })
           .then((data) => {
-            console.log("Response from server:", data);
+            console.log('Response from server:', data);
           })
           .catch((error) => {
-            console.error("Error making POST request:", error);
+            console.error('Error making POST request:', error);
           });
         toast(`Invitation has been sent to ${formData.email}`);
 

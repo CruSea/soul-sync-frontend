@@ -1,11 +1,7 @@
-'use client'
-import withAuth from "@/context/withAuth";
+'use client';
+import withAuth from '@/context/withAuth';
 
- function Agent() {
-  return (
-    <>
-    agents
-    </>
-  );
+function Agent() {
+  return <>agents</>;
 }
-export default withAuth(Agent)
+export default withAuth(Agent);

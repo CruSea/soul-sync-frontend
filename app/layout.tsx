@@ -19,10 +19,7 @@ export default function RootLayout({
             enableSystem={false}
             storageKey="dashboard-theme"
           >
-            <AuthProvider>
-
-            {children}
-            </AuthProvider>
+            <AuthProvider>{children}</AuthProvider>
           </ThemeProvider>
         </SessionWrapper>
       </body>

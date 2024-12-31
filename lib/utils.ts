@@ -13,7 +13,7 @@ export function decodeToken(token: string) {
   try {
     return jwtDecode(token); // Returns the decoded payload
   } catch (err) {
-    console.error("Invalid token:", err);
+    console.error('Invalid token:', err);
     return null;
   }
 }

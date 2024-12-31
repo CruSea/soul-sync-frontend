@@ -56,7 +56,7 @@ const GetStartedAdminForm = () => {
           />
         </div>
         <PhoneNumberField control={form.control} />
-        <LocationField />
+        <LocationField control={form.control} />
         <Button type="submit" className="w-4/5 mx-auto h-12 ">
           Submit
         </Button>

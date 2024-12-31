@@ -1,6 +1,6 @@
-"use client";
-import ChannelsPage from "@/components/views/admin/channel";
-import withAuth from "@/context/withAuth";
+'use client';
+import withAuth from '@/context/withAuth';
+import ChannelsPage from '@/components/views/admin/channel';
 
 function Channels() {
   return (
