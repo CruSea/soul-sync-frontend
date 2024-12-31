@@ -1,83 +1,112 @@
 "use client";
 
-import React from "react";
-import axios from "axios";
+import React, { useState, useMemo } from "react";
 import { DataTable } from "@/components/shared/DataTable";
-import { Badge } from "@/components/ui/badge";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Column, FilterOption } from "@/types/data-table";
+import { Badge } from "@/components/ui/badge";
 
-interface User {
+interface Mentee {
   id: string | number;
   name: string;
-  username: string;
-  email: string;
-  phone: string;
-  website: string;
-  company: {
-    name: string;
-  };
+  phoneNumber: string;
+  platform: string;
+  location: string;
+  status: "Joined" | "Pending";
+  imageUrl: string;
+  joinedDate?: string;
 }
 
-const columns: Array<Column<User>> = [
+const columns: Column<Mentee>[] = [
   {
     key: "name",
     header: "Name",
-    render: (user) => (
+    render: (mentee) => (
       <div className="flex items-center gap-2">
         <Avatar className="h-8 w-8">
-          <AvatarImage
-            src={`https://api.dicebear.com/6.x/initials/svg?seed=${user.name}`}
-            alt={user.name}
-          />
-          <AvatarFallback>{user.name.slice(0, 2)}</AvatarFallback>
+          <AvatarImage src={mentee.imageUrl} alt={mentee.name} />
+          <AvatarFallback>{mentee.name.slice(0, 2)}</AvatarFallback>
         </Avatar>
-        {user.name}
+        {mentee.name}
       </div>
     ),
   },
-  { key: "username", header: "Username" },
-  { key: "email", header: "Email" },
-  { key: "phone", header: "Phone" },
-  { key: "website", header: "Website" },
+  { key: "phoneNumber", header: "Phone Number" },
+  { key: "platform", header: "Platform" },
+  { key: "location", header: "Location" },
   {
-    key: "company",
-    header: "Company",
-    render: (user) => user.company.name,
+    key: "status",
+    header: "Status",
+    render: (mentee) => (
+      <Badge variant={mentee.status === "Joined" ? "default" : "secondary"}>
+        {mentee.status}
+      </Badge>
+    ),
+  },
+  {
+    key: "joinedDate",
+    header: "Joined Date",
+    render: (mentee) =>
+      mentee.joinedDate
+        ? new Date(mentee.joinedDate).toLocaleDateString()
+        : "-",
   },
 ];
 
-const filterOptions: Array<FilterOption<User>> = [
-  { key: "website", label: "hildegard.org" },
-  { key: "website", label: "anastasia.net" },
-  { key: "website", label: "ramiro.info" },
+const filterOptions: FilterOption<Mentee>[] = [
+  { key: "status", label: "Joined" },
+  { key: "status", label: "Pending" },
 ];
+const search = ["name", "location", "platform"];
 
-export function UsersTable() {
-  const handleDelete = async (id: string | number) => {
-    try {
-      await axios.delete(`https://jsonplaceholder.typicode.com/users/${id}`);
-      console.log(`User with id ${id} deleted successfully`);
-    } catch (error) {
-      console.error("Error deleting user:", error);
-    }
+const UserTable: React.FC = () => {
+  const [error, setError] = useState<string | null>(null);
+  const [allMentees, setAllMentees] = useState<Mentee[]>([]);
+  const endPoint = "http://localhost:3500/mentees";
+
+  const onDataFetched = (data: Mentee[]) => {
+    const sortedMentees = data
+      .filter((mentee) => mentee.joinedDate)
+      .sort((a, b) => {
+        const dateA = new Date(a.joinedDate!).getTime();
+        const dateB = new Date(b.joinedDate!).getTime();
+        return dateB - dateA;
+      });
+
+    const recentMentees = sortedMentees.slice(0, 4);
+
+    setAllMentees(recentMentees);
+
+    return recentMentees;
   };
 
   return (
     <div className="flex-1 p-4 bg-secondary dark:bg-gray-900">
       <div className="space-y-6 bg-white p-6 rounded-lg">
         <div className="flex items-center justify-between">
-          <h1 className="text-2xl font-semibold">Users</h1>
+          <h1 className="text-2xl font-semibold">New Mentees</h1>
         </div>
-        <DataTable
-          apiUrl="https://jsonplaceholder.typicode.com/users"
-          columns={columns}
-          searchFields={["name", "username", "email", "phone", "website"]}
-          filterOptions={filterOptions}
-          itemsPerPage={3}
-          onDelete={handleDelete}
-        />
+        {error ? (
+          <div className="text-red-500">{error}</div>
+        ) : (
+          <DataTable<Mentee>
+            columns={columns}
+            searchFields={search as []}
+            filterOptions={filterOptions}
+            itemsPerPage={4}
+            apiUrl={endPoint}
+            enableActions={false}
+            enablePagination={false}
+            onError={(errorMessage) => {
+              setError(errorMessage);
+              console.error("DataTable error:", errorMessage);
+            }}
+            onDataFetched={onDataFetched}
+          />
+        )}
       </div>
     </div>
   );
-}
+};
+
+export default UserTable;

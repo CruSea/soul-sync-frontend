@@ -60,13 +60,13 @@ const columns: Column<Mentors>[] = [
 const filterOptions: FilterOption<Mentors>[] = [
   { key: "location", label: "Addis Ababa" },
 ];
-
+const search = ["name", "age", "gender", "location", "isActive"];
 const MentorsTable: React.FC = () => {
   const user = localStorage.getItem("user");
   const token = localStorage.getItem("token");
   const userObj = JSON.parse(user || '""');
   const accountId = String(userObj.accounts[0].id);
-  const endPoint = `${BASE_URL}/${MENTORS_URL}/${accountId}/all`;
+  const endPoint = `${BASE_URL}/${MENTORS_URL}/${accountId}`;
   const endPointToDelete = `${BASE_URL}/${MENTORS_URL}/${accountId}/mentor`;
 
   const handleDelete = async (id: string | number) => {
@@ -100,7 +100,7 @@ const MentorsTable: React.FC = () => {
         <DataTable<Mentors>
           apiUrl={endPoint}
           columns={columns}
-          searchFields={["name", "age", "gender", "location", "isActive"]}
+          searchFields={search as []}
           filterOptions={filterOptions}
           itemsPerPage={10}
           onDelete={handleDelete}

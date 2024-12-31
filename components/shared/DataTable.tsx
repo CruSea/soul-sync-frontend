@@ -39,13 +39,16 @@ import {
 import { Column, FilterOption } from "@/types/data-table";
 
 interface DataTableProps<T> {
-  data?: T[];
   apiUrl: string;
   columns: Column<T>[];
   searchFields?: (keyof T)[];
   filterOptions?: FilterOption<T>[];
-  itemsPerPage?: number;
-  onDelete: (id: string | number) => Promise<void>;
+  itemsPerPage: number;
+  onDelete?: (id: string | number) => Promise<void>;
+  enableActions?: boolean;
+  enablePagination?: boolean;
+  onError?: (error: string) => void;
+  onDataFetched?: (data: T[]) => T[];
 }
 
 export function DataTable<T extends { id: string | number }>({
@@ -53,8 +56,12 @@ export function DataTable<T extends { id: string | number }>({
   columns,
   searchFields = [],
   filterOptions = [],
-  itemsPerPage = 5,
+  itemsPerPage,
   onDelete,
+  enableActions = true,
+  enablePagination = true,
+  onError,
+  onDataFetched,
 }: DataTableProps<T>) {
   const [data, setData] = useState<T[]>([]);
   const [totalItems, setTotalItems] = useState(0);
@@ -71,54 +78,44 @@ export function DataTable<T extends { id: string | number }>({
     setIsLoading(true);
     try {
       const token = localStorage.getItem("token");
-      const filterParams = filters.reduce((acc, filter) => {
-        const [key, value] = filter.split(":");
-        return `${acc}&${key}=${value}`;
-      }, "");
 
-      const response = await fetch(
-        `${apiUrl}?page=${currentPage}&limit=${itemsPerPage}&search=${searchQuery}${filterParams}`,
-        {
-          method: "GET",
-          headers: {
-            "Content-Type": "application/json",
-            Authorization: token ? `Bearer ${JSON.parse(token)}` : "",
-          },
-        }
-      );
+      console.log("Fetching data from:", apiUrl);
+
+      const response = await fetch(apiUrl, {
+        method: "GET",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: token ? `Bearer ${JSON.parse(token)}` : "",
+        },
+      });
 
       if (!response.ok) {
-        console.error(`HTTP error! Status: ${response.status}`);
-        throw new Error("Failed to fetch data.");
+        throw new Error(`HTTP error! Status: ${response.status}`);
       }
 
-      const text = await response.text();
+      const result = await response.json();
+      console.log("API response:", result);
 
-      if (text.trim() === "") {
-        setData([]);
-        setTotalItems(0);
-        return;
-      }
-
-      let result;
-      try {
-        result = JSON.parse(text);
-      } catch (error) {
-        console.error("Error parsing JSON response:", error);
-        setData([]);
-        setTotalItems(0);
-        return;
-      }
-
-      if (Array.isArray(result) && result.length > 0) {
-        setData(result);
-        setTotalItems(result.length);
+      let processedData: T[];
+      if (Array.isArray(result)) {
+        processedData = result;
+      } else if (result.data && Array.isArray(result.data)) {
+        processedData = result.data;
       } else {
-        setData([]);
-        setTotalItems(0);
+        throw new Error("Unexpected data format received from API");
       }
+
+      if (onDataFetched) {
+        processedData = onDataFetched(processedData);
+      }
+
+      setData(processedData);
+      setTotalItems(processedData.length);
     } catch (error) {
       console.error("Error fetching data:", error);
+      onError?.(
+        error instanceof Error ? error.message : "An unknown error occurred"
+      );
       setData([]);
       setTotalItems(0);
     } finally {
@@ -128,9 +125,22 @@ export function DataTable<T extends { id: string | number }>({
 
   useEffect(() => {
     fetchData();
-  }, [currentPage, searchQuery, filters]);
+  }, []);
 
-  const totalPages = Math.ceil(totalItems / itemsPerPage);
+  const filteredData = data.filter((item) =>
+    searchFields.some((field) =>
+      String(item[field]).toLowerCase().includes(searchQuery.toLowerCase())
+    )
+  );
+
+  const paginatedData = enablePagination
+    ? filteredData.slice(
+        (currentPage - 1) * itemsPerPage,
+        currentPage * itemsPerPage
+      )
+    : filteredData;
+
+  const totalPages = Math.ceil(filteredData.length / itemsPerPage);
 
   const handleDelete = (id: string | number) => {
     setDeleteDialog({ open: true, id });
@@ -141,12 +151,16 @@ export function DataTable<T extends { id: string | number }>({
     if (!id) return;
 
     try {
-      await onDelete(id);
+      await onDelete?.(id);
       setData((prev) => prev.filter((item) => item.id !== id));
       setDeleteDialog({ open: false, id: null });
-      console.log("mentor is deleted with id ", id);
     } catch (error) {
       console.error("Error deleting data:", error);
+      onError?.(
+        error instanceof Error
+          ? error.message
+          : "An error occurred while deleting"
+      );
     }
   };
 
@@ -221,18 +235,30 @@ export function DataTable<T extends { id: string | number }>({
               {columns.map((column) => (
                 <TableHead key={String(column.key)}>{column.header}</TableHead>
               ))}
-              <TableHead>Action</TableHead>
+              {enableActions && <TableHead>Action</TableHead>}
             </TableRow>
           </TableHeader>
           <TableBody>
             {isLoading ? (
               <TableRow>
-                <TableCell colSpan={columns.length + 1} className="text-center">
+                <TableCell
+                  colSpan={columns.length + (enableActions ? 1 : 0)}
+                  className="text-center"
+                >
                   Loading...
                 </TableCell>
               </TableRow>
+            ) : paginatedData.length === 0 ? (
+              <TableRow>
+                <TableCell
+                  colSpan={columns.length + (enableActions ? 1 : 0)}
+                  className="text-center"
+                >
+                  No data available
+                </TableCell>
+              </TableRow>
             ) : (
-              data?.map((item) => (
+              paginatedData.map((item) => (
                 <TableRow key={item.id}>
                   {columns.map((column) => (
                     <TableCell key={String(column.key)}>
@@ -241,16 +267,18 @@ export function DataTable<T extends { id: string | number }>({
                         : String(item[column.key])}
                     </TableCell>
                   ))}
-                  <TableCell>
-                    <Button
-                      variant="ghost"
-                      size="icon"
-                      onClick={() => handleDelete(item.id)}
-                      className="h-8 w-8"
-                    >
-                      <Trash2 className="h-4 w-4" />
-                    </Button>
-                  </TableCell>
+                  {enableActions && (
+                    <TableCell>
+                      <Button
+                        variant="ghost"
+                        size="icon"
+                        onClick={() => handleDelete(item.id)}
+                        className="h-8 w-8"
+                      >
+                        <Trash2 className="h-4 w-4" />
+                      </Button>
+                    </TableCell>
+                  )}
                 </TableRow>
               ))
             )}
@@ -258,40 +286,42 @@ export function DataTable<T extends { id: string | number }>({
         </Table>
       </div>
 
-      <div className="flex items-center justify-between">
-        <p className="text-sm text-muted-foreground">
-          Showing {data.length} out of {totalItems} items
-        </p>
-        <div className="flex items-center gap-2">
-          <Button
-            variant="outline"
-            size="icon"
-            onClick={() => setCurrentPage((p) => Math.max(1, p - 1))}
-            disabled={currentPage === 1}
-          >
-            <ChevronLeft className="h-4 w-4" />
-          </Button>
-          {Array.from({ length: Math.min(3, totalPages) }, (_, i) => (
+      {enablePagination && (
+        <div className="flex items-center justify-between">
+          <p className="text-sm text-muted-foreground">
+            Showing {paginatedData.length} out of {filteredData.length} items
+          </p>
+          <div className="flex items-center gap-2">
             <Button
-              key={i + 1}
-              variant={currentPage === i + 1 ? "default" : "outline"}
+              variant="outline"
               size="icon"
-              onClick={() => setCurrentPage(i + 1)}
+              onClick={() => setCurrentPage((p) => Math.max(1, p - 1))}
+              disabled={currentPage === 1}
             >
-              {i + 1}
+              <ChevronLeft className="h-4 w-4" />
             </Button>
-          ))}
-          {totalPages > 3 && <span className="px-2">...</span>}
-          <Button
-            variant="outline"
-            size="icon"
-            onClick={() => setCurrentPage((p) => Math.min(totalPages, p + 1))}
-            disabled={currentPage === totalPages}
-          >
-            <ChevronRight className="h-4 w-4" />
-          </Button>
+            {Array.from({ length: Math.min(3, totalPages) }, (_, i) => (
+              <Button
+                key={i + 1}
+                variant={currentPage === i + 1 ? "default" : "outline"}
+                size="icon"
+                onClick={() => setCurrentPage(i + 1)}
+              >
+                {i + 1}
+              </Button>
+            ))}
+            {totalPages > 3 && <span className="px-2">...</span>}
+            <Button
+              variant="outline"
+              size="icon"
+              onClick={() => setCurrentPage((p) => Math.min(totalPages, p + 1))}
+              disabled={currentPage === totalPages}
+            >
+              <ChevronRight className="h-4 w-4" />
+            </Button>
+          </div>
         </div>
-      </div>
+      )}
 
       <Dialog
         open={deleteDialog.open}

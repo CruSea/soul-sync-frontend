@@ -3,23 +3,10 @@
 import { GrowthChart } from "@/components/shared/admin/dashboard/GrowthChart";
 import { MentorsChart } from "@/components/shared/admin/dashboard/MentorsChart";
 import { StatsCards } from "@/components/shared/admin/dashboard/StatCard";
-import { UsersTable } from "@/components/shared/admin/dashboard/UserTable";
+import UsersTable from "@/components/shared/admin/dashboard/UserTable";
 import { useRouter } from "next/navigation";
 
 export default function AdminView() {
-  // const router = useRouter();
-  // const user = localStorage.getItem("user");
-  // if (!user) {
-  //   console.error("can't find user data")
-  //   return <div>Can't find user Data</div>
-  // }
-  // const userData = JSON.parse(user);
-
-  // if (!userData?.domain) {
-  //   console.log("new user")
-  //   router.push("/admin/create-org")
-  // }
-
   return (
     <div className="flex-1 p-4 bg-secondary dark:bg-gray-900">
       <div className="flex flex-col lg:flex-row gap-6">

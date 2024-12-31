@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import { DataTable } from "@/components/shared/DataTable";
 import { Badge } from "@/components/ui/badge";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
@@ -16,21 +16,9 @@ interface Mentee {
   platform: "Negarit" | "Telegram Bot" | "WhatsApp" | "Facebook";
   phoneNumber: string;
   location: string;
-  status: "Joined" | "Pending";
+  status: "Joined" | "Pending" | "Left";
   imageUrl: string;
-}
-
-interface MenteesResponse {
-  totalMentees: number;
-  currentPage: number;
-  itemsPerPage: number;
-  mentees: Mentee[];
-  pagination: {
-    totalPages: number;
-    currentPage: number;
-    hasNext: boolean;
-    hasPrevious: boolean;
-  };
+  joinedDate?: string;
 }
 
 const columns: Column<Mentee>[] = [
@@ -57,8 +45,26 @@ const columns: Column<Mentee>[] = [
     key: "status",
     header: "Status",
     render: (mentee) => (
-      <Badge variant="secondary">{mentee.status ? "Joined" : "Pending"}</Badge>
+      <Badge
+        variant={
+          mentee.status === "Joined"
+            ? "default"
+            : mentee.status === "Pending"
+            ? "secondary"
+            : "destructive"
+        }
+      >
+        {mentee.status}
+      </Badge>
     ),
+  },
+  {
+    key: "joinedDate",
+    header: "Joined Date",
+    render: (mentee) =>
+      mentee.joinedDate
+        ? new Date(mentee.joinedDate).toLocaleDateString()
+        : "-",
   },
 ];
 
@@ -67,35 +73,17 @@ const filterOptions: FilterOption<Mentee>[] = [
   { key: "platform", label: "Telegram Bot" },
   { key: "platform", label: "WhatsApp" },
   { key: "platform", label: "Facebook" },
+  { key: "status", label: "Joined" },
+  { key: "status", label: "Pending" },
+  { key: "status", label: "Left" },
 ];
 
-const MenteesTable: React.FC = () => {
-  const [mentees, setMentees] = useState<Mentee[]>([]);
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState<string | null>(null);
+const search = ["name", "age", "gender", "location", "status", "platform"];
 
+const MenteesTable: React.FC = () => {
+  const [error, setError] = useState<string | null>(null);
   const endPoint = "http://localhost:3500/mentees";
 
-  useEffect(() => {
-    const fetchMentees = async () => {
-      try {
-        const response = await fetch(endPoint);
-        if (!response.ok) {
-          throw new Error("Failed to fetch mentees");
-        }
-        const data: MenteesResponse = await response.json();
-        setMentees(data.mentees);
-        console.log("mentees", data.mentees);
-      } catch (err) {
-        setError("Error fetching mentees. Please try again later.");
-        console.error("Error fetching mentees:", err);
-      } finally {
-        setLoading(false);
-      }
-    };
-
-    fetchMentees();
-  }, []);
   const handleDelete = async (id: string | number) => {
     try {
       const response = await fetch(`${endPoint}/${id}`, {
@@ -107,8 +95,7 @@ const MenteesTable: React.FC = () => {
       if (!response.ok) {
         throw new Error("Failed to delete the mentee.");
       }
-      setMentees(mentees.filter((mentee) => mentee.id !== id));
-      toast("Mentee has been deleted.");
+      toast.success("Mentee has been deleted.");
     } catch (error) {
       console.error("Error deleting mentee:", error);
       toast.error("Failed to delete mentee");
@@ -116,37 +103,30 @@ const MenteesTable: React.FC = () => {
     }
   };
 
-  if (loading) {
-    return <div>Loading...</div>;
-  }
-
-  if (error) {
-    return <div className="text-red-500">{error}</div>;
-  }
-
   return (
     <div className="flex-1 p-4 bg-secondary dark:bg-gray-900">
       <div className="space-y-6 bg-white p-6 rounded-lg">
         <div className="flex items-center justify-between">
-          <h1 className="text-2xl font-semibold">Mentees</h1>
+          <h1 className="text-2xl font-semibold">List Of Mentees</h1>
         </div>
-        <DataTable<Mentee>
-          data={mentees}
-          columns={columns}
-          searchFields={[
-            "name",
-            "age",
-            "gender",
-            "email",
-            "platform",
-            "location",
-            "status",
-          ]}
-          filterOptions={filterOptions}
-          itemsPerPage={5}
-          onDelete={handleDelete}
-          apiUrl={endPoint}
-        />
+        {error ? (
+          <div className="text-red-500">{error}</div>
+        ) : (
+          <DataTable<Mentee>
+            columns={columns}
+            filterOptions={filterOptions}
+            searchFields={search as []}
+            itemsPerPage={10}
+            onDelete={handleDelete}
+            apiUrl={endPoint}
+            enableActions={true}
+            enablePagination={true}
+            onError={(errorMessage) => {
+              setError(errorMessage);
+              console.error("DataTable error:", errorMessage);
+            }}
+          />
+        )}
       </div>
     </div>
   );
