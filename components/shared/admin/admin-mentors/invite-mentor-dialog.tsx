@@ -14,9 +14,10 @@ import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { useToast } from '@/hooks/use-toast';
 import { useAuth } from '@/context/AuthContext';
-import handler from '@/app/api/[...params]/route';
+//import handler from '@/app/api/[...params]/route';
 import { endPoints, jsonServer } from '@/data/end-points';
 import React from 'react';
+import { toast } from 'sonner';
 
 const BASE_URL = process.env.NEXT_PUBLIC_API_BASE_URL;
 
@@ -31,7 +32,6 @@ export function InviteMentorDialog() {
     name: '',
     email: '',
   });
-  const { toast } = useToast();
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -45,7 +45,7 @@ export function InviteMentorDialog() {
         const userObj = JSON.parse(user);
         const requestBody = {
           accountId: userObj.accounts[0].id,
-          name: userObj.accounts[0].name,
+          name: formData.name,
           email: formData.email,
         };
 
@@ -71,11 +71,7 @@ export function InviteMentorDialog() {
           .catch((error) => {
             console.error('Error making POST request:', error);
           });
-
-        toast({
-          title: 'Invitation sent',
-          description: `Invitation has been sent to ${formData.email}`,
-        });
+        toast(`Invitation has been sent to ${formData.email}`);
 
         setFormData({ name: '', email: '' });
         setIsOpen(false);
@@ -83,11 +79,7 @@ export function InviteMentorDialog() {
         console.error('user not found');
       }
     } catch (error) {
-      toast({
-        title: 'Error',
-        description: 'Failed to send invitation. Please try again.',
-        variant: 'destructive',
-      });
+      toast('Failed to send invitation. Please try again.');
     }
   };
 

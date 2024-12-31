@@ -3,7 +3,7 @@
 import { GrowthChart } from '@/components/shared/admin/dashboard/GrowthChart';
 import { MentorsChart } from '@/components/shared/admin/dashboard/MentorsChart';
 import { StatsCards } from '@/components/shared/admin/dashboard/StatCard';
-import { UsersTable } from '@/components/shared/admin/dashboard/UserTable';
+import UsersTable from '@/components/shared/admin/dashboard/UserTable';
 import { endPoints } from '@/data/end-points';
 import { useRouter } from 'next/navigation';
 import { useEffect } from 'react';
