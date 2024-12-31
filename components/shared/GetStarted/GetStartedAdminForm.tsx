@@ -1,18 +1,21 @@
 'use client';
 
-import { useForm } from "react-hook-form"
-import { getStartedAdminFormSchema, getStartedAdminFormValues } from "@/types/get-started"
-import { getStartedMentorFormValues } from "@/types/get-started"
-import { zodResolver } from "@hookform/resolvers/zod"
-import { Form } from "@/components/ui/form"
-import { AgeField } from "./AgeField"
-import { GenderField } from "./GenderField"
-import { getStartedForm } from "@/data/get-started-data"
-import { LocationField } from "./LocationField"
-import { useEffect } from "react"
-import { Button } from "@/components/ui/button"
-import { useRouter } from "next/navigation";
-import { PhoneNumberField } from "./PhoneNumberField"
+import { useForm } from 'react-hook-form';
+import {
+  getStartedAdminFormSchema,
+  getStartedAdminFormValues,
+} from '@/types/get-started';
+import { getStartedMentorFormValues } from '@/types/get-started';
+import { zodResolver } from '@hookform/resolvers/zod';
+import { Form } from '@/components/ui/form';
+import { AgeField } from './AgeField';
+import { GenderField } from './GenderField';
+import { getStartedForm } from '@/data/get-started-data';
+import { LocationField } from './LocationField';
+import { useEffect } from 'react';
+import { Button } from '@/components/ui/button';
+import { useRouter } from 'next/navigation';
+import { PhoneNumberField } from './PhoneNumberField';
 
 const GetStartedAdminForm = () => {
   const form = useForm<getStartedAdminFormValues>({
@@ -38,10 +41,6 @@ const GetStartedAdminForm = () => {
   const {
     formState: { errors },
   } = form;
-
-  useEffect(() => {
-    console.log(errors);
-  }, []);
 
   return (
     <Form {...form}>

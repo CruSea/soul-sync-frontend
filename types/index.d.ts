@@ -1,7 +1,5 @@
 declare global {
-  interface Window {
-
-  }
+  interface Window {}
 
   interface HeaderProps {
     title: string;
@@ -10,8 +8,6 @@ declare global {
   interface LandingPageHeaderProps {
     showButton?: boolean;
   }
-
-
 }
 
 export {};

@@ -17,8 +17,8 @@ export default function MessagesView() {
         <Chat toggleProfileInView={() => setProfileInView(!profileInView)} />
         <div
           className={cn(
-            "w-96 h-full flex flex-col gap-5",
-            !profileInView ? "hidden" : ""
+            'w-96 h-full flex flex-col gap-5',
+            !profileInView ? 'hidden' : ''
           )}
         >
           <Profile type="mentor" />

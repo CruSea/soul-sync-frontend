@@ -1,4 +1,4 @@
-import { colors } from "@/components/shared/Mentor/Info";
+import { colors } from '@/components/shared/Mentor/Info';
 
 export interface Mentor {
   id: string;
@@ -73,7 +73,9 @@ export type UserMessages = {
 export interface ChatProps {
   userMessages: UserMessages | undefined;
   userDetails: UserDetails | undefined;
-  setUserMessages: React.Dispatch<React.SetStateAction<UserMessages | undefined>>;
+  setUserMessages: React.Dispatch<
+    React.SetStateAction<UserMessages | undefined>
+  >;
   toggleDrawer: () => void;
 }
 

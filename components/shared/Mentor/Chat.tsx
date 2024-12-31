@@ -1,20 +1,25 @@
-"use client";
+'use client';
 
-import { useState, useRef, useEffect } from "react";
-import { v4 as uuidv4 } from "uuid";
+import { useState, useRef, useEffect } from 'react';
+import { v4 as uuidv4 } from 'uuid';
 
-import { Card } from "@/components/ui/card";
-import { ScrollArea } from "./chat-scrollarea";
-import ChatHeader from "./ChatHeader";
-import Message from "./Message";
-import { ChatProps, threadType } from "@/types/mentor";
-import { transformChatData } from "@/lib/utils";
-import InputArea from "./InputArea";
-import { jsonServer } from "@/data/end-points";
+import { Card } from '@/components/ui/card';
+import { ScrollArea } from './chat-scrollarea';
+import ChatHeader from './ChatHeader';
+import Message from './Message';
+import { ChatProps, threadType } from '@/types/mentor';
+import { transformChatData } from '@/lib/utils';
+import InputArea from './InputArea';
+import { jsonServer } from '@/data/end-points';
 
-const Chat = ({ userMessages, toggleDrawer, userDetails, setUserMessages }: ChatProps) => {
+const Chat = ({
+  userMessages,
+  toggleDrawer,
+  userDetails,
+  setUserMessages,
+}: ChatProps) => {
   // text is where the text box saves what the mentor writes
-  const [text, setText] = useState<string>("");
+  const [text, setText] = useState<string>('');
 
   const chatData = transformChatData(userMessages?.messages);
 
@@ -28,7 +33,7 @@ const Chat = ({ userMessages, toggleDrawer, userDetails, setUserMessages }: Chat
     if (!messageText.trim()) return; // Don't send empty messages
 
     const newMessage = {
-      sender: "mentor",
+      sender: 'mentor',
       dateTime: new Date().toISOString(), // Get current time
       content: messageText.trim(),
     };
@@ -43,31 +48,31 @@ const Chat = ({ userMessages, toggleDrawer, userDetails, setUserMessages }: Chat
       const updatedMessages = [...userMessages.messages, newMessage];
 
       // Update the backend
-      const patchResponse = await fetch(`${jsonServer.baseUrl}/${jsonServer.messages}/${userMessages.id}`, {
-        method: "PATCH",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({ messages: updatedMessages }),
-      });
+      const patchResponse = await fetch(
+        `${jsonServer.baseUrl}/${jsonServer.messages}/${userMessages.id}`,
+        {
+          method: 'PATCH',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({ messages: updatedMessages }),
+        }
+      );
 
-      console.log("the patch response", patchResponse)
+      console.log('the patch response', patchResponse);
 
-      
-      if (textBox.current) textBox.current.value = ""; // Reset input field
+      if (textBox.current) textBox.current.value = ''; // Reset input field
 
-
-      setUserMessages({...userMessages, messages: updatedMessages})
-
+      setUserMessages({ ...userMessages, messages: updatedMessages });
     } catch (error) {
-      console.error("Failed to send message:", error);
+      console.error('Failed to send message:', error);
     }
   };
 
   useEffect(() => {
     // Scroll to the bottom whenever `thread` changes
     if (bottomOfPanelRef.current) {
-      bottomOfPanelRef.current.scrollIntoView({ behavior: "smooth" }); // Optional: Add smooth scrolling
+      bottomOfPanelRef.current.scrollIntoView({ behavior: 'smooth' }); // Optional: Add smooth scrolling
     }
   }, [userMessages]);
 
@@ -98,8 +103,7 @@ const Chat = ({ userMessages, toggleDrawer, userDetails, setUserMessages }: Chat
           </div>
 
           {/*textbox where you input text */}
-          <InputArea ref={textBox} sendText={sendText}/>
-          
+          <InputArea ref={textBox} sendText={sendText} />
         </Card>
       )}
     </>

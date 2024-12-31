@@ -1,11 +1,16 @@
-"use client";
+'use client';
 
-import { MentorContainerProps, User, UserDetails, UserMessages } from "@/types/mentor";
-import Chat from "./Chat";
-import Profile from "./Profile";
-import { useEffect, useState } from "react";
-import UsersList from "./users-list";
-import { jsonServer } from "@/data/end-points";
+import {
+  MentorContainerProps,
+  User,
+  UserDetails,
+  UserMessages,
+} from '@/types/mentor';
+import Chat from './Chat';
+import Profile from './Profile';
+import { useEffect, useState } from 'react';
+import UsersList from './users-list';
+import { jsonServer } from '@/data/end-points';
 
 const MentorContainer = ({ users }: MentorContainerProps) => {
   const [currentUser, setCurrentUser] = useState<User>(users[0]);
@@ -23,17 +28,17 @@ const MentorContainer = ({ users }: MentorContainerProps) => {
         );
 
         if (!response.ok) {
-          throw new Error("Network response was not ok");
+          throw new Error('Network response was not ok');
         }
         const data = await response.json();
 
         if (Array.isArray(data) && data.length > 0) {
           setUserDetails(data[0]); // Assuming you want the first item
         } else {
-          console.warn("No user details found");
+          console.warn('No user details found');
         }
       } catch (error) {
-        console.error("Failed to fetch user details:", error);
+        console.error('Failed to fetch user details:', error);
       }
     };
 
@@ -44,7 +49,7 @@ const MentorContainer = ({ users }: MentorContainerProps) => {
         );
 
         if (!response.ok) {
-          throw new Error("Network response was not ok");
+          throw new Error('Network response was not ok');
         }
 
         const data = await response.json();
@@ -52,11 +57,11 @@ const MentorContainer = ({ users }: MentorContainerProps) => {
         if (Array.isArray(data) && data.length > 0) {
           setUserMessages(data[0]); // Assuming you want the first item
         } else {
-          console.warn("No user details found");
+          console.warn('No user details found');
         }
-        console.log("the userMessages", data[0]);
+        console.log('the userMessages', data[0]);
       } catch (error) {
-        console.error("Failed to fetch user Messages:", error);
+        console.error('Failed to fetch user Messages:', error);
       }
     };
 

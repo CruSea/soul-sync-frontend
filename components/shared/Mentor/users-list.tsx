@@ -5,12 +5,12 @@ import {
   CommandInput,
   CommandItem,
   CommandList,
-} from "@/components/ui/command";
+} from '@/components/ui/command';
 
-import { ScrollArea } from "@/components/ui/scroll-area";
-import { cn, getFallBack } from "@/lib/utils";
-import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
-import { UsersListProps } from "@/types/mentor";
+import { ScrollArea } from '@/components/ui/scroll-area';
+import { cn, getFallBack } from '@/lib/utils';
+import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
+import { UsersListProps } from '@/types/mentor';
 
 const UsersList = ({ users, currentUser, setCurrentUser }: UsersListProps) => {
   return (
@@ -32,8 +32,8 @@ const UsersList = ({ users, currentUser, setCurrentUser }: UsersListProps) => {
                 <CommandItem
                   key={user.id}
                   className={cn(
-                    "flex px-2.5 gap-3.5 items-center h-[70px] outline-none rounded-lg cursor-pointer",
-                    user.id === currentUser.id ? "!bg-gray-300" : "bg-white"
+                    'flex px-2.5 gap-3.5 items-center h-[70px] outline-none rounded-lg cursor-pointer',
+                    user.id === currentUser.id ? '!bg-gray-300' : 'bg-white'
                   )} // if user is selected sets the background to gry
                   onSelect={() => setCurrentUser(user)} // sets the chosen user to the index of the selected item
                 >

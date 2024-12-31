@@ -9,5 +9,5 @@ export default async function handler(
   if (!code || !state) {
     return res.status(400).json({ error: 'Missing code or state parameter' });
   }
-console.log("code",code)
+  console.log('code', code);
 }

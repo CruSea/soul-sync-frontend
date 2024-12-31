@@ -1,14 +1,14 @@
 'use client';
 
-import React from "react";
-import { DataTable } from "@/components/shared/DataTable";
-import { Badge } from "@/components/ui/badge";
-import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
-import { Button } from "@/components/ui/button";
-import { Trash2 } from "lucide-react";
-import { InviteMentorDialog } from "../invite-mentor-dialog";
-import type { Mentor } from "@/types/mentor";
-import { Column, FilterOption } from "@/types/data-table";
+import React from 'react';
+import { DataTable } from '@/components/shared/DataTable';
+import { Badge } from '@/components/ui/badge';
+import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
+import { Button } from '@/components/ui/button';
+import { Trash2 } from 'lucide-react';
+import { InviteMentorDialog } from '../invite-mentor-dialog';
+import type { Mentor } from '@/types/mentor';
+import { Column, FilterOption } from '@/types/data-table';
 
 const ALL_MENTORS: Mentor[] = Array.from({ length: 50 }, (_, i) => ({
   id: `mentor-${i + 1}`,
