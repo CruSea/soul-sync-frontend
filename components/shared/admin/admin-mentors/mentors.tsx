@@ -6,7 +6,7 @@ import { Badge } from '@/components/ui/badge';
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 import { Button } from '@/components/ui/button';
 import { Trash2 } from 'lucide-react';
-import { InviteMentorDialog } from './invite-mentor-dialog';
+import { InviteMentorDialog } from '../invite-mentor-dialog';
 import type { Mentor } from '@/types/mentor';
 import { Column, FilterOption } from '@/types/data-table';
 

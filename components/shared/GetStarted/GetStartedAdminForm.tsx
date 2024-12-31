@@ -5,6 +5,7 @@ import {
   getStartedAdminFormSchema,
   getStartedAdminFormValues,
 } from '@/types/get-started';
+import { getStartedMentorFormValues } from '@/types/get-started';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { Form } from '@/components/ui/form';
 import { AgeField } from './AgeField';
@@ -40,10 +41,6 @@ const GetStartedAdminForm = () => {
   const {
     formState: { errors },
   } = form;
-
-  useEffect(() => {
-    console.log(errors);
-  }, []);
 
   return (
     <Form {...form}>

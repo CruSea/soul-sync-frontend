@@ -1,7 +1,7 @@
-import { GrowthChart } from '@/components/shared/GrowthChart';
-import { MentorsChart } from '@/components/shared/MentorsChart';
-import { StatsCards } from '@/components/shared/StatCard';
-import { UsersTable } from '@/components/shared/UserTable';
+import { GrowthChart } from '@/components/shared/admin/dashboard/GrowthChart';
+import { MentorsChart } from '@/components/shared/admin/dashboard/MentorsChart';
+import { StatsCards } from '@/components/shared/admin/dashboard/StatCard';
+import { UsersTable } from '@/components/shared/admin/dashboard/UserTable';
 
 export default function AdminView() {
   return (

@@ -1,8 +1,7 @@
 'use client';
 
 import { zodResolver } from '@hookform/resolvers/zod';
-import CreateOrgForm from '@/components/shared/CreateOrg/CreateOrgForm';
-import CreateOrgSidebar from '@/components/shared/CreateOrg/CreateOrgSidebar';
+
 import LandingPageHeader from '@/components/shared/LandingPage/LandingPageHeader';
 import {
   createOrgFormOneSchema,
@@ -12,8 +11,10 @@ import {
   OrgDataValues,
   Page,
 } from '@/types/create-org';
-import { useState, useEffect } from 'react';
+import { useState, useRef, useEffect } from 'react';
 import { useForm } from 'react-hook-form';
+import CreateOrgSidebar from '@/components/shared/admin/CreateOrg/CreateOrgSidebar';
+import CreateOrgForm from '@/components/shared/admin/CreateOrg/CreateOrgForm';
 
 const CreateOrgView = () => {
   const [currentPage, setCurrentPage] = useState<Page>('first');
@@ -79,24 +80,6 @@ const CreateOrgView = () => {
 
     return isValid; // Return the final validation status
   };
-
-  useEffect(() => {
-    if (currentPage === 'second') {
-      if (
-        orgData?.companyName &&
-        orgData?.companyDomain &&
-        orgData?.size &&
-        orgData?.focus &&
-        orgData?.role &&
-        orgData?.otherRole
-      ) {
-        console.log('Sending org Data to backend:', orgData);
-        // add sending functionallity to backend
-      } else {
-        console.log('organization data has missing values ');
-      }
-    }
-  }, [orgData]); // This will run whenever orgData changes
 
   return (
     <div className="w-screen h-screen flex flex-col">

@@ -1,8 +1,8 @@
-import { Button } from '../../ui/button';
 import { useRouter } from 'next/navigation';
-import { CreateOrgSidebarProps } from '@/types/create-org';
+import { CreateOrgSidebarProps, Page, SidebarPage } from '@/types/create-org';
 import { cn } from '@/lib/utils';
 import { CreateOrgPage } from '@/content/page';
+import { Button } from '@/components/ui/button';
 import React from 'react';
 
 const CreateOrgSidebar: React.FC<CreateOrgSidebarProps> = ({
