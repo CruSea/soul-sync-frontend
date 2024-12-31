@@ -35,6 +35,7 @@ export default function ChannelNameForm({
             <FormLabel>Channel Type</FormLabel>
             <Select
               onValueChange={(value) => {
+                // Update the channel type
                 field.onChange(value);
                 setSelectedChannel(value);
               }}

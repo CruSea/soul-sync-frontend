@@ -1,6 +1,6 @@
 'use client';
 
-import { useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useForm } from 'react-hook-form';
 import * as z from 'zod';
@@ -15,7 +15,7 @@ import React from 'react';
 
 import { Button } from '@/components/ui/button';
 import { Plus } from 'lucide-react';
-import type { Channel } from '@/types/channel';
+import type { Channel, formSchemaType } from '@/types/channel';
 import ChannelNameForm from './channel-name-form';
 import { formSchema } from '@/types/channel';
 import ChannelTypeForm from './channel-type-form';
@@ -25,11 +25,10 @@ import ChannelCampIdform from './channel-campId-form';
 import { Form } from '@/components/ui/form';
 
 interface AddChannelDialogProps {
-  onAddChannel: (channel: Omit<Channel, 'id' | 'icon'>) => void;
+  onAddChannel: (channel: Omit<Channel, 'id' | 'date'>) => void;
   selectedChannel: string;
   setSelectedChannel: React.Dispatch<React.SetStateAction<string>>;
 }
-
 export function AddChannelDialog({
   onAddChannel,
   selectedChannel,
@@ -52,14 +51,53 @@ export function AddChannelDialog({
       campaignId: '',
     },
   });
+  const watchedValues = form.watch();
+  const previousWatchedValues = useRef(watchedValues); // Keep track of previous values
+
+  const [currentChannel, setCurrentChannel] = useState<
+    Omit<Channel, 'id' | 'date'>
+  >({
+    name: '',
+    metaData: {
+      channelType: 'Telegram Bot',
+      channelToken: '',
+      apiKey: '',
+      campaignId: '',
+    },
+  });
+
+  useEffect(() => {
+    // Compare current and previous watched values
+    if (
+      JSON.stringify(watchedValues) !==
+      JSON.stringify(previousWatchedValues.current)
+    ) {
+      const transformedData = {
+        name: watchedValues.name || '',
+        metaData: {
+          channelType: watchedValues.type || '',
+          channelToken: watchedValues.token || '',
+          apiKey: watchedValues.apiKey || '',
+          campaignId: watchedValues.campaignId || '',
+        },
+        date: new Date().toLocaleDateString('en-US', format),
+      };
+
+      setCurrentChannel(transformedData);
+      previousWatchedValues.current = watchedValues; // Update ref with the new values
+    }
+  }, [watchedValues]);
+
+  console.log('Current Channel State:', currentChannel);
+
   const channelChange = () => {
     switch (selectedChannel) {
       case 'Telegram Bot':
-        return <ChannelApiForm form={form} />;
+        return <ChannelTokenform form={form} />;
       case 'Negarit SMS':
         return (
           <div>
-            <ChannelTokenform form={form} />
+            <ChannelApiForm form={form} />
             <ChannelCampIdform form={form} />
           </div>
         );
@@ -70,25 +108,10 @@ export function AddChannelDialog({
 
   function onSubmit(values: z.infer<typeof formSchema>) {
     const date = new Date().toLocaleDateString('en-US', format);
-
-    const transformedData = {
-      name: values.name,
-      Metadata: {
-        type: values.type,
-      },
-      Config: {
-        token: values.token || '',
-        apiKey: values.apiKey || '',
-        campaignId: values.campaignId || '',
-      },
-      Date: date,
-    };
-    console.log(transformedData);
-
-    onAddChannel(transformedData);
-
-    setOpen(false);
+    onAddChannel(currentChannel);
+    setSelectedChannel('Telegram Bot');
     form.reset();
+    setOpen(false);
   }
 
   return (
