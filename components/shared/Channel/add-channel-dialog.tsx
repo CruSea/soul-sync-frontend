@@ -58,8 +58,8 @@ export function AddChannelDialog({
     Omit<Channel, 'id' | 'date'>
   >({
     name: '',
-    metaData: {
-      channelType: 'Telegram Bot',
+    channelType: 'Telegram Bot',
+    channelConfig: {
       channelToken: '',
       apiKey: '',
       campaignId: '',
@@ -74,8 +74,8 @@ export function AddChannelDialog({
     ) {
       const transformedData = {
         name: watchedValues.name || '',
-        metaData: {
-          channelType: watchedValues.type || '',
+        channelType: watchedValues.type || '',
+        channelConfig: {
           channelToken: watchedValues.token || '',
           apiKey: watchedValues.apiKey || '',
           campaignId: watchedValues.campaignId || '',
@@ -107,12 +107,12 @@ export function AddChannelDialog({
 
   function onSubmit(values: z.infer<typeof formSchema>) {
     const date = new Date().toLocaleDateString('en-US', format);
-    if (currentChannel.metaData.channelType === 'Negarit SMS') {
-      currentChannel.metaData.channelToken = '';
+    if (currentChannel.channelType === 'Negarit SMS') {
+      currentChannel.channelConfig.channelToken = '';
       onAddChannel(currentChannel);
-    } else if (currentChannel.metaData.channelType === 'Telegram Bot') {
-      currentChannel.metaData.apiKey = '';
-      currentChannel.metaData.campaignId = '';
+    } else if (currentChannel.channelType === 'Telegram Bot') {
+      currentChannel.channelConfig.apiKey = '';
+      currentChannel.channelConfig.campaignId = '';
       onAddChannel(currentChannel);
     }
     setSelectedChannel('Telegram Bot');

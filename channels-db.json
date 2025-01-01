@@ -1,48 +1,15 @@
 {
   "channels": [
     {
-      "id": "bbbb286b-48ed-45f0-ab45-9758ad4d9e82",
+      "id": "ee028bac-9b1f-4d26-9e20-18ac827bbc1d",
       "name": "Soul sync - bot",
-      "metaData": {
-        "channelType": "Telegram Bot",
+      "channelType": "Telegram Bot",
+      "channelConfig": {
         "channelToken": "Telegram Token",
         "apiKey": "",
         "campaignId": ""
       },
-      "date": "Dec 31, 2024"
-    },
-    {
-      "id": "2ab90d33-f1ef-4612-b4f3-73b4e1877dc0",
-      "name": "Soul Sync ",
-      "metaData": {
-        "channelType": "Negarit SMS",
-        "channelToken": "",
-        "apiKey": "Negarit API",
-        "campaignId": "Negarit Camp"
-      },
-      "date": "Dec 31, 2024"
-    },
-    {
-      "id": "167cb7af-62d8-43d7-ac38-204594442015",
-      "name": "Soul sync - bot 2",
-      "metaData": {
-        "channelType": "Telegram Bot",
-        "channelToken": "Telegram Token 2",
-        "apiKey": "",
-        "campaignId": ""
-      },
-      "date": "Dec 31, 2024"
-    },
-    {
-      "id": "9597fb30-f8e5-4819-ba41-5732b39efaf7",
-      "name": "Soul Sync ",
-      "metaData": {
-        "channelType": "Telegram Bot",
-        "channelToken": "Telegram Token 3",
-        "apiKey": "",
-        "campaignId": ""
-      },
-      "date": "Dec 31, 2024"
+      "date": "Jan 1, 2025"
     }
   ]
 }

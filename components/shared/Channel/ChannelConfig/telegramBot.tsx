@@ -14,7 +14,7 @@ function telegramBot({ channel }: telegramProp) {
         </div>
       </div>
       <div className="text-gray-900 text-xs font-bold font-['Manrope'] ">
-        {channel.metaData.channelToken}
+        {channel.channelConfig.channelToken}
       </div>
     </div>
   );

@@ -50,8 +50,7 @@ export default function ChannelsPage() {
 
   const filteredChannel = channels?.filter(
     (item) =>
-      (selectedCategory === 'All' ||
-        item.metaData.channelType === selectedCategory) &&
+      (selectedCategory === 'All' || item.channelType === selectedCategory) &&
       item.name.toLowerCase().includes(search.toLowerCase())
   );
   const format: Intl.DateTimeFormatOptions = {

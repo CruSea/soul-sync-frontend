@@ -15,7 +15,7 @@ function Facebook({ channel }: facebookProp) {
           </div>
         </div>
         <div className="text-gray-900 text-xs font-bold font-['Manrope'] ">
-          {channel.Config.apiKey}
+          {channel.channelConfig.apiKey}
         </div>
       </div>
     </div>

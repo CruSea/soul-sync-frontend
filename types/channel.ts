@@ -10,8 +10,8 @@ export type ChannelType =
 export interface Channel {
   id: string;
   name: string;
-  metaData: {
-    channelType: ChannelType;
+  channelType: ChannelType;
+  channelConfig: {
     channelToken: string;
     apiKey: string;
     campaignId: string;

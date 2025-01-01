@@ -15,7 +15,7 @@ function NegaritSMS({ channel }: NegaritProp) {
           </div>
         </div>
         <div className="text-gray-900 text-xs font-bold font-['Manrope'] ">
-          {channel.metaData.apiKey}
+          {channel.channelConfig.apiKey}
         </div>
       </div>
       <div className="justify-between items-center flex  w-full ">
@@ -26,7 +26,7 @@ function NegaritSMS({ channel }: NegaritProp) {
           </div>
         </div>
         <div className="text-gray-900 text-xs font-bold font-['Manrope']">
-          {channel.metaData.campaignId}
+          {channel.channelConfig.campaignId}
         </div>
       </div>
     </div>
