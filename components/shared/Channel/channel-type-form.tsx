@@ -29,7 +29,7 @@ export default function ChannelNameForm({
     <div>
       <FormField
         control={form.control}
-        name="type"
+        name="channelType"
         render={({ field }) => (
           <FormItem>
             <FormLabel>Channel Type</FormLabel>

@@ -45,9 +45,9 @@ export function AddChannelDialog({
     resolver: zodResolver(formSchema),
     defaultValues: {
       name: '',
-      type: 'Telegram Bot',
+      channelType: 'Telegram Bot',
       apiKey: '',
-      token: '',
+      channelToken: '',
       campaignId: '',
     },
   });
@@ -61,8 +61,6 @@ export function AddChannelDialog({
     channelType: 'Telegram Bot',
     channelConfig: {
       channelToken: '',
-      apiKey: '',
-      campaignId: '',
     },
   });
 
@@ -72,17 +70,26 @@ export function AddChannelDialog({
       JSON.stringify(watchedValues) !==
       JSON.stringify(previousWatchedValues.current)
     ) {
-      const transformedData = {
-        name: watchedValues.name || '',
-        channelType: watchedValues.type || '',
-        channelConfig: {
-          channelToken: watchedValues.token || '',
-          apiKey: watchedValues.apiKey || '',
-          campaignId: watchedValues.campaignId || '',
-        },
-      };
-
-      setCurrentChannel(transformedData);
+      if (watchedValues.channelType == 'Telegram Bot') {
+        const transformedData = {
+          name: watchedValues.name || '',
+          channelType: watchedValues.channelType || '',
+          channelConfig: {
+            channelToken: watchedValues.channelToken || '',
+          },
+        };
+        setCurrentChannel(transformedData);
+      } else if (watchedValues.channelType == 'Negarit SMS') {
+        const transformedData = {
+          name: watchedValues.name || '',
+          channelType: watchedValues.channelType || '',
+          channelConfig: {
+            apiKey: watchedValues.apiKey || '',
+            campaignId: watchedValues.campaignId || '',
+          },
+        };
+        setCurrentChannel(transformedData);
+      }
       previousWatchedValues.current = watchedValues; // Update ref with the new values
     }
   }, [watchedValues]);
@@ -107,14 +114,7 @@ export function AddChannelDialog({
 
   function onSubmit(values: z.infer<typeof formSchema>) {
     const date = new Date().toLocaleDateString('en-US', format);
-    if (currentChannel.channelType === 'Negarit SMS') {
-      currentChannel.channelConfig.channelToken = '';
-      onAddChannel(currentChannel);
-    } else if (currentChannel.channelType === 'Telegram Bot') {
-      currentChannel.channelConfig.apiKey = '';
-      currentChannel.channelConfig.campaignId = '';
-      onAddChannel(currentChannel);
-    }
+    onAddChannel(currentChannel);
     setSelectedChannel('Telegram Bot');
     form.reset();
     setOpen(false);

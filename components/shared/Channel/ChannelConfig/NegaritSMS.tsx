@@ -1,10 +1,11 @@
-import type { Channel } from '@/types/channel';
-
+import type { Channel, NegaritConfig, telegramConfig } from '@/types/channel';
 type NegaritProp = {
   channel: Channel;
 };
 
 function NegaritSMS({ channel }: NegaritProp) {
+  const config = channel.channelConfig as NegaritConfig;
+
   return (
     <div className="w-full">
       <div className="w-full justify-between items-center flex ">
@@ -15,7 +16,7 @@ function NegaritSMS({ channel }: NegaritProp) {
           </div>
         </div>
         <div className="text-gray-900 text-xs font-bold font-['Manrope'] ">
-          {channel.channelConfig.apiKey}
+          {config.apiKey}
         </div>
       </div>
       <div className="justify-between items-center flex  w-full ">
@@ -26,7 +27,7 @@ function NegaritSMS({ channel }: NegaritProp) {
           </div>
         </div>
         <div className="text-gray-900 text-xs font-bold font-['Manrope']">
-          {channel.channelConfig.campaignId}
+          {config.campaignId}
         </div>
       </div>
     </div>

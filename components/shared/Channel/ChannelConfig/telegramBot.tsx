@@ -1,10 +1,11 @@
-import type { Channel } from '@/types/channel';
+import type { Channel, telegramConfig } from '@/types/channel';
 
 type telegramProp = {
   channel: Channel;
 };
 
 function telegramBot({ channel }: telegramProp) {
+  const config = channel.channelConfig as telegramConfig;
   return (
     <div className="w-full justify-between items-center flex ">
       <div className="h-auto w-fit gap-2 items-center flex  justify-between">
@@ -14,7 +15,7 @@ function telegramBot({ channel }: telegramProp) {
         </div>
       </div>
       <div className="text-gray-900 text-xs font-bold font-['Manrope'] ">
-        {channel.channelConfig.channelToken}
+        {config.channelToken}
       </div>
     </div>
   );

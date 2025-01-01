@@ -19,7 +19,7 @@ export default function ChannelNameForm({ form }: ChannelNameFormProps) {
     <div>
       <FormField
         control={form.control}
-        name="token"
+        name="channelToken"
         render={({ field }) => (
           <FormItem>
             <FormLabel>Token</FormLabel>
