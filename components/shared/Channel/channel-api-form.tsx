@@ -9,7 +9,6 @@ import React from 'react';
 import { UseFormReturn } from 'react-hook-form';
 import { formSchemaType } from '@/types/channel';
 import { Input } from '@/components/ui/input';
-
 type ChannelNameFormProps = {
   form: UseFormReturn<formSchemaType>;
 };
@@ -24,7 +23,7 @@ export default function ChannelNameForm({ form }: ChannelNameFormProps) {
           <FormItem>
             <FormLabel>API Key</FormLabel>
             <FormControl>
-              <Input placeholder="Aef35jhjsf48Hfe" {...field} />
+              <Input placeholder="Please Insert the API Key" {...field} />
             </FormControl>
             <FormMessage />
           </FormItem>
