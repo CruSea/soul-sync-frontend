@@ -2,6 +2,7 @@ import SessionWrapper from '@/context/providers/SessionWrapper';
 import './globals.css';
 import { ThemeProvider } from '@/context/providers/ThemeProvider';
 import React from 'react';
+import { AuthProvider } from '@/context/AuthContext';
 
 export default function RootLayout({
   children,
@@ -18,7 +19,7 @@ export default function RootLayout({
             enableSystem={false}
             storageKey="dashboard-theme"
           >
-            {children}
+            <AuthProvider>{children}</AuthProvider>
           </ThemeProvider>
         </SessionWrapper>
       </body>

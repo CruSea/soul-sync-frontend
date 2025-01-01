@@ -19,7 +19,7 @@ export function GenderField({ options }: GenderFieldProps) {
             <RadioGroup
               defaultValue="male"
               onValueChange={field.onChange}
-              className="flex gap-10"
+              className="flex gap-10 !font-normal text-2xl"
             >
               {options.map((option) => (
                 <FormItem
