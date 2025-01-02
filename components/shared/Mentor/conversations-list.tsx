@@ -7,12 +7,14 @@ import {
   CommandList,
 } from '@/components/ui/command';
 
+import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 import { ScrollArea } from '@/components/ui/scroll-area';
 import { cn, getFallBack } from '@/lib/utils';
-import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
-import { UsersListProps } from '@/types/mentor';
+import { ConversationsListProps } from '@/types/mentor';
+import { platformIcons } from '@/data/mentor';
+import { StaticImageData } from 'next/image';
 
-const UsersList = ({ users, currentUser, setCurrentUser }: UsersListProps) => {
+const ConversationsList = ({ conversations, currentConversation, setCurrentConversation }: ConversationsListProps) => {
   return (
     <div className="w-80 overflow-y-auto bg-white rounded-[10px] py-4 shadow-sidebar">
       <Command className="px-0">
@@ -28,19 +30,19 @@ const UsersList = ({ users, currentUser, setCurrentUser }: UsersListProps) => {
             <CommandEmpty>No results found.</CommandEmpty>
             <CommandGroup className="p-3 flex flex-col">
               {/* a an individual user */}
-              {users.map((user) => (
+              {conversations.map((conversation) => (
                 <CommandItem
-                  key={user.id}
+                  key={conversation.id}
                   className={cn(
                     'flex px-2.5 gap-3.5 items-center h-[70px] outline-none rounded-lg cursor-pointer',
-                    user.id === currentUser.id ? '!bg-gray-300' : 'bg-white'
+                    conversation.id === currentConversation.id ? '!bg-gray-300' : 'bg-white'
                   )} // if user is selected sets the background to gry
-                  onSelect={() => setCurrentUser(user)} // sets the chosen user to the index of the selected item
+                  onSelect={() => setCurrentConversation(conversation)} // sets the chosen user to the index of the selected item
                 >
                   {/* Avatar image a user */}
                   <Avatar className="w-[32px] h-[32px]">
                     <AvatarImage
-                      src={user.imageUrl}
+                      src=""
                       className="w-full h-full object-cover"
                     />
                     <AvatarFallback className="w-full h-full flex items-center justify-center text-base">
@@ -62,4 +64,4 @@ const UsersList = ({ users, currentUser, setCurrentUser }: UsersListProps) => {
   );
 };
 
-export default UsersList;
+export default ConversationsList;

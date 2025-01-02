@@ -9,6 +9,6 @@ export const endPoints = {
 export const jsonServer = {
   baseUrl: 'http://localhost:3001',
   messages: 'userMessages',
-  users: 'users',
+  conversations: 'conversations',
   userDetails: 'userDetails',
 };

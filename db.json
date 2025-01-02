@@ -1,35 +1,25 @@
 {
-  "users": [
+  "conversations": [
     {
-      "id": "fc6cb555-26b8-452a-a707-ce6b9db2d6ac",
-      "fullName": "John Doe",
-      "imageUrl": "https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8M3x8cGVvcGxlfGVufDB8fDB8fHww",
-      "lastUpdated": "2024-12-12T09:10:00Z"
+      "conversation_id": "fc6cb555-26b8-452a-a707-ce6b9db2d6ac",
+      "platform": "Telegram"
     },
     {
-      "id": "gc6cb555-26b8-452a-a707-ce6b9db2d6ac",
-      "fullName": "Emily Davis",
-      "imageUrl": "https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Mnx8cGVvcGxlfGVufDB8fDB8fHww",
-      "lastUpdated": "2024-12-13T08:40:00Z"
+      "conversation_id": "a2d7b830-4e29-4a4f-b6f5-6fa36d9918e3",
+      "platform": "WhatsApp"
     },
     {
-      "id": "hc6cb555-26b8-452a-a707-ce6b9db2d6ac",
-      "fullName": "Michael Johnson",
-      "imageUrl": "https://plus.unsplash.com/premium_photo-1689551670902-19b441a6afde?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MjV8fGF2YXRhcnxlbnwwfHwwfHx8MA%3D%3D",
-      "lastUpdated": "2024-12-11T10:00:00Z"
+      "conversation_id": "9b8cf41b-38fd-46c4-9ff1-3e06b2e1d8f7",
+      "platform": "Negarit"
     },
     {
-      "id": "ic6cb555-26b8-452a-a707-ce6b9db2d6ac",
-      "fullName": "Sophia Brown",
-      "imageUrl": "https://plus.unsplash.com/premium_photo-1689568126014-06fea9d5d341?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8NDl8fGF2YXRhcnxlbnwwfHwwfHx8MA%3D%3D",
-      "lastUpdated": "2024-12-11T11:00:00Z"
+      "conversation_id": "da1c918e-76de-4b72-b3d8-01bc2e3e2c45",
+      "platform": "Facebook"
     },
     {
-      "id": "ec6cb555-26b8-452a-a707-ce6b9db2d6ac",
-      "fullName": "Jane Smith",
-      "imageUrl": "https://plus.unsplash.com/premium_photo-1669703777437-27602d656c27?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MTN8fHBlb3BsZXxlbnwwfHwwfHx8MA%3D%3D",
-      "lastUpdated": "2024-12-11T10:00:00Z"
-    }
+      "conversation_id": "e4d7fdb2-1c98-4db3-95dc-6a07d8c3c92b",
+      "platform": "Twilio"
+    },
   ],
   "userMessages": [
     {

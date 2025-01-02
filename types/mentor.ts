@@ -1,4 +1,5 @@
 import { colors } from '@/components/shared/Mentor/Info';
+import type { StaticImageData } from "next/image";
 
 export interface Mentor {
   id: string;
@@ -22,14 +23,12 @@ export interface MentorLayoutProps {
   children: React.ReactNode;
 }
 
-export type User = {
+export type Conversation = {
   id: string;
-  fullName: string;
-  imageUrl: string;
-  lastUpdated: string;
+  platform: string;
 };
 
-export type Users = User[];
+export type Conversations = Conversation[];
 
 export type Message = {
   sender: string;
@@ -53,13 +52,13 @@ export type UserDetails = {
 };
 
 export interface MentorContainerProps {
-  users: Users;
+  conversations: Conversations;
 }
 
-export interface UsersListProps {
-  currentUser: User;
-  users: Users;
-  setCurrentUser: (user: User) => void;
+export interface ConversationsListProps {
+  currentConversation: Conversation;
+  conversations: Conversations;
+  setCurrentConversation: (conversation: Conversation) => void;
 }
 
 export type UserMessages = {
@@ -127,3 +126,7 @@ export interface MessageProps {
   newDay: string;
   imageUrl: string;
 }
+
+export type PlatformIcon = StaticImageData | string;
+
+export type PlatformIconsType = Record<string, PlatformIcon>
