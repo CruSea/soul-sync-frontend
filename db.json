@@ -1,25 +1,25 @@
 {
   "conversations": [
     {
-      "conversation_id": "fc6cb555-26b8-452a-a707-ce6b9db2d6ac",
+      "id": "fc6cb555-26b8-452a-a707-ce6b9db2d6ac",
       "platform": "Telegram"
     },
     {
-      "conversation_id": "a2d7b830-4e29-4a4f-b6f5-6fa36d9918e3",
+      "id": "a2d7b830-4e29-4a4f-b6f5-6fa36d9918e3",
       "platform": "WhatsApp"
     },
     {
-      "conversation_id": "9b8cf41b-38fd-46c4-9ff1-3e06b2e1d8f7",
+      "id": "9b8cf41b-38fd-46c4-9ff1-3e06b2e1d8f7",
       "platform": "Negarit"
     },
     {
-      "conversation_id": "da1c918e-76de-4b72-b3d8-01bc2e3e2c45",
+      "id": "da1c918e-76de-4b72-b3d8-01bc2e3e2c45",
       "platform": "Facebook"
     },
     {
-      "conversation_id": "e4d7fdb2-1c98-4db3-95dc-6a07d8c3c92b",
+      "id": "e4d7fdb2-1c98-4db3-95dc-6a07d8c3c92b",
       "platform": "Twilio"
-    },
+    }
   ],
   "userMessages": [
     {

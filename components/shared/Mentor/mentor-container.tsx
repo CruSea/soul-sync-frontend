@@ -1,10 +1,8 @@
 'use client';
 
 import {
-  MentorContainerProps,
-  User,
-  UserDetails,
-  UserMessages,
+  Conversation,
+  MentorContainerProps
 } from '@/types/mentor';
 import Chat from './Chat';
 import Profile from './Profile';
@@ -18,11 +16,11 @@ const BASE_URL = process.env.NEXT_PUBLIC_API_BASE_URL;
 const USER_URL = process.env.NEXT_PUBLIC_API_ADMIN_URL;
 
 const MentorContainer = ({ conversations }: MentorContainerProps) => {
-  const [currentConversation, setCurrentConversation] = useState<User>(conversations[0]);
-  const [userDetails, setUserDetails] = useState<UserDetails>();
-  const [userMessages, setUserMessages] = useState<UserMessages>();
+  const [currentConversation, setCurrentConversation] = useState<Conversation>(conversations[0]);
+  // const [userDetails, setUserDetails] = useState<UserDetails>();
+  // const [userMessages, setUserMessages] = useState<UserMessages>();
 
-  const [isDrawerOpen, setIsDrawerOpen] = useState<boolean>(false);
+  // const [isDrawerOpen, setIsDrawerOpen] = useState<boolean>(false);
 
   const router = useRouter();
 
