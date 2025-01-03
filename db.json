@@ -21,278 +21,206 @@
       "platform": "Twilio"
     }
   ],
-  "userMessages": [
-    {
-      "id": "ec6cb555-26b8-452a-a707-ce6b9db2d6ac",
-      "fullName": "Jane Smith",
-      "email": "janesmith@example.com",
-      "imageUrl": "https://plus.unsplash.com/premium_photo-1669703777437-27602d656c27?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MTN8fHBlb3BsZXxlbnwwfHwwfHx8MA%3D%3D",
-      "messages": [
-        {
-          "sender": "mentor",
-          "dateTime": "2024-12-12T09:00:00Z",
-          "content": "Hi John, what can I do for you today?"
-        },
-        {
-          "sender": "user",
-          "dateTime": "2024-12-12T09:05:00Z",
-          "content": "I need tips for better time management."
-        },
-        {
-          "sender": "mentor",
-          "dateTime": "2024-12-12T09:10:00Z",
-          "content": "Time management is crucial. Start by prioritizing tasks."
-        }
-      ]
-    },
+  "thread": [
     {
       "id": "fc6cb555-26b8-452a-a707-ce6b9db2d6ac",
-      "fullName": "John Doe",
-      "email": "johndoe@example.com",
-      "imageUrl": "https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8M3x8cGVvcGxlfGVufDB8fDB8fHww",
       "messages": [
         {
-          "sender": "mentor",
-          "dateTime": "2024-12-11T10:00:00Z",
-          "content": "Hello Jane, how can I assist you today?"
+          "type": "RECEIVED",
+          "createdAt": "2024-12-12T09:00:00Z",
+          "body": "Hi John, what can I do for you today?"
         },
         {
-          "sender": "user",
-          "dateTime": "2024-12-11T10:05:00Z",
-          "content": "I need help with my career planning."
+          "type": "SENT",
+          "createdAt": "2024-12-12T09:05:00Z",
+          "body": "I need tips for better time management."
         },
         {
-          "sender": "mentor",
-          "dateTime": "2024-12-11T10:10:00Z",
-          "content": "Sure! Let's discuss your goals. What specific areas are you looking to focus on?"
+          "type": "RECEIVED",
+          "createdAt": "2024-12-12T09:10:00Z",
+          "body": "Time management is crucial. Start by prioritizing tasks. What’s currently on your plate?"
         },
         {
-          "sender": "user",
-          "dateTime": "2024-12-11T10:15:00Z",
-          "content": "I’m interested in exploring opportunities in marketing and project management."
+          "type": "SENT",
+          "createdAt": "2024-12-12T09:15:00Z",
+          "body": "I have multiple assignments, meetings, and a personal project."
         },
         {
-          "sender": "mentor",
-          "dateTime": "2024-12-11T10:20:00Z",
-          "content": "Great choices! Have you had any experience in those fields yet?"
+          "type": "RECEIVED",
+          "createdAt": "2024-12-12T09:20:00Z",
+          "body": "Got it. Use a to-do list or a planner. Allocate specific blocks of time for each task."
         },
         {
-          "sender": "user",
-          "dateTime": "2024-12-12T09:00:00Z",
-          "content": "I did an internship in marketing last summer, but I’m not sure if I want to continue in that path."
+          "type": "SENT",
+          "createdAt": "2024-12-12T09:25:00Z",
+          "body": "That makes sense. Should I focus on one thing at a time or multitask?"
         },
         {
-          "sender": "mentor",
-          "dateTime": "2024-12-12T09:05:00Z",
-          "content": "That’s valuable experience. What did you enjoy most about the internship?"
-        },
-        {
-          "sender": "user",
-          "dateTime": "2024-12-12T09:10:00Z",
-          "content": "I liked working on campaigns, but I found the project management aspect intriguing as well."
-        },
-        {
-          "sender": "mentor",
-          "dateTime": "2024-12-13T14:30:00Z",
-          "content": "It sounds like you have a good foundation. Why not consider combining both interests? Project management skills are highly valued in marketing."
-        },
-        {
-          "sender": "user",
-          "dateTime": "2024-12-13T14:35:00Z",
-          "content": "That makes sense! I hadn’t thought of it that way. How can I build my project management skills?"
-        },
-        {
-          "sender": "mentor",
-          "dateTime": "2024-12-14T11:00:00Z",
-          "content": "You could start by taking online courses or certifications in project management. Have you looked into any programs?"
-        },
-        {
-          "sender": "user",
-          "dateTime": "2024-12-14T11:05:00Z",
-          "content": "I found a few courses on Coursera that look interesting. Do you think they’re worth it?"
-        },
-        {
-          "sender": "mentor",
-          "dateTime": "2024-12-14T11:10:00Z",
-          "content": "Absolutely! Online courses can provide flexibility and valuable knowledge. Just make sure to choose one that offers practical insights."
-        },
-        {
-          "sender": "user",
-          "dateTime": "2024-12-15T14:15:00Z",
-          "content": "[after a few days] I enrolled in a project management course! I'm excited to start learning."
-        },
-        {
-          "sender": "mentor",
-          "dateTime": "2024-12-15T14:20:00Z",
-          "content": "That's fantastic news! Setting aside time each week for your studies will help you stay on track."
-        },
-        {
-          "sender": "user",
-          "dateTime": "2024-12-16T09:30:00Z",
-          "content": "I’ve started the course and it’s really engaging! I’ve learned about Agile methodologies so far."
-        },
-        {
-          "sender": "mentor",
-          "dateTime": "2024-12-16T09:35:00Z",
-          "content": "Agile is a great approach for many projects. How do you think it will apply to your interests in marketing?"
-        },
-        {
-          "sender": "user",
-          "dateTime": "2024-12-17T08:45:00Z",
-          "content": "I think it will help me manage campaigns more efficiently and adapt quickly to changes."
-        },
-        {
-          "sender": "mentor",
-          "dateTime": "2024-12-17T08:50:00Z",
-          "content": "Exactly! Being adaptable is key in today’s fast-paced environment. Keep up the good work!"
-        },
-        {
-          "sender": "mentor",
-          "dateTime": "2024-12-17T05:11:47.407Z",
-          "content": "jjjjjjj"
-        },
-        {
-          "sender": "mentor",
-          "dateTime": "2024-12-17T07:11:14.633Z",
-          "content": "hi hello"
+          "type": "RECEIVED",
+          "createdAt": "2024-12-12T09:30:00Z",
+          "body": "Focus on one task at a time. Multitasking often reduces efficiency. Let’s review your priorities next time."
         }
       ]
     },
     {
-      "id": "gc6cb555-26b8-452a-a707-ce6b9db2d6ac",
-      "fullName": "Emily Davis",
-      "email": "updatedMessages@gmail.com",
-      "imageUrl": "https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Mnx8cGVvcGxlfGVufDB8fDB8fHww",
+      "id": "a2d7b830-4e29-4a4f-b6f5-6fa36d9918e3",
       "messages": [
         {
-          "sender": "mentor",
-          "dateTime": "2024-12-13T08:30:00Z",
-          "content": "Good morning Emily, how can I assist?"
+          "type": "RECEIVED",
+          "createdAt": "2024-12-13T10:00:00Z",
+          "body": "Good morning, Sarah. How’s your preparation for the upcoming coding interview?"
         },
         {
-          "sender": "user",
-          "dateTime": "2024-12-13T08:35:00Z",
-          "content": "I need help improving my resume."
+          "type": "SENT",
+          "createdAt": "2024-12-13T10:05:00Z",
+          "body": "Good morning! I’m reviewing algorithms and practicing mock interviews."
         },
         {
-          "sender": "mentor",
-          "dateTime": "2024-12-13T08:40:00Z",
-          "content": "Sure! Let's start with tailoring it to your job interests."
+          "type": "RECEIVED",
+          "createdAt": "2024-12-13T10:10:00Z",
+          "body": "That’s a good start. How comfortable are you with problem-solving under time pressure?"
         },
         {
-          "sender": "mentor",
-          "dateTime": "2024-12-18T07:08:01.480Z",
-          "content": "hi"
+          "type": "SENT",
+          "createdAt": "2024-12-13T10:15:00Z",
+          "body": "Not very confident yet. I struggle with staying calm during tough problems."
         },
         {
-          "sender": "mentor",
-          "dateTime": "2024-12-18T07:08:05.125Z",
-          "content": "sasdfasd"
+          "type": "RECEIVED",
+          "createdAt": "2024-12-13T10:20:00Z",
+          "body": "Understood. Practice breathing exercises and work on breaking problems into smaller parts."
+        },
+        {
+          "type": "SENT",
+          "createdAt": "2024-12-13T10:25:00Z",
+          "body": "Thanks, I’ll try that. Any tips for explaining my solutions clearly?"
+        },
+        {
+          "type": "RECEIVED",
+          "createdAt": "2024-12-13T10:30:00Z",
+          "body": "Yes, narrate your thought process as you solve. Clarity and logic are key. Let’s do a mock session next week."
         }
       ]
     },
     {
-      "id": "hc6cb555-26b8-452a-a707-ce6b9db2d6ac",
-      "fullName": "Michael Johnson",
-      "email": "michaeljohnson@example.com",
-      "imageUrl": "https://plus.unsplash.com/premium_photo-1689551670902-19b441a6afde?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MjV8fGF2YXRhcnxlbnwwfHwwfHx8MA%3D%3D",
+      "id": "9b8cf41b-38fd-46c4-9ff1-3e06b2e1d8f7",
       "messages": [
         {
-          "sender": "mentor",
-          "dateTime": "2024-12-14T11:00:00Z",
-          "content": "Hello Michael, what can I help you with?"
+          "type": "RECEIVED",
+          "createdAt": "2024-12-14T11:00:00Z",
+          "body": "Hey Alex, have you made progress on the design drafts?"
         },
         {
-          "sender": "user",
-          "dateTime": "2024-12-14T11:10:00Z",
-          "content": "I need advice on public speaking."
+          "type": "SENT",
+          "createdAt": "2024-12-14T11:15:00Z",
+          "body": "Hi, I’ve completed most of the wireframes but need help with some layouts."
         },
         {
-          "sender": "mentor",
-          "dateTime": "2024-12-14T11:20:00Z",
-          "content": "Public speaking can be improved with practice. Focus on clarity and confidence."
+          "type": "RECEIVED",
+          "createdAt": "2024-12-14T11:20:00Z",
+          "body": "Alright. What challenges are you facing specifically?"
+        },
+        {
+          "type": "SENT",
+          "createdAt": "2024-12-14T11:25:00Z",
+          "body": "The spacing feels off, and I’m unsure about the color contrast for accessibility."
+        },
+        {
+          "type": "RECEIVED",
+          "createdAt": "2024-12-14T11:30:00Z",
+          "body": "For spacing, try using a grid system. For contrast, tools like Contrast Checker can help."
+        },
+        {
+          "type": "SENT",
+          "createdAt": "2024-12-14T11:35:00Z",
+          "body": "Thanks! I’ll give that a shot. Do you think the typography fits the theme?"
+        },
+        {
+          "type": "RECEIVED",
+          "createdAt": "2024-12-14T11:40:00Z",
+          "body": "It’s close, but consider a slightly bolder font for better readability. Let me know when you’re ready for feedback."
         }
       ]
     },
     {
-      "id": "ic6cb555-26b8-452a-a707-ce6b9db2d6ac",
-      "fullName": "Sophia Brown",
-      "email": "sophiabrown@example.com",
-      "imageUrl": "https://plus.unsplash.com/premium_photo-1689568126014-06fea9d5d341?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8NDl8fGF2YXRhcnxlbnwwfHwwfHx8MA%3D%3D",
+      "id": "da1c918e-76de-4b72-b3d8-01bc2e3e2c45",
       "messages": [
         {
-          "sender": "mentor",
-          "dateTime": "2024-12-15T14:00:00Z",
-          "content": "Hi Sophia, how can I support you today?"
+          "type": "RECEIVED",
+          "createdAt": "2024-12-15T12:00:00Z",
+          "body": "Hi Mike, are you prepared for tomorrow’s presentation?"
         },
         {
-          "sender": "user",
-          "dateTime": "2024-12-15T14:15:00Z",
-          "content": "I'm struggling with work-life balance."
+          "type": "SENT",
+          "createdAt": "2024-12-15T12:10:00Z",
+          "body": "Almost ready, but I’m worried about answering tricky questions."
         },
         {
-          "sender": "mentor",
-          "dateTime": "2024-12-15T14:30:00Z",
-          "content": "Work-life balance requires setting boundaries and time for yourself."
+          "type": "RECEIVED",
+          "createdAt": "2024-12-15T12:15:00Z",
+          "body": "Stay calm and honest. If you don’t know, say you’ll follow up later."
+        },
+        {
+          "type": "SENT",
+          "createdAt": "2024-12-15T12:20:00Z",
+          "body": "Got it. Any advice on engaging the audience?"
+        },
+        {
+          "type": "RECEIVED",
+          "createdAt": "2024-12-15T12:25:00Z",
+          "body": "Start with a compelling story or question. Make eye contact and smile."
+        },
+        {
+          "type": "SENT",
+          "createdAt": "2024-12-15T12:30:00Z",
+          "body": "Thanks! I’ll practice tonight. Do you think I need more slides?"
+        },
+        {
+          "type": "RECEIVED",
+          "createdAt": "2024-12-15T12:35:00Z",
+          "body": "No, keep it concise. Focus on delivering value with each slide."
         }
       ]
-    }
-  ],
-  "userDetails": [
-    {
-      "id": "ec6cb555-26b8-452a-a707-ce6b9db2d6ac",
-      "fullName": "Jane Smith",
-      "age": "25",
-      "gender": "Female",
-      "location": "New York, USA",
-      "phoneNumber": "+1-555-1234",
-      "email": "janesmith@example.com",
-      "platform": "WhatsApp",
-      "imageUrl": "https://plus.unsplash.com/premium_photo-1669703777437-27602d656c27?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MTN8fHBlb3BsZXxlbnwwfHwwfHx8MA%3D%3D"
     },
     {
-      "id": "fc6cb555-26b8-452a-a707-ce6b9db2d6ac",
-      "fullName": "John Doe",
-      "age": "30",
-      "gender": "Male",
-      "location": "Los Angeles, USA",
-      "phoneNumber": "+1-555-5678",
-      "email": "johndoe@example.com",
-      "platform": "Telegram",
-      "imageUrl": "https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8M3x8cGVvcGxlfGVufDB8fDB8fHww"
-    },
-    {
-      "id": "gc6cb555-26b8-452a-a707-ce6b9db2d6ac",
-      "fullName": "Emily Davis",
-      "age": "22",
-      "gender": "Female",
-      "location": "London, UK",
-      "phoneNumber": "+44-789-1234",
-      "email": "emilydavis@example.com",
-      "platform": "Email",
-      "imageUrl": "https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Mnx8cGVvcGxlfGVufDB8fDB8fHww"
-    },
-    {
-      "id": "hc6cb555-26b8-452a-a707-ce6b9db2d6ac",
-      "fullName": "Michael Johnson",
-      "age": "28",
-      "gender": "Male",
-      "location": "Sydney, Australia",
-      "phoneNumber": "+61-400-5678",
-      "email": "michaeljohnson@example.com",
-      "platform": "Messenger",
-      "imageUrl": "https://plus.unsplash.com/premium_photo-1689551670902-19b441a6afde?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MjV8fGF2YXRhcnxlbnwwfHwwfHx8MA%3D%3D"
-    },
-    {
-      "id": "ic6cb555-26b8-452a-a707-ce6b9db2d6ac",
-      "fullName": "Sophia Brown",
-      "age": "26",
-      "gender": "Female",
-      "location": "Toronto, Canada",
-      "phoneNumber": "+1-416-9876",
-      "email": "sophiabrown@example.com",
-      "platform": "Slack",
-      "imageUrl": "https://plus.unsplash.com/premium_photo-1689568126014-06fea9d5d341?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8NDl8fGF2YXRhcnxlbnwwfHwwfHx8MA%3D%3D"
+      "id": "e4d7fdb2-1c98-4db3-95dc-6a07d8c3c92b",
+      "messages": [
+        {
+          "type": "RECEIVED",
+          "createdAt": "2024-12-16T13:00:00Z",
+          "body": "Hello Emily, did you review the research findings?"
+        },
+        {
+          "type": "SENT",
+          "createdAt": "2024-12-16T13:05:00Z",
+          "body": "Yes, but I’m struggling to draw conclusions from the data."
+        },
+        {
+          "type": "RECEIVED",
+          "createdAt": "2024-12-16T13:10:00Z",
+          "body": "No problem. What trends or patterns stand out to you?"
+        },
+        {
+          "type": "SENT",
+          "createdAt": "2024-12-16T13:15:00Z",
+          "body": "There’s a clear seasonal increase in demand, but I’m not sure why."
+        },
+        {
+          "type": "RECEIVED",
+          "createdAt": "2024-12-16T13:20:00Z",
+          "body": "Good observation. Consider external factors like holidays or events."
+        },
+        {
+          "type": "SENT",
+          "createdAt": "2024-12-16T13:25:00Z",
+          "body": "Ah, that makes sense! I’ll cross-reference with the event calendar."
+        },
+        {
+          "type": "RECEIVED",
+          "createdAt": "2024-12-16T13:30:00Z",
+          "body": "Great idea. Let’s connect later to finalize the conclusions."
+        }
+      ]
     }
   ]
 }

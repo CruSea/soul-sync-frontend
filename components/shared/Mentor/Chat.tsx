@@ -14,9 +14,8 @@ import { jsonServer } from '@/data/end-points';
 
 const Chat = ({
   userMessages,
-  toggleDrawer,
-  userDetails,
   setUserMessages,
+  currentConversation
 }: ChatProps) => {
   // text is where the text box saves what the mentor writes
   const [text, setText] = useState<string>('');
@@ -82,16 +81,13 @@ const Chat = ({
         <Card className="flex-1 h-full rounded-[10px] flex flex-col justify-between overflow-hidden">
           <div className="flex-1 flex flex-col overflow-hidden">
             {/* the header that shows user name*/}
-            <ChatHeader
-              imageUrl={userMessages.imageUrl}
-              fullName={userMessages.fullName}
-              email={userMessages.email}
-              toggleDrawer={toggleDrawer}
-              userDetails={userDetails}
+            <ChatHeader 
+              id= {currentConversation.id} 
+              platform={currentConversation.platform}
             />
 
-            {/* the chat thread between the user and mentor*/}
-            <ScrollArea className="flex-1 overflow-hidden relative w-full pt-3 px-6 flex flex-col gap-8">
+            {/* the chat thread between the user and mentor */}
+            {/* <ScrollArea className="flex-1 overflow-hidden relative w-full pt-3 px-6 flex flex-col gap-8">
               {chatData?.map((message, index) => (
                 <div key={message.id} className="w-full relative py-4">
                   <Message imageUrl={userMessages.imageUrl} {...message} />
@@ -99,11 +95,11 @@ const Chat = ({
               ))}
 
               <div ref={bottomOfPanelRef} className="h-10 w-full p-5"></div>
-            </ScrollArea>
+            </ScrollArea> */}
           </div>
 
           {/*textbox where you input text */}
-          <InputArea ref={textBox} sendText={sendText} />
+          {/* <InputArea ref={textBox} sendText={sendText} /> */}
         </Card>
       )}
     </>

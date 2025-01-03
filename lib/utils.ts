@@ -47,13 +47,13 @@ export function transformChatData(input: Messages | undefined) {
   };
 
   return input.map((message, index, arr) => {
-    const currentDay = formatDate(message.dateTime);
-    const previousDay = index > 0 ? formatDate(arr[index - 1].dateTime) : null;
+    const currentDay = formatDate(message.createdAt);
+    const previousDay = index > 0 ? formatDate(arr[index - 1].createdAt) : null;
 
     return {
-      isUser: message.sender === 'user',
-      text: message.content,
-      time: formatTime(message.dateTime),
+      isMentor: message.type === 'SENT',
+      text: message.body,
+      time: formatTime(message.createdAt),
       newDay: currentDay !== previousDay ? currentDay : '',
       id: uuidv4(),
     };

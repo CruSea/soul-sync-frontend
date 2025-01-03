@@ -23,17 +23,21 @@ export interface MentorLayoutProps {
   children: React.ReactNode;
 }
 
+type Platform = "Telegram" | "WhatsApp" | "Negarit" | "Facebook" | "Twilio"
+
 export type Conversation = {
   id: string;
-  platform: string;
+  platform: Platform;
 };
 
 export type Conversations = Conversation[];
 
+type ISODateString = string & { __brand: 'ISODate' };
+
 export type Message = {
-  sender: string;
-  dateTime: string;
-  content: string;
+  type: "RECEIVED" | "SENT";
+  createdAt: ISODateString;
+  body: string;
 };
 
 export type Messages = Message[];
@@ -45,7 +49,7 @@ export type UserDetails = {
   location: string;
   phoneNumber: string;
   email: string;
-  platform: string;
+  platform: Platform;
   imageUrl: string;
   lastUpdated: string;
   messages: Message[];
@@ -64,18 +68,14 @@ export interface ConversationsListProps {
 export type UserMessages = {
   id: string;
   messages: Messages;
-  email: string;
-  imageUrl: string;
-  fullName: string;
 };
 
 export interface ChatProps {
+  currentConversation: Conversation;
   userMessages: UserMessages | undefined;
-  userDetails: UserDetails | undefined;
   setUserMessages: React.Dispatch<
     React.SetStateAction<UserMessages | undefined>
   >;
-  toggleDrawer: () => void;
 }
 
 export interface ProfileProps {
@@ -98,7 +98,7 @@ export interface ProfileTypes {
   location: string;
   email: string;
   phone: string;
-  platform: string | undefined;
+  platform: Platform | undefined;
   Expertise: string | undefined;
   src: string;
   abrivation: string;
@@ -106,11 +106,8 @@ export interface ProfileTypes {
 }
 
 export interface ChatHeaderProps {
-  imageUrl: string;
-  fullName: string;
-  email: string;
-  toggleDrawer: () => void;
-  userDetails: UserDetails | undefined;
+  platform: Platform;
+  id: string
 }
 
 export interface InfoProps {
