@@ -47,17 +47,17 @@
         },
         {
           "type": "RECEIVED",
-          "createdAt": "2024-12-12T09:20:00Z",
+          "createdAt": "2024-12-13T09:20:00Z",
           "body": "Got it. Use a to-do list or a planner. Allocate specific blocks of time for each task."
         },
         {
           "type": "SENT",
-          "createdAt": "2024-12-12T09:25:00Z",
+          "createdAt": "2024-12-13T09:25:00Z",
           "body": "That makes sense. Should I focus on one thing at a time or multitask?"
         },
         {
           "type": "RECEIVED",
-          "createdAt": "2024-12-12T09:30:00Z",
+          "createdAt": "2024-12-13T09:30:00Z",
           "body": "Focus on one task at a time. Multitasking often reduces efficiency. Let’s review your priorities next time."
         }
       ]
@@ -87,17 +87,17 @@
         },
         {
           "type": "RECEIVED",
-          "createdAt": "2024-12-13T10:20:00Z",
+          "createdAt": "2024-12-14T10:20:00Z",
           "body": "Understood. Practice breathing exercises and work on breaking problems into smaller parts."
         },
         {
           "type": "SENT",
-          "createdAt": "2024-12-13T10:25:00Z",
+          "createdAt": "2024-12-14T10:25:00Z",
           "body": "Thanks, I’ll try that. Any tips for explaining my solutions clearly?"
         },
         {
           "type": "RECEIVED",
-          "createdAt": "2024-12-13T10:30:00Z",
+          "createdAt": "2024-12-14T10:30:00Z",
           "body": "Yes, narrate your thought process as you solve. Clarity and logic are key. Let’s do a mock session next week."
         }
       ]

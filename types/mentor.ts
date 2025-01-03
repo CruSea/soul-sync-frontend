@@ -118,10 +118,9 @@ export interface InfoProps {
 
 export interface MessageProps {
   text: string;
-  isUser: boolean;
+  isMentor: boolean;
   time: string;
   newDay: string;
-  imageUrl: string;
 }
 
 export type PlatformIcon = StaticImageData | string;
