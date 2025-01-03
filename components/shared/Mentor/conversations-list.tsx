@@ -66,6 +66,7 @@ const ConversationsList = ({ conversations, currentConversation, setCurrentConve
                   {/* user information */}
                   <div className="flex flex-col justify-center">
                     <div className="font-bold text-base">{conversation.id}</div>
+                    <div className="font-bold text-xs text-muted-foreground">{conversation.platform}</div>
                   </div>
                 </CommandItem>
               ))}
