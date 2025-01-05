@@ -11,22 +11,13 @@ import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 import { ScrollArea } from '@/components/ui/scroll-area';
 import { cn, getFallBack } from '@/lib/utils';
 import { ConversationsListProps } from '@/types/mentor';
-import { StaticImageData } from 'next/image';
-import facebook from "@/public/facebook.png"
-import negarit from "@/public/negarit.png"
-import telegram from "@/public/telegram.png"
-import twilio from "@/public/Twilio.png"
-import whatsApp from "@/public/Whatsapp.png"
+import { platformIcons } from '@/data/mentor';
 
-const ConversationsList = ({ conversations, currentConversation, setCurrentConversation }: ConversationsListProps) => {
-  const platformIcons: Record<string, string> = {
-    Telegram: "@/public/facebook.png",
-    Negarit: "@/public/negarit.png",
-    Twilio: "@/public/Twilio.png",
-    Facebook: "@/public/facebook.png",
-    WhatsApp: "@/public/Whatsapp.png",
-  };
-
+const ConversationsList = ({
+  conversations,
+  currentConversation,
+  setCurrentConversation,
+}: ConversationsListProps) => {
   return (
     <div className="w-80 overflow-y-auto bg-white rounded-[10px] py-4 shadow-sidebar">
       <Command className="px-0">
@@ -47,14 +38,15 @@ const ConversationsList = ({ conversations, currentConversation, setCurrentConve
                   key={conversation.id}
                   className={cn(
                     'flex px-2.5 gap-3.5 items-center h-[70px] outline-none rounded-lg cursor-pointer',
-                    conversation.id === currentConversation.id ? '!bg-gray-300' : 'bg-white'
+                    conversation.id === currentConversation.id
+                      ? '!bg-gray-300'
+                      : 'bg-white'
                   )} // if user is selected sets the background to gry
                   onSelect={() => setCurrentConversation(conversation)} // sets the chosen user to the index of the selected item
                 >
                   {/* Avatar image a user */}
                   <Avatar className="w-[32px] h-[32px]">
                     <AvatarImage
-                      // src={conversation.platform === "Facebook" ? facebook : conversation.platform === "Negarit" ? negarit : conversation.platform === "Twilio" ? twilio : conversation.platform === "WhatsApp" ? whatsApp : conversation.platform === "telegram" ? telegram : "" }
                       src={platformIcons[conversation.platform]}
                       className="w-full h-full object-cover"
                     />
@@ -66,7 +58,9 @@ const ConversationsList = ({ conversations, currentConversation, setCurrentConve
                   {/* user information */}
                   <div className="flex flex-col justify-center">
                     <div className="font-bold text-base">{conversation.id}</div>
-                    <div className="font-bold text-xs text-muted-foreground">{conversation.platform}</div>
+                    <div className="font-bold text-xs text-muted-foreground">
+                      {conversation.platform}
+                    </div>
                   </div>
                 </CommandItem>
               ))}
