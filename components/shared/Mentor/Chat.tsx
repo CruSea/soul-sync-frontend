@@ -19,6 +19,7 @@ const Chat = ({
 }: ChatProps) => {
   // text is where the text box saves what the mentor writes
   const [text, setText] = useState<string>('');
+  const socket = new WebSocket('ws://localhost:8080');
 
   const chatData = transformChatData(userMessages?.messages);
 
@@ -28,44 +29,30 @@ const Chat = ({
   // a referance for where the you will write the text
   const textBox = useRef<HTMLInputElement | null>(null);
 
+  socket.onmessage = ({ data }) => {
+    console.log("message from server ", data);
+  }
+
   const sendText = async (messageText: string) => {
-    // if (!messageText.trim()) return; // Don't send empty messages
+    if (!messageText.trim()) return; // Don't send empty messages
+
+    const newMessage = {
+      "type": "SENT",
+      "createdAt": new Date().toISOString(),
+      "body": messageText
+    }
+
+    socket.send(JSON.stringify(newMessage))
+
+
+
+
 
     // const newMessage = {
     //   sender: 'mentor',
     //   dateTime: new Date().toISOString(), // Get current time
     //   content: messageText.trim(),
     // };
-
-    // try {
-    //   // Find the current id from props
-    //   if (!userMessages) {
-    //     return;
-    //   }
-
-    //   // Append the new message to the messages array
-    //   const updatedMessages = [...userMessages.messages, newMessage];
-
-    //   // Update the backend
-    //   const patchResponse = await fetch(
-    //     `${jsonServer.baseUrl}/${jsonServer.messages}/${userMessages.id}`,
-    //     {
-    //       method: 'PATCH',
-    //       headers: {
-    //         'Content-Type': 'application/json',
-    //       },
-    //       body: JSON.stringify({ messages: updatedMessages }),
-    //     }
-    //   );
-
-    //   console.log('the patch response', patchResponse);
-
-    //   if (textBox.current) textBox.current.value = ''; // Reset input field
-
-    //   setUserMessages({ ...userMessages, messages: updatedMessages });
-    // } catch (error) {
-    //   console.error('Failed to send message:', error);
-    // }
   };
 
   useEffect(() => {

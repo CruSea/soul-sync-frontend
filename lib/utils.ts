@@ -26,7 +26,7 @@ export function getFallBack(fullName: string) {
 
 export function transformChatData(input: Messages | undefined) {
   if (!input) {
-    return;
+    return [];
   }
 
   const formatDate = (isoString: string) => {

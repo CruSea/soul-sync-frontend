@@ -15,7 +15,7 @@ const Message: React.FC<MessageProps> = ({
     <div
       className={cn(
         ' flex gap-2 items-end',
-        !isMentor ? 'ml-auto flex-row-reverse' : 'flex',
+        isMentor ? 'ml-auto flex-row-reverse' : 'flex',
         newDay !== '' ? 'pt-6' : ''
       )}
     >
@@ -47,7 +47,7 @@ const Message: React.FC<MessageProps> = ({
         <div
           className={cn(
             'absolute bottom-[-15px] min-w-[45px] font-normal text-[9px] text-neutral-400',
-            !isMentor ? 'right-[7px]' : 'left-[14px]'
+            isMentor ? 'right-[7px]' : 'left-[14px]'
           )}
         >
           {/* make the time text directly under the text */}

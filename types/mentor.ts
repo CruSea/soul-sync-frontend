@@ -35,8 +35,8 @@ export type Conversations = Conversation[];
 type ISODateString = string & { __brand: 'ISODate' };
 
 export type Message = {
-  type: "RECEIVED" | "SENT";
-  createdAt: ISODateString;
+  type: string;
+  createdAt: string;
   body: string;
 };
 
@@ -82,14 +82,7 @@ export interface ProfileProps {
   userDetails: UserDetails | undefined;
 }
 
-// type for the group of message threads between user and mentor
-export interface threadType {
-  isUser: boolean;
-  text: string;
-  time: string;
-  newDay: string;
-  id: string;
-}
+
 
 export interface ProfileTypes {
   title: string;
@@ -123,6 +116,20 @@ export interface MessageProps {
   newDay: string;
 }
 
+
+
 export type PlatformIcon = StaticImageData | string;
 
 export type PlatformIconsType = Record<string, PlatformIcon>
+
+
+// type for the group of message threads between user and mentor
+export interface threadType {
+  isMentor: boolean,
+  text: string,
+  time: string,
+  newDay: string,
+  id: string,
+}
+
+export type chatData = threadType[];

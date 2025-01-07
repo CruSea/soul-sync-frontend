@@ -26,37 +26,37 @@
       "id": "fc6cb555-26b8-452a-a707-ce6b9db2d6ac",
       "messages": [
         {
-          "type": "RECEIVED",
+          "type": "SENT",
           "createdAt": "2024-12-12T09:00:00Z",
           "body": "Hi John, what can I do for you today?"
         },
         {
-          "type": "SENT",
+          "type": "RECEIVED",
           "createdAt": "2024-12-12T09:05:00Z",
           "body": "I need tips for better time management."
         },
         {
-          "type": "RECEIVED",
+          "type": "SENT",
           "createdAt": "2024-12-12T09:10:00Z",
           "body": "Time management is crucial. Start by prioritizing tasks. What’s currently on your plate?"
         },
         {
-          "type": "SENT",
+          "type": "RECEIVED",
           "createdAt": "2024-12-12T09:15:00Z",
           "body": "I have multiple assignments, meetings, and a personal project."
         },
         {
-          "type": "RECEIVED",
+          "type": "SENT",
           "createdAt": "2024-12-13T09:20:00Z",
           "body": "Got it. Use a to-do list or a planner. Allocate specific blocks of time for each task."
         },
         {
-          "type": "SENT",
+          "type": "RECEIVED",
           "createdAt": "2024-12-13T09:25:00Z",
           "body": "That makes sense. Should I focus on one thing at a time or multitask?"
         },
         {
-          "type": "RECEIVED",
+          "type": "SENT",
           "createdAt": "2024-12-13T09:30:00Z",
           "body": "Focus on one task at a time. Multitasking often reduces efficiency. Let’s review your priorities next time."
         }
@@ -66,37 +66,37 @@
       "id": "a2d7b830-4e29-4a4f-b6f5-6fa36d9918e3",
       "messages": [
         {
-          "type": "RECEIVED",
+          "type": "SENT",
           "createdAt": "2024-12-13T10:00:00Z",
           "body": "Good morning, Sarah. How’s your preparation for the upcoming coding interview?"
         },
         {
-          "type": "SENT",
+          "type": "RECEIVED",
           "createdAt": "2024-12-13T10:05:00Z",
           "body": "Good morning! I’m reviewing algorithms and practicing mock interviews."
         },
         {
-          "type": "RECEIVED",
+          "type": "SENT",
           "createdAt": "2024-12-13T10:10:00Z",
           "body": "That’s a good start. How comfortable are you with problem-solving under time pressure?"
         },
         {
-          "type": "SENT",
+          "type": "RECEIVED",
           "createdAt": "2024-12-13T10:15:00Z",
           "body": "Not very confident yet. I struggle with staying calm during tough problems."
         },
         {
-          "type": "RECEIVED",
+          "type": "SENT",
           "createdAt": "2024-12-14T10:20:00Z",
           "body": "Understood. Practice breathing exercises and work on breaking problems into smaller parts."
         },
         {
-          "type": "SENT",
+          "type": "RECEIVED",
           "createdAt": "2024-12-14T10:25:00Z",
           "body": "Thanks, I’ll try that. Any tips for explaining my solutions clearly?"
         },
         {
-          "type": "RECEIVED",
+          "type": "SENT",
           "createdAt": "2024-12-14T10:30:00Z",
           "body": "Yes, narrate your thought process as you solve. Clarity and logic are key. Let’s do a mock session next week."
         }
@@ -106,37 +106,37 @@
       "id": "9b8cf41b-38fd-46c4-9ff1-3e06b2e1d8f7",
       "messages": [
         {
-          "type": "RECEIVED",
+          "type": "SENT",
           "createdAt": "2024-12-14T11:00:00Z",
           "body": "Hey Alex, have you made progress on the design drafts?"
         },
         {
-          "type": "SENT",
+          "type": "RECEIVED",
           "createdAt": "2024-12-14T11:15:00Z",
           "body": "Hi, I’ve completed most of the wireframes but need help with some layouts."
         },
         {
-          "type": "RECEIVED",
+          "type": "SENT",
           "createdAt": "2024-12-14T11:20:00Z",
           "body": "Alright. What challenges are you facing specifically?"
         },
         {
-          "type": "SENT",
+          "type": "RECEIVED",
           "createdAt": "2024-12-14T11:25:00Z",
           "body": "The spacing feels off, and I’m unsure about the color contrast for accessibility."
         },
         {
-          "type": "RECEIVED",
+          "type": "SENT",
           "createdAt": "2024-12-14T11:30:00Z",
           "body": "For spacing, try using a grid system. For contrast, tools like Contrast Checker can help."
         },
         {
-          "type": "SENT",
+          "type": "RECEIVED",
           "createdAt": "2024-12-14T11:35:00Z",
           "body": "Thanks! I’ll give that a shot. Do you think the typography fits the theme?"
         },
         {
-          "type": "RECEIVED",
+          "type": "SENT",
           "createdAt": "2024-12-14T11:40:00Z",
           "body": "It’s close, but consider a slightly bolder font for better readability. Let me know when you’re ready for feedback."
         }
@@ -146,37 +146,37 @@
       "id": "da1c918e-76de-4b72-b3d8-01bc2e3e2c45",
       "messages": [
         {
-          "type": "RECEIVED",
+          "type": "SENT",
           "createdAt": "2024-12-15T12:00:00Z",
           "body": "Hi Mike, are you prepared for tomorrow’s presentation?"
         },
         {
-          "type": "SENT",
+          "type": "RECEIVED",
           "createdAt": "2024-12-15T12:10:00Z",
           "body": "Almost ready, but I’m worried about answering tricky questions."
         },
         {
-          "type": "RECEIVED",
+          "type": "SENT",
           "createdAt": "2024-12-15T12:15:00Z",
           "body": "Stay calm and honest. If you don’t know, say you’ll follow up later."
         },
         {
-          "type": "SENT",
+          "type": "RECEIVED",
           "createdAt": "2024-12-15T12:20:00Z",
           "body": "Got it. Any advice on engaging the audience?"
         },
         {
-          "type": "RECEIVED",
+          "type": "SENT",
           "createdAt": "2024-12-15T12:25:00Z",
           "body": "Start with a compelling story or question. Make eye contact and smile."
         },
         {
-          "type": "SENT",
+          "type": "RECEIVED",
           "createdAt": "2024-12-15T12:30:00Z",
           "body": "Thanks! I’ll practice tonight. Do you think I need more slides?"
         },
         {
-          "type": "RECEIVED",
+          "type": "SENT",
           "createdAt": "2024-12-15T12:35:00Z",
           "body": "No, keep it concise. Focus on delivering value with each slide."
         }
@@ -186,37 +186,37 @@
       "id": "e4d7fdb2-1c98-4db3-95dc-6a07d8c3c92b",
       "messages": [
         {
-          "type": "RECEIVED",
+          "type": "SENT",
           "createdAt": "2024-12-16T13:00:00Z",
           "body": "Hello Emily, did you review the research findings?"
         },
         {
-          "type": "SENT",
+          "type": "RECEIVED",
           "createdAt": "2024-12-16T13:05:00Z",
           "body": "Yes, but I’m struggling to draw conclusions from the data."
         },
         {
-          "type": "RECEIVED",
+          "type": "SENT",
           "createdAt": "2024-12-16T13:10:00Z",
           "body": "No problem. What trends or patterns stand out to you?"
         },
         {
-          "type": "SENT",
+          "type": "RECEIVED",
           "createdAt": "2024-12-16T13:15:00Z",
           "body": "There’s a clear seasonal increase in demand, but I’m not sure why."
         },
         {
-          "type": "RECEIVED",
+          "type": "SENT",
           "createdAt": "2024-12-16T13:20:00Z",
           "body": "Good observation. Consider external factors like holidays or events."
         },
         {
-          "type": "SENT",
+          "type": "RECEIVED",
           "createdAt": "2024-12-16T13:25:00Z",
           "body": "Ah, that makes sense! I’ll cross-reference with the event calendar."
         },
         {
-          "type": "RECEIVED",
+          "type": "SENT",
           "createdAt": "2024-12-16T13:30:00Z",
           "body": "Great idea. Let’s connect later to finalize the conclusions."
         }
