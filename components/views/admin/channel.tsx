@@ -22,6 +22,7 @@ import {
   DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu';
 import { useToast } from '@/hooks/use-toast';
+import { channelJsonserver } from '@/data/end-points';
 
 export default function ChannelsPage() {
   const [channels, setChannels] = useState<Channel[]>([]);
@@ -40,7 +41,9 @@ export default function ChannelsPage() {
 
   useEffect(() => {
     const fetchedChannels = async () => {
-      const response = await fetch('http://localhost:3001/channels');
+      const response = await fetch(
+        `${channelJsonserver.baseUrl}/${channelJsonserver.channels}`
+      );
       const data = await response.json();
       setChannels(data);
     };
@@ -68,7 +71,7 @@ export default function ChannelsPage() {
       accountId: '4211a09b-b42a-4b1d-85f9-a6598d8ff585',
     };
     setChannels(channels ? [...channels, channelWithId] : [channelWithId]);
-    fetch('http://localhost:3001/channels', {
+    fetch(`${channelJsonserver.baseUrl}/${channelJsonserver.channels}`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',

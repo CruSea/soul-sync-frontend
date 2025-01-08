@@ -16,6 +16,7 @@ import {
 import { Button } from '@/components/ui/button';
 import { useState } from 'react';
 import NegaritSMS from './configuration/NegaritSMS';
+import { channelJsonserver } from '@/data/end-points';
 
 interface ChannelCardProps {
   channel: Channel;
@@ -59,9 +60,12 @@ export function ChannelCard({ channel, setChannels, toast }: ChannelCardProps) {
       setChannels((prevItems) =>
         prevItems.filter((item) => item.id !== deleteId)
       );
-      fetch(`http://localhost:3001/channels/${deleteId}`, {
-        method: 'DELETE',
-      })
+      fetch(
+        `${channelJsonserver.baseUrl}/${channelJsonserver.channels}/${deleteId}`,
+        {
+          method: 'DELETE',
+        }
+      )
         .then((response) => response.json())
         .then((data) => {
           console.log('Deleted channel:', data);
