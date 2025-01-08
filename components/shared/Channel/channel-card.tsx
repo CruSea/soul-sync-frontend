@@ -30,7 +30,7 @@ interface ChannelCardProps {
 export function ChannelCard({ channel, setChannels, toast }: ChannelCardProps) {
   const [deleteId, setDeleteId] = useState<string | null>(null);
   let iconURL = '';
-  switch (channel.Metadata.type) {
+  switch (channel.channelType) {
     case 'Telegram Bot':
       iconURL = '/telegram.png';
       break;
@@ -85,7 +85,7 @@ export function ChannelCard({ channel, setChannels, toast }: ChannelCardProps) {
     }
   };
   const channelChange = (channel: Channel) => {
-    switch (channel.Metadata.type) {
+    switch (channel.channelType) {
       case 'Telegram Bot':
         return <TelegramBot channel={channel} />;
       case 'Negarit SMS':
@@ -116,7 +116,7 @@ export function ChannelCard({ channel, setChannels, toast }: ChannelCardProps) {
       <div className="w-auto mb-2 h-auto">
         <Image
           src={iconURL}
-          alt={channel.Metadata.type}
+          alt={channel.channelType}
           width={80}
           height={80}
           className="object-contain"
@@ -142,7 +142,7 @@ export function ChannelCard({ channel, setChannels, toast }: ChannelCardProps) {
             </div>
           </div>
           <div className="text-gray-900 text-xs font-bold font-['Manrope'] ">
-            {channel.Metadata.type}
+            {channel.channelType}
           </div>
         </div>
         <div className="w-full h-auto justify-between items-center flex text-wrap ">
@@ -153,7 +153,7 @@ export function ChannelCard({ channel, setChannels, toast }: ChannelCardProps) {
             </div>
           </div>
           <div className="text-gray-900 text-xs font-bold font-['Manrope'] ">
-            {channel.Date}
+            {channel.date}
           </div>
         </div>
         {channelChange(channel)}
@@ -165,7 +165,7 @@ export function ChannelCard({ channel, setChannels, toast }: ChannelCardProps) {
             <DialogDescription>
               Are you sure you want to delete?{' '}
               <span className="font-bold text-black inline">
-                {channel.name} | {channel.Metadata.type}
+                {channel.name} | {channel.channelType}
               </span>{' '}
               action cannot be undone.
             </DialogDescription>

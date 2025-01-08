@@ -3,7 +3,7 @@ type NegaritProp = {
   channel: Channel;
 };
 
-function NegaritSMS({ channel }: NegaritProp) {
+function Negarit({ channel }: NegaritProp) {
   const config = channel.channelConfig as NegaritConfig;
 
   return (
@@ -34,4 +34,4 @@ function NegaritSMS({ channel }: NegaritProp) {
   );
 }
 
-export default NegaritSMS;
+export default Negarit;

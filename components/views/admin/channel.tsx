@@ -50,7 +50,7 @@ export default function ChannelsPage() {
 
   const filteredChannel = channels?.filter(
     (item) =>
-      (selectedCategory === 'All' || item.Metadata.type === selectedCategory) &&
+      (selectedCategory === 'All' || item.channelType === selectedCategory) &&
       item.name.toLowerCase().includes(search.toLowerCase())
   );
   const format: Intl.DateTimeFormatOptions = {
@@ -60,12 +60,12 @@ export default function ChannelsPage() {
   };
 
   const handleAddChannel = (
-    newChannel: Omit<Channel, 'id' | 'icon' | 'Date'>
+    newChannel: Omit<Channel, 'id' | 'icon' | 'date'>
   ) => {
     const channelWithId: Channel = {
       ...newChannel,
       id: `${uuidv4().toString()}`,
-      Date: `${new Date().toLocaleDateString('en-US', format)}`,
+      date: new Date().toLocaleDateString('en-US', format),
     };
     setChannels(channels ? [...channels, channelWithId] : [channelWithId]);
     fetch('http://localhost:3001/channels', {
