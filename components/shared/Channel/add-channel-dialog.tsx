@@ -25,7 +25,9 @@ import ChannelCampIdform from './channel-campId-form';
 import { Form } from '@/components/ui/form';
 
 interface AddChannelDialogProps {
-  onAddChannel: (channel: Omit<Channel, 'id' | 'date'>) => void;
+  onAddChannel: (
+    channel: Omit<Channel, 'id' | 'date' | 'accountId' | 'createdAt'>
+  ) => void;
   selectedChannel: string;
   setSelectedChannel: React.Dispatch<React.SetStateAction<string>>;
 }
@@ -45,7 +47,7 @@ export function AddChannelDialog({
     resolver: zodResolver(formSchema),
     defaultValues: {
       name: '',
-      type: 'Telegram Bot',
+      type: 'TELEGRAM',
       api_key: '',
       token: '',
       campaign_id: '',
@@ -55,10 +57,10 @@ export function AddChannelDialog({
   const previousWatchedValues = useRef(watchedValues); // Keep track of previous values
 
   const [currentChannel, setCurrentChannel] = useState<
-    Omit<Channel, 'id' | 'date'>
+    Omit<Channel, 'id' | 'date' | 'accountId' | 'createdAt'>
   >({
     name: '',
-    type: 'Telegram Bot',
+    type: 'TELEGRAM',
     configuration: {
       token: '',
     },
@@ -70,7 +72,7 @@ export function AddChannelDialog({
       JSON.stringify(watchedValues) !==
       JSON.stringify(previousWatchedValues.current)
     ) {
-      if (watchedValues.type == 'Telegram Bot') {
+      if (watchedValues.type == 'TELEGRAM') {
         const transformedData = {
           name: watchedValues.name || '',
           type: watchedValues.type || '',
@@ -79,7 +81,7 @@ export function AddChannelDialog({
           },
         };
         setCurrentChannel(transformedData);
-      } else if (watchedValues.type == 'Negarit SMS') {
+      } else if (watchedValues.type == 'NEGARIT') {
         const transformedData = {
           name: watchedValues.name || '',
           type: watchedValues.type || '',
@@ -98,9 +100,9 @@ export function AddChannelDialog({
 
   const channelChange = () => {
     switch (selectedChannel) {
-      case 'Telegram Bot':
+      case 'TELEGRAM':
         return <Tokenform form={form} />;
-      case 'Negarit SMS':
+      case 'NEGARIT':
         return (
           <div>
             <ChannelApiForm form={form} />
@@ -115,7 +117,7 @@ export function AddChannelDialog({
   function onSubmit(values: z.infer<typeof formSchema>) {
     const date = new Date().toLocaleDateString('en-US', format);
     onAddChannel(currentChannel);
-    setSelectedChannel('Telegram Bot');
+    setSelectedChannel('TELEGRAM');
     form.reset();
     setOpen(false);
   }

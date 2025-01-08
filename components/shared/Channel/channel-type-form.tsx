@@ -47,11 +47,11 @@ export default function ChannelNameForm({
                 </SelectTrigger>
               </FormControl>
               <SelectContent>
-                <SelectItem value="Telegram Bot">Telegram Bot</SelectItem>
-                <SelectItem value="WhatsApp">WhatsApp</SelectItem>
-                <SelectItem value="Negarit SMS">Negarit</SelectItem>
-                <SelectItem value="Facebook">Facebook</SelectItem>
-                <SelectItem value="Twilio">Twilio</SelectItem>
+                <SelectItem value="TELEGRAM">TELEGRAM</SelectItem>
+                <SelectItem value="WHATSAPP">WHATSAPP</SelectItem>
+                <SelectItem value="NEGARIT">NEGARIT</SelectItem>
+                <SelectItem value="FACEBOOK">FACEBOOK</SelectItem>
+                <SelectItem value="TWILIO">TWILIO</SelectItem>
               </SelectContent>
             </Select>
             <FormMessage />

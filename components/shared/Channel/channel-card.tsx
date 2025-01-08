@@ -31,19 +31,19 @@ export function ChannelCard({ channel, setChannels, toast }: ChannelCardProps) {
   const [deleteId, setDeleteId] = useState<string | null>(null);
   let iconURL = '';
   switch (channel.type) {
-    case 'Telegram Bot':
+    case 'TELEGRAM':
       iconURL = '/telegram.png';
       break;
-    case 'Negarit SMS':
+    case 'NEGARIT':
       iconURL = '/negarit.png';
       break;
-    case 'WhatsApp':
+    case 'WHATSAPP':
       iconURL = '/Whatsapp.png';
       break;
-    case 'Facebook':
+    case 'FACEBOOK':
       iconURL = '/Facebook.svg';
       break;
-    case 'Twilio':
+    case 'TWILIO':
       iconURL = '/Twilio.png';
       break;
     default:
@@ -86,9 +86,9 @@ export function ChannelCard({ channel, setChannels, toast }: ChannelCardProps) {
   };
   const channelChange = (channel: Channel) => {
     switch (channel.type) {
-      case 'Telegram Bot':
+      case 'TELEGRAM':
         return <TelegramBot channel={channel} />;
-      case 'Negarit SMS':
+      case 'NEGARIT':
         return <NegaritSMS channel={channel} />;
       default:
         return <div>Has not been set yet</div>;
@@ -153,7 +153,7 @@ export function ChannelCard({ channel, setChannels, toast }: ChannelCardProps) {
             </div>
           </div>
           <div className="text-gray-900 text-xs font-bold font-['Manrope'] ">
-            {channel.date}
+            {channel.createdAt}
           </div>
         </div>
         {channelChange(channel)}

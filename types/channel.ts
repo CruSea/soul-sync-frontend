@@ -1,18 +1,14 @@
 import * as z from 'zod';
 
-export type type =
-  | 'Telegram Bot'
-  | 'WhatsApp'
-  | 'Negarit SMS'
-  | 'Facebook'
-  | 'Twilio';
+export type type = 'TELEGRAM' | 'WHATSAPP' | 'NEGARIT' | 'FACEBOOK' | 'TWILIO';
 
 export interface Channel {
   id: string;
   name: string;
   type: type;
   configuration: telegramConfig | NegaritConfig;
-  date: string;
+  createdAt: string;
+  accountId: string;
 }
 export type telegramConfig = {
   token: string;
@@ -28,39 +24,33 @@ export const formSchema = z
     name: z.string().min(2, {
       message: 'Channel name must be at least 2 characters.',
     }),
-    type: z.enum([
-      'Telegram Bot',
-      'WhatsApp',
-      'Negarit SMS',
-      'Facebook',
-      'Twilio',
-    ]),
+    type: z.enum(['TELEGRAM', 'WHATSAPP', 'NEGARIT', 'FACEBOOK', 'TWILIO']),
     api_key: z.string().optional(),
     token: z.string().optional(),
     campaign_id: z.string().optional(),
   })
   .superRefine((channel, ctx) => {
-    if (channel.type === 'Telegram Bot' && !channel.token) {
+    if (channel.type === 'TELEGRAM' && !channel.token) {
       ctx.addIssue({
         code: 'custom',
         path: ['token'], // Fixed path to match the schema
-        message: 'Channel token is required for Telegram Bot.',
+        message: 'Channel token is required for Telegram.',
       });
     }
 
-    if (channel.type === 'Negarit SMS') {
+    if (channel.type === 'NEGARIT') {
       if (!channel.api_key) {
         ctx.addIssue({
           code: 'custom',
           path: ['api_key'],
-          message: 'API key is required for Negarit SMS.',
+          message: 'API key is required for Negarit.',
         });
       }
       if (!channel.campaign_id) {
         ctx.addIssue({
           code: 'custom',
           path: ['campaign_id'],
-          message: 'Campaign ID is required for Negarit SMS.',
+          message: 'Campaign ID is required for Negarit.',
         });
       }
     }

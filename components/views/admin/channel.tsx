@@ -28,15 +28,14 @@ export default function ChannelsPage() {
   const [search, setSearch] = useState('');
   const [selectedCategory, setSelectedCategory] = useState('All');
   const { toast } = useToast();
-  const [selectedChannel, setSelectedChannel] =
-    useState<string>('Telegram Bot');
+  const [selectedChannel, setSelectedChannel] = useState<string>('TELEGRAM');
   const categories = [
     'All',
-    'Telegram Bot',
-    'WhatsApp',
-    'Negarit SMS',
-    'Facebook',
-    'Twilio',
+    'TELEGRAM',
+    'WHATSAPP',
+    'NEGARIT',
+    'FACEBOOK',
+    'TWILIO',
   ];
 
   useEffect(() => {
@@ -60,12 +59,13 @@ export default function ChannelsPage() {
   };
 
   const handleAddChannel = (
-    newChannel: Omit<Channel, 'id' | 'icon' | 'date'>
+    newChannel: Omit<Channel, 'id' | 'icon' | 'createdAt' | 'accountId'>
   ) => {
     const channelWithId: Channel = {
       ...newChannel,
       id: `${uuidv4().toString()}`,
-      date: new Date().toLocaleDateString('en-US', format),
+      createdAt: new Date().toLocaleDateString('en-US', format),
+      accountId: '4211a09b-b42a-4b1d-85f9-a6598d8ff585',
     };
     setChannels(channels ? [...channels, channelWithId] : [channelWithId]);
     fetch('http://localhost:3001/channels', {
