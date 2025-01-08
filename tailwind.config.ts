@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/no-require-imports */
 import type { Config } from 'tailwindcss';
 
 export default {
@@ -11,6 +10,9 @@ export default {
   theme: {
     screens: {
       '3xl': '1650px',
+      md: '768px', // Ensure commas are properly placed
+      sm: '640px',
+      lg: '1024px',
     },
     extend: {
       fontFamily: {
@@ -87,6 +89,5 @@ export default {
       },
     },
   },
-  // eslint-disable-next-line @typescript-eslint/no-require-imports
   plugins: [require('tailwindcss-animate'), require('tailwind-scrollbar')],
 } as Config;

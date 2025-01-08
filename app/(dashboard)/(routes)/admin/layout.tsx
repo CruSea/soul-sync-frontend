@@ -20,8 +20,8 @@ const DashboardLayout: React.FC<DashboardLayoutProps> = ({ children }) => {
 
   return (
     <AdminLayout title={lastSegment?.toLocaleUpperCase() as string}>
-      <div className="flex-1  bg-secondary dark:bg-gray-900">
-        <div className="container mx-auto">{children}</div>
+      <div className=" w-full bg-secondary p-0 dark:bg-gray-900">
+        <div className="flex mx-auto">{children}</div>
         <Toaster />
       </div>
     </AdminLayout>
