@@ -16,11 +16,15 @@ import {
   SelectValue,
 } from '@/components/ui/select';
 
-type ChannelNameFormProps = {
+type typeFormProps = {
   form: UseFormReturn<formSchemaType>;
+  setSelectedChannel: React.Dispatch<React.SetStateAction<string>>;
 };
 
-export default function ChannelNameForm({ form }: ChannelNameFormProps) {
+export default function ChannelNameForm({
+  form,
+  setSelectedChannel,
+}: typeFormProps) {
   return (
     <div>
       <FormField
@@ -29,18 +33,25 @@ export default function ChannelNameForm({ form }: ChannelNameFormProps) {
         render={({ field }) => (
           <FormItem>
             <FormLabel>Channel Type</FormLabel>
-            <Select onValueChange={field.onChange} defaultValue={field.value}>
+            <Select
+              onValueChange={(value) => {
+                // Update the channel type
+                field.onChange(value);
+                setSelectedChannel(value);
+              }}
+              defaultValue={field.value}
+            >
               <FormControl>
                 <SelectTrigger>
                   <SelectValue placeholder="Select a channel type" />
                 </SelectTrigger>
               </FormControl>
               <SelectContent>
-                <SelectItem value="Telegram Bot">Telegram Bot</SelectItem>
-                <SelectItem value="WhatsApp">WhatsApp</SelectItem>
-                <SelectItem value="Negarit">Negarit</SelectItem>
-                <SelectItem value="Facebook">Facebook</SelectItem>
-                <SelectItem value="Twilio">Twilio</SelectItem>
+                <SelectItem value="TELEGRAM">TELEGRAM</SelectItem>
+                <SelectItem value="WHATSAPP">WHATSAPP</SelectItem>
+                <SelectItem value="NEGARIT">NEGARIT</SelectItem>
+                <SelectItem value="FACEBOOK">FACEBOOK</SelectItem>
+                <SelectItem value="TWILIO">TWILIO</SelectItem>
               </SelectContent>
             </Select>
             <FormMessage />

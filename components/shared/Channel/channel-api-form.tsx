@@ -19,12 +19,12 @@ export default function ChannelNameForm({ form }: ChannelNameFormProps) {
     <div>
       <FormField
         control={form.control}
-        name="apiKey"
+        name="api_key"
         render={({ field }) => (
           <FormItem>
             <FormLabel>API Key</FormLabel>
             <FormControl>
-              <Input placeholder="Aef35jhjsf48Hfe" {...field} />
+              <Input placeholder="Please Insert the API Key" {...field} />
             </FormControl>
             <FormMessage />
           </FormItem>
