@@ -3,38 +3,38 @@
     {
       "id": "9c150ad0-8692-4183-aebf-c17f991c15f4",
       "name": "Soul Sync ",
-      "channelType": "Telegram Bot",
-      "channelConfig": {
-        "channelToken": "Abc2211"
+      "type": "Telegram Bot",
+      "configuration": {
+        "token": "Abc2211"
       },
       "date": "Jan 1, 2025"
     },
     {
       "id": "a90cf3a4-66f7-4836-b253-9fa98b4052ab",
       "name": "Soul Sync ",
-      "channelType": "Negarit SMS",
-      "channelConfig": {
-        "apiKey": "Negarit API",
-        "campaignId": "Negarit Camp"
+      "type": "Negarit SMS",
+      "configuration": {
+        "api_key": "Negarit API",
+        "campaign_id": "Negarit Camp"
       },
       "date": "Jan 1, 2025"
     },
     {
       "id": "2545ab48-5fdc-4a22-8ca9-20d65f359075",
       "name": "Eyosi",
-      "channelType": "Negarit SMS",
-      "channelConfig": {
-        "apiKey": "Negarit API",
-        "campaignId": "Negarit Camp"
+      "type": "Negarit SMS",
+      "configuration": {
+        "api_key": "Negarit API",
+        "campaign_id": "Negarit Camp"
       },
       "date": "Jan 8, 2025"
     },
     {
       "id": "acc2c0de-e48d-4d41-b6cb-37e12a57161e",
       "name": "Soul sync - bot",
-      "channelType": "Telegram Bot",
-      "channelConfig": {
-        "channelToken": "Telegram Token"
+      "type": "Telegram Bot",
+      "configuration": {
+        "token": "Telegram Token"
       },
       "date": "Jan 8, 2025"
     }

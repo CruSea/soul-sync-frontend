@@ -18,9 +18,9 @@ import { Plus } from 'lucide-react';
 import type { Channel, formSchemaType } from '@/types/channel';
 import ChannelNameForm from './channel-name-form';
 import { formSchema } from '@/types/channel';
-import ChannelTypeForm from './channel-type-form';
+import TypeForm from './channel-type-form';
 import ChannelApiForm from './channel-api-form';
-import ChannelTokenform from './channel-token-form';
+import Tokenform from './channel-token-form';
 import ChannelCampIdform from './channel-campId-form';
 import { Form } from '@/components/ui/form';
 
@@ -45,10 +45,10 @@ export function AddChannelDialog({
     resolver: zodResolver(formSchema),
     defaultValues: {
       name: '',
-      channelType: 'Telegram Bot',
-      apiKey: '',
-      channelToken: '',
-      campaignId: '',
+      type: 'Telegram Bot',
+      api_key: '',
+      token: '',
+      campaign_id: '',
     },
   });
   const watchedValues = form.watch();
@@ -58,9 +58,9 @@ export function AddChannelDialog({
     Omit<Channel, 'id' | 'date'>
   >({
     name: '',
-    channelType: 'Telegram Bot',
-    channelConfig: {
-      channelToken: '',
+    type: 'Telegram Bot',
+    configuration: {
+      token: '',
     },
   });
 
@@ -70,22 +70,22 @@ export function AddChannelDialog({
       JSON.stringify(watchedValues) !==
       JSON.stringify(previousWatchedValues.current)
     ) {
-      if (watchedValues.channelType == 'Telegram Bot') {
+      if (watchedValues.type == 'Telegram Bot') {
         const transformedData = {
           name: watchedValues.name || '',
-          channelType: watchedValues.channelType || '',
-          channelConfig: {
-            channelToken: watchedValues.channelToken || '',
+          type: watchedValues.type || '',
+          configuration: {
+            token: watchedValues.token || '',
           },
         };
         setCurrentChannel(transformedData);
-      } else if (watchedValues.channelType == 'Negarit SMS') {
+      } else if (watchedValues.type == 'Negarit SMS') {
         const transformedData = {
           name: watchedValues.name || '',
-          channelType: watchedValues.channelType || '',
-          channelConfig: {
-            apiKey: watchedValues.apiKey || '',
-            campaignId: watchedValues.campaignId || '',
+          type: watchedValues.type || '',
+          configuration: {
+            api_key: watchedValues.api_key || '',
+            campaign_id: watchedValues.campaign_id || '',
           },
         };
         setCurrentChannel(transformedData);
@@ -99,7 +99,7 @@ export function AddChannelDialog({
   const channelChange = () => {
     switch (selectedChannel) {
       case 'Telegram Bot':
-        return <ChannelTokenform form={form} />;
+        return <Tokenform form={form} />;
       case 'Negarit SMS':
         return (
           <div>
@@ -135,10 +135,7 @@ export function AddChannelDialog({
         <Form {...form}>
           <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4">
             <ChannelNameForm form={form} />
-            <ChannelTypeForm
-              form={form}
-              setSelectedChannel={setSelectedChannel}
-            />
+            <TypeForm form={form} setSelectedChannel={setSelectedChannel} />
             {channelChange()}
             <Button type="submit" className="w-full">
               Add channel

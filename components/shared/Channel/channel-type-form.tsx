@@ -16,7 +16,7 @@ import {
   SelectValue,
 } from '@/components/ui/select';
 
-type ChannelTypeFormProps = {
+type typeFormProps = {
   form: UseFormReturn<formSchemaType>;
   setSelectedChannel: React.Dispatch<React.SetStateAction<string>>;
 };
@@ -24,12 +24,12 @@ type ChannelTypeFormProps = {
 export default function ChannelNameForm({
   form,
   setSelectedChannel,
-}: ChannelTypeFormProps) {
+}: typeFormProps) {
   return (
     <div>
       <FormField
         control={form.control}
-        name="channelType"
+        name="type"
         render={({ field }) => (
           <FormItem>
             <FormLabel>Channel Type</FormLabel>

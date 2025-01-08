@@ -1,6 +1,6 @@
 import * as z from 'zod';
 
-export type ChannelType =
+export type type =
   | 'Telegram Bot'
   | 'WhatsApp'
   | 'Negarit SMS'
@@ -10,17 +10,17 @@ export type ChannelType =
 export interface Channel {
   id: string;
   name: string;
-  channelType: ChannelType;
-  channelConfig: telegramConfig | NegaritConfig;
+  type: type;
+  configuration: telegramConfig | NegaritConfig;
   date: string;
 }
 export type telegramConfig = {
-  channelToken: string;
+  token: string;
 };
 
 export type NegaritConfig = {
-  apiKey: string;
-  campaignId: string;
+  api_key: string;
+  campaign_id: string;
 };
 
 export const formSchema = z
@@ -28,38 +28,38 @@ export const formSchema = z
     name: z.string().min(2, {
       message: 'Channel name must be at least 2 characters.',
     }),
-    channelType: z.enum([
+    type: z.enum([
       'Telegram Bot',
       'WhatsApp',
       'Negarit SMS',
       'Facebook',
       'Twilio',
     ]),
-    apiKey: z.string().optional(),
-    channelToken: z.string().optional(),
-    campaignId: z.string().optional(),
+    api_key: z.string().optional(),
+    token: z.string().optional(),
+    campaign_id: z.string().optional(),
   })
   .superRefine((channel, ctx) => {
-    if (channel.channelType === 'Telegram Bot' && !channel.channelToken) {
+    if (channel.type === 'Telegram Bot' && !channel.token) {
       ctx.addIssue({
         code: 'custom',
-        path: ['channelToken'], // Fixed path to match the schema
+        path: ['token'], // Fixed path to match the schema
         message: 'Channel token is required for Telegram Bot.',
       });
     }
 
-    if (channel.channelType === 'Negarit SMS') {
-      if (!channel.apiKey) {
+    if (channel.type === 'Negarit SMS') {
+      if (!channel.api_key) {
         ctx.addIssue({
           code: 'custom',
-          path: ['apiKey'],
+          path: ['api_key'],
           message: 'API key is required for Negarit SMS.',
         });
       }
-      if (!channel.campaignId) {
+      if (!channel.campaign_id) {
         ctx.addIssue({
           code: 'custom',
-          path: ['campaignId'],
+          path: ['campaign_id'],
           message: 'Campaign ID is required for Negarit SMS.',
         });
       }

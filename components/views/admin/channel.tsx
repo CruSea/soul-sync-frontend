@@ -50,7 +50,7 @@ export default function ChannelsPage() {
 
   const filteredChannel = channels?.filter(
     (item) =>
-      (selectedCategory === 'All' || item.channelType === selectedCategory) &&
+      (selectedCategory === 'All' || item.type === selectedCategory) &&
       item.name.toLowerCase().includes(search.toLowerCase())
   );
   const format: Intl.DateTimeFormatOptions = {
@@ -87,8 +87,8 @@ export default function ChannelsPage() {
   };
 
   return (
-    <div className="h-fit min-h-screen container mx-auto p-10 ">
-      <div className="h-fit min-h-screen space-y-6  bg-white p-6 rounded-lg ">
+    <div className="h-fit min-h-screen w-full mx-auto p-10  ">
+      <div className="h-fit min-h-screen w-full space-y-6  bg-white border p-6 rounded-lg ">
         <div className="flex items-center justify-between mb-6 px-3 pt-3">
           <h1 className="text-2xl font-bold">List of Channels</h1>
           <p className="text-sm text-muted-foreground">
@@ -126,11 +126,14 @@ export default function ChannelsPage() {
             <CommandList className="flex-grow overflow-none h-full">
               <CommandEmpty>No results found.</CommandEmpty>
               <CommandGroup className="h-full">
-                <div className="grid lg:grid-cols-4 md:grid-cols-3 grid-cols-[repeat(auto-fit,minmax(min-content,1fr))] gap-4 p-4 h-full">
+                <div
+                  className="grid lg:grid-cols-4 3xl:grid-cols-5 md:grid-cols-3 grid-cols-[repeat(auto-fit,minmax(min-content,1fr))] gap-4 p-4 h-full
+"
+                >
                   {filteredChannel?.map((channel) => (
                     <CommandItem
                       key={channel.id}
-                      className="w-auto flex flex-col items-center justify-center h-full min-h-[100px] rounded-xl"
+                      className="w-auto items-center justify-center h-full min-h-[100px] rounded-xl"
                     >
                       <ChannelCard
                         key={channel.id}

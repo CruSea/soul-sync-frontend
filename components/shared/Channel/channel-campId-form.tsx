@@ -19,7 +19,7 @@ export default function ChannelNameForm({ form }: ChannelNameFormProps) {
     <div>
       <FormField
         control={form.control}
-        name="campaignId"
+        name="campaign_id"
         render={({ field }) => (
           <FormItem>
             <FormLabel>campaign Id</FormLabel>
