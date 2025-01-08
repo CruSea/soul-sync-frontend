@@ -4,7 +4,6 @@ import Link from 'next/link';
 import React from 'react';
 
 interface LandingPageHeaderProps {
-  handleGetStarted?: () => void;
   showButton?: boolean;
 }
 

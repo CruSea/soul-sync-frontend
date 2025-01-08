@@ -5,6 +5,7 @@ import {
   getStartedAdminFormSchema,
   getStartedAdminFormValues,
 } from '@/types/get-started';
+import { getStartedMentorFormValues } from '@/types/get-started';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { Form } from '@/components/ui/form';
 import { AgeField } from './AgeField';
@@ -41,10 +42,6 @@ const GetStartedAdminForm = () => {
     formState: { errors },
   } = form;
 
-  useEffect(() => {
-    console.log(errors);
-  }, []);
-
   return (
     <Form {...form}>
       <form
@@ -59,7 +56,7 @@ const GetStartedAdminForm = () => {
           />
         </div>
         <PhoneNumberField control={form.control} />
-        <LocationField />
+        <LocationField control={form.control} />
         <Button type="submit" className="w-4/5 mx-auto h-12 ">
           Submit
         </Button>
