@@ -3,7 +3,8 @@
 import {
   Conversation,
   MentorContainerProps,
-  UserMessages
+  UserMessages,
+  WSMessage,
 } from '@/types/mentor';
 import Chat from './Chat';
 import Profile from './Profile';
@@ -12,14 +13,37 @@ import UsersList from './conversations-list';
 import { jsonServer } from '@/data/end-points';
 import { useRouter } from 'next/navigation';
 import ConversationsList from './conversations-list';
+import useWebSocket from 'react-use-websocket';
 
 const BASE_URL = process.env.NEXT_PUBLIC_API_BASE_URL;
 const USER_URL = process.env.NEXT_PUBLIC_API_ADMIN_URL;
 
 const MentorContainer = ({ conversations }: MentorContainerProps) => {
-  const [currentConversation, setCurrentConversation] = useState<Conversation>(conversations[0]);
+  const [currentConversation, setCurrentConversation] = useState<Conversation>(
+    conversations[0]
+  );
   const [userMessages, setUserMessages] = useState<UserMessages>();
-  const router = useRouter();
+  const [socket, setSocket] = useState({});
+
+  const WS_URL = 'ws://localhost:8000';
+
+  const { sendJsonMessage, lastJsonMessage } = useWebSocket<WSMessage>(WS_URL, {
+    share: true,
+    queryParams: { userId: '76f8af8a-a765-448c-b680-c77307f62794' }, // replace by actual userId of the mentor in the future
+  });
+
+  // Effect to log lastJsonMessage
+  useEffect(() => {
+    console.log('last message', lastJsonMessage);
+    if (Object.keys(socket).length === 0) {
+      const messageSocket = lastJsonMessage.socket;
+      setSocket(messageSocket);
+    }
+  }, [lastJsonMessage]);
+
+  useEffect(() => {
+    console.log("hte socket", socket)
+  }, [socket]);
 
   useEffect(() => {
     const fetchUserMesages = async () => {
@@ -106,6 +130,7 @@ const MentorContainer = ({ conversations }: MentorContainerProps) => {
         currentConversation={currentConversation}
         userMessages={userMessages}
         setUserMessages={setUserMessages}
+        sendJsonMessage={sendJsonMessage}
       />
       {/* <div className="hidden 3xl:block">
         <Profile userDetails={userDetails} />

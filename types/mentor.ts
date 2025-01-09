@@ -70,12 +70,32 @@ export type UserMessages = {
   messages: Messages;
 };
 
+interface Metadata {
+  userId: string;
+  conversationId: string;
+}
+
+interface Socket {
+  userId: string;
+  socketId: string;
+  entryId: string;
+}
+
+export interface WSMessage {
+  id: string;        // Unique identifier for the message
+  type: "CHAT";     // Type of the message, which can be a union of types if needed
+  metadata: Metadata; // Metadata containing user and conversation IDs
+  payload: string;   // The actual message content
+  socket: Socket;    // Information about the socket connection
+}
+
 export interface ChatProps {
   currentConversation: Conversation;
   userMessages: UserMessages | undefined;
   setUserMessages: React.Dispatch<
     React.SetStateAction<UserMessages | undefined>
   >;
+  sendJsonMessage: (message: WSMessage) => void;
 }
 
 export interface ProfileProps {

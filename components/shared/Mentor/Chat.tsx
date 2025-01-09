@@ -15,7 +15,8 @@ import { jsonServer } from '@/data/end-points';
 const Chat = ({
   userMessages,
   setUserMessages,
-  currentConversation
+  currentConversation,
+  sendJsonMessage
 }: ChatProps) => {
   // text is where the text box saves what the mentor writes
   const [text, setText] = useState<string>('');
@@ -41,18 +42,6 @@ const Chat = ({
       "createdAt": new Date().toISOString(),
       "body": messageText
     }
-
-    socket.send(JSON.stringify(newMessage))
-
-
-
-
-
-    // const newMessage = {
-    //   sender: 'mentor',
-    //   dateTime: new Date().toISOString(), // Get current time
-    //   content: messageText.trim(),
-    // };
   };
 
   useEffect(() => {
