@@ -20,7 +20,6 @@ const Chat = ({
 }: ChatProps) => {
   // text is where the text box saves what the mentor writes
   const [text, setText] = useState<string>('');
-  const socket = new WebSocket('ws://localhost:8080');
 
   const chatData = transformChatData(userMessages?.messages);
 
@@ -29,10 +28,6 @@ const Chat = ({
 
   // a referance for where the you will write the text
   const textBox = useRef<HTMLInputElement | null>(null);
-
-  socket.onmessage = ({ data }) => {
-    console.log("message from server ", data);
-  }
 
   const sendText = async (messageText: string) => {
     if (!messageText.trim()) return; // Don't send empty messages

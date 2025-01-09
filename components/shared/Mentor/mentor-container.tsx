@@ -23,7 +23,7 @@ const MentorContainer = ({ conversations }: MentorContainerProps) => {
     conversations[0]
   );
   const [userMessages, setUserMessages] = useState<UserMessages>();
-  const [socket, setSocket] = useState({});
+  const [socket, setSocket] = useState({});       // // the web socket information that we will get from the messages
 
   const WS_URL = 'ws://localhost:8000';
 
@@ -34,16 +34,13 @@ const MentorContainer = ({ conversations }: MentorContainerProps) => {
 
   // Effect to log lastJsonMessage
   useEffect(() => {
-    console.log('last message', lastJsonMessage);
-    if (Object.keys(socket).length === 0) {
+    if (Object.entries(socket).length === 0 && lastJsonMessage) {
       const messageSocket = lastJsonMessage.socket;
-      setSocket(messageSocket);
+      setSocket((prevSocket) => {
+        return {...messageSocket}   // we store the socket information that we got from the message
+      });
     }
   }, [lastJsonMessage]);
-
-  useEffect(() => {
-    console.log("hte socket", socket)
-  }, [socket]);
 
   useEffect(() => {
     const fetchUserMesages = async () => {
