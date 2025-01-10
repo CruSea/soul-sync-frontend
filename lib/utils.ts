@@ -68,7 +68,7 @@ export function transformChatData(input: Messages | undefined) {
 //   socket: Socket;
 // }
 
-export function transformWSData(Messages:WSMessage[], mentorId: string) {
+export function transformWSData(Messages:WSMessage[]) {
   return Messages.map((Message) => {
     return {
       isMentor: Message.metadata.userId === mentorId,
