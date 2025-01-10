@@ -59,6 +59,10 @@ const Chat = ({
     }
 
     sendJsonMessage(newMessage);
+
+    // if (textBox.current) {
+    //   textBox.current.value = "";
+    // }
   };
 
   useEffect(() => {
@@ -67,11 +71,11 @@ const Chat = ({
       bottomOfPanelRef.current.scrollIntoView({ behavior: 'smooth' }); // Optional: Add smooth scrolling
     }
 
-    // sets the input box to empty when changing from one mentee to another
-    if (textBox.current) {
-      textBox.current.value = "";
-    }
-  }, [userMessages]);
+    // // sets the input box to empty when changing from one mentee to another
+    // if (textBox.current) {
+    //   textBox.current.value = "";
+    // }
+  }, [userMessages, conversationMessages]);
 
   return (
     <>
