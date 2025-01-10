@@ -75,7 +75,7 @@ interface Metadata {
   conversationId: string;
 }
 
-interface Socket {
+export interface Socket {
   userId: string;
   socketId: string;
   entryId: string;
@@ -96,6 +96,7 @@ export interface ChatProps {
     React.SetStateAction<UserMessages | undefined>
   >;
   sendJsonMessage: (message: WSMessage) => void;
+  conversationMessages: WSMessage[];
 }
 
 export interface ProfileProps {

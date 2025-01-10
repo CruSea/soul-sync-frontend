@@ -7,7 +7,7 @@ import { Card } from '@/components/ui/card';
 import { ScrollArea } from './chat-scrollarea';
 import ChatHeader from './ChatHeader';
 import Message from './Message';
-import { ChatProps, threadType } from '@/types/mentor';
+import { ChatProps, threadType, WSMessage } from '@/types/mentor';
 import { transformChatData } from '@/lib/utils';
 import InputArea from './InputArea';
 import { jsonServer } from '@/data/end-points';
@@ -16,12 +16,19 @@ const Chat = ({
   userMessages,
   setUserMessages,
   currentConversation,
-  sendJsonMessage
+  sendJsonMessage,
+  conversationMessages
 }: ChatProps) => {
   // text is where the text box saves what the mentor writes
   const [text, setText] = useState<string>('');
 
   const chatData = transformChatData(userMessages?.messages);
+
+  useEffect(() => {
+    console.log("my messages", conversationMessages)
+  }, [conversationMessages])
+
+  // const WSData = transformWSData(conversationMessages, "76f8af8a-a765-448c-b680-c77307f62794"); // get the mentorId from the token next time
 
   // an empty div at the end of the thread used to scroll to the bottom on send
   const bottomOfPanelRef = useRef<HTMLDivElement | null>(null);
@@ -32,11 +39,22 @@ const Chat = ({
   const sendText = async (messageText: string) => {
     if (!messageText.trim()) return; // Don't send empty messages
 
-    const newMessage = {
-      "type": "SENT",
-      "createdAt": new Date().toISOString(),
-      "body": messageText
+    const newMessage: WSMessage = {
+      id: uuidv4(),
+      type: "CHAT",
+      metadata: {
+        userId: "76f8af8a-a765-448c-b680-c77307f62794",  // get this from the token next time
+        conversationId: currentConversation.id,
+      },
+      payload: messageText,
+      socket: {
+        userId: "dd36a143-19d9-4486-907d-0251cb5455b8",
+        socketId: "6053b544-29df-4f8c-b047-61ac88b98738",
+        entryId: "a20beb76-6816-40fd-8b49-d862475236b2"
+      }
     }
+
+    sendJsonMessage(newMessage);
   };
 
   useEffect(() => {

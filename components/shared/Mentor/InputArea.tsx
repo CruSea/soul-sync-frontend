@@ -22,6 +22,7 @@ const InputArea = forwardRef<HTMLInputElement, InputAreaProps>(
             // updates the value of the text state whenever something is written
             setInputText(e.target.value);
           }}
+          value={inputText}
           onKeyDown={(e) => {
             // sends the text value when pressing enter
             if (e.key === 'Enter') {

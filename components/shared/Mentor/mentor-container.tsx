@@ -1,19 +1,17 @@
 'use client';
 
+import { jsonServer } from '@/data/end-points';
 import {
   Conversation,
   MentorContainerProps,
   UserMessages,
   WSMessage,
 } from '@/types/mentor';
-import Chat from './Chat';
-import Profile from './Profile';
 import { useEffect, useState } from 'react';
-import UsersList from './conversations-list';
-import { jsonServer } from '@/data/end-points';
-import { useRouter } from 'next/navigation';
-import ConversationsList from './conversations-list';
 import useWebSocket from 'react-use-websocket';
+import Chat from './Chat';
+import ConversationsList from './conversations-list';
+import { Socket } from 'dgram';
 
 const BASE_URL = process.env.NEXT_PUBLIC_API_BASE_URL;
 const USER_URL = process.env.NEXT_PUBLIC_API_ADMIN_URL;
@@ -23,24 +21,36 @@ const MentorContainer = ({ conversations }: MentorContainerProps) => {
     conversations[0]
   );
   const [userMessages, setUserMessages] = useState<UserMessages>();
-  const [socket, setSocket] = useState({});       // // the web socket information that we will get from the messages
+  const [socket, setSocket] = useState<Socket | {}>({}); // // the web socket information that we will get from the messages
+  const [WebSocketMessages, setWebSocketMessages] = useState<WSMessage[]>([]);
 
   const WS_URL = 'ws://localhost:8000';
 
   const { sendJsonMessage, lastJsonMessage } = useWebSocket<WSMessage>(WS_URL, {
     share: true,
-    queryParams: { userId: '76f8af8a-a765-448c-b680-c77307f62794' }, // replace by actual userId of the mentor in the future
+    queryParams: { userId: '76f8af8a-a765-448c-b680-c77307f62794' }, // replace by actual userId of the mentor form the token in the future
   });
 
   // Effect to log lastJsonMessage
   useEffect(() => {
-    if (Object.entries(socket).length === 0 && lastJsonMessage) {
-      const messageSocket = lastJsonMessage.socket;
-      setSocket((prevSocket) => {
-        return {...messageSocket}   // we store the socket information that we got from the message
-      });
+    if (lastJsonMessage) {
+      setWebSocketMessages((prevMessages) => [  // store all the messages recieved by the us
+        ...prevMessages,
+        lastJsonMessage,
+      ]);
+
+      if (Object.entries(socket).length === 0) {   // if websocket information hasn't been stored yet, store it in the state
+        const messageSocket = lastJsonMessage.socket;
+        setSocket((prevSocket) => {
+          return { ...messageSocket }; 
+        });
+      }
     }
   }, [lastJsonMessage]);
+
+  useEffect(() => {
+    console.log('messages', WebSocketMessages);
+  }, [WebSocketMessages]);
 
   useEffect(() => {
     const fetchUserMesages = async () => {
@@ -128,6 +138,7 @@ const MentorContainer = ({ conversations }: MentorContainerProps) => {
         userMessages={userMessages}
         setUserMessages={setUserMessages}
         sendJsonMessage={sendJsonMessage}
+        conversationMessages={WebSocketMessages.filter(message => message.metadata.conversationId === currentConversation.id)}
       />
       {/* <div className="hidden 3xl:block">
         <Profile userDetails={userDetails} />
