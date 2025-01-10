@@ -103,6 +103,14 @@ export type ChatProps = {
   conversationMessages: WSMessage[];
 }
 
+export type transformedMessage = {
+  isMentor: boolean,
+  text: string,
+  time: string,
+  newDay: string,
+  id: string
+}
+
 export type ProfileProps = {
   userDetails: UserDetails | undefined;
 }

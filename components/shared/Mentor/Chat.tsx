@@ -8,7 +8,7 @@ import { ScrollArea } from './chat-scrollarea';
 import ChatHeader from './ChatHeader';
 import Message from './Message';
 import { ChatProps, threadType, WSMessage } from '@/types/mentor';
-import { transformChatData } from '@/lib/utils';
+import { transformChatData, transformWSData } from '@/lib/utils';
 import InputArea from './InputArea';
 import { jsonServer } from '@/data/end-points';
 
@@ -28,7 +28,7 @@ const Chat = ({
     console.log("my messages", conversationMessages)
   }, [conversationMessages])
 
-  // const WSData = transformWSData(conversationMessages, "76f8af8a-a765-448c-b680-c77307f62794"); // get the mentorId from the token next time
+  const WSData = transformWSData(conversationMessages); // get the mentorId from the token next time
 
   // an empty div at the end of the thread used to scroll to the bottom on send
   const bottomOfPanelRef = useRef<HTMLDivElement | null>(null);
@@ -46,7 +46,11 @@ const Chat = ({
         userId: "76f8af8a-a765-448c-b680-c77307f62794",  // get this from the token next time
         conversationId: currentConversation.id,
       },
-      payload: messageText,
+      payload: {
+        type: "MENTOR",
+        createdAt: "2024-12-12T09:05:18.353Z",
+        body: messageText
+      },
       socket: {
         userId: "dd36a143-19d9-4486-907d-0251cb5455b8",
         socketId: "6053b544-29df-4f8c-b047-61ac88b98738",
@@ -82,7 +86,7 @@ const Chat = ({
 
             {/* the chat thread between the user and mentor */}
             <ScrollArea className="flex-1 overflow-hidden relative w-full pt-3 px-6 flex flex-col gap-8">
-              {chatData?.map((message) => (
+              {[...chatData, ...WSData]?.map((message) => (
                 <div key={message.id} className="w-full relative py-4">
                   <Message {...message} />
                 </div>
