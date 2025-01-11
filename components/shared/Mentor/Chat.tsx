@@ -43,11 +43,30 @@ const Chat = ({
     const now = new Date();
     const createdAt = now.toISOString();
 
+    // const user = localStorage.getItem('user');  get from local storage in final version
+    const user = {
+      "sub": "32ef0d61-7a31-4cdc-abe4-d7eead36f4dd",
+      "email": "destanathnaelataro@gmail.com",
+      "imageUrl": null,
+      "accounts": [
+        {
+          "id": "b0c157c8-af23-4344-a437-134d23a624a9",
+          "name": "nathnael",
+          "domain": null
+        }
+      ],
+      "roles": [
+        "OWNER"
+      ],
+      "iat": 1734942898,
+      "exp": 1734946498
+    }
+
     const newMessage: WSMessage = {
       id: uuidv4(),
       type: 'CHAT',
       metadata: {
-        userId: '138ef344-6a03-4a9d-ad10-78094fab8218', // get this from the token next time
+        userId: user.sub,
         conversationId: currentConversation.id,
       },
       payload: {
