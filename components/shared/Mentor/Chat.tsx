@@ -56,7 +56,7 @@ const Chat = ({
         address: "e2f7d3a1-b342-4eaf-af8c-c58f0a012d35",
         channelId: "50f4a2c3-7348-4af8-9203-b9fc27aec5b6"
       },
-      socket: "a20beb76-6816-40fd-8b49-d862475236b2"
+      socket: "a20beb76-6816-40fd-8b49-d862475236b2"         // change it so that it sends the socket stored by conversation id key ....................................
     };
 
     sendJsonMessage(newMessage);

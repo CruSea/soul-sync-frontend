@@ -89,8 +89,11 @@ export type WSMessage = {
   socket: string;    // Information about the socket connection
 }
 
-export type Sockets = {
-  [key: string]: string
+export type ConversationInfo = {
+  channelId: string;
+  address: string;
+  socket: string;
+  userId: string;
 }
 
 export type ChatProps = {
