@@ -73,16 +73,12 @@ type Metadata = {
   conversationId: string;
 }
 
-export type Socket = {
-  userId: string;
-  socketId: string;
-  entryId: string;
-}
-
 export type Payload = {
-  type: "MENTEE" | "MENTOR",
+  type: "RECIEVED" | "SENT",
   createdAt: string,
-  body: string
+  body: string,
+  address: string,
+  channelId: string
 }
 
 export type WSMessage = {
@@ -90,7 +86,11 @@ export type WSMessage = {
   type: "CHAT";     // Type of the message, which can be a union of types if needed
   metadata: Metadata; // Metadata containing user and conversation IDs
   payload: Payload;   // The actual message content
-  socket: Socket;    // Information about the socket connection
+  socket: string;    // Information about the socket connection
+}
+
+export type Sockets = {
+  [key: string]: string
 }
 
 export type ChatProps = {

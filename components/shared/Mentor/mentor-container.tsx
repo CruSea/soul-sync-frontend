@@ -4,6 +4,7 @@ import { jsonServer } from '@/data/end-points';
 import {
   Conversation,
   MentorContainerProps,
+  Sockets,
   UserMessages,
   WSMessage,
 } from '@/types/mentor';
@@ -11,7 +12,6 @@ import { useEffect, useState } from 'react';
 import useWebSocket from 'react-use-websocket';
 import Chat from './Chat';
 import ConversationsList from './conversations-list';
-import { Socket } from 'dgram';
 
 const BASE_URL = process.env.NEXT_PUBLIC_API_BASE_URL;
 const USER_URL = process.env.NEXT_PUBLIC_API_ADMIN_URL;
@@ -21,7 +21,7 @@ const MentorContainer = ({ conversations }: MentorContainerProps) => {
     conversations[0]
   );
   const [userMessages, setUserMessages] = useState<UserMessages>();
-  const [socket, setSocket] = useState<Socket | {}>({}); // // the web socket information that we will get from the messages
+  const [sockets, setSockets] = useState<Sockets>({}); // // the web socket information that we will get from the messages
   const [WebSocketMessages, setWebSocketMessages] = useState<WSMessage[]>([]);
 
   const WS_URL = 'ws://localhost:8000';
@@ -39,12 +39,9 @@ const MentorContainer = ({ conversations }: MentorContainerProps) => {
         lastJsonMessage,
       ]);
 
-      if (Object.entries(socket).length === 0) {   // if websocket information hasn't been stored yet, store it in the state
-        const messageSocket = lastJsonMessage.socket;
-        setSocket((prevSocket) => {
-          return { ...messageSocket }; 
-        });
-      }
+      setSockets((prevSockets) => {
+        return {...prevSockets, [lastJsonMessage.metadata.conversationId]: lastJsonMessage.socket}
+      })
     }
   }, [lastJsonMessage]);
 

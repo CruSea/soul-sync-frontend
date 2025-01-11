@@ -17,7 +17,7 @@ const Chat = ({
   setUserMessages,
   currentConversation,
   sendJsonMessage,
-  conversationMessages
+  conversationMessages,
 }: ChatProps) => {
   // text is where the text box saves what the mentor writes
   const [text, setText] = useState<string>('');
@@ -25,8 +25,8 @@ const Chat = ({
   const chatData = transformChatData(userMessages?.messages);
 
   useEffect(() => {
-    console.log("my messages", conversationMessages)
-  }, [conversationMessages])
+    console.log('my messages', conversationMessages);
+  }, [conversationMessages]);
 
   const WSData = transformWSData(conversationMessages); // get the mentorId from the token next time
 
@@ -39,24 +39,25 @@ const Chat = ({
   const sendText = async (messageText: string) => {
     if (!messageText.trim()) return; // Don't send empty messages
 
+    const now = new Date();
+    const createdAt = now.toISOString();
+
     const newMessage: WSMessage = {
       id: uuidv4(),
-      type: "CHAT",
+      type: 'CHAT',
       metadata: {
-        userId: "76f8af8a-a765-448c-b680-c77307f62794",  // get this from the token next time
+        userId: '76f8af8a-a765-448c-b680-c77307f62794', // get this from the token next time
         conversationId: currentConversation.id,
       },
       payload: {
-        type: "MENTOR",
-        createdAt: "2024-12-12T09:05:18.353Z",
-        body: messageText
+        type: 'SENT',
+        createdAt: createdAt,
+        body: messageText,
+        address: "e2f7d3a1-b342-4eaf-af8c-c58f0a012d35",
+        channelId: "50f4a2c3-7348-4af8-9203-b9fc27aec5b6"
       },
-      socket: {
-        userId: "dd36a143-19d9-4486-907d-0251cb5455b8",
-        socketId: "6053b544-29df-4f8c-b047-61ac88b98738",
-        entryId: "a20beb76-6816-40fd-8b49-d862475236b2"
-      }
-    }
+      socket: "a20beb76-6816-40fd-8b49-d862475236b2"
+    };
 
     sendJsonMessage(newMessage);
 
@@ -83,8 +84,8 @@ const Chat = ({
         <Card className="flex-1 h-full rounded-[10px] flex flex-col justify-between overflow-hidden">
           <div className="flex-1 flex flex-col overflow-hidden">
             {/* the header that shows user name*/}
-            <ChatHeader 
-              id= {currentConversation.id} 
+            <ChatHeader
+              id={currentConversation.id}
               platform={currentConversation.platform}
             />
 
