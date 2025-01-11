@@ -4,6 +4,7 @@ import { jsonServer } from '@/data/end-points';
 import {
   Conversation,
   ConversationInfo,
+  ConversationInfos,
   MentorContainerProps,
   UserMessages,
   WSMessage,
@@ -22,8 +23,8 @@ const MentorContainer = ({ conversations }: MentorContainerProps) => {
   );
   const [userMessages, setUserMessages] = useState<UserMessages>();
   const [conversationInfos, setConversationInfos] = useState<
-    ConversationInfo[]
-  >([]); // // the web socket information that we will get from the messages
+  ConversationInfos
+  >({}); // // the web socket information that we will get from the messages
   const [webSocketMessages, setWebSocketMessages] = useState<WSMessage[]>([]);
 
   const WS_URL = 'ws://localhost:8000';
@@ -41,6 +42,8 @@ const MentorContainer = ({ conversations }: MentorContainerProps) => {
         ...prevMessages,
         lastJsonMessage,
       ]);
+
+      console.log("the last message", lastJsonMessage)
 
       setConversationInfos((prevConversationInfo) => {
         return {
@@ -154,6 +157,7 @@ const MentorContainer = ({ conversations }: MentorContainerProps) => {
           (message) =>
             message.metadata.conversationId === currentConversation.id
         )}
+        conversationInfo={conversationInfos[currentConversation.id]}
       />
       {/* <div className="hidden 3xl:block">
         <Profile userDetails={userDetails} />

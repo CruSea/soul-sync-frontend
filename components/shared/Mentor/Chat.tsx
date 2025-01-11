@@ -18,6 +18,7 @@ const Chat = ({
   currentConversation,
   sendJsonMessage,
   conversationMessages,
+  conversationInfo
 }: ChatProps) => {
   // text is where the text box saves what the mentor writes
   const [text, setText] = useState<string>('');
@@ -37,7 +38,7 @@ const Chat = ({
   const textBox = useRef<HTMLInputElement | null>(null);
 
   const sendText = async (messageText: string) => {
-    if (!messageText.trim()) return; // Don't send empty messages
+    if (!messageText.trim() || !conversationInfo) return; // Don't send empty messages
 
     const now = new Date();
     const createdAt = now.toISOString();
@@ -46,17 +47,17 @@ const Chat = ({
       id: uuidv4(),
       type: 'CHAT',
       metadata: {
-        userId: '76f8af8a-a765-448c-b680-c77307f62794', // get this from the token next time
+        userId: '138ef344-6a03-4a9d-ad10-78094fab8218', // get this from the token next time
         conversationId: currentConversation.id,
       },
       payload: {
         type: 'SENT',
         createdAt: createdAt,
         body: messageText,
-        address: "e2f7d3a1-b342-4eaf-af8c-c58f0a012d35",
-        channelId: "50f4a2c3-7348-4af8-9203-b9fc27aec5b6"
+        address: conversationInfo.address,
+        channelId: conversationInfo.channelId
       },
-      socket: "a20beb76-6816-40fd-8b49-d862475236b2"         // change it so that it sends the socket stored by conversation id key ....................................
+      socket: conversationInfo.socket 
     };
 
     sendJsonMessage(newMessage);
