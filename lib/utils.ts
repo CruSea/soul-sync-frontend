@@ -69,7 +69,7 @@ export function transformWSData(Messages: WSMessage[]): transformedMessage[] | [
     const currentDay = formatDate(Message.payload.createdAt);
     const previousDay = index > 0 ? formatDate(arr[index - 1].payload.createdAt) : null;
     return {
-      isMentor: Message.payload.type === 'MENTOR',
+      isMentor: Message.payload.type === 'SENT',
       text: Message.payload.body,
       time: formatTime(Message.payload.createdAt),
       newDay: currentDay !== previousDay ? currentDay : '',
