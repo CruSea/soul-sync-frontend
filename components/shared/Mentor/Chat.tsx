@@ -14,7 +14,6 @@ import { jsonServer } from '@/data/end-points';
 
 const Chat = ({
   userMessages,
-  setUserMessages,
   currentConversation,
   sendJsonMessage,
   conversationMessages,
@@ -23,7 +22,7 @@ const Chat = ({
   // text is where the text box saves what the mentor writes
   const [text, setText] = useState<string>('');
 
-  const chatData = transformChatData(userMessages?.messages);
+  const chatData = transformChatData(userMessages);
 
   useEffect(() => {
     console.log('my messages', conversationMessages);

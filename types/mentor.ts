@@ -102,10 +102,7 @@ export type ConversationInfos = {
 
 export type ChatProps = {
   currentConversation: Conversation;
-  userMessages: UserMessages | undefined;
-  setUserMessages: React.Dispatch<
-    React.SetStateAction<UserMessages | undefined>
-  >;
+  userMessages: Messages | undefined;
   sendJsonMessage: (message: WSMessage) => void;
   conversationMessages: WSMessage[];
   conversationInfo: ConversationInfo; 

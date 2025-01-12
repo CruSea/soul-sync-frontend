@@ -6,6 +6,7 @@ import {
   ConversationInfo,
   ConversationInfos,
   MentorContainerProps,
+  Messages,
   UserMessages,
   WSMessage,
 } from '@/types/mentor';
@@ -21,7 +22,7 @@ const MentorContainer = ({ conversations }: MentorContainerProps) => {
   const [currentConversation, setCurrentConversation] = useState<Conversation>(
     conversations[0]
   );
-  const [userMessages, setUserMessages] = useState<UserMessages>();
+  const [userMessages, setUserMessages] = useState<Messages>();
   const [conversationInfos, setConversationInfos] = useState<
   ConversationInfos
   >({}); // // the web socket information that we will get from the messages
@@ -73,11 +74,11 @@ const MentorContainer = ({ conversations }: MentorContainerProps) => {
   useEffect(() => {
     const fetchUserMesages = async () => {
       try {
-        const response = await fetch(                      // for when connecting to local db server
+        const response = await fetch(                                                                 // for when connecting to local db server
           `${jsonServer.baseUrl}/${jsonServer.thread}?id=${currentConversation.conversation_id}`
         );     
 
-        // const response = await fetch(                      // for when connecting to backend 
+        // const response = await fetch(                                                              // for when connecting to backend 
         //   `${BASE_URL}/${endPoints.threads}/${currentConversation.conversation_id}`
         // );     
 
@@ -88,11 +89,13 @@ const MentorContainer = ({ conversations }: MentorContainerProps) => {
         const data = await response.json();
 
         if (Array.isArray(data) && data.length > 0) {
-          console.log("the data", data)
-          setUserMessages(data[0]); // Assuming you want the first item
+          // setUserMessages(data[0].messages);                                                // for when connecting to local db server
+          setUserMessages(data);                                                               // for when connecting to backend 
         } else {
           console.warn('No user details found');
         }
+
+
       } catch (error) {
         console.error('Failed to fetch user Messages:', error);
       }
@@ -159,7 +162,6 @@ const MentorContainer = ({ conversations }: MentorContainerProps) => {
       <Chat
         currentConversation={currentConversation}
         userMessages={userMessages}
-        setUserMessages={setUserMessages}
         sendJsonMessage={sendJsonMessage}
         conversationMessages={webSocketMessages.filter(
           (message) =>
