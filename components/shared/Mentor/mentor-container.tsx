@@ -1,6 +1,6 @@
 'use client';
 
-import { jsonServer } from '@/data/end-points';
+import { endPoints, jsonServer } from '@/data/end-points';
 import {
   Conversation,
   ConversationInfo,
@@ -73,9 +73,13 @@ const MentorContainer = ({ conversations }: MentorContainerProps) => {
   useEffect(() => {
     const fetchUserMesages = async () => {
       try {
-        const response = await fetch(
+        const response = await fetch(                      // for when connecting to local db server
           `${jsonServer.baseUrl}/${jsonServer.thread}?id=${currentConversation.conversation_id}`
-        );
+        );     
+
+        // const response = await fetch(                      // for when connecting to backend 
+        //   `${BASE_URL}/${endPoints.threads}/${currentConversation.conversation_id}`
+        // );     
 
         if (!response.ok) {
           throw new Error('Network response was not ok');
@@ -84,6 +88,7 @@ const MentorContainer = ({ conversations }: MentorContainerProps) => {
         const data = await response.json();
 
         if (Array.isArray(data) && data.length > 0) {
+          console.log("the data", data)
           setUserMessages(data[0]); // Assuming you want the first item
         } else {
           console.warn('No user details found');
