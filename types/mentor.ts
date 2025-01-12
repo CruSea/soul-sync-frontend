@@ -24,7 +24,7 @@ export type MentorLayoutProps = {
 type Platform = "Telegram" | "WhatsApp" | "Negarit" | "Facebook" | "Twilio"
 
 export type Conversation = {
-  id: string;
+  conversation_id: string;
   platform: Platform;
 };
 

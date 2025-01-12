@@ -67,7 +67,7 @@ const Chat = ({
       type: 'CHAT',
       metadata: {
         userId: user.sub,
-        conversationId: currentConversation.id,
+        conversationId: currentConversation.conversation_id,
       },
       payload: {
         type: 'SENT',
@@ -105,7 +105,7 @@ const Chat = ({
           <div className="flex-1 flex flex-col overflow-hidden">
             {/* the header that shows user name*/}
             <ChatHeader
-              id={currentConversation.id}
+              id={currentConversation.conversation_id}
               platform={currentConversation.platform}
             />
 

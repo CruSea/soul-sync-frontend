@@ -74,7 +74,7 @@ const MentorContainer = ({ conversations }: MentorContainerProps) => {
     const fetchUserMesages = async () => {
       try {
         const response = await fetch(
-          `${jsonServer.baseUrl}/${jsonServer.thread}?id=${currentConversation.id}`
+          `${jsonServer.baseUrl}/${jsonServer.thread}?id=${currentConversation.conversation_id}`
         );
 
         if (!response.ok) {
@@ -93,7 +93,7 @@ const MentorContainer = ({ conversations }: MentorContainerProps) => {
       }
     };
 
-    if (currentConversation && currentConversation.id) {
+    if (currentConversation && currentConversation.conversation_id) {
       fetchUserMesages();
     }
   }, [currentConversation]);
@@ -158,9 +158,9 @@ const MentorContainer = ({ conversations }: MentorContainerProps) => {
         sendJsonMessage={sendJsonMessage}
         conversationMessages={webSocketMessages.filter(
           (message) =>
-            message.metadata.conversationId === currentConversation.id
+            message.metadata.conversationId === currentConversation.conversation_id
         )}
-        conversationInfo={conversationInfos[currentConversation.id]}
+        conversationInfo={conversationInfos[currentConversation.conversation_id]}
       />
       {/* <div className="hidden 3xl:block">
         <Profile userDetails={userDetails} />
