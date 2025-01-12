@@ -29,9 +29,12 @@ const MentorContainer = ({ conversations }: MentorContainerProps) => {
 
   const WS_URL = 'ws://localhost:8000';
 
+  // const token = localStorage.getItem('token');    // get token this way for the actual implementation
+  const token = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIzMmVmMGQ2MS03YTMxLTRjZGMtYWJlNC1kN2VlYWQzNmY0ZGQiLCJlbWFpbCI6ImRlc3RhbmF0aG5hZWxhdGFyb0BnbWFpbC5jb20iLCJpbWFnZVVybCI6bnVsbCwiYWNjb3VudHMiOlt7ImlkIjoiYjBjMTU3YzgtYWYyMy00MzQ0LWE0MzctMTM0ZDIzYTYyNGE5IiwibmFtZSI6Im5hdGhuYWVsIiwiZG9tYWluIjpudWxsfV0sInJvbGVzIjpbIk9XTkVSIl0sImlhdCI6MTczNDk0Mjg5OCwiZXhwIjoxNzM0OTQ2NDk4fQ.S5nSDy3zYmG926BAYaqDWnp0lsGq8scr1t6Db41m1wM"
+
   const { sendJsonMessage, lastJsonMessage } = useWebSocket<WSMessage>(WS_URL, {
     share: true,
-    queryParams: { userId: '76f8af8a-a765-448c-b680-c77307f62794' }, // replace by actual userId of the mentor form the token in the future
+    queryParams: { token: token }, // replace by actual userId of the mentor form the token in the future
   });
 
   // Effect to log lastJsonMessage
