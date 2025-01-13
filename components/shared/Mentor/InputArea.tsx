@@ -15,18 +15,19 @@ const InputArea = forwardRef<HTMLInputElement, InputAreaProps>(
     return (
       <div className="relative flex gap-2.5 mx-4 mb-4 h-[50px]">
         <Input
-          ref={ref}
           placeholder="Write a Message"
           className="h-full rounded-md bg-neutral-200 outline-none border border-neutral-300 pl-4 pr-4 font-normal text-md placeholder:text-neutral-400"
           onChange={(e) => {
             // updates the value of the text state whenever something is written
             setInputText(e.target.value);
           }}
+          value={inputText}
           onKeyDown={(e) => {
             // sends the text value when pressing enter
             if (e.key === 'Enter') {
               e.preventDefault(); // Prevents newline on enter in the textarea
               sendText(inputText);
+              setInputText('');
             }
           }}
         />
@@ -37,6 +38,7 @@ const InputArea = forwardRef<HTMLInputElement, InputAreaProps>(
           onClick={() => {
             // sends the text value when clicking send
             sendText(inputText);
+            setInputText('');
           }}
         >
           <Image

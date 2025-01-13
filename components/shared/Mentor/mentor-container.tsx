@@ -1,58 +1,89 @@
 'use client';
 
+import { endPoints, jsonServer } from '@/data/end-points';
 import {
+  Conversation,
+  ConversationInfo,
+  ConversationInfos,
   MentorContainerProps,
-  User,
-  UserDetails,
+  Messages,
   UserMessages,
+  WSMessage,
 } from '@/types/mentor';
-import Chat from './Chat';
-import Profile from './Profile';
 import { useEffect, useState } from 'react';
-import UsersList from './users-list';
-import { jsonServer } from '@/data/end-points';
-import { useRouter } from 'next/navigation';
+import useWebSocket from 'react-use-websocket';
+import Chat from './Chat';
+import ConversationsList from './conversations-list';
 
 const BASE_URL = process.env.NEXT_PUBLIC_API_BASE_URL;
 const USER_URL = process.env.NEXT_PUBLIC_API_ADMIN_URL;
 
-const MentorContainer = ({ users }: MentorContainerProps) => {
-  const [currentUser, setCurrentUser] = useState<User>(users[0]);
-  const [userDetails, setUserDetails] = useState<UserDetails>();
-  const [userMessages, setUserMessages] = useState<UserMessages>();
+const MentorContainer = ({ conversations }: MentorContainerProps) => {
+  const [currentConversation, setCurrentConversation] = useState<Conversation>(
+    conversations[0]
+  );
+  const [userMessages, setUserMessages] = useState<Messages>();
+  const [conversationInfos, setConversationInfos] = useState<ConversationInfos>(
+    {}
+  ); // // the web socket information that we will get from the messages
+  const [webSocketMessages, setWebSocketMessages] = useState<WSMessage[]>([]);
 
-  const [isDrawerOpen, setIsDrawerOpen] = useState<boolean>(false);
+  const WS_URL = 'ws://localhost:8000';
 
-  const router = useRouter();
+  // const token = localStorage.getItem('token');    // get token this way for the actual implementation
+  const token =
+    'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIzMmVmMGQ2MS03YTMxLTRjZGMtYWJlNC1kN2VlYWQzNmY0ZGQiLCJlbWFpbCI6ImRlc3RhbmF0aG5hZWxhdGFyb0BnbWFpbC5jb20iLCJpbWFnZVVybCI6bnVsbCwiYWNjb3VudHMiOlt7ImlkIjoiYjBjMTU3YzgtYWYyMy00MzQ0LWE0MzctMTM0ZDIzYTYyNGE5IiwibmFtZSI6Im5hdGhuYWVsIiwiZG9tYWluIjpudWxsfV0sInJvbGVzIjpbIk9XTkVSIl0sImlhdCI6MTczNDk0Mjg5OCwiZXhwIjoxNzM0OTQ2NDk4fQ.S5nSDy3zYmG926BAYaqDWnp0lsGq8scr1t6Db41m1wM';
+
+  const { sendJsonMessage, lastJsonMessage } = useWebSocket<WSMessage>(WS_URL, {
+    share: true,
+    queryParams: { token: token }, // replace by actual userId of the mentor form the token in the future
+  });
+
+  // Effect to log lastJsonMessage
+  useEffect(() => {
+    if (lastJsonMessage) {
+      setWebSocketMessages((prevMessages) => [
+        // store all the messages recieved by the us
+        ...prevMessages,
+        lastJsonMessage,
+      ]);
+
+      console.log('the last message', lastJsonMessage);
+
+      setConversationInfos((prevConversationInfo) => {
+        return {
+          ...prevConversationInfo,
+          [lastJsonMessage.metadata.conversationId]: {
+            channelId: lastJsonMessage.payload.channelId,
+            address: lastJsonMessage.payload.address,
+            userId: lastJsonMessage.metadata.userId,
+            socket: lastJsonMessage.socket,
+          },
+        };
+      });
+    }
+  }, [lastJsonMessage]);
 
   useEffect(() => {
-    const fetchUserDetails = async () => {
-      try {
-        // fetches the userDetails from db
-        const response = await fetch(
-          `${jsonServer.baseUrl}/${jsonServer.userDetails}?id=${currentUser.id}`
-        );
+    console.log('messages', webSocketMessages);
+  }, [webSocketMessages]);
 
-        if (!response.ok) {
-          throw new Error('Network response was not ok');
-        }
-        const data = await response.json();
+  useEffect(() => {
+    console.log('conversationInfos', conversationInfos);
+  }),
+    [conversationInfos];
 
-        if (Array.isArray(data) && data.length > 0) {
-          setUserDetails(data[0]); // Assuming you want the first item
-        } else {
-          console.warn('No user details found');
-        }
-      } catch (error) {
-        console.error('Failed to fetch user details:', error);
-      }
-    };
-
+  useEffect(() => {
     const fetchUserMesages = async () => {
       try {
         const response = await fetch(
-          `${jsonServer.baseUrl}/${jsonServer.messages}?id=${currentUser.id}`
+          // for when connecting to local db server
+          `${jsonServer.baseUrl}/${jsonServer.thread}?id=${currentConversation.conversation_id}`
         );
+
+        // const response = await fetch(                                                              // for when connecting to backend
+        //   `${BASE_URL}/${endPoints.threads}/${currentConversation.conversation_id}`
+        // );
 
         if (!response.ok) {
           throw new Error('Network response was not ok');
@@ -61,7 +92,8 @@ const MentorContainer = ({ users }: MentorContainerProps) => {
         const data = await response.json();
 
         if (Array.isArray(data) && data.length > 0) {
-          setUserMessages(data[0]); // Assuming you want the first item
+          // setUserMessages(data[0].messages);                                                // for when connecting to local db server
+          setUserMessages(data); // for when connecting to backend
         } else {
           console.warn('No user details found');
         }
@@ -70,74 +102,80 @@ const MentorContainer = ({ users }: MentorContainerProps) => {
       }
     };
 
-    if (currentUser && currentUser.id) {
+    if (currentConversation && currentConversation.conversation_id) {
       fetchUserMesages();
-      fetchUserDetails();
     }
-  }, [currentUser]);
+  }, [currentConversation]);
 
-  useEffect(() => {
-    const checkUser = async () => {
-      try {
-        const user = localStorage.getItem('user');
-        const token = localStorage.getItem('token');
+  // useEffect(() => {
+  //   const checkUser = async () => {
+  //     try {
+  //       const user = localStorage.getItem('user');
+  //       const token = localStorage.getItem('token');
 
-        if (user && token) {
-          const userObj = JSON.parse(user);
-          // const endPoint = `${BASE_URL}/${USER_URL}/${userObj.accounts[0].id}/user/${userObj.sub}`;
-          const endPoint = `${BASE_URL}/${USER_URL}/${userObj.sub}`;
-          const response = await fetch(endPoint, {
-            method: 'GET',
-            headers: {
-              'Content-Type': 'application/json',
-              Authorization: `Bearer ${JSON.parse(token)}`,
-            },
-          });
+  //       if (user && token) {
+  //         const userObj = JSON.parse(user);
+  //         // const endPoint = `${BASE_URL}/${USER_URL}/${userObj.accounts[0].id}/user/${userObj.sub}`;
+  //         const endPoint = `${BASE_URL}/${USER_URL}/${userObj.sub}`;
+  //         const response = await fetch(endPoint, {
+  //           method: 'GET',
+  //           headers: {
+  //             'Content-Type': 'application/json',
+  //             Authorization: `Bearer ${JSON.parse(token)}`,
+  //           },
+  //         });
 
-          if (!response.ok) {
-            console.error('Failed to fetch user info', response);
-            throw new Error('Fetch failed');
-          }
+  //         if (!response.ok) {
+  //           console.error('Failed to fetch user info', response);
+  //           throw new Error('Fetch failed');
+  //         }
 
-          const userInfo = await response.json();
+  //         const userInfo = await response.json();
 
-          if (!userInfo) {
-            console.error("userInfo doesn't exist");
-            throw new Error('userInfo not found');
-          }
+  //         if (!userInfo) {
+  //           console.error("userInfo doesn't exist");
+  //           throw new Error('userInfo not found');
+  //         }
 
-          if (!userInfo.mentors[0].location) {
-            router.push('/mentor/get-started');
-          }
-        } else {
-          console.error('User or token not found');
-          router.push('/log-in');
-        }
-      } catch (error) {
-        console.error('Error: ', error);
-        router.push('/log-in');
-      }
-    };
+  //         if (!userInfo.mentors[0].location) {
+  //           router.push('/mentor/get-started');
+  //         }
+  //       } else {
+  //         console.error('User or token not found');
+  //         router.push('/log-in');
+  //       }
+  //     } catch (error) {
+  //       console.error('Error: ', error);
+  //       router.push('/log-in');
+  //     }
+  //   };
 
-    checkUser();
-  }, [router]);
+  //   checkUser();
+  // }, [router]);
 
   return (
     <>
-      <UsersList
-        users={users}
-        currentUser={currentUser}
-        setCurrentUser={setCurrentUser}
+      <ConversationsList
+        conversations={conversations}
+        currentConversation={currentConversation}
+        setCurrentConversation={setCurrentConversation}
       />
       <Chat
+        currentConversation={currentConversation}
         userMessages={userMessages}
-        toggleDrawer={() => setIsDrawerOpen(!isDrawerOpen)}
-        userDetails={userDetails}
-        setUserMessages={setUserMessages}
+        sendJsonMessage={sendJsonMessage}
+        conversationMessages={webSocketMessages.filter(
+          (message) =>
+            message.metadata.conversationId ===
+            currentConversation.conversation_id
+        )}
+        conversationInfo={
+          conversationInfos[currentConversation.conversation_id]
+        }
       />
-      <div className="hidden 3xl:block">
+      {/* <div className="hidden 3xl:block">
         <Profile userDetails={userDetails} />
-      </div>
+      </div> */}
     </>
   );
 };

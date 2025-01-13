@@ -7,21 +7,28 @@ import { Card } from '@/components/ui/card';
 import { ScrollArea } from './chat-scrollarea';
 import ChatHeader from './ChatHeader';
 import Message from './Message';
-import { ChatProps, threadType } from '@/types/mentor';
-import { transformChatData } from '@/lib/utils';
+import { ChatProps, threadType, WSMessage } from '@/types/mentor';
+import { transformChatData, transformWSData } from '@/lib/utils';
 import InputArea from './InputArea';
 import { jsonServer } from '@/data/end-points';
 
 const Chat = ({
   userMessages,
-  toggleDrawer,
-  userDetails,
-  setUserMessages,
+  currentConversation,
+  sendJsonMessage,
+  conversationMessages,
+  conversationInfo,
 }: ChatProps) => {
   // text is where the text box saves what the mentor writes
   const [text, setText] = useState<string>('');
 
-  const chatData = transformChatData(userMessages?.messages);
+  const chatData = transformChatData(userMessages);
+
+  useEffect(() => {
+    console.log('my messages', conversationMessages);
+  }, [conversationMessages]);
+
+  const WSData = transformWSData(conversationMessages); // get the mentorId from the token next time
 
   // an empty div at the end of the thread used to scroll to the bottom on send
   const bottomOfPanelRef = useRef<HTMLDivElement | null>(null);
@@ -30,43 +37,50 @@ const Chat = ({
   const textBox = useRef<HTMLInputElement | null>(null);
 
   const sendText = async (messageText: string) => {
-    if (!messageText.trim()) return; // Don't send empty messages
+    if (!messageText.trim() || !conversationInfo) return; // Don't send empty messages
 
-    const newMessage = {
-      sender: 'mentor',
-      dateTime: new Date().toISOString(), // Get current time
-      content: messageText.trim(),
+    const now = new Date();
+    const createdAt = now.toISOString();
+
+    // const user = localStorage.getItem('user');  get from local storage in final version
+    const user = {
+      sub: '32ef0d61-7a31-4cdc-abe4-d7eead36f4dd',
+      email: 'destanathnaelataro@gmail.com',
+      imageUrl: null,
+      accounts: [
+        {
+          id: 'b0c157c8-af23-4344-a437-134d23a624a9',
+          name: 'nathnael',
+          domain: null,
+        },
+      ],
+      roles: ['OWNER'],
+      iat: 1734942898,
+      exp: 1734946498,
     };
 
-    try {
-      // Find the current id from props
-      if (!userMessages) {
-        return;
-      }
+    const newMessage: WSMessage = {
+      id: uuidv4(),
+      type: 'CHAT',
+      metadata: {
+        userId: user.sub,
+        conversationId: currentConversation.conversation_id,
+      },
+      payload: {
+        type: 'SENT',
+        createdAt: createdAt,
+        body: messageText,
+        address: conversationInfo.address,
+        channelId: conversationInfo.channelId,
+      },
+      socket: conversationInfo.socket,
+    };
 
-      // Append the new message to the messages array
-      const updatedMessages = [...userMessages.messages, newMessage];
+    sendJsonMessage(newMessage);
 
-      // Update the backend
-      const patchResponse = await fetch(
-        `${jsonServer.baseUrl}/${jsonServer.messages}/${userMessages.id}`,
-        {
-          method: 'PATCH',
-          headers: {
-            'Content-Type': 'application/json',
-          },
-          body: JSON.stringify({ messages: updatedMessages }),
-        }
-      );
-
-      console.log('the patch response', patchResponse);
-
-      if (textBox.current) textBox.current.value = ''; // Reset input field
-
-      setUserMessages({ ...userMessages, messages: updatedMessages });
-    } catch (error) {
-      console.error('Failed to send message:', error);
-    }
+    // if (textBox.current) {
+    //   textBox.current.value = "";
+    // }
   };
 
   useEffect(() => {
@@ -74,7 +88,12 @@ const Chat = ({
     if (bottomOfPanelRef.current) {
       bottomOfPanelRef.current.scrollIntoView({ behavior: 'smooth' }); // Optional: Add smooth scrolling
     }
-  }, [userMessages]);
+
+    // // sets the input box to empty when changing from one mentee to another
+    // if (textBox.current) {
+    //   textBox.current.value = "";
+    // }
+  }, [userMessages, conversationMessages]);
 
   return (
     <>
@@ -83,18 +102,15 @@ const Chat = ({
           <div className="flex-1 flex flex-col overflow-hidden">
             {/* the header that shows user name*/}
             <ChatHeader
-              imageUrl={userMessages.imageUrl}
-              fullName={userMessages.fullName}
-              email={userMessages.email}
-              toggleDrawer={toggleDrawer}
-              userDetails={userDetails}
+              id={currentConversation.conversation_id}
+              platform={currentConversation.platform}
             />
 
-            {/* the chat thread between the user and mentor*/}
+            {/* the chat thread between the user and mentor */}
             <ScrollArea className="flex-1 overflow-hidden relative w-full pt-3 px-6 flex flex-col gap-8">
-              {chatData?.map((message, index) => (
+              {[...chatData, ...WSData]?.map((message) => (
                 <div key={message.id} className="w-full relative py-4">
-                  <Message imageUrl={userMessages.imageUrl} {...message} />
+                  <Message {...message} />
                 </div>
               ))}
 

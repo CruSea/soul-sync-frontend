@@ -1,25 +1,29 @@
 import MentorContainer from '@/components/shared/Mentor/mentor-container';
-import { jsonServer } from '@/data/end-points';
-import { sortUsers } from '@/lib/utils';
+import { endPoints, jsonServer } from '@/data/end-points';
+
+const BASE_URL = process.env.NEXT_PUBLIC_API_BASE_URL;
 
 const MentorView = async () => {
   // Fetch users from the JSON Server
-  const response = await fetch(`${jsonServer.baseUrl}/${jsonServer.users}`);
+  const response = await fetch(
+    `${jsonServer.baseUrl}/${jsonServer.conversation}`
+  ); // for when connecting to local db server
+  // const response = await fetch(`${BASE_URL}/${endPoints.allConversations}`);            // for when connecting to backend
   if (!response.ok) {
     throw new Error('Failed to fetch users from JSON Server');
   }
 
-  const users = await response.json();
+  const conversations = await response.json();
 
-  if (users.length === 0) {
-    throw new Error('No users found');
+  if (conversations.length === 0) {
+    throw new Error('No conversations found');
   }
 
-  const sortedUsers = sortUsers(users); // backend will send a sorted list in actual implementation
+  console.log('the conversatoins', conversations);
 
   return (
     <>
-      <MentorContainer users={sortedUsers} />
+      <MentorContainer conversations={conversations} />
     </>
   );
 };
