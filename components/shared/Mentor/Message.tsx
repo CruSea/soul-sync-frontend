@@ -5,12 +5,7 @@ import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 import { MessageProps } from '@/types/mentor';
 import React from 'react';
 
-const Message: React.FC<MessageProps> = ({
-  text,
-  isMentor,
-  time,
-  newDay,
-}) => {
+const Message: React.FC<MessageProps> = ({ text, isMentor, time, newDay }) => {
   return (
     <div
       className={cn(

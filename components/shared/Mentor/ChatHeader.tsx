@@ -14,17 +14,12 @@ import {
 } from './metor-sheet';
 import Profile from './Profile';
 
-const ChatHeader = ({
-  platform,
-  id
-}: ChatHeaderProps) => {
+const ChatHeader = ({ platform, id }: ChatHeaderProps) => {
   return (
     <CardHeader className="w-full bg-neutral-300 rounded-t-lg shadow-custom-chat flex flex-row justify-between px-5 py-2.5">
       <div className="flex gap-2.5 items-center">
         <div className="flex flex-col gap-0">
-          <CardTitle className="font-bold text-2xl mb-[-5px]">
-            {id}
-          </CardTitle>
+          <CardTitle className="font-bold text-2xl mb-[-5px]">{id}</CardTitle>
           <CardDescription className="font-bold text-xs text-neutral-500 ">
             {platform}
           </CardDescription>

@@ -38,7 +38,8 @@ const ConversationsList = ({
                   key={conversation.conversation_id}
                   className={cn(
                     'flex px-2.5 gap-3.5 items-center h-[70px] outline-none rounded-lg cursor-pointer',
-                    conversation.conversation_id === currentConversation.conversation_id
+                    conversation.conversation_id ===
+                      currentConversation.conversation_id
                       ? '!bg-gray-300'
                       : 'bg-white'
                   )} // if user is selected sets the background to gry
@@ -57,7 +58,9 @@ const ConversationsList = ({
 
                   {/* user information */}
                   <div className="flex flex-col justify-center">
-                    <div className="font-bold text-base">{conversation.conversation_id}</div>
+                    <div className="font-bold text-base">
+                      {conversation.conversation_id}
+                    </div>
                     <div className="font-bold text-xs text-muted-foreground">
                       {conversation.platform}
                     </div>

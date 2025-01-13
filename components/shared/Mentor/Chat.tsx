@@ -17,7 +17,7 @@ const Chat = ({
   currentConversation,
   sendJsonMessage,
   conversationMessages,
-  conversationInfo
+  conversationInfo,
 }: ChatProps) => {
   // text is where the text box saves what the mentor writes
   const [text, setText] = useState<string>('');
@@ -44,22 +44,20 @@ const Chat = ({
 
     // const user = localStorage.getItem('user');  get from local storage in final version
     const user = {
-      "sub": "32ef0d61-7a31-4cdc-abe4-d7eead36f4dd",
-      "email": "destanathnaelataro@gmail.com",
-      "imageUrl": null,
-      "accounts": [
+      sub: '32ef0d61-7a31-4cdc-abe4-d7eead36f4dd',
+      email: 'destanathnaelataro@gmail.com',
+      imageUrl: null,
+      accounts: [
         {
-          "id": "b0c157c8-af23-4344-a437-134d23a624a9",
-          "name": "nathnael",
-          "domain": null
-        }
+          id: 'b0c157c8-af23-4344-a437-134d23a624a9',
+          name: 'nathnael',
+          domain: null,
+        },
       ],
-      "roles": [
-        "OWNER"
-      ],
-      "iat": 1734942898,
-      "exp": 1734946498
-    }
+      roles: ['OWNER'],
+      iat: 1734942898,
+      exp: 1734946498,
+    };
 
     const newMessage: WSMessage = {
       id: uuidv4(),
@@ -73,9 +71,9 @@ const Chat = ({
         createdAt: createdAt,
         body: messageText,
         address: conversationInfo.address,
-        channelId: conversationInfo.channelId
+        channelId: conversationInfo.channelId,
       },
-      socket: conversationInfo.socket 
+      socket: conversationInfo.socket,
     };
 
     sendJsonMessage(newMessage);

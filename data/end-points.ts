@@ -5,7 +5,7 @@ export const endPoints = {
   adminMentors: 'admin/mentors',
   mentor: 'mentors',
   allConversations: 'conversation',
-  threads: 'conversation/threads'
+  threads: 'conversation/threads',
 };
 
 export const jsonServer = {

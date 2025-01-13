@@ -41,7 +41,9 @@ const formatTime = (isoString: string) => {
   });
 };
 
-export function transformChatData(input: Messages | undefined): transformedMessage[] | [] {
+export function transformChatData(
+  input: Messages | undefined
+): transformedMessage[] | [] {
   if (!input) {
     return [];
   }
@@ -49,7 +51,7 @@ export function transformChatData(input: Messages | undefined): transformedMessa
   return input.map((message, index, arr) => {
     // checks if the messages next to each other are different, if so adds a newDay text
     const currentDay = formatDate(message.createdAt);
-    const previousDay = index > 0 ? formatDate(arr[index - 1].createdAt) : null;  
+    const previousDay = index > 0 ? formatDate(arr[index - 1].createdAt) : null;
 
     return {
       isMentor: message.type === 'SENT',
@@ -61,19 +63,22 @@ export function transformChatData(input: Messages | undefined): transformedMessa
   });
 }
 
-export function transformWSData(Messages: WSMessage[]): transformedMessage[] | [] {
+export function transformWSData(
+  Messages: WSMessage[]
+): transformedMessage[] | [] {
   if (!Messages) {
     return [];
   }
   return Messages.map((Message, index, arr) => {
     const currentDay = formatDate(Message.payload.createdAt);
-    const previousDay = index > 0 ? formatDate(arr[index - 1].payload.createdAt) : null;
+    const previousDay =
+      index > 0 ? formatDate(arr[index - 1].payload.createdAt) : null;
     return {
       isMentor: Message.payload.type === 'SENT',
       text: Message.payload.body,
       time: formatTime(Message.payload.createdAt),
       newDay: currentDay !== previousDay ? currentDay : '',
-      id: Message.id
+      id: Message.id,
     };
   });
 }

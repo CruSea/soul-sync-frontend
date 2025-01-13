@@ -27,7 +27,7 @@ const InputArea = forwardRef<HTMLInputElement, InputAreaProps>(
             if (e.key === 'Enter') {
               e.preventDefault(); // Prevents newline on enter in the textarea
               sendText(inputText);
-              setInputText("");
+              setInputText('');
             }
           }}
         />
@@ -38,7 +38,7 @@ const InputArea = forwardRef<HTMLInputElement, InputAreaProps>(
           onClick={() => {
             // sends the text value when clicking send
             sendText(inputText);
-            setInputText("");
+            setInputText('');
           }}
         >
           <Image

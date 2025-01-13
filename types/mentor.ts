@@ -1,5 +1,5 @@
 import { colors } from '@/components/shared/Mentor/Info';
-import type { StaticImageData } from "next/image";
+import type { StaticImageData } from 'next/image';
 
 export type Mentor = {
   id: string;
@@ -12,16 +12,14 @@ export type Mentor = {
   location: string;
   status: string;
   profileImage: string;
-}
+};
 
 export type MentorLayoutProps = {
   children: React.ReactNode;
   title: string;
-}
+};
 
-
-
-type Platform = "Telegram" | "WhatsApp" | "Negarit" | "Facebook" | "Twilio"
+type Platform = 'Telegram' | 'WhatsApp' | 'Negarit' | 'Facebook' | 'Twilio';
 
 export type Conversation = {
   conversation_id: string;
@@ -55,13 +53,13 @@ export type UserDetails = {
 
 export type MentorContainerProps = {
   conversations: Conversations;
-}
+};
 
 export type ConversationsListProps = {
   currentConversation: Conversation;
   conversations: Conversations;
   setCurrentConversation: (conversation: Conversation) => void;
-}
+};
 
 export type UserMessages = {
   id: string;
@@ -71,56 +69,54 @@ export type UserMessages = {
 type Metadata = {
   userId: string;
   conversationId: string;
-}
+};
 
 export type Payload = {
-  type: "RECIEVED" | "SENT",
-  createdAt: string,
-  body: string,
-  address: string,
-  channelId: string
-}
+  type: 'RECIEVED' | 'SENT';
+  createdAt: string;
+  body: string;
+  address: string;
+  channelId: string;
+};
 
 export type WSMessage = {
-  id: string;        // Unique identifier for the message
-  type: "CHAT";     // Type of the message, which can be a union of types if needed
+  id: string; // Unique identifier for the message
+  type: 'CHAT'; // Type of the message, which can be a union of types if needed
   metadata: Metadata; // Metadata containing user and conversation IDs
-  payload: Payload;   // The actual message content
-  socket: string;    // Information about the socket connection
-}
+  payload: Payload; // The actual message content
+  socket: string; // Information about the socket connection
+};
 
 export type ConversationInfo = {
   channelId: string;
   address: string;
   socket: string;
   userId: string;
-}
+};
 
 export type ConversationInfos = {
   [conversationId: string]: ConversationInfo;
-}
+};
 
 export type ChatProps = {
   currentConversation: Conversation;
   userMessages: Messages | undefined;
   sendJsonMessage: (message: WSMessage) => void;
   conversationMessages: WSMessage[];
-  conversationInfo: ConversationInfo; 
-}
+  conversationInfo: ConversationInfo;
+};
 
 export type transformedMessage = {
-  isMentor: boolean,
-  text: string,
-  time: string,
-  newDay: string,
-  id: string
-}
+  isMentor: boolean;
+  text: string;
+  time: string;
+  newDay: string;
+  id: string;
+};
 
 export type ProfileProps = {
   userDetails: UserDetails | undefined;
-}
-
-
+};
 
 export type ProfileTypes = {
   title: string;
@@ -134,40 +130,37 @@ export type ProfileTypes = {
   src: string;
   abrivation: string;
   age: string;
-}
+};
 
 export type ChatHeaderProps = {
   platform: Platform;
-  id: string
-}
+  id: string;
+};
 
 export type InfoProps = {
   title: string | undefined;
   value: string | undefined;
   color: keyof typeof colors;
-}
+};
 
 export type MessageProps = {
   text: string;
   isMentor: boolean;
   time: string;
   newDay: string;
-}
-
-
+};
 
 export type PlatformIcon = StaticImageData | string;
 
-export type PlatformIconsType = Record<string, PlatformIcon>
-
+export type PlatformIconsType = Record<string, PlatformIcon>;
 
 // type for the group of message threads between user and mentor
 export type threadType = {
-  isMentor: boolean,
-  text: string,
-  time: string,
-  newDay: string,
-  id: string,
-}
+  isMentor: boolean;
+  text: string;
+  time: string;
+  newDay: string;
+  id: string;
+};
 
 export type chatData = threadType[];
