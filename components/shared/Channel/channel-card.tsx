@@ -16,7 +16,7 @@ import {
 import { Button } from '@/components/ui/button';
 import { useState } from 'react';
 import NegaritSMS from './configuration/NegaritSMS';
-import { channelJsonserver } from '@/data/end-points';
+import { channelJsonserver, endPoints } from '@/data/end-points';
 
 interface ChannelCardProps {
   channel: Channel;
@@ -27,6 +27,8 @@ interface ChannelCardProps {
     duration?: number;
   }) => void;
 }
+
+const BASE_URL = process.env.NEXT_PUBLIC_API_BASE_URL;
 
 export function ChannelCard({ channel, setChannels, toast }: ChannelCardProps) {
   const [deleteId, setDeleteId] = useState<string | null>(null);
@@ -52,20 +54,33 @@ export function ChannelCard({ channel, setChannels, toast }: ChannelCardProps) {
       break;
   }
   const handleDelete = (channel: Channel) => {
-    setDeleteId(channel.id);
+    if (channel.id) {
+      setDeleteId(channel.id);
+    }
   };
+
+  // backend call
+  const user = localStorage.getItem('user');
+  if (!user) {
+    return;
+  }
+  const accountId = '2b25e49b-6796-4d82-8b54-7220404d1171';
+  const token =
+    'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjI4ZDQ1YzFmLTM3ZjgtNGI0Zi05OGU1LTZhYjMyNjFkMjg3YiIsIm5hbWUiOiJNeSBBY2NvdW50IiwiZW1haWwiOiJiaW55QGdtYWlsLmNvbSIsInBhc3N3b3JkIjoiJDJhJDEwJGFaQ2VmaGN6L2E4S1daODVHZGZaaS5pMTRaMFREL1lraHpLVkpFWUJwOHcyRXRIRFNjT0M2IiwiaW1hZ2VVcmwiOm51bGwsImRlbGV0ZWRBdCI6bnVsbCwiY3JlYXRlZEF0IjoiMjAyNS0wMS0yMFQxMTozODozNC4xNjdaIiwidXBkYXRlZEF0IjoiMjAyNS0wMS0yMFQxMTozODozNC4xNjdaIiwiaWF0IjoxNzM3MzczMTE0fQ.UeKdhaPoqqfVuaoezJI0dea7Y1mvEAAqE2SlpW0dq4w';
+  // const accountId = JSON.parse(user).accounts[0].id;
 
   const confirmDelete = () => {
     if (deleteId !== null) {
       setChannels((prevItems) =>
         prevItems.filter((item) => item.id !== deleteId)
       );
-      fetch(
-        `${channelJsonserver.baseUrl}/${channelJsonserver.channels}/${deleteId}`,
-        {
-          method: 'DELETE',
-        }
-      )
+      fetch(`${BASE_URL}/${endPoints.channel}/${deleteId}`, {
+        method: 'DELETE',
+        headers: {
+          'Content-Type': 'application/json',
+          Authorization: `Bearer ${token}`,
+        },
+      })
         .then((response) => response.json())
         .then((data) => {
           console.log('Deleted channel:', data);
@@ -84,6 +99,31 @@ export function ChannelCard({ channel, setChannels, toast }: ChannelCardProps) {
             duration: 3000,
           });
         });
+      //   // dbserver deleted
+      // fetch(
+      //   `${channelJsonserver.baseUrl}/${channelJsonserver.channels}/${deleteId}`,
+      //   {
+      //     method: 'DELETE',
+      //   }
+      // )
+      //   .then((response) => response.json())
+      //   .then((data) => {
+      //     console.log('Deleted channel:', data);
+      //     // Show toast notification after successful deletion
+      //     toast({
+      //       title: 'Channel deleted successfully',
+      //       description: 'The channel has been deleted from the list',
+      //       duration: 3000,
+      //     });
+      //   })
+      //   .catch((error) => {
+      //     console.error('Error:', error);
+      //     toast({
+      //       title: 'Error deleting channel',
+      //       description: 'An error occurred while deleting the channel.',
+      //       duration: 3000,
+      //     });
+      //   });
 
       setDeleteId(null);
     }

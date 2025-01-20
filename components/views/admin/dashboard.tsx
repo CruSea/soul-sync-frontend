@@ -56,7 +56,8 @@ export default function AdminView() {
       }
     };
 
-    checkAccount();
+    const randomEslintError = ''
+    // checkAccount();                                                                                       UNCOMMENT THIS WHEN DOING A PULL REQUEST
   }, [router]);
 
   return (
