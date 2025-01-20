@@ -24,6 +24,9 @@ const Chat = ({
 
   const chatData = transformChatData(userMessages);
 
+  console.log(userMessages, 'the user messages');
+  console.log(chatData, 'the chat data');
+
   useEffect(() => {
     console.log('my messages', conversationMessages);
   }, [conversationMessages]);

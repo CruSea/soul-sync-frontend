@@ -6,8 +6,11 @@
     "plugin:prettier/recommended"
   ],
   "rules": {
-    "prettier/prettier": "error",
     "@typescript-eslint/no-explicit-any": "off",
-    "no-unused-vars": "off"
-  }
+    "no-unused-vars": "off",
+    "prettier/prettier": ["error", { "endOfLine": "auto" }]
+  },
+  "plugins": [
+    "prettier"
+  ]
 }
