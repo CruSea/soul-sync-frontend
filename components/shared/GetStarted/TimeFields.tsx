@@ -6,7 +6,6 @@ import { MinuteField } from './MinuteField';
 export function TimeFields({ form, errors }: TimeFieldsProps) {
   return (
     <div className="space-y-2">
-      <div className="font-medium text-xl">Availability Time</div>
       <div className="flex gap-6">
         <div className="space-y-2">
           <div className="font-medium text-zinc-500 font-base">Start Time</div>

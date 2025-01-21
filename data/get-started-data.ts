@@ -11,6 +11,16 @@ const specializationOptions = [
   { label: 'Spiritual', value: 'spritual' },
 ];
 
+const dayOptions = [
+  { label: 'Monday', value: 'monday' },
+  { label: 'Tuesday', value: 'tuesday' },
+  { label: 'Wednesday', value: 'wednesday' },
+  { label: 'Thursday', value: 'thursday' },
+  { label: 'Friday', value: 'friday' },
+  { label: 'Saturday', value: 'saturday' },
+  { label: 'Sunday', value: 'sunday' },
+];
+
 const hours = [
   { label: '01', value: '01' },
   { label: '02', value: '02' },
@@ -52,4 +62,5 @@ export const getStartedForm = {
   hours,
   minutes,
   dayPeriod,
+  dayOptions,
 };
