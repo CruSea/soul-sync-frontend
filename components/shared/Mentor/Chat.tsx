@@ -19,17 +19,13 @@ const Chat = ({
   conversationMessages,
   conversationInfo,
 }: ChatProps) => {
-  // text is where the text box saves what the mentor writes
-  const [text, setText] = useState<string>('');
+  const chatData = userMessages
+    ? transformChatData(userMessages[0]?.messages) //                                                      //for when connecting to json server
+    : [];
 
-  const chatData = transformChatData(userMessages);
-
-  console.log(userMessages, 'the user messages');
-  console.log(chatData, 'the chat data');
-
-  useEffect(() => {
-    console.log('my messages', conversationMessages);
-  }, [conversationMessages]);
+  // const chatData = userMessages
+  // ? transformChatData(userMessages)                                                                     // for when connecting to backend
+  // : [];
 
   const WSData = transformWSData(conversationMessages); // get the mentorId from the token next time
 

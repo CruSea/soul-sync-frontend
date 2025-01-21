@@ -100,7 +100,7 @@ export type ConversationInfos = {
 
 export type ChatProps = {
   currentConversation: Conversation;
-  userMessages: Messages | undefined;
+  userMessages: any;
   sendJsonMessage: (message: WSMessage) => void;
   conversationMessages: WSMessage[];
   conversationInfo: ConversationInfo;
