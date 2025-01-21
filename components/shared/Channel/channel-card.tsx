@@ -30,6 +30,14 @@ interface ChannelCardProps {
 
 const BASE_URL = process.env.NEXT_PUBLIC_API_BASE_URL;
 
+const formatDate = (isoString: string) => {
+  const date = new Date(isoString);
+  return date.toLocaleDateString('en-US', {
+    year: 'numeric',
+    month: 'long',
+    day: 'numeric',
+  });
+};
 export function ChannelCard({ channel, setChannels, toast }: ChannelCardProps) {
   const [deleteId, setDeleteId] = useState<string | null>(null);
   let iconURL = '';
@@ -197,7 +205,8 @@ export function ChannelCard({ channel, setChannels, toast }: ChannelCardProps) {
             </div>
           </div>
           <div className="text-gray-900 text-xs font-bold font-['Manrope'] ">
-            {channel.createdAt}
+            {/* {channel.createdAt} */}
+            {formatDate(channel.createdAt)}
           </div>
         </div>
         {channelChange(channel)}
