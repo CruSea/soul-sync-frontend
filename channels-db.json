@@ -1,8 +1,21 @@
 {
   "channels": [
     {
-      "id": "745f1b1b-dafa-4c44-9e81-bd1c962ec949",
+      "id": "51c261b8-cc62-41a0-a8e9-7cc04be6cd80",
       "name": "Eyosias Solomon",
+      "Metadata": {
+        "type": "Negarit SMS"
+      },
+      "Config": {
+        "token": "daskjdlkajld",
+        "apiKey": "",
+        "campaignId": "jsdalkjdlksa"
+      },
+      "Date": "Dec 29, 2024"
+    },
+    {
+      "id": "bfc042f8-d8ed-4206-bc57-348db4ba7376",
+      "name": "Eyosi",
       "Metadata": {
         "type": "Telegram Bot"
       },
@@ -14,8 +27,8 @@
       "Date": "Dec 29, 2024"
     },
     {
-      "id": "ecf08930-ca29-4f5d-8772-ec343e4e64d2",
-      "name": "Eyosias Solomon Lale",
+      "id": "3921898b-5813-4b36-b0cc-265c3a0f77eb",
+      "name": "Eyosi",
       "Metadata": {
         "type": "Negarit SMS"
       },
