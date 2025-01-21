@@ -1,26 +1,22 @@
 import * as z from 'zod';
 
-export type ChannelType =
-  | 'Telegram Bot'
-  | 'WhatsApp'
-  | 'Negarit SMS'
-  | 'Facebook'
-  | 'Twilio';
+export type type = 'TELEGRAM' | 'WHATSAPP' | 'NEGARIT' | 'FACEBOOK' | 'TWILIO';
 
 export interface Channel {
   id: string;
   name: string;
-  channelType: ChannelType;
-  channelConfig: telegramConfig | NegaritConfig;
-  date: string;
+  type: type;
+  configuration: telegramConfig | NegaritConfig;
+  createdAt: string;
+  accountId: string;
 }
 export type telegramConfig = {
-  channelToken: string;
+  token: string;
 };
 
 export type NegaritConfig = {
-  apiKey: string;
-  campaignId: string;
+  api_key: string;
+  campaign_id: string;
 };
 
 export const formSchema = z
@@ -28,39 +24,33 @@ export const formSchema = z
     name: z.string().min(2, {
       message: 'Channel name must be at least 2 characters.',
     }),
-    channelType: z.enum([
-      'Telegram Bot',
-      'WhatsApp',
-      'Negarit SMS',
-      'Facebook',
-      'Twilio',
-    ]),
-    apiKey: z.string().optional(),
-    channelToken: z.string().optional(),
-    campaignId: z.string().optional(),
+    type: z.enum(['TELEGRAM', 'WHATSAPP', 'NEGARIT', 'FACEBOOK', 'TWILIO']),
+    api_key: z.string().optional(),
+    token: z.string().optional(),
+    campaign_id: z.string().optional(),
   })
   .superRefine((channel, ctx) => {
-    if (channel.channelType === 'Telegram Bot' && !channel.channelToken) {
+    if (channel.type === 'TELEGRAM' && !channel.token) {
       ctx.addIssue({
         code: 'custom',
-        path: ['channelToken'], // Fixed path to match the schema
-        message: 'Channel token is required for Telegram Bot.',
+        path: ['token'], // Fixed path to match the schema
+        message: 'Channel token is required for Telegram.',
       });
     }
 
-    if (channel.channelType === 'Negarit SMS') {
-      if (!channel.apiKey) {
+    if (channel.type === 'NEGARIT') {
+      if (!channel.api_key) {
         ctx.addIssue({
           code: 'custom',
-          path: ['apiKey'],
-          message: 'API key is required for Negarit SMS.',
+          path: ['api_key'],
+          message: 'API key is required for Negarit.',
         });
       }
-      if (!channel.campaignId) {
+      if (!channel.campaign_id) {
         ctx.addIssue({
           code: 'custom',
-          path: ['campaignId'],
-          message: 'Campaign ID is required for Negarit SMS.',
+          path: ['campaign_id'],
+          message: 'Campaign ID is required for Negarit.',
         });
       }
     }

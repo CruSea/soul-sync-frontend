@@ -3,7 +3,7 @@ import React from 'react';
 import Image from 'next/image';
 import type { Channel } from '@/types/channel';
 import { AiOutlineDelete } from 'react-icons/ai';
-import TelegramBot from './ChannelConfig/telegramBot';
+import TelegramBot from './configuration/telegramBot';
 
 import {
   Dialog,
@@ -15,7 +15,7 @@ import {
 } from '@/components/ui/dialog';
 import { Button } from '@/components/ui/button';
 import { useState } from 'react';
-import NegaritSMS from './ChannelConfig/NegaritSMS';
+import NegaritSMS from './configuration/NegaritSMS';
 
 interface ChannelCardProps {
   channel: Channel;
@@ -30,20 +30,20 @@ interface ChannelCardProps {
 export function ChannelCard({ channel, setChannels, toast }: ChannelCardProps) {
   const [deleteId, setDeleteId] = useState<string | null>(null);
   let iconURL = '';
-  switch (channel.channelType) {
-    case 'Telegram Bot':
+  switch (channel.type) {
+    case 'TELEGRAM':
       iconURL = '/telegram.png';
       break;
-    case 'Negarit SMS':
+    case 'NEGARIT':
       iconURL = '/negarit.png';
       break;
-    case 'WhatsApp':
+    case 'WHATSAPP':
       iconURL = '/Whatsapp.png';
       break;
-    case 'Facebook':
+    case 'FACEBOOK':
       iconURL = '/Facebook.svg';
       break;
-    case 'Twilio':
+    case 'TWILIO':
       iconURL = '/Twilio.png';
       break;
     default:
@@ -85,10 +85,10 @@ export function ChannelCard({ channel, setChannels, toast }: ChannelCardProps) {
     }
   };
   const channelChange = (channel: Channel) => {
-    switch (channel.channelType) {
-      case 'Telegram Bot':
+    switch (channel.type) {
+      case 'TELEGRAM':
         return <TelegramBot channel={channel} />;
-      case 'Negarit SMS':
+      case 'NEGARIT':
         return <NegaritSMS channel={channel} />;
       default:
         return <div>Has not been set yet</div>;
@@ -116,7 +116,7 @@ export function ChannelCard({ channel, setChannels, toast }: ChannelCardProps) {
       <div className="w-auto mb-2 h-auto">
         <Image
           src={iconURL}
-          alt={channel.channelType}
+          alt={channel.type}
           width={80}
           height={80}
           className="object-contain"
@@ -142,7 +142,7 @@ export function ChannelCard({ channel, setChannels, toast }: ChannelCardProps) {
             </div>
           </div>
           <div className="text-gray-900 text-xs font-bold font-['Manrope'] ">
-            {channel.channelType}
+            {channel.type}
           </div>
         </div>
         <div className="w-full h-auto justify-between items-center flex text-wrap ">
@@ -153,7 +153,7 @@ export function ChannelCard({ channel, setChannels, toast }: ChannelCardProps) {
             </div>
           </div>
           <div className="text-gray-900 text-xs font-bold font-['Manrope'] ">
-            {channel.date}
+            {channel.createdAt}
           </div>
         </div>
         {channelChange(channel)}
@@ -165,7 +165,7 @@ export function ChannelCard({ channel, setChannels, toast }: ChannelCardProps) {
             <DialogDescription>
               Are you sure you want to delete?{' '}
               <span className="font-bold text-black inline">
-                {channel.name} | {channel.channelType}
+                {channel.name} | {channel.type}
               </span>{' '}
               action cannot be undone.
             </DialogDescription>

@@ -4,7 +4,7 @@ type NegaritProp = {
 };
 
 function Negarit({ channel }: NegaritProp) {
-  const config = channel.channelConfig as NegaritConfig;
+  const config = channel.configuration as NegaritConfig;
 
   return (
     <div className="w-full">
@@ -16,7 +16,7 @@ function Negarit({ channel }: NegaritProp) {
           </div>
         </div>
         <div className="text-gray-900 text-xs font-bold font-['Manrope'] ">
-          {config.apiKey}
+          {config.api_key}
         </div>
       </div>
       <div className="justify-between items-center flex  w-full ">
@@ -27,7 +27,7 @@ function Negarit({ channel }: NegaritProp) {
           </div>
         </div>
         <div className="text-gray-900 text-xs font-bold font-['Manrope']">
-          {config.campaignId}
+          {config.campaign_id}
         </div>
       </div>
     </div>

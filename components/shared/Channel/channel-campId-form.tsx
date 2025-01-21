@@ -19,10 +19,10 @@ export default function ChannelNameForm({ form }: ChannelNameFormProps) {
     <div>
       <FormField
         control={form.control}
-        name="campaignId"
+        name="campaign_id"
         render={({ field }) => (
           <FormItem>
-            <FormLabel>campaign Id</FormLabel>
+            <FormLabel>Campaign Id</FormLabel>
             <FormControl>
               <Input placeholder="Please Insert the Campaign Id" {...field} />
             </FormControl>

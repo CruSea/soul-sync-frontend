@@ -12,9 +12,9 @@ export function AdminLayout({ children, title }: AdminLayoutProps) {
   return (
     <div className="flex max-h-screen">
       <Sidebar />
-      <div className="flex flex-1 flex-col">
+      <div className="flex w-full flex-1 flex-col">
         <Header title={title} />
-        <main className="flex-1 overflow-auto">{children}</main>
+        <main className="w-full overflow-auto">{children}</main>
         <Toaster />
       </div>
     </div>

@@ -16,7 +16,7 @@ import {
   SelectValue,
 } from '@/components/ui/select';
 
-type ChannelTypeFormProps = {
+type typeFormProps = {
   form: UseFormReturn<formSchemaType>;
   setSelectedChannel: React.Dispatch<React.SetStateAction<string>>;
 };
@@ -24,12 +24,12 @@ type ChannelTypeFormProps = {
 export default function ChannelNameForm({
   form,
   setSelectedChannel,
-}: ChannelTypeFormProps) {
+}: typeFormProps) {
   return (
     <div>
       <FormField
         control={form.control}
-        name="channelType"
+        name="type"
         render={({ field }) => (
           <FormItem>
             <FormLabel>Channel Type</FormLabel>
@@ -47,11 +47,11 @@ export default function ChannelNameForm({
                 </SelectTrigger>
               </FormControl>
               <SelectContent>
-                <SelectItem value="Telegram Bot">Telegram Bot</SelectItem>
-                <SelectItem value="WhatsApp">WhatsApp</SelectItem>
-                <SelectItem value="Negarit SMS">Negarit</SelectItem>
-                <SelectItem value="Facebook">Facebook</SelectItem>
-                <SelectItem value="Twilio">Twilio</SelectItem>
+                <SelectItem value="TELEGRAM">TELEGRAM</SelectItem>
+                <SelectItem value="WHATSAPP">WHATSAPP</SelectItem>
+                <SelectItem value="NEGARIT">NEGARIT</SelectItem>
+                <SelectItem value="FACEBOOK">FACEBOOK</SelectItem>
+                <SelectItem value="TWILIO">TWILIO</SelectItem>
               </SelectContent>
             </Select>
             <FormMessage />
