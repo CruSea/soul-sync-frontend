@@ -2,7 +2,7 @@ import {
   LuLayoutDashboard,
   LuUser,
   LuMessagesSquare,
-  LuAArrowDown,
+  LuUserCog,
   LuLibrary,
 } from 'react-icons/lu';
 import { RxLinkNone2 } from 'react-icons/rx';
@@ -14,7 +14,7 @@ const menuItems = [
   { icon: LuUser, label: 'Mentors', href: '/admin/mentors' },
   { icon: LuMessagesSquare, label: 'Messages', href: '/admin/messages' },
   { icon: RxLinkNone2, label: 'Channels', href: '/admin/channels' },
-  { icon: LuAArrowDown, label: 'Admins', href: '/admin/admins' },
+  { icon: LuUserCog, label: 'Admins', href: '/admin/admins' },
   { icon: LuLibrary, label: 'Agents', href: '/admin/agents' },
 ];
 

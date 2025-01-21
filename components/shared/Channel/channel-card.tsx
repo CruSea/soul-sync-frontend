@@ -27,11 +27,11 @@ interface ChannelCardProps {
 export function ChannelCard({ channel, setChannels, toast }: ChannelCardProps) {
   const [deleteId, setDeleteId] = useState<string | null>(null);
   let iconURL = '';
-  switch (channel.type) {
+  switch (channel.Metadata.type) {
     case 'Telegram Bot':
       iconURL = '/telegram.png';
       break;
-    case 'Negarit':
+    case 'Negarit SMS':
       iconURL = '/negarit.png';
       break;
     case 'WhatsApp':
@@ -50,26 +50,87 @@ export function ChannelCard({ channel, setChannels, toast }: ChannelCardProps) {
   const handleDelete = (channel: Channel) => {
     setDeleteId(channel.id);
   };
+
   const confirmDelete = () => {
     if (deleteId !== null) {
       setChannels((prevItems) =>
         prevItems.filter((item) => item.id !== deleteId)
       );
+      fetch(`http://localhost:3001/channels/${deleteId}`, {
+        method: 'DELETE',
+      })
+        .then((response) => response.json())
+        .then((data) => {
+          console.log('Deleted channel:', data);
+          // Show toast notification after successful deletion
+          toast({
+            title: 'Channel deleted successfully',
+            description: 'The channel has been deleted from the list',
+            duration: 3000,
+          });
+        })
+        .catch((error) => {
+          console.error('Error:', error);
+          toast({
+            title: 'Error deleting channel',
+            description: 'An error occurred while deleting the channel.',
+            duration: 3000,
+          });
+        });
+
       setDeleteId(null);
     }
-    toast({
-      title: 'Channel deleted successfully',
-      description: 'The channel has been deleted from the list',
-      duration: 3000,
-    });
+  };
+  const channelChange = (channel: Channel) => {
+    switch (channel.Metadata.type) {
+      case 'Telegram Bot':
+        return (
+          <div className="self-stretch justify-between items-center inline-flex gap-9">
+            <div className="h-[19px] justify-start items-center gap-2 flex">
+              <div className="w-2.5 h-2.5 bg-[#27a376] rounded-[50px]" />
+              <div className="text-[#677488] text-xs font-medium font-['Manrope'] leading-tight">
+                ApiKey
+              </div>
+            </div>
+            <div className="grow shrink basis-0 text-gray-900 text-xs font-bold font-['Manrope'] leading-[18px] tracking-wide">
+              {channel.Config.apiKey}
+            </div>
+          </div>
+        );
+      case 'Negarit SMS':
+        return (
+          <div>
+            <div className="self-stretch justify-between items-center inline-flex gap-9">
+              <div className="h-[19px] justify-start items-center gap-2 flex">
+                <div className="w-2.5 h-2.5 bg-[#27a376] rounded-[50px]" />
+                <div className="text-[#677488] text-xs font-medium font-['Manrope'] leading-tight">
+                  Token
+                </div>
+              </div>
+              <div className="grow shrink basis-0 text-gray-900 text-xs font-bold font-['Manrope'] leading-[18px] tracking-wide">
+                {channel.Config.token}
+              </div>
+            </div>
+            <div className="self-stretch justify-between items-center inline-flex gap-9">
+              <div className="h-[19px] justify-start items-center gap-2 flex">
+                <div className="w-2.5 h-2.5 bg-[#27a376] rounded-[50px]" />
+                <div className="text-[#677488] text-xs font-medium font-['Manrope'] leading-tight">
+                  Campaign ID
+                </div>
+              </div>
+              <div className="grow shrink basis-0 text-gray-900 text-xs font-bold font-['Manrope'] leading-[18px] tracking-wide">
+                {channel.Config.campaignId}
+              </div>
+            </div>
+          </div>
+        );
+      default:
+        return <p>Has not been set yet</p>;
+    }
   };
   const cancelDelete = () => {
     setDeleteId(null);
   };
-
-  // const handleDeleteChannel = (id: string) => {
-  //   setChannel((prevItems) => prevItems.filter((item) => item.id !== id));
-  // };
 
   return (
     <div className="h-[278px] w-full  flex flex-col items-center justify-between px-2.5 pt-1 pb-2 border rounded-xl bg-white hover:shadow-md hover:rounded-xl transition-shadow">
@@ -89,7 +150,7 @@ export function ChannelCard({ channel, setChannels, toast }: ChannelCardProps) {
       <div className="relative w-16 h-16 mb-2">
         <Image
           src={iconURL}
-          alt={channel.type}
+          alt={channel.Metadata.type}
           fill
           className="object-contain"
         />
@@ -114,7 +175,7 @@ export function ChannelCard({ channel, setChannels, toast }: ChannelCardProps) {
             </div>
           </div>
           <div className="grow shrink basis-0 text-gray-900 text-xs font-bold font-['Manrope'] leading-tight tracking-tight">
-            {channel.type}
+            {channel.Metadata.type}
           </div>
         </div>
         <div className="self-stretch justify-between items-center inline-flex gap-8">
@@ -126,20 +187,10 @@ export function ChannelCard({ channel, setChannels, toast }: ChannelCardProps) {
           </div>
           <div className="grow shrink basis-0 text-gray-900 text-xs font-bold font-['Manrope'] leading-tight tracking-tight">
             {/* Jan 16,2024 */}
-            {channel.Date}
+            randomDate
           </div>
         </div>
-        <div className="self-stretch justify-between items-center inline-flex gap-9">
-          <div className="h-[19px] justify-start items-center gap-2 flex">
-            <div className="w-2.5 h-2.5 bg-[#27a376] rounded-[50px]" />
-            <div className="text-[#677488] text-xs font-medium font-['Manrope'] leading-tight">
-              Port
-            </div>
-          </div>
-          <div className="grow shrink basis-0 text-gray-900 text-xs font-bold font-['Manrope'] leading-[18px] tracking-wide">
-            OXXFTHRZA7
-          </div>
-        </div>
+        {channelChange(channel)}
       </div>
       <Dialog open={deleteId !== null} onOpenChange={cancelDelete}>
         <DialogContent className="w-[400px] flex flex-col gap-y-4">
@@ -148,7 +199,7 @@ export function ChannelCard({ channel, setChannels, toast }: ChannelCardProps) {
             <DialogDescription>
               Are you sure you want to delete?{' '}
               <span className="font-bold text-black inline">
-                {channel.name} | {channel.type}
+                {channel.name} | {channel.Metadata.type}
               </span>{' '}
               action cannot be undone.
             </DialogDescription>

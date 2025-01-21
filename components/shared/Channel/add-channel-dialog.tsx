@@ -19,14 +19,22 @@ import type { Channel } from '@/types/channel';
 import ChannelNameForm from './channel-name-form';
 import { formSchema } from '@/types/channel';
 import ChannelTypeForm from './channel-type-form';
-import ChannelConfigForm from './channel-config-form';
+import ChannelApiForm from './channel-api-form';
+import ChannelTokenform from './channel-token-form';
+import ChannelCampIdform from './channel-campId-form';
 import { Form } from '@/components/ui/form';
 
 interface AddChannelDialogProps {
   onAddChannel: (channel: Omit<Channel, 'id' | 'icon'>) => void;
+  selectedChannel: string;
+  setSelectedChannel: React.Dispatch<React.SetStateAction<string>>;
 }
 
-export function AddChannelDialog({ onAddChannel }: AddChannelDialogProps) {
+export function AddChannelDialog({
+  onAddChannel,
+  selectedChannel,
+  setSelectedChannel,
+}: AddChannelDialogProps) {
   const [open, setOpen] = useState(false);
   const format: Intl.DateTimeFormatOptions = {
     year: 'numeric',
@@ -40,16 +48,45 @@ export function AddChannelDialog({ onAddChannel }: AddChannelDialogProps) {
       name: '',
       type: 'Telegram Bot',
       apiKey: '',
+      token: '',
+      campaignId: '',
     },
   });
+  const channelChange = () => {
+    switch (selectedChannel) {
+      case 'Telegram Bot':
+        return <ChannelApiForm form={form} />;
+      case 'Negarit SMS':
+        return (
+          <div>
+            <ChannelTokenform form={form} />
+            <ChannelCampIdform form={form} />
+          </div>
+        );
+      default:
+        return <p>Has not been set yet</p>;
+    }
+  };
 
   function onSubmit(values: z.infer<typeof formSchema>) {
     const date = new Date().toLocaleDateString('en-US', format);
-    onAddChannel({
-      ...values,
+
+    const transformedData = {
+      name: values.name,
+      Metadata: {
+        type: values.type,
+      },
+      Config: {
+        token: values.token || '',
+        apiKey: values.apiKey || '',
+        campaignId: values.campaignId || '',
+      },
       Date: date,
-      isDeleted: false,
-    });
+    };
+    console.log(transformedData);
+
+    onAddChannel(transformedData);
+
     setOpen(false);
     form.reset();
   }
@@ -69,8 +106,11 @@ export function AddChannelDialog({ onAddChannel }: AddChannelDialogProps) {
         <Form {...form}>
           <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4">
             <ChannelNameForm form={form} />
-            <ChannelTypeForm form={form} />
-            <ChannelConfigForm form={form} />
+            <ChannelTypeForm
+              form={form}
+              setSelectedChannel={setSelectedChannel}
+            />
+            {channelChange()}
             <Button type="submit" className="w-full">
               Add channel
             </Button>
