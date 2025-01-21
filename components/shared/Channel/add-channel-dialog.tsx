@@ -114,10 +114,25 @@ export function AddChannelDialog({
 
   function onSubmit(values: z.infer<typeof formSchema>) {
     const date = new Date().toLocaleDateString('en-US', format);
-    onAddChannel(currentChannel);
-    setSelectedChannel('Telegram Bot');
-    form.reset();
+
+    const transformedData = {
+      name: values.name,
+      Metadata: {
+        type: values.type,
+      },
+      Config: {
+        token: values.token || '',
+        apiKey: values.apiKey || '',
+        campaignId: values.campaignId || '',
+      },
+      Date: date,
+    };
+    console.log(transformedData);
+
+    onAddChannel(transformedData);
+
     setOpen(false);
+    form.reset();
   }
 
   return (
