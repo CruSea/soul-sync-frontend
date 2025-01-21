@@ -1,9 +1,12 @@
+'use client';
+import withAuth from '@/context/withAuth';
 import ChannelsPage from '@/components/views/admin/channel';
 
-export default function Channel() {
+function Channels() {
   return (
     <>
       <ChannelsPage />
     </>
   );
 }
+export default withAuth(Channels);

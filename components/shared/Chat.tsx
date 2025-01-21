@@ -177,3 +177,4 @@ const Chat: React.FC<ChatProps> = ({ toggleProfileInView }) => {
 };
 
 export default Chat;
+
