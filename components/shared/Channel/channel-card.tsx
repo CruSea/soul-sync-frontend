@@ -1,7 +1,9 @@
+import React from 'react';
+
 import Image from 'next/image';
 import type { Channel } from '@/types/channel';
 import { AiOutlineDelete } from 'react-icons/ai';
-import React from 'react';
+import TelegramBot from './ChannelConfig/telegramBot';
 
 import {
   Dialog,
@@ -13,6 +15,7 @@ import {
 } from '@/components/ui/dialog';
 import { Button } from '@/components/ui/button';
 import { useState } from 'react';
+import NegaritSMS from './ChannelConfig/NegaritSMS';
 
 interface ChannelCardProps {
   channel: Channel;
@@ -27,7 +30,7 @@ interface ChannelCardProps {
 export function ChannelCard({ channel, setChannels, toast }: ChannelCardProps) {
   const [deleteId, setDeleteId] = useState<string | null>(null);
   let iconURL = '';
-  switch (channel.Metadata.type) {
+  switch (channel.channelType) {
     case 'Telegram Bot':
       iconURL = '/telegram.png';
       break;
@@ -82,50 +85,13 @@ export function ChannelCard({ channel, setChannels, toast }: ChannelCardProps) {
     }
   };
   const channelChange = (channel: Channel) => {
-    switch (channel.Metadata.type) {
+    switch (channel.channelType) {
       case 'Telegram Bot':
-        return (
-          <div className="w-full justify-between items-center flex ">
-            <div className="h-auto w-fit gap-2 items-center flex  justify-between">
-              <div className="w-2.5 h-2.5 bg-[#27a376] rounded-[50px]" />
-              <div className="text-[#677488] text-xs font-medium font-['Manrope'] leading-tight">
-                ApiKey
-              </div>
-            </div>
-            <div className="text-gray-900 text-xs font-bold font-['Manrope'] ">
-              {channel.Config.apiKey}
-            </div>
-          </div>
-        );
+        return <TelegramBot channel={channel} />;
       case 'Negarit SMS':
-        return (
-          <div className="w-full">
-            <div className="w-full justify-between items-center flex ">
-              <div className="h-auto w-fit gap-2 items-center flex  justify-between">
-                <div className="w-2.5 h-2.5 bg-[#27a376] rounded-[50px]" />
-                <div className="text-[#677488] text-xs font-medium font-['Manrope'] leading-tight">
-                  Token
-                </div>
-              </div>
-              <div className="text-gray-900 text-xs font-bold font-['Manrope'] ">
-                {channel.Config.token}
-              </div>
-            </div>
-            <div className="justify-between items-center flex  w-full ">
-              <div className="h-auto justify-start items-center gap-2 flex">
-                <div className="w-2.5 h-2.5 bg-[#27a376] rounded-[50px]" />
-                <div className="text-[#677488] text-xs font-medium font-['Manrope'] leading-tight">
-                  Campaign ID
-                </div>
-              </div>
-              <div className="text-gray-900 text-xs font-bold font-['Manrope']">
-                {channel.Config.campaignId}
-              </div>
-            </div>
-          </div>
-        );
+        return <NegaritSMS channel={channel} />;
       default:
-        return <p>Has not been set yet</p>;
+        return <div>Has not been set yet</div>;
     }
   };
   const cancelDelete = () => {
@@ -150,7 +116,7 @@ export function ChannelCard({ channel, setChannels, toast }: ChannelCardProps) {
       <div className="w-auto mb-2 h-auto">
         <Image
           src={iconURL}
-          alt={channel.Metadata.type}
+          alt={channel.channelType}
           width={80}
           height={80}
           className="object-contain"
@@ -176,7 +142,7 @@ export function ChannelCard({ channel, setChannels, toast }: ChannelCardProps) {
             </div>
           </div>
           <div className="text-gray-900 text-xs font-bold font-['Manrope'] ">
-            {channel.Metadata.type}
+            {channel.channelType}
           </div>
         </div>
         <div className="w-full h-auto justify-between items-center flex text-wrap ">
@@ -187,7 +153,7 @@ export function ChannelCard({ channel, setChannels, toast }: ChannelCardProps) {
             </div>
           </div>
           <div className="text-gray-900 text-xs font-bold font-['Manrope'] ">
-            {channel.Date}
+            {channel.date}
           </div>
         </div>
         {channelChange(channel)}
@@ -199,7 +165,7 @@ export function ChannelCard({ channel, setChannels, toast }: ChannelCardProps) {
             <DialogDescription>
               Are you sure you want to delete?{' '}
               <span className="font-bold text-black inline">
-                {channel.name} | {channel.Metadata.type}
+                {channel.name} | {channel.channelType}
               </span>{' '}
               action cannot be undone.
             </DialogDescription>

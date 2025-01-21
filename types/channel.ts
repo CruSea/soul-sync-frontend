@@ -10,24 +10,25 @@ export type ChannelType =
 export interface Channel {
   id: string;
   name: string;
-  Metadata: {
-    type: ChannelType;
-  };
-  Config: {
-    token: string;
-    apiKey: string;
-    campaignId: string;
-  };
-  Date: string;
-  // icon: string;
+  channelType: ChannelType;
+  channelConfig: telegramConfig | NegaritConfig;
+  date: string;
 }
+export type telegramConfig = {
+  channelToken: string;
+};
+
+export type NegaritConfig = {
+  apiKey: string;
+  campaignId: string;
+};
 
 export const formSchema = z
   .object({
     name: z.string().min(2, {
       message: 'Channel name must be at least 2 characters.',
     }),
-    type: z.enum([
+    channelType: z.enum([
       'Telegram Bot',
       'WhatsApp',
       'Negarit SMS',
@@ -35,24 +36,24 @@ export const formSchema = z
       'Twilio',
     ]),
     apiKey: z.string().optional(),
-    token: z.string().optional(),
+    channelToken: z.string().optional(),
     campaignId: z.string().optional(),
   })
   .superRefine((channel, ctx) => {
-    if (channel.type === 'Telegram Bot' && !channel.apiKey) {
+    if (channel.channelType === 'Telegram Bot' && !channel.channelToken) {
       ctx.addIssue({
         code: 'custom',
-        path: ['apiKey'],
-        message: 'API Key is required for Telegram Bot.',
+        path: ['channelToken'], // Fixed path to match the schema
+        message: 'Channel token is required for Telegram Bot.',
       });
     }
 
-    if (channel.type === 'Negarit SMS') {
-      if (!channel.token) {
+    if (channel.channelType === 'Negarit SMS') {
+      if (!channel.apiKey) {
         ctx.addIssue({
           code: 'custom',
-          path: ['token'],
-          message: 'Token is required for Negarit SMS.',
+          path: ['apiKey'],
+          message: 'API key is required for Negarit SMS.',
         });
       }
       if (!channel.campaignId) {
