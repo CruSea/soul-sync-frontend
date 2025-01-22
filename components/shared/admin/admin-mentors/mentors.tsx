@@ -8,9 +8,9 @@ import { Column, FilterOption } from '@/types/data-table';
 import { useToast } from '@/hooks/use-toast';
 import { InviteMentorDialog } from './invite-mentor-dialog';
 import { toast } from 'sonner';
+import { endPoints } from '@/data/end-points';
 
 const BASE_URL = process.env.NEXT_PUBLIC_API_BASE_URL;
-const MENTORS_URL = process.env.NEXT_PUBLIC_API_ADMIN_MENTORS_URL;
 
 interface Mentors {
   id: string | number;
@@ -45,14 +45,18 @@ const columns: Column<Mentors>[] = [
   {
     key: 'availability',
     header: 'Availability',
-    render: (mentor) => mentor.availability.startDate,
+    render: (mentor) => mentor.availability?.startDate,
   },
   { key: 'location', header: 'Location' },
   {
     key: 'isActive',
     header: 'Is Active',
     render: (mentor) => (
-      <Badge variant="secondary">{mentor.isActive ? 'Yes' : 'No'}</Badge>
+      <Badge variant="secondary">
+        {mentor?.isActive
+          ? 'Yes'
+          : 'isActive Not found, change to No when you fix the schema'}
+      </Badge>
     ),
   },
 ];
@@ -66,8 +70,8 @@ const MentorsTable: React.FC = () => {
   const token = localStorage.getItem('token');
   const userObj = JSON.parse(user || '""');
   const accountId = String(userObj.accounts[0].id);
-  const endPoint = `${BASE_URL}/${MENTORS_URL}/${accountId}`;
-  const endPointToDelete = `${BASE_URL}/${MENTORS_URL}/${accountId}/mentor`;
+  const endPoint = `${BASE_URL}/${endPoints.adminMentors}?accountId=${accountId}`;
+  const endPointToDelete = `${BASE_URL}/${endPoints.adminMentors}/${accountId}/mentor`;
 
   const handleDelete = async (id: string | number) => {
     try {
