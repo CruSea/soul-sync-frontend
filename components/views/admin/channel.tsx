@@ -6,7 +6,6 @@ import { ChannelCard } from '@/components/shared/Channel/channel-card';
 import type { Channel } from '@/types/channel';
 import { ChevronDown } from 'lucide-react';
 import { Button } from '@/components/ui/button';
-import { v4 as uuidv4 } from 'uuid';
 import {
   Command,
   CommandEmpty,
@@ -22,7 +21,7 @@ import {
   DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu';
 import { useToast } from '@/hooks/use-toast';
-import { channelJsonserver, endPoints } from '@/data/end-points';
+import { endPoints } from '@/data/end-points';
 
 const BASE_URL = process.env.NEXT_PUBLIC_API_BASE_URL;
 
