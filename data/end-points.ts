@@ -4,7 +4,7 @@ export const endPoints = {
   auth: 'auth/google',
   adminAccount: 'admin/account',
   adminUser: 'admin/user',
-  adminMentors: 'admin/mentors',
+  adminMentors: 'admin/mentor',
   mentor: 'mentors',
   channel: 'admin/channel',
 };

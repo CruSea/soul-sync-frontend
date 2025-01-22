@@ -121,7 +121,6 @@ export function AddChannelDialog({
     form.reset();
     setOpen(false);
   }
-
   return (
     <Dialog open={open} onOpenChange={setOpen}>
       <DialogTrigger asChild>
