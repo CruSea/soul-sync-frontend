@@ -43,33 +43,34 @@ export default function ChannelsPage() {
 
   useEffect(() => {
     const fetchedChannels = async () => {
-      // // dbserver call
-      // const response = await fetch(
-      //   `${channelJsonserver.baseUrl}/${channelJsonserver.channels}`
-      // );
-
       // backend call
       const user = localStorage.getItem('user');
-      if (!user) {
-        return;
-      }
-      const accountId = '2b25e49b-6796-4d82-8b54-7220404d1171';
-      const token =
-        'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjI4ZDQ1YzFmLTM3ZjgtNGI0Zi05OGU1LTZhYjMyNjFkMjg3YiIsIm5hbWUiOiJNeSBBY2NvdW50IiwiZW1haWwiOiJiaW55QGdtYWlsLmNvbSIsInBhc3N3b3JkIjoiJDJhJDEwJGFaQ2VmaGN6L2E4S1daODVHZGZaaS5pMTRaMFREL1lraHpLVkpFWUJwOHcyRXRIRFNjT0M2IiwiaW1hZ2VVcmwiOm51bGwsImRlbGV0ZWRBdCI6bnVsbCwiY3JlYXRlZEF0IjoiMjAyNS0wMS0yMFQxMTozODozNC4xNjdaIiwidXBkYXRlZEF0IjoiMjAyNS0wMS0yMFQxMTozODozNC4xNjdaIiwiaWF0IjoxNzM3MzczMTE0fQ.UeKdhaPoqqfVuaoezJI0dea7Y1mvEAAqE2SlpW0dq4w';
-      // const accountId = JSON.parse(user).accounts[0].id;
-      const response = await fetch(
-        `${BASE_URL}/${endPoints.channel}?accountId=${accountId}`,
-        {
-          headers: {
-            'Content-Type': 'application/json',
-            Authorization: `Bearer ${token}`,
-          },
-        }
-      );
+      const token = localStorage.getItem('token');
 
-      // // ends here
-      const data = await response.json();
-      setChannels(data);
+      if (user) {
+        const endpoint = `${BASE_URL}/${endPoints.channel}`;
+
+        const userObj = JSON.parse(user);
+
+        const requestBody = {
+          accountId: userObj.accounts[0].id,
+        };
+
+        const response = await fetch(
+          `${endpoint}?accountId=${requestBody.accountId}`,
+          {
+            headers: {
+              'Content-Type': 'application/json',
+              Authorization: token ? `Bearer ${JSON.parse(token)}` : '',
+            },
+          }
+        );
+        const data = await response.json();
+        console.log('fetched', data);
+        setChannels(data);
+      } else {
+        console.log('cant fetch');
+      }
     };
     fetchedChannels();
   }, []);
@@ -88,66 +89,57 @@ export default function ChannelsPage() {
   const handleAddChannel = (
     newChannel: Omit<Channel, 'id' | 'icon' | 'createdAt' | 'accountId'>
   ) => {
-    const channelWithId = {
-      ...newChannel,
-      accountId: '2b25e49b-6796-4d82-8b54-7220404d1171',
-    } as Channel;
-    // const channelWithId: Channel = {
-    //   ...newChannel,
-    //   id: `${uuidv4().toString()}`,
-    //   createdAt: new Date().toLocaleDateString('en-US', format),
-    //   accountId: '2b25e49b-6796-4d82-8b54-7220404d1171',
-    // };
-    // setChannels(channels ? [...channels, channelWithId] : [channelWithId]);
-
-    // // dbserver call
-    // fetch(`${channelJsonserver.baseUrl}/${channelJsonserver.channels}`, {
-    //   method: 'POST',
-    //   headers: {
-    //     'Content-Type': 'application/json',
-    //   },
-    //   body: JSON.stringify(channelWithId),
-    // })
-    //   .then((response) => response.json())
-    //   .catch((error) => {
-    //     console.error('Error adding channel:', error);
-    //   });
-
-    // backend call
-    const accountId = '2b25e49b-6796-4d82-8b54-7220404d1171';
-    const token =
-      'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjI4ZDQ1YzFmLTM3ZjgtNGI0Zi05OGU1LTZhYjMyNjFkMjg3YiIsIm5hbWUiOiJNeSBBY2NvdW50IiwiZW1haWwiOiJiaW55QGdtYWlsLmNvbSIsInBhc3N3b3JkIjoiJDJhJDEwJGFaQ2VmaGN6L2E4S1daODVHZGZaaS5pMTRaMFREL1lraHpLVkpFWUJwOHcyRXRIRFNjT0M2IiwiaW1hZ2VVcmwiOm51bGwsImRlbGV0ZWRBdCI6bnVsbCwiY3JlYXRlZEF0IjoiMjAyNS0wMS0yMFQxMTozODozNC4xNjdaIiwidXBkYXRlZEF0IjoiMjAyNS0wMS0yMFQxMTozODozNC4xNjdaIiwiaWF0IjoxNzM3MzczMTE0fQ.UeKdhaPoqqfVuaoezJI0dea7Y1mvEAAqE2SlpW0dq4w';
-    fetch(`${BASE_URL}/${endPoints.channel}`, {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-        Authorization: `Bearer ${token}`,
-      },
-      body: JSON.stringify(channelWithId),
-    })
-      .then(async (response) => {
-        if (!response.ok) {
-          throw new Error(`Failed to add channel: ${response.status}`);
-        }
-        const newChannel = await response.json(); // Get the server's response
-        setChannels((channels) =>
-          channels ? [...channels, newChannel] : [newChannel]
-        ); // Add new channel to state
-        toast({
-          title: 'Channel added successfully',
-          description: 'The channel has been added to the list',
-          duration: 3000,
-        });
+    const user = localStorage.getItem('user');
+    const token = localStorage.getItem('token');
+    if (user && token) {
+      const endpoint = `${BASE_URL}/${endPoints.channel}`;
+      const userObj = JSON.parse(user);
+      const requestBody = {
+        accountId: userObj.accounts[0].id,
+      };
+      const channelWithId = {
+        ...newChannel,
+        accountId: requestBody.accountId,
+      } as Channel;
+      fetch(endpoint, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          Authorization: token ? `Bearer ${JSON.parse(token)}` : '',
+        },
+        body: JSON.stringify(channelWithId),
       })
-      .catch((error) => {
-        console.error('Error adding channel:', error);
-        toast({
-          title: 'Error adding channel',
-          description:
-            'There was an error adding the channel. Please try again.',
-          duration: 3000,
+        .then(async (response) => {
+          if (!response.ok) {
+            throw new Error(`Failed to add channel: ${response.status}`);
+          }
+          const newChannel = await response.json(); // Get the server's response
+          setChannels((channels) =>
+            channels ? [...channels, newChannel] : [newChannel]
+          ); // Add new channel to state
+          toast({
+            title: 'Channel added successfully',
+            description: 'The channel has been added to the list',
+            duration: 3000,
+          });
+        })
+        .catch((error) => {
+          console.error('Error adding channel:', error);
+          toast({
+            title: 'Error adding channel',
+            description:
+              'There was an error adding the channel. Please try again.',
+            duration: 3000,
+          });
         });
+    } else {
+      toast({
+        title: 'Error Finding the user',
+        description:
+          'There was an error while fetching a user. Please try again.',
+        duration: 3000,
       });
+    }
   };
 
   return (
