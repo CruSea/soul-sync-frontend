@@ -16,7 +16,7 @@ import {
 import { Button } from '@/components/ui/button';
 import { useState } from 'react';
 import NegaritSMS from './configuration/NegaritSMS';
-import { channelJsonserver, endPoints } from '@/data/end-points';
+import { endPoints } from '@/data/end-points';
 
 interface ChannelCardProps {
   channel: Channel;
