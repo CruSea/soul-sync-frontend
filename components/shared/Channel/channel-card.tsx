@@ -69,24 +69,28 @@ export function ChannelCard({ channel, setChannels, toast }: ChannelCardProps) {
 
   // backend call
   const user = localStorage.getItem('user');
+  const token = localStorage.getItem('token');
   if (!user) {
     return;
   }
+  const endpoint = `${BASE_URL}/${endPoints.channel}`;
   const accountId = '2b25e49b-6796-4d82-8b54-7220404d1171';
-  const token =
-    'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjI4ZDQ1YzFmLTM3ZjgtNGI0Zi05OGU1LTZhYjMyNjFkMjg3YiIsIm5hbWUiOiJNeSBBY2NvdW50IiwiZW1haWwiOiJiaW55QGdtYWlsLmNvbSIsInBhc3N3b3JkIjoiJDJhJDEwJGFaQ2VmaGN6L2E4S1daODVHZGZaaS5pMTRaMFREL1lraHpLVkpFWUJwOHcyRXRIRFNjT0M2IiwiaW1hZ2VVcmwiOm51bGwsImRlbGV0ZWRBdCI6bnVsbCwiY3JlYXRlZEF0IjoiMjAyNS0wMS0yMFQxMTozODozNC4xNjdaIiwidXBkYXRlZEF0IjoiMjAyNS0wMS0yMFQxMTozODozNC4xNjdaIiwiaWF0IjoxNzM3MzczMTE0fQ.UeKdhaPoqqfVuaoezJI0dea7Y1mvEAAqE2SlpW0dq4w';
-  // const accountId = JSON.parse(user).accounts[0].id;
+  const userObj = JSON.parse(user);
+
+  const requestBody = {
+    accountId: userObj.accounts[0].id,
+  };
 
   const confirmDelete = () => {
     if (deleteId !== null) {
       setChannels((prevItems) =>
         prevItems.filter((item) => item.id !== deleteId)
       );
-      fetch(`${BASE_URL}/${endPoints.channel}/${deleteId}`, {
+      fetch(`${endpoint}/${deleteId}`, {
         method: 'DELETE',
         headers: {
           'Content-Type': 'application/json',
-          Authorization: `Bearer ${token}`,
+          Authorization: token ? `Bearer ${JSON.parse(token)}` : '',
         },
       })
         .then((response) => response.json())
@@ -107,31 +111,6 @@ export function ChannelCard({ channel, setChannels, toast }: ChannelCardProps) {
             duration: 3000,
           });
         });
-      //   // dbserver deleted
-      // fetch(
-      //   `${channelJsonserver.baseUrl}/${channelJsonserver.channels}/${deleteId}`,
-      //   {
-      //     method: 'DELETE',
-      //   }
-      // )
-      //   .then((response) => response.json())
-      //   .then((data) => {
-      //     console.log('Deleted channel:', data);
-      //     // Show toast notification after successful deletion
-      //     toast({
-      //       title: 'Channel deleted successfully',
-      //       description: 'The channel has been deleted from the list',
-      //       duration: 3000,
-      //     });
-      //   })
-      //   .catch((error) => {
-      //     console.error('Error:', error);
-      //     toast({
-      //       title: 'Error deleting channel',
-      //       description: 'An error occurred while deleting the channel.',
-      //       duration: 3000,
-      //     });
-      //   });
 
       setDeleteId(null);
     }
