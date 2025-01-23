@@ -16,7 +16,7 @@ import {
 import { Button } from '@/components/ui/button';
 import { useState } from 'react';
 import NegaritSMS from './configuration/NegaritSMS';
-import { channelJsonserver } from '@/data/end-points';
+import { endPoints } from '@/data/end-points';
 
 interface ChannelCardProps {
   channel: Channel;
@@ -28,6 +28,16 @@ interface ChannelCardProps {
   }) => void;
 }
 
+const BASE_URL = process.env.NEXT_PUBLIC_API_BASE_URL;
+
+const formatDate = (isoString: string) => {
+  const date = new Date(isoString);
+  return date.toLocaleDateString('en-US', {
+    year: 'numeric',
+    month: 'long',
+    day: 'numeric',
+  });
+};
 export function ChannelCard({ channel, setChannels, toast }: ChannelCardProps) {
   const [deleteId, setDeleteId] = useState<string | null>(null);
   let iconURL = '';
@@ -52,7 +62,23 @@ export function ChannelCard({ channel, setChannels, toast }: ChannelCardProps) {
       break;
   }
   const handleDelete = (channel: Channel) => {
-    setDeleteId(channel.id);
+    if (channel.id) {
+      setDeleteId(channel.id);
+    }
+  };
+
+  // backend call
+  const user = localStorage.getItem('user');
+  const token = localStorage.getItem('token');
+  if (!user) {
+    return;
+  }
+  const endpoint = `${BASE_URL}/${endPoints.channel}`;
+  const accountId = '2b25e49b-6796-4d82-8b54-7220404d1171';
+  const userObj = JSON.parse(user);
+
+  const requestBody = {
+    accountId: userObj.accounts[0].id,
   };
 
   const confirmDelete = () => {
@@ -60,12 +86,13 @@ export function ChannelCard({ channel, setChannels, toast }: ChannelCardProps) {
       setChannels((prevItems) =>
         prevItems.filter((item) => item.id !== deleteId)
       );
-      fetch(
-        `${channelJsonserver.baseUrl}/${channelJsonserver.channels}/${deleteId}`,
-        {
-          method: 'DELETE',
-        }
-      )
+      fetch(`${endpoint}/${deleteId}`, {
+        method: 'DELETE',
+        headers: {
+          'Content-Type': 'application/json',
+          Authorization: token ? `Bearer ${JSON.parse(token)}` : '',
+        },
+      })
         .then((response) => response.json())
         .then((data) => {
           console.log('Deleted channel:', data);
@@ -157,7 +184,8 @@ export function ChannelCard({ channel, setChannels, toast }: ChannelCardProps) {
             </div>
           </div>
           <div className="text-gray-900 text-xs font-bold font-['Manrope'] ">
-            {channel.createdAt}
+            {/* {channel.createdAt} */}
+            {formatDate(channel.createdAt)}
           </div>
         </div>
         {channelChange(channel)}

@@ -33,6 +33,7 @@ const LoginPageCard = () => {
   }, [searchParams]);
 
   const handleLogin = () => {
+    console.log('redirecting to', `${BASE_URL}/${endPoints.auth}`);
     router.push(`${BASE_URL}/${endPoints.auth}`);
   };
 

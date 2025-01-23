@@ -56,6 +56,7 @@ export default function AdminView() {
       }
     };
 
+    // const randomEslintError = ''  UNCOMMENT THIS There is a problem
     checkAccount();
   }, [router]);
 
