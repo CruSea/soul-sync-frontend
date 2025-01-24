@@ -26,7 +26,7 @@ const BASE_URL = process.env.NEXT_PUBLIC_API_BASE_URL;
 const CreateOrgView = () => {
   const [currentPage, setCurrentPage] = useState<Page>('first');
   const [orgData, setOrgData] = useState<OrgDataValues>({});
-const {user,notification}= useAuth();
+  const { user, notification } = useAuth();
   const formOne = useForm<createOrgFormOneValues>({
     resolver: zodResolver(createOrgFormOneSchema),
     mode: 'onChange',
@@ -56,7 +56,6 @@ const {user,notification}= useAuth();
     });
 
     if (currentPage === 'second') {
-     
       if (!user) {
         console.error('user not found');
         return;
@@ -68,19 +67,21 @@ const {user,notification}= useAuth();
         name: orgData.companyName,
         domain: orgData.companyDomain,
       };
-const response = await createOrganazation(userData?.accounts[0]?.id,reqBody)
+      const response = await createOrganazation(
+        userData?.accounts[0]?.id,
+        reqBody
+      );
       if (response.ok) {
         notification({
-          title:'Success!',
-          description:'successfull Created!'
-        })
-       
+          title: 'Success!',
+          description: 'successfull Created!',
+        });
       } else {
         console.error('Form Submission is wrong');
         notification({
-          title:'Error!',
-          description:'Form Submission is wrong!'
-        })
+          title: 'Error!',
+          description: 'Form Submission is wrong!',
+        });
         setCurrentPage('first');
       }
     }

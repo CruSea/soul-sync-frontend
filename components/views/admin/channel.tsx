@@ -42,12 +42,11 @@ export default function ChannelsPage() {
 
   useEffect(() => {
     const getChannels = async () => {
-      const response = await fetchedChannels()
-      if(response.responseData){
-
+      const response = await fetchedChannels();
+      if (response.responseData) {
         setChannels(response.responseData);
       } else {
-        toast(response.error)
+        toast(response.error);
       }
     };
     getChannels();
@@ -74,10 +73,8 @@ export default function ChannelsPage() {
       accountId: '4211a09b-b42a-4b1d-85f9-a6598d8ff585',
     };
     setChannels(channels ? [...channels, channelWithId] : [channelWithId]);
-    handleAddChannel(channelWithId)
-    
-    
-      
+    handleAddChannel(channelWithId);
+
     toast({
       title: 'Channel added successfully',
       description: 'The channel has been added to the list',

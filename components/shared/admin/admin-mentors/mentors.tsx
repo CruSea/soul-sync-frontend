@@ -69,7 +69,7 @@ const filterOptions: FilterOption<Mentors>[] = [
 ];
 const search = ['name', 'age', 'gender', 'location', 'isActive'];
 const MentorsTable: React.FC = () => {
- const {user,notification}=useAuth();
+  const { user, notification } = useAuth();
   const userObj = JSON.parse(user);
   const accountId = String(userObj?.accounts[0]?.id);
   const endPoint = `${BASE_URL}/${endPoints.adminMentors}?accountId=${accountId}`;
@@ -79,16 +79,16 @@ const MentorsTable: React.FC = () => {
       const response = await deleteMentor(id as string);
       if (!response.ok) {
         notification({
-          title:'Error!',
-          description:'Failed to delete the mentor'
+          title: 'Error!',
+          description: 'Failed to delete the mentor',
         });
 
         throw new Error('Failed to delete the mentor.');
       }
-      
+
       notification({
-        title:'Success!',
-        description:'Mentor Successfully deleted.'
+        title: 'Success!',
+        description: 'Mentor Successfully deleted.',
       });
     } catch (error) {
       console.error('Error deleting mentor:', error);
