@@ -139,7 +139,7 @@ export default function ChannelsPage() {
                     </CommandItem>
                   ))}
                   <AddChannelDialog
-                    onAddChannel={handleAddChannel}
+                    onAddChannel={AddChannel}
                     setSelectedChannel={setSelectedChannel}
                     selectedChannel={selectedChannel}
                   />
