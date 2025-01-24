@@ -23,6 +23,7 @@ import {
 import { useToast } from '@/hooks/use-toast';
 import { channelJsonserver } from '@/data/end-points';
 import { fetchedChannels, handleAddChannel } from '@/actions/admin/channel';
+import { uuid } from 'uuidv4';
 
 export default function ChannelsPage() {
   const [channels, setChannels] = useState<Channel[]>([]);
@@ -68,23 +69,15 @@ export default function ChannelsPage() {
   ) => {
     const channelWithId: Channel = {
       ...newChannel,
-      id: `${uuidv4().toString()}`,
+      id: `${uuid().toString()}`,
       createdAt: new Date().toLocaleDateString('en-US', format),
       accountId: '4211a09b-b42a-4b1d-85f9-a6598d8ff585',
     };
     setChannels(channels ? [...channels, channelWithId] : [channelWithId]);
     handleAddChannel(channelWithId)
-    fetch(`${channelJsonserver.baseUrl}/${channelJsonserver.channels}`, {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify(channelWithId),
-    })
-      .then((response) => response.json())
-      .catch((error) => {
-        console.error('Error adding channel:', error);
-      });
+    
+    
+      
     toast({
       title: 'Channel added successfully',
       description: 'The channel has been added to the list',
