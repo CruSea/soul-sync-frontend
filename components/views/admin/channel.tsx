@@ -23,6 +23,7 @@ import {
 } from '@/components/ui/dropdown-menu';
 import { useToast } from '@/hooks/use-toast';
 import { channelJsonserver } from '@/data/end-points';
+import { fetchedChannels, handleAddChannel } from '@/actions/admin/channel';
 
 export default function ChannelsPage() {
   const [channels, setChannels] = useState<Channel[]>([]);
@@ -40,14 +41,16 @@ export default function ChannelsPage() {
   ];
 
   useEffect(() => {
-    const fetchedChannels = async () => {
-      const response = await fetch(
-        `${channelJsonserver.baseUrl}/${channelJsonserver.channels}`
-      );
-      const data = await response.json();
-      setChannels(data);
+    const getChannels = async () => {
+      const response = await fetchedChannels()
+      if(response.responseData){
+
+        setChannels(response.responseData);
+      } else {
+        toast(response.error)
+      }
     };
-    fetchedChannels();
+    getChannels();
   }, []);
 
   const filteredChannel = channels?.filter(
@@ -61,7 +64,7 @@ export default function ChannelsPage() {
     day: 'numeric',
   };
 
-  const handleAddChannel = (
+  const AddChannel = (
     newChannel: Omit<Channel, 'id' | 'icon' | 'createdAt' | 'accountId'>
   ) => {
     const channelWithId: Channel = {
@@ -71,6 +74,7 @@ export default function ChannelsPage() {
       accountId: '4211a09b-b42a-4b1d-85f9-a6598d8ff585',
     };
     setChannels(channels ? [...channels, channelWithId] : [channelWithId]);
+    handleAddChannel(channelWithId)
     fetch(`${channelJsonserver.baseUrl}/${channelJsonserver.channels}`, {
       method: 'POST',
       headers: {
