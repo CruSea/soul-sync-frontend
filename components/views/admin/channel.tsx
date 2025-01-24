@@ -23,7 +23,7 @@ import {
 import { useToast } from '@/hooks/use-toast';
 import { channelJsonserver } from '@/data/end-points';
 import { fetchedChannels, handleAddChannel } from '@/actions/admin/channel';
-import { uuid } from 'uuidv4';
+import { v4 as uuidv4 } from 'uuid';
 
 export default function ChannelsPage() {
   const [channels, setChannels] = useState<Channel[]>([]);
@@ -69,7 +69,7 @@ export default function ChannelsPage() {
   ) => {
     const channelWithId: Channel = {
       ...newChannel,
-      id: `${uuid().toString()}`,
+      id: `${uuidv4().toString()}`,
       createdAt: new Date().toLocaleDateString('en-US', format),
       accountId: '4211a09b-b42a-4b1d-85f9-a6598d8ff585',
     };
