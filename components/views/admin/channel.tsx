@@ -21,9 +21,9 @@ import {
   DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu';
 import { useToast } from '@/hooks/use-toast';
-import { endPoints } from '@/data/end-points';
-
-const BASE_URL = process.env.NEXT_PUBLIC_API_BASE_URL;
+import { channelJsonserver } from '@/data/end-points';
+import { fetchedChannels, handleAddChannel } from '@/actions/admin/channel';
+import { v4 as uuidv4 } from 'uuid';
 
 export default function ChannelsPage() {
   const [channels, setChannels] = useState<Channel[]>([]);
@@ -41,37 +41,15 @@ export default function ChannelsPage() {
   ];
 
   useEffect(() => {
-    const fetchedChannels = async () => {
-      // backend call
-      const user = localStorage.getItem('user');
-      const token = localStorage.getItem('token');
-
-      if (user) {
-        const endpoint = `${BASE_URL}/${endPoints.channel}`;
-
-        const userObj = JSON.parse(user);
-
-        const requestBody = {
-          accountId: userObj.accounts[0].id,
-        };
-
-        const response = await fetch(
-          `${endpoint}?accountId=${requestBody.accountId}`,
-          {
-            headers: {
-              'Content-Type': 'application/json',
-              Authorization: token ? `Bearer ${JSON.parse(token)}` : '',
-            },
-          }
-        );
-        const data = await response.json();
-        console.log('fetched', data);
-        setChannels(data);
+    const getChannels = async () => {
+      const response = await fetchedChannels();
+      if (response.responseData) {
+        setChannels(response.responseData);
       } else {
-        console.log('cant fetch');
+        toast(response.error);
       }
     };
-    fetchedChannels();
+    getChannels();
   }, []);
 
   const filteredChannel = channels?.filter(
@@ -85,60 +63,23 @@ export default function ChannelsPage() {
     day: 'numeric',
   };
 
-  const handleAddChannel = (
+  const AddChannel = (
     newChannel: Omit<Channel, 'id' | 'icon' | 'createdAt' | 'accountId'>
   ) => {
-    const user = localStorage.getItem('user');
-    const token = localStorage.getItem('token');
-    if (user && token) {
-      const endpoint = `${BASE_URL}/${endPoints.channel}`;
-      const userObj = JSON.parse(user);
-      const requestBody = {
-        accountId: userObj.accounts[0].id,
-      };
-      const channelWithId = {
-        ...newChannel,
-        accountId: requestBody.accountId,
-      } as Channel;
-      fetch(endpoint, {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-          Authorization: token ? `Bearer ${JSON.parse(token)}` : '',
-        },
-        body: JSON.stringify(channelWithId),
-      })
-        .then(async (response) => {
-          if (!response.ok) {
-            throw new Error(`Failed to add channel: ${response.status}`);
-          }
-          const newChannel = await response.json(); // Get the server's response
-          setChannels((channels) =>
-            channels ? [...channels, newChannel] : [newChannel]
-          ); // Add new channel to state
-          toast({
-            title: 'Channel added successfully',
-            description: 'The channel has been added to the list',
-            duration: 3000,
-          });
-        })
-        .catch((error) => {
-          console.error('Error adding channel:', error);
-          toast({
-            title: 'Error adding channel',
-            description:
-              'There was an error adding the channel. Please try again.',
-            duration: 3000,
-          });
-        });
-    } else {
-      toast({
-        title: 'Error Finding the user',
-        description:
-          'There was an error while fetching a user. Please try again.',
-        duration: 3000,
-      });
-    }
+    const channelWithId: Channel = {
+      ...newChannel,
+      id: `${uuidv4().toString()}`,
+      createdAt: new Date().toLocaleDateString('en-US', format),
+      accountId: '4211a09b-b42a-4b1d-85f9-a6598d8ff585',
+    };
+    setChannels(channels ? [...channels, channelWithId] : [channelWithId]);
+    handleAddChannel(channelWithId);
+
+    toast({
+      title: 'Channel added successfully',
+      description: 'The channel has been added to the list',
+      duration: 3000,
+    });
   };
 
   return (
@@ -195,7 +136,7 @@ export default function ChannelsPage() {
                     </CommandItem>
                   ))}
                   <AddChannelDialog
-                    onAddChannel={handleAddChannel}
+                    onAddChannel={AddChannel}
                     setSelectedChannel={setSelectedChannel}
                     selectedChannel={selectedChannel}
                   />

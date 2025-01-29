@@ -1,3 +1,4 @@
+'use client';
 import { MessageTable } from '@/components/shared/MessageTable';
 import withAuth from '@/context/withAuth';
 

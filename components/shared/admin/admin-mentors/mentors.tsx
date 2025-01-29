@@ -9,6 +9,9 @@ import { useToast } from '@/hooks/use-toast';
 import { InviteMentorDialog } from './invite-mentor-dialog';
 import { toast } from 'sonner';
 import { endPoints } from '@/data/end-points';
+import { useAuth } from '@/context/AuthContext';
+import { deleteMentor } from '@/actions/admin/admin';
+import { title } from 'process';
 
 const BASE_URL = process.env.NEXT_PUBLIC_API_BASE_URL;
 
@@ -66,28 +69,27 @@ const filterOptions: FilterOption<Mentors>[] = [
 ];
 const search = ['name', 'age', 'gender', 'location', 'isActive'];
 const MentorsTable: React.FC = () => {
-  const user = localStorage.getItem('user');
-  const token = localStorage.getItem('token');
-  const userObj = JSON.parse(user || '""');
-  const accountId = String(userObj.accounts[0].id);
+  const { user, notification } = useAuth();
+  const userObj = JSON.parse(user);
+  const accountId = String(userObj?.accounts[0]?.id);
   const endPoint = `${BASE_URL}/${endPoints.adminMentors}?accountId=${accountId}`;
-  const endPointToDelete = `${BASE_URL}/${endPoints.adminMentors}/${accountId}/mentor`;
 
   const handleDelete = async (id: string | number) => {
     try {
-      const response = await fetch(`${endPointToDelete}/${id}`, {
-        method: 'DELETE',
-        headers: {
-          'Content-Type': 'application/json',
-          Authorization: `Bearer ${JSON.parse(token || '""')}`,
-        },
-      });
+      const response = await deleteMentor(id as string);
       if (!response.ok) {
-        toast('Error deleting');
+        notification({
+          title: 'Error!',
+          description: 'Failed to delete the mentor',
+        });
 
         throw new Error('Failed to delete the mentor.');
       }
-      toast('Mentor has been deleted.');
+
+      notification({
+        title: 'Success!',
+        description: 'Mentor Successfully deleted.',
+      });
     } catch (error) {
       console.error('Error deleting mentor:', error);
       throw error;

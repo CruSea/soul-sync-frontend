@@ -4,6 +4,8 @@ import Image from 'next/image';
 import type { Channel } from '@/types/channel';
 import { AiOutlineDelete } from 'react-icons/ai';
 import TelegramBot from './configuration/telegramBot';
+import { Switch } from '@/components/ui/switch';
+import { Label } from '@/components/ui/label';
 
 import {
   Dialog,
@@ -17,6 +19,7 @@ import { Button } from '@/components/ui/button';
 import { useState } from 'react';
 import NegaritSMS from './configuration/NegaritSMS';
 import { endPoints } from '@/data/end-points';
+import { connectionRequest } from '@/types/channel';
 
 interface ChannelCardProps {
   channel: Channel;
@@ -40,6 +43,8 @@ const formatDate = (isoString: string) => {
 };
 export function ChannelCard({ channel, setChannels, toast }: ChannelCardProps) {
   const [deleteId, setDeleteId] = useState<string | null>(null);
+  const [requests, setRequests] = useState<connectionRequest>();
+  const [connectedId, setConnectedId] = useState<string | null>(null);
   let iconURL = '';
   switch (channel.type) {
     case 'TELEGRAM':
@@ -74,7 +79,6 @@ export function ChannelCard({ channel, setChannels, toast }: ChannelCardProps) {
     return;
   }
   const endpoint = `${BASE_URL}/${endPoints.channel}`;
-  const accountId = '2b25e49b-6796-4d82-8b54-7220404d1171';
   const userObj = JSON.parse(user);
 
   const requestBody = {
@@ -129,14 +133,51 @@ export function ChannelCard({ channel, setChannels, toast }: ChannelCardProps) {
     setDeleteId(null);
   };
 
+  const handleToggle = (channel: Channel) => {
+    if (channel.id) {
+      setConnectedId(channel.id);
+    }
+    if (connectedId !== null) {
+      fetch(`${endpoint}/${connectedId}/connect`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          Authorization: token ? `Bearer ${JSON.parse(token)}` : '',
+        },
+      })
+        .then((response) => response.json())
+        .then((data) => {
+          console.log('connectedChannel:', data);
+          setRequests({
+            id: channel.id,
+            request: {
+              ok: data.ok,
+              result: data.result,
+              description: data.description,
+            },
+          });
+          toast({
+            title: `Channel Connected successfully`,
+            description: `The channel  ${channel.name} has been connected successfully`,
+            duration: 3000,
+          });
+        })
+        .catch((error) => {
+          console.error('Error:', error);
+          toast({
+            title: 'Error Connecting channel',
+            description: `An error occurred while Connecting the channel ${channel.name}.`,
+            duration: 3000,
+          });
+        });
+    }
+  };
+
+  const check = true; //temporary
   return (
     <div className="h-full w-full  gap-4  pb-5 flex flex-col items-center justify-between px-2.5 pt-1 border rounded-xl bg-white hover:shadow-md hover:rounded-xl transition-shadow ">
       <div className="h-auto px-1 py-2 rounded-tl-lg rounded-tr-lg justify-between items-center inline-flex w-full">
-        <div className="px-1.5 py-0.5 rounded-xl border border-zinc-500 justify-center items-center gap-2.5 flex">
-          <div className="w-auto h-3 text-center text-zinc-500 text-[8px] font-bold font-['Inter'] leading-3 tracking-wide">
-            Active
-          </div>
-        </div>
+        <div className="px-1.5 py-0.5 rounded-xl  justify-center items-center gap-2.5 flex"></div>
         <div
           onClick={() => handleDelete(channel)}
           className="w-8 h-8 px-[3px] py-[2.62px] justify-center rounded-xl hover:bg-[#f1f2f4] items-center cursor-pointer flex"
@@ -189,6 +230,18 @@ export function ChannelCard({ channel, setChannels, toast }: ChannelCardProps) {
           </div>
         </div>
         {channelChange(channel)}
+        <div className="w-full">
+          <div className="flex items-center justify-between space-x-2 w-full ">
+            <Switch
+              id="connect"
+              checked={true}
+              onCheckedChange={() => handleToggle(channel)}
+            />
+            <Label htmlFor="connect">
+              {check ? 'Connected' : 'Not Connected'}
+            </Label>
+          </div>
+        </div>
       </div>
       <Dialog open={deleteId !== null} onOpenChange={cancelDelete}>
         <DialogContent className="w-[400px] flex flex-col gap-y-4">

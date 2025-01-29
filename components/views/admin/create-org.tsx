@@ -16,13 +16,17 @@ import { useForm } from 'react-hook-form';
 import CreateOrgSidebar from '@/components/shared/admin/CreateOrg/CreateOrgSidebar';
 import CreateOrgForm from '@/components/shared/admin/CreateOrg/CreateOrgForm';
 import { endPoints } from '@/data/end-points';
+import { useAuth } from '@/context/AuthContext';
+import { createOrganazation } from '@/actions/admin/admin';
+import { title } from 'process';
+import { DessertIcon } from 'lucide-react';
 
 const BASE_URL = process.env.NEXT_PUBLIC_API_BASE_URL;
 
 const CreateOrgView = () => {
   const [currentPage, setCurrentPage] = useState<Page>('first');
   const [orgData, setOrgData] = useState<OrgDataValues>({});
-
+  const { user, notification } = useAuth();
   const formOne = useForm<createOrgFormOneValues>({
     resolver: zodResolver(createOrgFormOneSchema),
     mode: 'onChange',
@@ -46,21 +50,14 @@ const CreateOrgView = () => {
   const onSubmit = async (
     data: createOrgFormTwoValues | createOrgFormOneValues
   ) => {
-    setOrgData((prevOrgData) => {
+    setOrgData((prevOrgData: any) => {
       const updatedData = { ...prevOrgData, ...data };
       return updatedData;
     });
 
     if (currentPage === 'second') {
-      const user = localStorage.getItem('user');
-      const token = localStorage.getItem('token');
       if (!user) {
         console.error('user not found');
-        return;
-      }
-
-      if (!token) {
-        console.error('token not found');
         return;
       }
 
@@ -70,24 +67,21 @@ const CreateOrgView = () => {
         name: orgData.companyName,
         domain: orgData.companyDomain,
       };
-
-      const AccountId = userData.accounts[0].id;
-
-      const response = await fetch(
-        `${BASE_URL}/${endPoints.adminAccount}/${AccountId}`,
-        {
-          method: 'PATCH', // Specify PATCH as the method
-          headers: {
-            'Content-Type': 'application/json', // Ensure JSON content
-            Authorization: `Bearer ${JSON.parse(token)}`, // Optional: Include token if required
-          },
-          body: JSON.stringify(reqBody), // Stringify the request body
-        }
+      const response = await createOrganazation(
+        userData?.accounts[0]?.id,
+        reqBody
       );
       if (response.ok) {
-        console.log('successfull submission');
+        notification({
+          title: 'Success!',
+          description: 'successfull Created!',
+        });
       } else {
         console.error('Form Submission is wrong');
+        notification({
+          title: 'Error!',
+          description: 'Form Submission is wrong!',
+        });
         setCurrentPage('first');
       }
     }
@@ -127,7 +121,6 @@ const CreateOrgView = () => {
   return (
     <div className="w-screen h-screen flex flex-col">
       <LandingPageHeader showButton={false} />
-
       <div className="flex-1 flex w-screen">
         <CreateOrgSidebar
           handleSubmit={() => handleSubmit()}
