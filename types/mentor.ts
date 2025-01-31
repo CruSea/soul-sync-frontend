@@ -86,7 +86,6 @@ export type WSSentMessage = {
   type: 'CHAT';
   metadata: Metadata;
   payload: Payload;
-  conversationId?: string;
 };
 
 export type webSocketMessages = Array<WSSentMessage | WSMessage>;

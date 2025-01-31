@@ -147,9 +147,11 @@ const MentorContainer = ({ conversations }: MentorContainerProps) => {
         currentConversation={currentConversation}
         userMessages={userMessages}
         sendJsonMessage={sendJsonMessage}
-        conversationMessages={webSocketMessages.filter(
-          (message) =>
-            message.conversationId === currentConversation.conversation_id
+        conversationMessages={webSocketMessages.filter((message) =>
+          'conversationId' in message // if it is a recieved message or sent message
+            ? message.conversationId === currentConversation.conversation_id
+            : message.metadata.conversationId ===
+              currentConversation.conversation_id
         )}
       />
     </>
