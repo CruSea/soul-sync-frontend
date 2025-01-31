@@ -65,7 +65,7 @@ const MentorContainer = ({ conversations }: MentorContainerProps) => {
 
         const response = await fetch(
           // for when connecting to backend
-          `${BASE_URL}/${endPoints.threads}/${currentConversation.conversation_id}`
+          `${BASE_URL}/${endPoints.allConversations}/${currentConversation.conversation_id}`
         );
 
         if (!response.ok) {

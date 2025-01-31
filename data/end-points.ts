@@ -7,7 +7,6 @@ export const endPoints = {
   adminMentors: 'admin/mentor',
   mentor: 'mentors',
   allConversations: 'conversation',
-  threads: 'conversation/threads',
   channel: 'admin/channel',
 };
 
