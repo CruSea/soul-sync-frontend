@@ -23,13 +23,13 @@ const Chat = ({
   sendJsonMessage,
   conversationMessages,
 }: ChatProps) => {
-  const chatData = userMessages
-    ? transformChatData(userMessages[0]?.messages) //                                                      //for when connecting to json server
-    : [];
-
   // const chatData = userMessages
-  // ? transformChatData(userMessages)                                                                     // for when connecting to backend
-  // : [];
+  //  ? transformChatData(userMessages[0]?.messages) //                                                      //for when connecting to json server
+  //  : [];
+
+  const chatData = userMessages
+    ? transformChatData(userMessages) // for when connecting to backend
+    : [];
 
   const WSData = transformWSData(conversationMessages as WSMessage[]); // get the mentorId from the token next time
 
@@ -45,24 +45,6 @@ const Chat = ({
     const now = new Date();
     const createdAt = now.toISOString();
 
-    // const user = localStorage.getItem('user');       // for when connecting to backend
-    const user = {
-      // for when connecting to json server
-      sub: '32ef0d61-7a31-4cdc-abe4-d7eead36f4dd',
-      email: 'destanathnaelataro@gmail.com',
-      imageUrl: null,
-      accounts: [
-        {
-          id: 'b0c157c8-af23-4344-a437-134d23a624a9',
-          name: 'nathnael',
-          domain: null,
-        },
-      ],
-      roles: ['OWNER'],
-      iat: 1734942898,
-      exp: 1734946498,
-    };
-
     const newMessage: WSSentMessage = {
       type: 'CHAT',
       metadata: {
@@ -74,10 +56,6 @@ const Chat = ({
     };
 
     sendJsonMessage(newMessage);
-
-    // if (textBox.current) {
-    //   textBox.current.value = "";
-    // }
   };
 
   useEffect(() => {

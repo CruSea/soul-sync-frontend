@@ -29,11 +29,10 @@ const MentorContainer = ({ conversations }: MentorContainerProps) => {
     []
   );
 
-  const WS_URL = 'ws://localhost:8000';
+  const WS_URL = 'https://1clr2kph-3002.uks1.devtunnels.ms';
 
-  // const token = localStorage.getItem('token');    // get token this way for the actual implementation
-  const token =
-    'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIzMmVmMGQ2MS03YTMxLTRjZGMtYWJlNC1kN2VlYWQzNmY0ZGQiLCJlbWFpbCI6ImRlc3RhbmF0aG5hZWxhdGFyb0BnbWFpbC5jb20iLCJpbWFnZVVybCI6bnVsbCwiYWNjb3VudHMiOlt7ImlkIjoiYjBjMTU3YzgtYWYyMy00MzQ0LWE0MzctMTM0ZDIzYTYyNGE5IiwibmFtZSI6Im5hdGhuYWVsIiwiZG9tYWluIjpudWxsfV0sInJvbGVzIjpbIk9XTkVSIl0sImlhdCI6MTczNDk0Mjg5OCwiZXhwIjoxNzM0OTQ2NDk4fQ.S5nSDy3zYmG926BAYaqDWnp0lsGq8scr1t6Db41m1wM';
+  const token = localStorage.getItem('token') as string; // get token this way for the actual implementation
+  // const token = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIzMmVmMGQ2MS03YTMxLTRjZGMtYWJlNC1kN2VlYWQzNmY0ZGQiLCJlbWFpbCI6ImRlc3RhbmF0aG5hZWxhdGFyb0BnbWFpbC5jb20iLCJpbWFnZVVybCI6bnVsbCwiYWNjb3VudHMiOlt7ImlkIjoiYjBjMTU3YzgtYWYyMy00MzQ0LWE0MzctMTM0ZDIzYTYyNGE5IiwibmFtZSI6Im5hdGhuYWVsIiwiZG9tYWluIjpudWxsfV0sInJvbGVzIjpbIk9XTkVSIl0sImlhdCI6MTczNDk0Mjg5OCwiZXhwIjoxNzM0OTQ2NDk4fQ.S5nSDy3zYmG926BAYaqDWnp0lsGq8scr1t6Db41m1wM';
 
   const { sendJsonMessage, lastJsonMessage } = useWebSocket<
     WSMessage | WSSentMessage
@@ -60,13 +59,14 @@ const MentorContainer = ({ conversations }: MentorContainerProps) => {
   useEffect(() => {
     const fetchUserMesages = async () => {
       try {
-        const response = await fetch(
-          `${jsonServer.baseUrl}/${jsonServer.thread}?id=${currentConversation.conversation_id}` // for when connecting to local db server
-        );
-
-        // const response = await fetch(                                                              // for when connecting to backend
-        //   `${BASE_URL}/${endPoints.threads}/${currentConversation.conversation_id}`
+        // const response = await fetch(
+        //  `${jsonServer.baseUrl}/${jsonServer.thread}?id=${currentConversation.conversation_id}` // for when connecting to local db server
         // );
+
+        const response = await fetch(
+          // for when connecting to backend
+          `${BASE_URL}/${endPoints.threads}/${currentConversation.conversation_id}`
+        );
 
         if (!response.ok) {
           throw new Error('Network response was not ok');
@@ -75,7 +75,7 @@ const MentorContainer = ({ conversations }: MentorContainerProps) => {
         const data = await response.json();
 
         if (Array.isArray(data) && data.length > 0) {
-          // setUserMessages(data[0].messages);                                                // for when connecting to local db server
+          // setUserMessages(data[0].messages); // for when connecting to json server
           setUserMessages(data); // for when connecting to backend
         } else {
           console.warn('No user details found');

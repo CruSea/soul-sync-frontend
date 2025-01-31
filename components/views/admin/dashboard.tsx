@@ -56,7 +56,7 @@ export default function AdminView() {
       }
     };
 
-    checkAccount();
+    // checkAccount();
   }, [router]);
 
   return (
