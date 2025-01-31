@@ -5,7 +5,7 @@ import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import { FiChevronLeft, FiHelpCircle } from 'react-icons/fi';
 
-import { LuUser, LuMessagesSquare, LuMic2, LuLibrary } from 'react-icons/lu';
+import { LuUser, LuMessagesSquare, LuMic, LuLibrary } from 'react-icons/lu';
 import { RxLinkNone2 } from 'react-icons/rx';
 import { CiSettings } from 'react-icons/ci';
 import { LayoutDashboardIcon as LuLayoutDashboard } from 'lucide-react';
@@ -18,7 +18,7 @@ const menuItems = [
   { icon: LuUser, label: 'Mentees', href: '/admin/mentees' },
   { icon: LuMessagesSquare, label: 'Messages', href: '/admin/messages' },
   { icon: RxLinkNone2, label: 'Channels', href: '/admin/channels' },
-  { icon: LuMic2, label: 'Admins', href: '/admin/admins' },
+  { icon: LuMic, label: 'Admins', href: '/admin/admins' },
   { icon: LuLibrary, label: 'Agents', href: '/admin/agents' },
 ];
 

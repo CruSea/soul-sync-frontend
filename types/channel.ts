@@ -2,6 +2,11 @@ import * as z from 'zod';
 
 export type type = 'TELEGRAM' | 'WHATSAPP' | 'NEGARIT' | 'FACEBOOK' | 'TWILIO';
 
+export type connectionRequest = {
+  id: string;
+  request: { ok: boolean; result: boolean; description: string };
+};
+
 export interface Channel {
   id: string;
   name: string;

@@ -28,11 +28,12 @@ const LoginPageCard = () => {
       // Store the decoded token in the cookie
       // Cookies.set("user", JSON.stringify(decoded), { expires: 7 }); // Cookie will expire in 7 days
       localStorage.setItem('user', JSON.stringify(decoded));
-      localStorage.setItem('token', JSON.stringify(token));
+      localStorage.setItem('token', token);
     }
   }, [searchParams]);
 
   const handleLogin = () => {
+    console.log('redirecting to', `${BASE_URL}/${endPoints.auth}`);
     router.push(`${BASE_URL}/${endPoints.auth}`);
   };
 

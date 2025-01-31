@@ -1,10 +1,13 @@
 'use client';
 
+import { checkAccount } from '@/actions/admin/admin';
 import { GrowthChart } from '@/components/shared/admin/dashboard/GrowthChart';
 import { MentorsChart } from '@/components/shared/admin/dashboard/MentorsChart';
 import { StatsCards } from '@/components/shared/admin/dashboard/StatCard';
 import UsersTable from '@/components/shared/admin/dashboard/UserTable';
+import { useAuth } from '@/context/AuthContext';
 import { endPoints } from '@/data/end-points';
+import { toast } from '@/hooks/use-toast';
 import { useRouter } from 'next/navigation';
 import { useEffect } from 'react';
 
@@ -12,52 +15,33 @@ const BASE_URL = process.env.NEXT_PUBLIC_API_BASE_URL;
 
 export default function AdminView() {
   const router = useRouter();
-
+  const { logout, user } = useAuth();
+  console.log('user', user);
   useEffect(() => {
-    const checkAccount = async () => {
-      try {
-        const user = localStorage.getItem('user');
-        const token = localStorage.getItem('token');
+    const checkAccounts = async () => {
+      // const user = localStorage.getItem('user');
 
-        if (user && token) {
-          const userObj = JSON.parse(user);
-          const endPoint = `${BASE_URL}/${endPoints.adminAccount}/${userObj.accounts[0].id}`;
-          const response = await fetch(endPoint, {
-            method: 'GET',
-            headers: {
-              'Content-Type': 'application/json',
-              Authorization: `Bearer ${JSON.parse(token)}`,
-            },
-          });
+      const userObj = JSON.parse(user as string);
 
-          if (!response.ok) {
-            console.error('Failed to fetch account info', response);
-            throw new Error('Fetch failed');
-          }
+      const response = await checkAccount(userObj.accounts[0].id);
 
-          const accountInfo = await response.json();
+      if (!response) {
+        console.error("AccountInfo doesn't exist");
+        throw new Error('Account info not found');
+      }
 
-          if (!accountInfo) {
-            console.error("AccountInfo doesn't exist");
-            throw new Error('Account info not found');
-          }
+      if (!response?.domain) {
+        console.log('Redirecting new user to create org page');
+        router.push('/admin/create-org');
+      }
 
-          if (!accountInfo.domain) {
-            console.log('Redirecting new user to create org page');
-            router.push('/admin/create-org');
-          }
-        } else {
-          console.error('User or token not found');
-          router.push('/log-in');
-        }
-      } catch (error) {
-        console.error('Error: ', error);
-        router.push('/log-in');
+      if (response?.error?.description === 'Invalid or expired token') {
+        logout();
       }
     };
 
-    // checkAccount();
-  }, [router]);
+    checkAccounts();
+  }, [router, user]);
 
   return (
     <div className="flex-1 p-4 bg-secondary dark:bg-gray-900">
