@@ -7,7 +7,12 @@ import { Card } from '@/components/ui/card';
 import { ScrollArea } from './chat-scrollarea';
 import ChatHeader from './ChatHeader';
 import Message from './Message';
-import { ChatProps, threadType, WSMessage } from '@/types/mentor';
+import {
+  ChatProps,
+  threadType,
+  WSMessage,
+  WSSentMessage,
+} from '@/types/mentor';
 import { transformChatData, transformWSData } from '@/lib/utils';
 import InputArea from './InputArea';
 import { jsonServer } from '@/data/end-points';
@@ -17,7 +22,6 @@ const Chat = ({
   currentConversation,
   sendJsonMessage,
   conversationMessages,
-  conversationInfo,
 }: ChatProps) => {
   const chatData = userMessages
     ? transformChatData(userMessages[0]?.messages) //                                                      //for when connecting to json server
@@ -27,7 +31,7 @@ const Chat = ({
   // ? transformChatData(userMessages)                                                                     // for when connecting to backend
   // : [];
 
-  const WSData = transformWSData(conversationMessages); // get the mentorId from the token next time
+  const WSData = transformWSData(conversationMessages as WSMessage[]); // get the mentorId from the token next time
 
   // an empty div at the end of the thread used to scroll to the bottom on send
   const bottomOfPanelRef = useRef<HTMLDivElement | null>(null);
@@ -36,13 +40,14 @@ const Chat = ({
   const textBox = useRef<HTMLInputElement | null>(null);
 
   const sendText = async (messageText: string) => {
-    if (!messageText.trim() || !conversationInfo) return; // Don't send empty messages
+    if (!messageText.trim()) return; // Don't send empty messages
 
     const now = new Date();
     const createdAt = now.toISOString();
 
-    // const user = localStorage.getItem('user');  get from local storage in final version
+    // const user = localStorage.getItem('user');       // for when connecting to backend
     const user = {
+      // for when connecting to json server
       sub: '32ef0d61-7a31-4cdc-abe4-d7eead36f4dd',
       email: 'destanathnaelataro@gmail.com',
       imageUrl: null,
@@ -58,21 +63,14 @@ const Chat = ({
       exp: 1734946498,
     };
 
-    const newMessage: WSMessage = {
-      id: uuidv4(),
+    const newMessage: WSSentMessage = {
       type: 'CHAT',
       metadata: {
-        userId: user.sub,
         conversationId: currentConversation.conversation_id,
       },
       payload: {
-        type: 'SENT',
-        createdAt: createdAt,
         body: messageText,
-        address: conversationInfo.address,
-        channelId: conversationInfo.channelId,
       },
-      socket: conversationInfo.socket,
     };
 
     sendJsonMessage(newMessage);

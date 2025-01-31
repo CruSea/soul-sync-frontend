@@ -1,5 +1,6 @@
 import { colors } from '@/components/shared/Mentor/Info';
 import type { StaticImageData } from 'next/image';
+import React from 'react';
 
 export type Mentor = {
   id: string;
@@ -67,25 +68,28 @@ export type UserMessages = {
 };
 
 type Metadata = {
-  userId: string;
   conversationId: string;
 };
 
 export type Payload = {
-  type: 'RECIEVED' | 'SENT';
-  createdAt: string;
   body: string;
-  address: string;
-  channelId: string;
 };
 
 export type WSMessage = {
-  id: string; // Unique identifier for the message
-  type: 'CHAT'; // Type of the message, which can be a union of types if needed
-  metadata: Metadata; // Metadata containing user and conversation IDs
-  payload: Payload; // The actual message content
-  socket: string; // Information about the socket connection
+  conversationId: string; // Unique identifier for the message
+  type: 'RECIEVED' | 'SENT'; // Type of the message, which can be a union of types if needed
+  body: string;
+  createdAt: string;
 };
+
+export type WSSentMessage = {
+  type: 'CHAT';
+  metadata: Metadata;
+  payload: Payload;
+  conversationId?: string;
+};
+
+export type webSocketMessages = Array<WSSentMessage | WSMessage>;
 
 export type ConversationInfo = {
   channelId: string;
@@ -101,9 +105,8 @@ export type ConversationInfos = {
 export type ChatProps = {
   currentConversation: Conversation;
   userMessages: any;
-  sendJsonMessage: (message: WSMessage) => void;
-  conversationMessages: WSMessage[];
-  conversationInfo: ConversationInfo;
+  sendJsonMessage: (message: WSMessage | WSSentMessage) => void;
+  conversationMessages: webSocketMessages;
 };
 
 export type transformedMessage = {

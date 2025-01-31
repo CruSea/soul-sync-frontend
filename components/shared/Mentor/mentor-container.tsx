@@ -9,6 +9,8 @@ import {
   Messages,
   UserMessages,
   WSMessage,
+  WSSentMessage,
+  webSocketMessages,
 } from '@/types/mentor';
 import { useEffect, useState } from 'react';
 import useWebSocket from 'react-use-websocket';
@@ -23,10 +25,9 @@ const MentorContainer = ({ conversations }: MentorContainerProps) => {
     conversations[0]
   );
   const [userMessages, setUserMessages] = useState<Messages>();
-  const [conversationInfos, setConversationInfos] = useState<ConversationInfos>(
-    {}
-  ); // // the web socket information that we will get from the messages
-  const [webSocketMessages, setWebSocketMessages] = useState<WSMessage[]>([]);
+  const [webSocketMessages, setWebSocketMessages] = useState<webSocketMessages>(
+    []
+  );
 
   const WS_URL = 'ws://localhost:8000';
 
@@ -34,9 +35,11 @@ const MentorContainer = ({ conversations }: MentorContainerProps) => {
   const token =
     'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIzMmVmMGQ2MS03YTMxLTRjZGMtYWJlNC1kN2VlYWQzNmY0ZGQiLCJlbWFpbCI6ImRlc3RhbmF0aG5hZWxhdGFyb0BnbWFpbC5jb20iLCJpbWFnZVVybCI6bnVsbCwiYWNjb3VudHMiOlt7ImlkIjoiYjBjMTU3YzgtYWYyMy00MzQ0LWE0MzctMTM0ZDIzYTYyNGE5IiwibmFtZSI6Im5hdGhuYWVsIiwiZG9tYWluIjpudWxsfV0sInJvbGVzIjpbIk9XTkVSIl0sImlhdCI6MTczNDk0Mjg5OCwiZXhwIjoxNzM0OTQ2NDk4fQ.S5nSDy3zYmG926BAYaqDWnp0lsGq8scr1t6Db41m1wM';
 
-  const { sendJsonMessage, lastJsonMessage } = useWebSocket<WSMessage>(WS_URL, {
+  const { sendJsonMessage, lastJsonMessage } = useWebSocket<
+    WSMessage | WSSentMessage
+  >(WS_URL, {
     share: true,
-    queryParams: { token: token }, // replace by actual userId of the mentor form the token in the future
+    queryParams: { token: token },
   });
 
   // Effect to log lastJsonMessage
@@ -47,20 +50,6 @@ const MentorContainer = ({ conversations }: MentorContainerProps) => {
         ...prevMessages,
         lastJsonMessage,
       ]);
-
-      console.log('the last message', lastJsonMessage);
-
-      setConversationInfos((prevConversationInfo) => {
-        return {
-          ...prevConversationInfo,
-          [lastJsonMessage.metadata.conversationId]: {
-            channelId: lastJsonMessage.payload.channelId,
-            address: lastJsonMessage.payload.address,
-            userId: lastJsonMessage.metadata.userId,
-            socket: lastJsonMessage.socket,
-          },
-        };
-      });
     }
   }, [lastJsonMessage]);
 
@@ -69,16 +58,10 @@ const MentorContainer = ({ conversations }: MentorContainerProps) => {
   }, [webSocketMessages]);
 
   useEffect(() => {
-    console.log('conversationInfos', conversationInfos);
-  }),
-    [conversationInfos];
-
-  useEffect(() => {
     const fetchUserMesages = async () => {
       try {
         const response = await fetch(
-          // for when connecting to local db server
-          `${jsonServer.baseUrl}/${jsonServer.thread}?id=${currentConversation.conversation_id}`
+          `${jsonServer.baseUrl}/${jsonServer.thread}?id=${currentConversation.conversation_id}` // for when connecting to local db server
         );
 
         // const response = await fetch(                                                              // for when connecting to backend
@@ -166,16 +149,9 @@ const MentorContainer = ({ conversations }: MentorContainerProps) => {
         sendJsonMessage={sendJsonMessage}
         conversationMessages={webSocketMessages.filter(
           (message) =>
-            message.metadata.conversationId ===
-            currentConversation.conversation_id
+            message.conversationId === currentConversation.conversation_id
         )}
-        conversationInfo={
-          conversationInfos[currentConversation.conversation_id]
-        }
       />
-      {/* <div className="hidden 3xl:block">
-        <Profile userDetails={userDetails} />
-      </div> */}
     </>
   );
 };

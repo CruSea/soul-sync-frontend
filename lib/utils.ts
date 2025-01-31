@@ -70,15 +70,14 @@ export function transformWSData(
     return [];
   }
   return Messages.map((Message, index, arr) => {
-    const currentDay = formatDate(Message.payload.createdAt);
-    const previousDay =
-      index > 0 ? formatDate(arr[index - 1].payload.createdAt) : null;
+    const currentDay = formatDate(Message.createdAt);
+    const previousDay = index > 0 ? formatDate(arr[index - 1].createdAt) : null;
     return {
-      isMentor: Message.payload.type === 'SENT',
-      text: Message.payload.body,
-      time: formatTime(Message.payload.createdAt),
+      isMentor: Message.type === 'SENT',
+      text: Message.body,
+      time: formatTime(Message.createdAt),
       newDay: currentDay !== previousDay ? currentDay : '',
-      id: Message.id,
+      id: uuidv4(),
     };
   });
 }
