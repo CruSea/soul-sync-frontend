@@ -1,6 +1,7 @@
 import { colors } from '@/components/shared/Mentor/Info';
 import type { StaticImageData } from 'next/image';
 import React from 'react';
+import { Socket } from 'socket.io-client';
 
 export type Mentor = {
   id: string;
@@ -71,10 +72,6 @@ type Metadata = {
   conversationId: string;
 };
 
-export type Payload = {
-  body: string;
-};
-
 export type WSMessage = {
   conversationId: string; // Unique identifier for the message
   type: 'RECIEVED' | 'SENT'; // Type of the message, which can be a union of types if needed
@@ -85,7 +82,7 @@ export type WSMessage = {
 export type WSSentMessage = {
   type: 'CHAT';
   metadata: Metadata;
-  payload: Payload;
+  payload: string;
 };
 
 export type webSocketMessages = Array<WSSentMessage | WSMessage>;
@@ -104,8 +101,9 @@ export type ConversationInfos = {
 export type ChatProps = {
   currentConversation: Conversation;
   userMessages: any;
-  sendJsonMessage: (message: WSMessage | WSSentMessage) => void;
+  // sendJsonMessage: (message: WSMessage | WSSentMessage) => void;
   conversationMessages: webSocketMessages;
+  socket: Socket | null;
 };
 
 export type transformedMessage = {

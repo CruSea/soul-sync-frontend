@@ -49,6 +49,8 @@ export function InviteMentorDialog() {
           email: formData.email,
         };
 
+        console.log('endPoint', endPoint);
+
         fetch(endPoint, {
           method: 'POST',
           headers: {

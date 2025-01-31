@@ -16,6 +16,8 @@ import { useEffect, useState } from 'react';
 import useWebSocket from 'react-use-websocket';
 import Chat from './Chat';
 import ConversationsList from './conversations-list';
+import { io, Socket } from 'socket.io-client';
+import readline from 'readline';
 
 const BASE_URL = process.env.NEXT_PUBLIC_API_BASE_URL;
 const USER_URL = process.env.NEXT_PUBLIC_API_ADMIN_URL;
@@ -28,29 +30,76 @@ const MentorContainer = ({ conversations }: MentorContainerProps) => {
   const [webSocketMessages, setWebSocketMessages] = useState<webSocketMessages>(
     []
   );
+  const [socket, setSocket] = useState<Socket | null>(null);
 
-  const WS_URL = 'https://1clr2kph-3002.uks1.devtunnels.ms';
+  // const WS_URL = 'https://1clr2kph-3002.uks1.devtunnels.ms';
 
   const token = localStorage.getItem('token') as string; // get token this way for the actual implementation
   // const token = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIzMmVmMGQ2MS03YTMxLTRjZGMtYWJlNC1kN2VlYWQzNmY0ZGQiLCJlbWFpbCI6ImRlc3RhbmF0aG5hZWxhdGFyb0BnbWFpbC5jb20iLCJpbWFnZVVybCI6bnVsbCwiYWNjb3VudHMiOlt7ImlkIjoiYjBjMTU3YzgtYWYyMy00MzQ0LWE0MzctMTM0ZDIzYTYyNGE5IiwibmFtZSI6Im5hdGhuYWVsIiwiZG9tYWluIjpudWxsfV0sInJvbGVzIjpbIk9XTkVSIl0sImlhdCI6MTczNDk0Mjg5OCwiZXhwIjoxNzM0OTQ2NDk4fQ.S5nSDy3zYmG926BAYaqDWnp0lsGq8scr1t6Db41m1wM';
 
-  const { sendJsonMessage, lastJsonMessage } = useWebSocket<
-    WSMessage | WSSentMessage
-  >(WS_URL, {
-    share: true,
-    queryParams: { token: token },
-  });
+  useEffect(() => {
+    const token = localStorage.getItem('token') as string;
+    const newSocket: Socket = io(`https://1clr2kph-3002.uks1.devtunnels.ms`, {
+      query: { token },
+    });
+
+    newSocket.on('connect', () => {
+      console.log('Connected to the WebSocket server');
+    });
+
+    newSocket.on('disconnect', () => {
+      console.log('Disconnected from the WebSocket server');
+    });
+
+    newSocket.on('message', (message) => {
+      try {
+        const data = JSON.parse(message);
+        console.log('Received message: ', data.body);
+      } catch (error) {
+        console.error('Failed to parse message:', error);
+      }
+    });
+
+    newSocket.on('error', (error) => {
+      console.error('Error occurred:', error);
+    });
+
+    newSocket.on('reconnect_attempt', () => {
+      console.log('Reconnecting to the WebSocket server...');
+    });
+
+    newSocket.on('reconnect_error', (error) => {
+      console.error('Reconnection error:', error);
+    });
+
+    newSocket.on('reconnect_failed', () => {
+      console.log('Reconnection failed');
+    });
+
+    setSocket(newSocket);
+
+    return () => {
+      newSocket.disconnect(); // Clean up when unmounting
+    };
+  }, []);
+
+  //const { sendJsonMessage, lastJsonMessage } = useWebSocket<
+  //  WSMessage | WSSentMessage
+  //>(WS_URL, {
+  //  share: true,
+  //  queryParams: { token: token },
+  //});
 
   // Effect to log lastJsonMessage
-  useEffect(() => {
-    if (lastJsonMessage) {
-      setWebSocketMessages((prevMessages) => [
-        // store all the messages recieved by the us
-        ...prevMessages,
-        lastJsonMessage,
-      ]);
-    }
-  }, [lastJsonMessage]);
+  //useEffect(() => {
+  //  if (lastJsonMessage) {
+  //    setWebSocketMessages((prevMessages) => [
+  //      // store all the messages recieved by the us
+  //      ...prevMessages,
+  //      lastJsonMessage,
+  //    ]);
+  //  }
+  //}, [lastJsonMessage]);
 
   useEffect(() => {
     console.log('messages', webSocketMessages);
@@ -146,13 +195,14 @@ const MentorContainer = ({ conversations }: MentorContainerProps) => {
       <Chat
         currentConversation={currentConversation}
         userMessages={userMessages}
-        sendJsonMessage={sendJsonMessage}
+        // sendJsonMessage={sendJsonMessage}
         conversationMessages={webSocketMessages.filter((message) =>
           'conversationId' in message // if it is a recieved message or sent message
             ? message.conversationId === currentConversation.conversation_id
             : message.metadata.conversationId ===
               currentConversation.conversation_id
         )}
+        socket={socket}
       />
     </>
   );

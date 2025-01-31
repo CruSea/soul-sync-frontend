@@ -20,8 +20,8 @@ import { jsonServer } from '@/data/end-points';
 const Chat = ({
   userMessages,
   currentConversation,
-  sendJsonMessage,
   conversationMessages,
+  socket,
 }: ChatProps) => {
   // const chatData = userMessages
   //  ? transformChatData(userMessages[0]?.messages) //                                                      //for when connecting to json server
@@ -40,7 +40,7 @@ const Chat = ({
   const textBox = useRef<HTMLInputElement | null>(null);
 
   const sendText = async (messageText: string) => {
-    if (!messageText.trim()) return; // Don't send empty messages
+    if (!messageText.trim() || !socket) return; // Don't send empty messages
 
     const now = new Date();
     const createdAt = now.toISOString();
@@ -50,12 +50,10 @@ const Chat = ({
       metadata: {
         conversationId: currentConversation.conversation_id,
       },
-      payload: {
-        body: messageText,
-      },
+      payload: messageText,
     };
 
-    sendJsonMessage(newMessage);
+    socket.emit('message', JSON.stringify(newMessage));
   };
 
   useEffect(() => {
