@@ -21,9 +21,7 @@ import {
   DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu';
 import { useToast } from '@/hooks/use-toast';
-import { channelJsonserver } from '@/data/end-points';
 import { fetchedChannels, handleAddChannel } from '@/actions/admin/channel';
-import { v4 as uuidv4 } from 'uuid';
 
 export default function ChannelsPage() {
   const [channels, setChannels] = useState<Channel[]>([]);
@@ -31,6 +29,7 @@ export default function ChannelsPage() {
   const [selectedCategory, setSelectedCategory] = useState('All');
   const { toast } = useToast();
   const [selectedChannel, setSelectedChannel] = useState<string>('TELEGRAM');
+  const [triggerState, setTriggerState] = useState<boolean>(true);
   const categories = [
     'All',
     'TELEGRAM',
@@ -41,16 +40,23 @@ export default function ChannelsPage() {
   ];
 
   useEffect(() => {
+    const user = localStorage.getItem('user');
+
+    if (!user) {
+      console.log('cannot fetch data');
+    }
     const getChannels = async () => {
-      const response = await fetchedChannels();
-      if (response.responseData) {
-        setChannels(response.responseData);
+      const response = await fetchedChannels(user);
+      if (response) {
+        setChannels(response);
+        console.log('response found');
       } else {
+        console.log('response NOT found');
         toast(response.error);
       }
     };
     getChannels();
-  }, []);
+  }, [triggerState]);
 
   const filteredChannel = channels?.filter(
     (item) =>
@@ -66,20 +72,25 @@ export default function ChannelsPage() {
   const AddChannel = (
     newChannel: Omit<Channel, 'id' | 'icon' | 'createdAt' | 'accountId'>
   ) => {
-    const channelWithId: Channel = {
-      ...newChannel,
-      id: `${uuidv4().toString()}`,
-      createdAt: new Date().toLocaleDateString('en-US', format),
-      accountId: '4211a09b-b42a-4b1d-85f9-a6598d8ff585',
-    };
-    setChannels(channels ? [...channels, channelWithId] : [channelWithId]);
-    handleAddChannel(channelWithId);
-
-    toast({
-      title: 'Channel added successfully',
-      description: 'The channel has been added to the list',
-      duration: 3000,
-    });
+    const user = localStorage.getItem('user');
+    if (user) {
+      const userObj = JSON.parse(user);
+      const requestBody = {
+        accountId: userObj.accounts[0].id,
+      };
+      const channelWithId = {
+        ...newChannel,
+        accountId: requestBody.accountId,
+      } as Channel;
+      setChannels(channels ? [...channels, channelWithId] : [channelWithId]);
+      handleAddChannel(channelWithId, user!);
+      toast({
+        title: 'Channel added successfully',
+        description: 'The channel has been added to the list',
+        duration: 3000,
+      });
+      setTriggerState(!triggerState);
+    }
   };
 
   return (
@@ -132,6 +143,8 @@ export default function ChannelsPage() {
                         channel={channel}
                         setChannels={setChannels}
                         toast={toast}
+                        setTriggerState={setTriggerState}
+                        triggerState={triggerState}
                       />
                     </CommandItem>
                   ))}

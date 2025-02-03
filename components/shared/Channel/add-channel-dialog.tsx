@@ -96,7 +96,7 @@ export function AddChannelDialog({
     }
   }, [watchedValues]);
 
-  console.log('Current Channel State:', currentChannel);
+  // console.log('Current Channel State:', currentChannel);
 
   const channelChange = () => {
     switch (selectedChannel) {

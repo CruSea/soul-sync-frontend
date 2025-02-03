@@ -20,6 +20,7 @@ import { useState } from 'react';
 import NegaritSMS from './configuration/NegaritSMS';
 import { endPoints } from '@/data/end-points';
 import { connectionRequest } from '@/types/channel';
+import { handleDeleting, handleConnect } from '@/actions/admin/channel';
 
 interface ChannelCardProps {
   channel: Channel;
@@ -29,6 +30,8 @@ interface ChannelCardProps {
     description: string;
     duration?: number;
   }) => void;
+  setTriggerState: React.Dispatch<React.SetStateAction<boolean>>;
+  triggerState: boolean;
 }
 
 const BASE_URL = process.env.NEXT_PUBLIC_API_BASE_URL;
@@ -41,9 +44,14 @@ const formatDate = (isoString: string) => {
     day: 'numeric',
   });
 };
-export function ChannelCard({ channel, setChannels, toast }: ChannelCardProps) {
+export function ChannelCard({
+  channel,
+  setChannels,
+  toast,
+  triggerState,
+  setTriggerState,
+}: ChannelCardProps) {
   const [deleteId, setDeleteId] = useState<string | null>(null);
-  const [requests, setRequests] = useState<connectionRequest>();
   const [connectedId, setConnectedId] = useState<string | null>(null);
   let iconURL = '';
   switch (channel.type) {
@@ -71,53 +79,17 @@ export function ChannelCard({ channel, setChannels, toast }: ChannelCardProps) {
       setDeleteId(channel.id);
     }
   };
-
-  // backend call
   const user = localStorage.getItem('user');
-  const token = localStorage.getItem('token');
-  if (!user) {
-    return;
-  }
+  const token = localStorage.getItem;
   const endpoint = `${BASE_URL}/${endPoints.channel}`;
-  const userObj = JSON.parse(user);
-
-  const requestBody = {
-    accountId: userObj.accounts[0].id,
-  };
 
   const confirmDelete = () => {
-    if (deleteId !== null) {
-      setChannels((prevItems) =>
-        prevItems.filter((item) => item.id !== deleteId)
-      );
-      fetch(`${endpoint}/${deleteId}`, {
-        method: 'DELETE',
-        headers: {
-          'Content-Type': 'application/json',
-          Authorization: token ? `Bearer ${JSON.parse(token)}` : '',
-        },
-      })
-        .then((response) => response.json())
-        .then((data) => {
-          console.log('Deleted channel:', data);
-          // Show toast notification after successful deletion
-          toast({
-            title: 'Channel deleted successfully',
-            description: 'The channel has been deleted from the list',
-            duration: 3000,
-          });
-        })
-        .catch((error) => {
-          console.error('Error:', error);
-          toast({
-            title: 'Error deleting channel',
-            description: 'An error occurred while deleting the channel.',
-            duration: 3000,
-          });
-        });
-
-      setDeleteId(null);
-    }
+    handleDeleting(setChannels, deleteId, setDeleteId);
+    toast({
+      title: 'Channel deleted successfully',
+      description: 'The channel has been added to the list',
+      duration: 3000,
+    });
   };
   const channelChange = (channel: Channel) => {
     switch (channel.type) {
@@ -133,46 +105,9 @@ export function ChannelCard({ channel, setChannels, toast }: ChannelCardProps) {
     setDeleteId(null);
   };
 
-  const handleToggle = (channel: Channel) => {
-    if (channel.id) {
-      setConnectedId(channel.id);
-    }
-    if (connectedId !== null) {
-      fetch(`${endpoint}/${connectedId}/connect`, {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-          Authorization: token ? `Bearer ${JSON.parse(token)}` : '',
-        },
-      })
-        .then((response) => response.json())
-        .then((data) => {
-          console.log('connectedChannel:', data);
-          setRequests({
-            id: channel.id,
-            request: {
-              ok: data.ok,
-              result: data.result,
-              description: data.description,
-            },
-          });
-          toast({
-            title: `Channel Connected successfully`,
-            description: `The channel  ${channel.name} has been connected successfully`,
-            duration: 3000,
-          });
-        })
-        .catch((error) => {
-          console.error('Error:', error);
-          toast({
-            title: 'Error Connecting channel',
-            description: `An error occurred while Connecting the channel ${channel.name}.`,
-            duration: 3000,
-          });
-        });
-    }
+  const handleToggle = () => {
+    handleConnect(channel, setChannels, connectedId, setConnectedId);
   };
-
   const check = true; //temporary
   return (
     <div className="h-full w-full  gap-4  pb-5 flex flex-col items-center justify-between px-2.5 pt-1 border rounded-xl bg-white hover:shadow-md hover:rounded-xl transition-shadow ">
@@ -234,8 +169,8 @@ export function ChannelCard({ channel, setChannels, toast }: ChannelCardProps) {
           <div className="flex items-center justify-between space-x-2 w-full ">
             <Switch
               id="connect"
-              checked={true}
-              onCheckedChange={() => handleToggle(channel)}
+              checked={channel.is_on}
+              onCheckedChange={() => handleToggle()}
             />
             <Label htmlFor="connect">
               {check ? 'Connected' : 'Not Connected'}
