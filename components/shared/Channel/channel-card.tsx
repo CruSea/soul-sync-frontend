@@ -173,7 +173,7 @@ export function ChannelCard({
               onCheckedChange={() => handleToggle()}
             />
             <Label htmlFor="connect">
-              {check ? 'Connected' : 'Not Connected'}
+              {channel.is_on ? 'Connected' : 'Not Connected'}
             </Label>
           </div>
         </div>

@@ -14,7 +14,7 @@ function telegramBot({ channel }: telegramProp) {
           Token
         </div>
       </div>
-      <div className="text-gray-900 text-xs font-bold font-['Manrope'] ">
+      <div className="text-gray-900 text-xs font-bold  p-1 [overflow-wrap:anywhere]">
         {config.token}
       </div>
     </div>
