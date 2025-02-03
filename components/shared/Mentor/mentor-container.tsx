@@ -198,6 +198,7 @@ const MentorContainer = ({ conversations }: MentorContainerProps) => {
         // sendJsonMessage={sendJsonMessage}
         webSocketMessages={webSocketMessages}
         socket={socket}
+        setWebSocketMessages={setWebSocketMessages}
       />
     </>
   );

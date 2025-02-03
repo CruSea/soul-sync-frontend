@@ -101,8 +101,8 @@ export type ConversationInfos = {
 export type ChatProps = {
   currentConversation: Conversation;
   userMessages: any;
-  // sendJsonMessage: (message: WSMessage | WSSentMessage) => void;
   webSocketMessages: webSocketMessages;
+  setWebSocketMessages: React.Dispatch<React.SetStateAction<webSocketMessages>>;
   socket: Socket | null;
 };
 

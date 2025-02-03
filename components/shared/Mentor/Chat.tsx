@@ -23,6 +23,7 @@ const Chat = ({
   userMessages,
   currentConversation,
   webSocketMessages,
+  setWebSocketMessages,
   socket,
 }: ChatProps) => {
   // const chatData = userMessages
@@ -71,7 +72,15 @@ const Chat = ({
       payload: messageText,
     };
 
+    const WSFormatMessage: WSMessage = {
+      conversationId: currentConversation.conversation_id,
+      type: 'SENT',
+      body: messageText,
+      createdAt: createdAt
+    }
+
     socket.emit('message', JSON.stringify(newMessage));
+    setWebSocketMessages((prevMessages) => [...prevMessages, WSFormatMessage]);
   };
 
   useEffect(() => {
