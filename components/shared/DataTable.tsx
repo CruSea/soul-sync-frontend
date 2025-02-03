@@ -37,6 +37,8 @@ import {
   DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu';
 import { Column, FilterOption } from '@/types/data-table';
+import { fetchedDataTable } from '@/actions/shared/dataTable';
+import { useAuth } from '@/context/AuthContext';
 
 interface DataTableProps<T> {
   apiUrl: string;
@@ -73,52 +75,30 @@ export function DataTable<T extends { id: string | number }>({
     open: boolean;
     id: string | number | null;
   }>({ open: false, id: null });
-
+const {notification}=useAuth();
   // Memoized fetchData function
   const fetchData = useCallback(async () => {
     setIsLoading(true);
     try {
-      const token = localStorage.getItem('token');
-
+     // const token = localStorage.getItem('token');
       console.log('Fetching data from:', apiUrl);
-
-      const response = await fetch(apiUrl, {
-        method: 'GET',
-        headers: {
-          'Content-Type': 'application/json',
-          Authorization: token ? `Bearer ${JSON.parse(token)}` : '',
-        },
-      });
-
-      if (!response.ok) {
-        throw new Error(`HTTP error! Status: ${response.status}`);
+      const response = await fetchedDataTable(apiUrl);
+      console.log('API response:', response);
+      if(response.error){
+      notification({message:{
+        title:response.error.title,
+        description:response.error.description
+      }})
+      return null
       }
-
-      const result = await response.json();
-      console.log('API response:', result);
-
-      let processedData: T[];
-      if (Array.isArray(result)) {
-        processedData = result;
-      } else if (result.data && Array.isArray(result.data)) {
-        processedData = result.data;
-      } else {
-        throw new Error('Unexpected data format received from API');
-      }
-
-      if (onDataFetched) {
-        processedData = onDataFetched(processedData);
-      }
-
-      setData(processedData);
-      setTotalItems(processedData.length);
+      setData(response);
+      setTotalItems(response.length);
     } catch (error) {
       console.error('Error fetching data:', error);
-      onError?.(
-        error instanceof Error ? error.message : 'An unknown error occurred'
-      );
-      setData([]);
-      setTotalItems(0);
+      notification({message:{
+        title:'Error',
+        description:error instanceof Error ? error.message : 'An unknown error occurred'
+      }})
     } finally {
       setIsLoading(false);
     }

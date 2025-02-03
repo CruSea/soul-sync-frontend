@@ -70,9 +70,8 @@ const filterOptions: FilterOption<Mentors>[] = [
 const search = ['name', 'age', 'gender', 'location', 'isActive'];
 const MentorsTable: React.FC = () => {
   const { user, notification } = useAuth();
-  const userObj = JSON.parse(user);
-  const accountId = String(userObj?.accounts[0]?.id);
-  const endPoint = `${BASE_URL}/${endPoints.adminMentors}?accountId=${accountId}`;
+ 
+  const endPoint = `${endPoints.adminMentors}?accountId=${user?.accountId as string}`;
 
   const handleDelete = async (id: string | number) => {
     try {

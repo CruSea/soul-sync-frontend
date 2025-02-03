@@ -8,7 +8,8 @@ export interface pagination {
 }
 
 export interface NotifyType {
+ message: {
   title: string;
   description: string;
-  duration: number;
+  duration?: number;}
 }

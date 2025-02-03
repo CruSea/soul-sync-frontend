@@ -62,7 +62,7 @@ const search = ['name', 'location', 'platform'];
 const UserTable: React.FC = () => {
   const [error, setError] = useState<string | null>(null);
   const [allMentees, setAllMentees] = useState<Mentee[]>([]);
-  const endPoint = 'http://localhost:3500/mentees';
+  const endPoint = 'mentees';
 
   const onDataFetched = (data: Mentee[]) => {
     const sortedMentees = data

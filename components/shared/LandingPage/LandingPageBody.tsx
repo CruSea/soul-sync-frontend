@@ -1,9 +1,10 @@
+'use server'
 import Image from 'next/image';
 import { Button } from '@/components/ui/button';
 import { LuArrowRight } from 'react-icons/lu';
 import Link from 'next/link';
 
-const LandingPageBody = () => {
+const LandingPageBody = async() => {
   return (
     <div className="flex-1 flex items-center justify-evenly h-full">
       <div className="flex flex-col justify-center gap-7">

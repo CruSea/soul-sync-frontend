@@ -15,33 +15,30 @@ const BASE_URL = process.env.NEXT_PUBLIC_API_BASE_URL;
 
 export default function AdminView() {
   const router = useRouter();
-  const { logout, user } = useAuth();
-  console.log('user', user);
+const {logout,user}= useAuth();
+console.log("user",user)
   useEffect(() => {
     const checkAccounts = async () => {
-      // const user = localStorage.getItem('user');
+         // const userObj = JSON.parse(user as string);
+           const response = await checkAccount(user?.accountId as string)
+          if (!response) {
+            console.error("AccountInfo doesn't exist");
+            throw new Error('Account info not found');
+          }
 
-      const userObj = JSON.parse(user as string);
+          if (!response?.domain) {
+            console.log('Redirecting new user to create org page');
+            router.push('/admin/create-org');
+          }
 
-      const response = await checkAccount(userObj.accounts[0].id);
-
-      if (!response) {
-        console.error("AccountInfo doesn't exist");
-        throw new Error('Account info not found');
-      }
-
-      if (!response?.domain) {
-        console.log('Redirecting new user to create org page');
-        router.push('/admin/create-org');
-      }
-
-      if (response?.error?.description === 'Invalid or expired token') {
-        logout();
-      }
+          if(response?.error?.description==="Invalid or expired token"){
+            logout()
+          }
+      
     };
 
-    checkAccounts();
-  }, [router, user]);
+   user&& checkAccounts();
+  }, [router,user]);
 
   return (
     <div className="flex-1 p-4 bg-secondary dark:bg-gray-900">

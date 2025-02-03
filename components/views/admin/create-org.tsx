@@ -11,22 +11,20 @@ import {
   OrgDataValues,
   Page,
 } from '@/types/create-org';
-import { useState, useRef, useEffect } from 'react';
+import { useState } from 'react';
 import { useForm } from 'react-hook-form';
 import CreateOrgSidebar from '@/components/shared/admin/CreateOrg/CreateOrgSidebar';
 import CreateOrgForm from '@/components/shared/admin/CreateOrg/CreateOrgForm';
-import { endPoints } from '@/data/end-points';
 import { useAuth } from '@/context/AuthContext';
 import { createOrganazation } from '@/actions/admin/admin';
-import { title } from 'process';
-import { DessertIcon } from 'lucide-react';
-
-const BASE_URL = process.env.NEXT_PUBLIC_API_BASE_URL;
+import { Account } from '@/types/users';
 
 const CreateOrgView = () => {
   const [currentPage, setCurrentPage] = useState<Page>('first');
   const [orgData, setOrgData] = useState<OrgDataValues>({});
   const { user, notification } = useAuth();
+
+  const userAccoutId:Account=JSON.parse(JSON.stringify(user))
   const formOne = useForm<createOrgFormOneValues>({
     resolver: zodResolver(createOrgFormOneSchema),
     mode: 'onChange',
@@ -61,26 +59,27 @@ const CreateOrgView = () => {
         return;
       }
 
-      const userData = JSON.parse(user);
-
       const reqBody = {
-        name: orgData.companyName,
-        domain: orgData.companyDomain,
+        name: orgData.companyName as string,
+        domain: orgData.companyDomain as string,
       };
       const response = await createOrganazation(
-        userData?.accounts[0]?.id,
+        userAccoutId?.id,
         reqBody
       );
       if (response.ok) {
         notification({
-          title: 'Success!',
-          description: 'successfull Created!',
+          message:{
+            title: 'Success!',
+          description: 'successfull Created!'
+      },
         });
       } else {
-        console.error('Form Submission is wrong');
+        console.error('Form Submission is wrong',response);
         notification({
+          message:{
           title: 'Error!',
-          description: 'Form Submission is wrong!',
+          description: 'Form Submission is wrong!'}
         });
         setCurrentPage('first');
       }
