@@ -85,7 +85,7 @@ export type WSSentMessage = {
   payload: string;
 };
 
-export type webSocketMessages = Array<WSSentMessage | WSMessage>;
+export type webSocketMessages = Array<WSMessage>;
 
 export type ConversationInfo = {
   channelId: string;
@@ -101,7 +101,7 @@ export type ConversationInfos = {
 export type ChatProps = {
   currentConversation: Conversation;
   userMessages: any;
-  webSocketMessages: webSocketMessages;
+  currentConversationMessages: webSocketMessages;
   setWebSocketMessages: React.Dispatch<React.SetStateAction<webSocketMessages>>;
   socket: Socket | null;
 };

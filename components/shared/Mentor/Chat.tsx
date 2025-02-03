@@ -12,7 +12,8 @@ import {
   threadType,
   WSMessage,
   WSSentMessage,
-  webSocketMessages
+  webSocketMessages,
+  transformedMessage
 } from '@/types/mentor';
 import { transformChatData, transformWSData } from '@/lib/utils';
 import InputArea from './InputArea';
@@ -22,7 +23,7 @@ import { jsonServer } from '@/data/end-points';
 const Chat = ({
   userMessages,
   currentConversation,
-  webSocketMessages,
+  currentConversationMessages,
   setWebSocketMessages,
   socket,
 }: ChatProps) => {
@@ -30,27 +31,23 @@ const Chat = ({
   //  ? transformChatData(userMessages[0]?.messages) //                                                      //for when connecting to json server
   //  : [];
 
-  const [filteredWSMessages, setFilteredWSMessages] = useState<webSocketMessages>([])
+  const [WSData, setWSData] = useState<transformedMessage[]>([]);
+
 
   const chatData = userMessages
     ? transformChatData(userMessages) // for when connecting to backend
     : [];
 
   useEffect(() => {
-    console.log("websocket message changed", webSocketMessages)
-    const filteredMessages = webSocketMessages.filter((message) =>
-      'conversationId' in message // if it is a recieved message or sent message
-        ? message.conversationId === currentConversation.conversation_id
-        : message.metadata.conversationId ===
-          currentConversation.conversation_id
-    )
+    console.log("curent messages", currentConversationMessages)
+    const transformedWSData = transformWSData(currentConversationMessages as WSMessage[]);
 
-    setFilteredWSMessages(filteredMessages)
-  }, [webSocketMessages])
+    setWSData(transformedWSData);
+  }, [currentConversationMessages, currentConversation]);
 
 
 
-  const WSData = transformWSData(webSocketMessages as WSMessage[]); // get the mentorId from the token next time
+  // const WSData = transformWSData(webSocketMessages as WSMessage[]); // get the mentorId from the token next time
 
   // an empty div at the end of the thread used to scroll to the bottom on send
   const bottomOfPanelRef = useRef<HTMLDivElement | null>(null);
@@ -93,7 +90,7 @@ const Chat = ({
     // if (textBox.current) {
     //   textBox.current.value = "";
     // }
-  }, [userMessages, webSocketMessages]);
+  }, [userMessages, currentConversationMessages]);
 
   return (
     <>

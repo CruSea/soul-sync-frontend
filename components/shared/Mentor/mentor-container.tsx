@@ -26,6 +26,7 @@ const MentorContainer = ({ conversations }: MentorContainerProps) => {
   const [currentConversation, setCurrentConversation] = useState<Conversation>(
     conversations[0]
   );
+  const [currentConversationMessages, setCurrentConversationMessages] = useState<webSocketMessages>([])
   const [userMessages, setUserMessages] = useState<Messages>();
   const [webSocketMessages, setWebSocketMessages] = useState<webSocketMessages>(
     []
@@ -102,7 +103,11 @@ const MentorContainer = ({ conversations }: MentorContainerProps) => {
   //}, [lastJsonMessage]);
 
   useEffect(() => {
-    console.log('messages', webSocketMessages);
+    const filteredMessages: webSocketMessages = webSocketMessages.filter(
+      (message) => message.conversationId === currentConversation.conversation_id
+    );
+
+    setCurrentConversationMessages(filteredMessages);
   }, [webSocketMessages]);
 
   useEffect(() => {
@@ -196,7 +201,7 @@ const MentorContainer = ({ conversations }: MentorContainerProps) => {
         currentConversation={currentConversation}
         userMessages={userMessages}
         // sendJsonMessage={sendJsonMessage}
-        webSocketMessages={webSocketMessages}
+        currentConversationMessages={currentConversationMessages}
         socket={socket}
         setWebSocketMessages={setWebSocketMessages}
       />
