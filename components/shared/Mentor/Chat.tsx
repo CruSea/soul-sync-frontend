@@ -12,26 +12,44 @@ import {
   threadType,
   WSMessage,
   WSSentMessage,
+  webSocketMessages
 } from '@/types/mentor';
 import { transformChatData, transformWSData } from '@/lib/utils';
 import InputArea from './InputArea';
 import { jsonServer } from '@/data/end-points';
 
+
 const Chat = ({
   userMessages,
   currentConversation,
-  conversationMessages,
+  webSocketMessages,
   socket,
 }: ChatProps) => {
   // const chatData = userMessages
   //  ? transformChatData(userMessages[0]?.messages) //                                                      //for when connecting to json server
   //  : [];
 
+  const [filteredWSMessages, setFilteredWSMessages] = useState<webSocketMessages>([])
+
   const chatData = userMessages
     ? transformChatData(userMessages) // for when connecting to backend
     : [];
 
-  const WSData = transformWSData(conversationMessages as WSMessage[]); // get the mentorId from the token next time
+  useEffect(() => {
+    console.log("websocket message changed", webSocketMessages)
+    const filteredMessages = webSocketMessages.filter((message) =>
+      'conversationId' in message // if it is a recieved message or sent message
+        ? message.conversationId === currentConversation.conversation_id
+        : message.metadata.conversationId ===
+          currentConversation.conversation_id
+    )
+
+    setFilteredWSMessages(filteredMessages)
+  }, [webSocketMessages])
+
+
+
+  const WSData = transformWSData(webSocketMessages as WSMessage[]); // get the mentorId from the token next time
 
   // an empty div at the end of the thread used to scroll to the bottom on send
   const bottomOfPanelRef = useRef<HTMLDivElement | null>(null);
@@ -66,7 +84,7 @@ const Chat = ({
     // if (textBox.current) {
     //   textBox.current.value = "";
     // }
-  }, [userMessages, conversationMessages]);
+  }, [userMessages, webSocketMessages]);
 
   return (
     <>

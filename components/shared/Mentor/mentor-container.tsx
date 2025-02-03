@@ -45,19 +45,19 @@ const MentorContainer = ({ conversations }: MentorContainerProps) => {
 
     newSocket.on('connect', () => {
       console.log('Connected to the WebSocket server');
+
+      newSocket.on('message', (message) => {
+        try {
+          let data = JSON.parse(message);
+          setWebSocketMessages((prevMessages) => [...prevMessages, data]);
+        } catch (error) {
+          console.error('Failed to parse message:', error);
+        }
+      });
     });
 
     newSocket.on('disconnect', () => {
       console.log('Disconnected from the WebSocket server');
-    });
-
-    newSocket.on('message', (message) => {
-      try {
-        const data = JSON.parse(message);
-        console.log('Received message: ', data.body);
-      } catch (error) {
-        console.error('Failed to parse message:', error);
-      }
     });
 
     newSocket.on('error', (error) => {
@@ -196,12 +196,7 @@ const MentorContainer = ({ conversations }: MentorContainerProps) => {
         currentConversation={currentConversation}
         userMessages={userMessages}
         // sendJsonMessage={sendJsonMessage}
-        conversationMessages={webSocketMessages.filter((message) =>
-          'conversationId' in message // if it is a recieved message or sent message
-            ? message.conversationId === currentConversation.conversation_id
-            : message.metadata.conversationId ===
-              currentConversation.conversation_id
-        )}
+        webSocketMessages={webSocketMessages}
         socket={socket}
       />
     </>

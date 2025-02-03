@@ -102,7 +102,7 @@ export type ChatProps = {
   currentConversation: Conversation;
   userMessages: any;
   // sendJsonMessage: (message: WSMessage | WSSentMessage) => void;
-  conversationMessages: webSocketMessages;
+  webSocketMessages: webSocketMessages;
   socket: Socket | null;
 };
 
