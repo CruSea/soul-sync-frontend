@@ -18,6 +18,7 @@ const BASE_URL = process.env.NEXT_PUBLIC_API_BASE_URL;
 interface Mentors {
   id: string | number;
   name: string;
+  email: string;
   expertise: string;
   age: number;
   gender: string;
@@ -42,13 +43,13 @@ const columns: Column<Mentors>[] = [
       </div>
     ),
   },
+  { key: 'email', header: 'Email' },
   { key: 'age', header: 'Age' },
   { key: 'gender', header: 'Gender' },
   { key: 'expertise', header: 'Expertise' },
   {
     key: 'availability',
     header: 'Availability',
-    render: (mentor) => mentor.availability?.startDate,
   },
   { key: 'location', header: 'Location' },
   {
@@ -65,22 +66,30 @@ const columns: Column<Mentors>[] = [
 ];
 
 const filterOptions: FilterOption<Mentors>[] = [
-  { key: 'location', label: 'Addis Ababa' },
+  { key: 'gender', label: 'Female' },
+  { key: 'gender', label: 'Male' },
 ];
 const search = ['name', 'age', 'gender', 'location', 'isActive'];
 const MentorsTable: React.FC = () => {
+  const [mentorInviteTrigger, setMentorInviteTrigger] = useState(true);
   const { user, notification } = useAuth();
-  const userObj = JSON.parse(user);
-  const accountId = String(userObj?.accounts[0]?.id);
+  // const userObj = JSON.parse(user);
+  // const accountId = String(userObj?.accounts[0]?.id);
+  const userObj = user ? JSON.parse(user) : null;
+  const accountId = userObj?.accounts?.[0]?.id ? String(userObj.accounts[0].id) : '';
+  console.log(accountId, '...........................')
+
   const endPoint = `${BASE_URL}/${endPoints.adminMentors}?accountId=${accountId}`;
 
   const handleDelete = async (id: string | number) => {
     try {
       const response = await deleteMentor(id as string);
-      if (!response.ok) {
+      console.log("the delete response", response)
+      if (!response) {
         notification({
           title: 'Error!',
           description: 'Failed to delete the mentor',
+          duration: 0
         });
 
         throw new Error('Failed to delete the mentor.');
@@ -89,6 +98,7 @@ const MentorsTable: React.FC = () => {
       notification({
         title: 'Success!',
         description: 'Mentor Successfully deleted.',
+        duration: 0
       });
     } catch (error) {
       console.error('Error deleting mentor:', error);
@@ -101,7 +111,7 @@ const MentorsTable: React.FC = () => {
       <div className="space-y-6 bg-white p-6 rounded-lg">
         <div className="flex items-center justify-between">
           <h1 className="text-2xl font-semibold">Mentors</h1>
-          <InviteMentorDialog />
+          <InviteMentorDialog setMentorInviteTrigger={setMentorInviteTrigger} mentorInviteTrigger={mentorInviteTrigger}/>
         </div>
         <DataTable<Mentors>
           apiUrl={endPoint}
@@ -110,6 +120,7 @@ const MentorsTable: React.FC = () => {
           filterOptions={filterOptions}
           itemsPerPage={10}
           onDelete={handleDelete}
+        mentorInviteTrigger={mentorInviteTrigger}
         />
       </div>
     </div>

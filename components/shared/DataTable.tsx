@@ -38,17 +38,20 @@ import {
 } from '@/components/ui/dropdown-menu';
 import { Column, FilterOption } from '@/types/data-table';
 
-interface DataTableProps<T> {
+interface DataTableProps<
+  T extends { id: string | number; [key: string]: any },
+> {
   apiUrl: string;
   columns: Column<T>[];
-  searchFields?: (keyof T)[];
-  filterOptions?: FilterOption<T>[];
+  searchFields?: (keyof T)[]; // Optional search fields
+  filterOptions?: FilterOption<T>[]; // Optional filter options
   itemsPerPage: number;
   onDelete?: (id: string | number) => Promise<void>;
   enableActions?: boolean;
   enablePagination?: boolean;
   onError?: (error: string) => void;
   onDataFetched?: (data: T[]) => T[];
+  mentorInviteTrigger?: any;
 }
 
 export function DataTable<T extends { id: string | number }>({
@@ -62,78 +65,125 @@ export function DataTable<T extends { id: string | number }>({
   enablePagination = true,
   onError,
   onDataFetched,
+  mentorInviteTrigger,
 }: DataTableProps<T>) {
+  const [filteredData, setFilteredData] = useState<T[]>([]);
+
   const [data, setData] = useState<T[]>([]);
   const [totalItems, setTotalItems] = useState(0);
   const [searchQuery, setSearchQuery] = useState('');
   const [currentPage, setCurrentPage] = useState(1);
   const [filters, setFilters] = useState<string[]>([]);
   const [isLoading, setIsLoading] = useState(false);
+  const [deletingId, setDeletingId] = useState<string | number | null>(null);
+
   const [deleteDialog, setDeleteDialog] = useState<{
     open: boolean;
     id: string | number | null;
   }>({ open: false, id: null });
 
   // Memoized fetchData function
-  const fetchData = useCallback(async () => {
-    setIsLoading(true);
-    try {
-      const token = localStorage.getItem('token');
+  useEffect(() => {
+    const fetchData = async () => {
+      setIsLoading(true);
+      try {
+        const token = localStorage.getItem('token');
+        console.log('Token from localStorage:', token);
+        console.log('Fetching from API URL:', apiUrl);
+        const response = await fetch(apiUrl, {
+          method: 'GET',
+          headers: {
+            'Content-Type': 'application/json',
+            Authorization: token ? `Bearer ${token}` : '',
+          },
+        });
 
-      console.log('Fetching data from:', apiUrl);
+        if (!response.ok) {
+          throw new Error(`HTTP error! Status: ${response.status}`);
+        }
 
-      const response = await fetch(apiUrl, {
-        method: 'GET',
-        headers: {
-          'Content-Type': 'application/json',
-          Authorization: token ? `Bearer ${JSON.parse(token)}` : '',
-        },
-      });
+        const result = await response.json();
+        console.log('API response:', result);
 
-      if (!response.ok) {
-        throw new Error(`HTTP error! Status: ${response.status}`);
+        let processedData: T[];
+        if (Array.isArray(result)) {
+          processedData = result;
+        } else if (result.data && Array.isArray(result.data)) {
+          processedData = result.data;
+        } else {
+          throw new Error('Unexpected data format received from API');
+        }
+
+        if (onDataFetched) {
+          processedData = onDataFetched(processedData);
+        }
+
+        setData(processedData);
+        setTotalItems(processedData.length);
+        const myFilter = processedData.filter((item) =>
+          searchFields.some((field) =>
+            String(item[field])
+              .toLowerCase()
+              .includes(searchQuery.toLowerCase())
+          )
+        );
+
+        if (myFilter) {
+          setFilteredData(myFilter);
+        }
+      } catch (error) {
+        console.error('Error fetching data:', error);
+        onError?.(
+          error instanceof Error ? error.message : 'An unknown error occurred'
+        );
+        setData([]);
+        setTotalItems(0);
+      } finally {
+        setIsLoading(false);
       }
+    };
 
-      const result = await response.json();
-      console.log('API response:', result);
+    const accountId = apiUrl.split('accountId=')[1];
 
-      let processedData: T[];
-      if (Array.isArray(result)) {
-        processedData = result;
-      } else if (result.data && Array.isArray(result.data)) {
-        processedData = result.data;
-      } else {
-        throw new Error('Unexpected data format received from API');
-      }
-
-      if (onDataFetched) {
-        processedData = onDataFetched(processedData);
-      }
-
-      setData(processedData);
-      setTotalItems(processedData.length);
-    } catch (error) {
-      console.error('Error fetching data:', error);
-      onError?.(
-        error instanceof Error ? error.message : 'An unknown error occurred'
-      );
-      setData([]);
-      setTotalItems(0);
-    } finally {
-      setIsLoading(false);
+    if (accountId) {
+      console.log('id.............', accountId);
+      fetchData();
     }
-  }, [apiUrl, onDataFetched, onError]);
+  }, [apiUrl, onDataFetched, onError, mentorInviteTrigger]);
+
+  useEffect(() => {
+    console.log('my filtered dt', filteredData);
+  }, [filteredData]);
+
+  useEffect(() => {
+    let updatedData = data;
+
+    // Apply search filter
+    if (searchQuery.trim() !== '') {
+      updatedData = updatedData.filter((item) =>
+        searchFields.some((field) =>
+          String(item[field]).toLowerCase().includes(searchQuery.toLowerCase())
+        )
+      );
+    }
+
+    // Apply selected filters
+    if (filters.length > 0) {
+      updatedData = updatedData.filter((item) =>
+        filters.every((filter) => {
+          const [key, value] = filter.split(':');
+          return String(item[key]).toLowerCase() === value.toLowerCase();
+        })
+      );
+    }
+
+    setFilteredData(updatedData);
+  }, [data, searchQuery, filters]);
 
   // useEffect with dependencies
-  useEffect(() => {
-    fetchData();
-  }, [fetchData]);
-
-  const filteredData = data.filter((item) =>
-    searchFields.some((field) =>
-      String(item[field]).toLowerCase().includes(searchQuery.toLowerCase())
-    )
-  );
+  // useEffect(() => {
+  //   fetchData();
+  // }, [fetchData]);
 
   const paginatedData = enablePagination
     ? filteredData.slice(
@@ -145,19 +195,22 @@ export function DataTable<T extends { id: string | number }>({
   const totalPages = Math.ceil(filteredData.length / itemsPerPage);
 
   const handleDelete = (id: string | number) => {
+    setDeletingId(id);
     setDeleteDialog({ open: true, id });
   };
 
   const confirmDelete = async () => {
-    const id = deleteDialog.id;
-    if (!id) return;
+    if (!deletingId) return;
+
+    console.log('Deleting ID:', deletingId);
 
     try {
-      await onDelete?.(id);
-      setData((prev) => prev.filter((item) => item.id !== id));
+      await onDelete?.(deletingId);
+      setFilteredData((prev) => prev.filter((item) => item.id !== deletingId));
+      setDeletingId(null);
       setDeleteDialog({ open: false, id: null });
     } catch (error) {
-      console.error('Error deleting data:', error);
+      console.error('Error deleting item:', error);
       onError?.(
         error instanceof Error
           ? error.message

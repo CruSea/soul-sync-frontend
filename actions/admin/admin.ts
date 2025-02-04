@@ -5,6 +5,7 @@ const BASE_URL = process.env.NEXT_PUBLIC_API_BASE_URL;
 const Url = {
   adminAccount: `${BASE_URL}/admin/account`,
   adminMentors: `${BASE_URL}/${endPoints.adminMentors}/`,
+  mentorAccount: `${BASE_URL}/admin/mentor`,
 };
 
 export const checkAccount = async (params: string) => {
@@ -28,7 +29,7 @@ export const createOrganazation = async (
 
 export const deleteMentor = async (id: string) => {
   const response = await apiCall({
-    url: `${Url.adminAccount}/mentor/${id}`,
+    url: `${Url.mentorAccount}/${id}`,
     method: 'DELETE',
   });
   const data = response;

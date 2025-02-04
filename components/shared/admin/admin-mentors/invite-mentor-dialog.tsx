@@ -26,7 +26,12 @@ interface InviteMentorFormData {
   email: string;
 }
 
-export function InviteMentorDialog() {
+interface InviteMentorDialogProps {
+  setMentorInviteTrigger: any,
+   mentorInviteTrigger: any
+  }
+
+export function InviteMentorDialog({setMentorInviteTrigger, mentorInviteTrigger}: InviteMentorDialogProps) {
   const [isOpen, setIsOpen] = useState(false);
   const [formData, setFormData] = useState<InviteMentorFormData>({
     name: '',
@@ -39,6 +44,11 @@ export function InviteMentorDialog() {
     try {
       const user = localStorage.getItem('user');
       const token = localStorage.getItem('token');
+
+      if (!user || !token) {
+        toast('User session expired. Please log in again.');
+        return;
+      }
 
       if (user && token) {
         const endPoint = `${BASE_URL}/${endPoints.adminMentors}`; // move base to env
@@ -53,7 +63,7 @@ export function InviteMentorDialog() {
           method: 'POST',
           headers: {
             'Content-Type': 'application/json',
-            Authorization: `Bearer ${JSON.parse(token)}`,
+            Authorization: `Bearer ${token}`,
           },
           body: JSON.stringify(requestBody),
         })
@@ -75,10 +85,12 @@ export function InviteMentorDialog() {
 
         setFormData({ name: '', email: '' });
         setIsOpen(false);
+        setMentorInviteTrigger(!mentorInviteTrigger)
       } else {
         console.error('user not found');
       }
     } catch (error) {
+      console.log(error)
       toast('Failed to send invitation. Please try again.');
     }
   };

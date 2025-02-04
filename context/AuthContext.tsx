@@ -8,6 +8,7 @@ interface AuthContextType {
   user: string | null;
   login: (username: string, password: string) => Promise<void>;
   logout: () => void;
+  notification: (message: NotifyType) => Promise<void>;
 }
 
 const AuthContext = createContext<AuthContextType | undefined>(undefined);

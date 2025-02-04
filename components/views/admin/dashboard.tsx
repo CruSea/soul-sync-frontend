@@ -31,7 +31,7 @@ export default function AdminView() {
       }
 
       if (!response?.domain) {
-        console.log('Redirecting new user to create org page');
+        console.log('Redirecting new user to create org page', response);
         router.push('/admin/create-org');
       }
 
