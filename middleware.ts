@@ -3,7 +3,7 @@ import type { NextRequest } from 'next/server';
 import { getToken } from 'next-auth/jwt';
 
 export async function middleware(req: NextRequest) {
-  // const token = await getToken({ req, secret: process.env.NEXTAUTH_SECRET });
+ // const token = await getToken({ req, secret: process.env.NEXTAUTH_SECRET });
   const token = req.cookies.get('auth-token')?.value;
 
   // Define the restricted route
@@ -25,25 +25,3 @@ export async function middleware(req: NextRequest) {
 export const config = {
   matcher: ['/admin/:path*'], // Apply middleware to `/admin/` and its subroutes
 };
-// middleware.ts
-// import { NextResponse, type NextRequest } from 'next/server';
-// import { verifyToken } from './lib/utils';
-
-// export async function middleware(request: NextRequest) {
-//   const token = request.cookies.get('auth-token')?.value;
-
-//   if (!token) {
-//     return NextResponse.redirect(new URL('/', request.url));
-//   }
-
-//   // Verify token with your auth service
-//   const isValid = await verifyToken(token);
-
-//   if (!isValid) {
-//     const response = NextResponse.redirect(new URL('/', request.url));
-//     response.cookies.delete('auth-token');
-//     return response;
-//   }
-
-//   return NextResponse.next();
-// }
