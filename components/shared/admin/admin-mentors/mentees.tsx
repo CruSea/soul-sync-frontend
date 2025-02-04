@@ -115,7 +115,7 @@ const MenteesTable: React.FC = () => {
             itemsPerPage={10}
             onDelete={handleDelete}
             apiUrl={endPoint}
-            tag='featch-mentees'
+            tag="featch-mentees"
             enableActions={true}
             enablePagination={true}
             onError={(errorMessage) => {

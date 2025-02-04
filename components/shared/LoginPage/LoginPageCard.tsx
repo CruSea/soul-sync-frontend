@@ -1,4 +1,4 @@
-"use client"
+'use client';
 import { Button } from '@/components/ui/button';
 import {
   Card,
@@ -7,7 +7,7 @@ import {
   CardHeader,
   CardTitle,
 } from '@/components/ui/card';
-import {  redirect, useSearchParams } from 'next/navigation';
+import { redirect, useSearchParams } from 'next/navigation';
 import { useEffect } from 'react';
 import { decodeToken } from '@/lib/utils';
 import { endPoints } from '@/data/end-points';
@@ -17,7 +17,6 @@ import { setAuthCookie } from '@/actions/auth/auth';
 const BASE_URL = process.env.NEXT_PUBLIC_API_BASE_URL;
 
 const LoginPageCard = () => {
- 
   const searchParams = useSearchParams();
 
   useEffect(() => {
@@ -25,20 +24,20 @@ const LoginPageCard = () => {
     if (token) {
       const decoded = decodeToken(token); // Ensure decodeToken is working properly
       const userInfo = decoded as User;
-      localStorage.setItem("auth-token", token);
+      localStorage.setItem('auth-token', token);
 
       // Fix: Correctly access the first account
       const user = {
-        userName: userInfo?.email ?? "Guest", // Default to "Guest" if no name
+        userName: userInfo?.email ?? 'Guest', // Default to "Guest" if no name
         accountId: userInfo?.accounts?.[0]?.id ?? null, // Ensure we access index 0
         roleId: userInfo?.accounts?.[0]?.role?.id ?? null, // Access role correctly
-        roleName:userInfo?.accounts?.[0]?.role?.name ?? null,
-        token
+        roleName: userInfo?.accounts?.[0]?.role?.name ?? null,
+        token,
       };
-      setAuthCookie(user)
-    
+      setAuthCookie(user);
+
       console.log(user);
-    
+
       // Fix: Store user properly in localStorage
       localStorage.setItem('user', JSON.stringify(user));
       localStorage.setItem('token', token);
@@ -46,7 +45,7 @@ const LoginPageCard = () => {
   }, [searchParams]);
 
   const handleLogin = () => {
-  // Login();
+    // Login();
     redirect(`${BASE_URL}/${endPoints.auth}`);
   };
 

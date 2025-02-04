@@ -1,7 +1,5 @@
 'use client';
-
 import { zodResolver } from '@hookform/resolvers/zod';
-
 import LandingPageHeader from '@/components/shared/LandingPage/LandingPageHeader';
 import {
   createOrgFormOneSchema,
@@ -15,16 +13,15 @@ import { useEffect, useState } from 'react';
 import { useForm } from 'react-hook-form';
 import CreateOrgSidebar from '@/components/shared/admin/CreateOrg/CreateOrgSidebar';
 import CreateOrgForm from '@/components/shared/admin/CreateOrg/CreateOrgForm';
-import { useAuth } from '@/context/AuthContext';
 import { createOrganazation } from '@/actions/admin/admin';
 import { Account, User_Info } from '@/types/users';
 import { useRouter } from 'next/navigation';
 import { toast } from '@/hooks/use-toast';
 
-const CreateOrgView =  (user:User_Info) => {
+const CreateOrgView = (user: User_Info) => {
   const [currentPage, setCurrentPage] = useState<Page>('first');
   const [orgData, setOrgData] = useState<OrgDataValues>({});
-  const router = useRouter();
+  //const router = useRouter();
 
   const [clientUser, setClientUser] = useState(user);
 
@@ -32,23 +29,22 @@ const CreateOrgView =  (user:User_Info) => {
     if (typeof window !== 'undefined' && !clientUser) {
       const cookie = document.cookie
         .split('; ')
-        .find(row => row.startsWith('user-profile='))
+        .find((row) => row.startsWith('user-profile='))
         ?.split('=')[1];
-      
+
       if (cookie) {
         try {
           setClientUser(JSON.parse(decodeURIComponent(cookie)));
         } catch (error) {
           console.error('Invalid user cookie');
-          document.cookie = 'user-profile=; path=/; expires=Thu, 01 Jan 1970 00:00:00 GMT';
-          router.push('/log-in');
+          // document.cookie = 'user-profile=; path=/; expires=Thu, 01 Jan 1970 00:00:00 GMT';
+          //router.push('/log-in');
         }
       }
     }
-  }, [router, clientUser]);
+  }, [clientUser]);
 
-
-  const userAccoutId:Account=JSON.parse(JSON.stringify(user))
+  const userAccoutId: Account = JSON.parse(JSON.stringify(user));
   const formOne = useForm<createOrgFormOneValues>({
     resolver: zodResolver(createOrgFormOneSchema),
     mode: 'onChange',
@@ -87,23 +83,17 @@ const CreateOrgView =  (user:User_Info) => {
         name: orgData.companyName as string,
         domain: orgData.companyDomain as string,
       };
-      const response = await createOrganazation(
-        userAccoutId?.id,
-        reqBody
-      );
+      const response = await createOrganazation(userAccoutId?.id, reqBody);
       if (response.ok) {
         toast({
-          
-            title: 'Success!',
-          description: 'successfull Created!'
-    
+          title: 'Success!',
+          description: 'successfull Created!',
         });
       } else {
-        console.error('Form Submission is wrong',response);
+        console.error('Form Submission is wrong', response);
         toast({
-      
           title: 'Error!',
-          description: 'Form Submission is wrong!'
+          description: 'Form Submission is wrong!',
         });
         setCurrentPage('first');
       }

@@ -1,5 +1,5 @@
-'use client'
-import { useEffect, useState } from 'react';
+'use client';
+import { useState } from 'react';
 import {
   Dialog,
   DialogContent,
@@ -11,57 +11,60 @@ import {
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
-import { toast, useToast } from '@/hooks/use-toast';
-import { useAuth } from '@/context/AuthContext';
-//import handler from '@/app/api/[...params]/route';
-import { endPoints, jsonServer } from '@/data/end-points';
+import { toast } from '@/hooks/use-toast';
 import React from 'react';
 
-import { inviteMentore, revalidateWithLogging } from '@/actions/admin/metore';
-import { revalidateTag } from 'next/cache';
-import { revalidate } from '@/actions/revalidate';
+import { inviteMentore } from '@/actions/admin/metore';
 import { User_Info } from '@/types/users';
-import { useRouter } from 'next/navigation';
-
 
 interface InviteMentorFormData {
   name: string;
   email: string;
 }
 
-export function InviteMentorDialog(user?:User_Info) {
+export function InviteMentorDialog(user?: User_Info) {
   const [isOpen, setIsOpen] = useState(false);
   const [formData, setFormData] = useState<InviteMentorFormData>({
     name: '',
     email: '',
   });
- 
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    
+
     const requestBody = {
       accountId: user?.accountId as string,
       name: formData.name,
       email: formData.email,
     };
-  
+
     try {
       const response = await inviteMentore(requestBody);
       if (response.error) {
-        toast({ title: "Error!", description: response.error.message });
+        toast({
+          variant: 'destructive',
+          title: 'Error!',
+          description: response.error.message,
+        });
         return;
       }
-  
-      toast({ title: "Success!", description: `Invitation sent to ${formData.email}` });
-      setFormData({ name: "", email: "" });
+
+      toast({
+        title: 'Success!',
+        description: `Invitation sent to ${formData.email}`,
+      });
+      setFormData({ name: '', email: '' });
       setIsOpen(false);
     } catch (error) {
       console.log(error);
-      toast({ title: "Error!", description: "Failed to send invitation." });
+      toast({
+        variant: 'destructive',
+        title: 'Error!',
+        description: 'Failed to send invitation.',
+      });
     }
   };
-  
+
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
     setFormData((prev) => ({ ...prev, [name]: value }));

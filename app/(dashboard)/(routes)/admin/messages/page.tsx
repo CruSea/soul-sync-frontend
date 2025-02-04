@@ -1,6 +1,5 @@
-'use client';
+'use server';
 import { MessageTable } from '@/components/shared/MessageTable';
-import withAuth from '@/context/withAuth';
 
 function Message() {
   return (
@@ -10,4 +9,4 @@ function Message() {
   );
 }
 
-export default withAuth(Message);
+export default Message;

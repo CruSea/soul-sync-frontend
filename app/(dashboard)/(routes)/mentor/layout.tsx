@@ -17,7 +17,11 @@ const MentorFrontPageLayout: React.FC<MentorLayoutProps> = ({ children }) => {
     return <>{children}</>; // Render without the layout
   }
 
-  return <MentorLayout title="Mentor">{children}</MentorLayout>;
+  return (
+    <MentorLayout title={lastSegment?.toLocaleUpperCase() as string}>
+      {children}
+    </MentorLayout>
+  );
 };
 
 export default MentorFrontPageLayout;

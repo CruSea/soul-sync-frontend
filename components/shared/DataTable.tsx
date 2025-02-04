@@ -51,7 +51,7 @@ interface DataTableProps<T> {
   enablePagination?: boolean;
   onError?: (error: string) => void;
   onDataFetched?: (data: T[]) => T[];
-  tag:string
+  tag: string;
 }
 
 export function DataTable<T extends { id: string | number }>({
@@ -65,7 +65,7 @@ export function DataTable<T extends { id: string | number }>({
   enablePagination = true,
   onError,
   onDataFetched,
-  tag
+  tag,
 }: DataTableProps<T>) {
   const [data, setData] = useState<T[]>([]);
   const [totalItems, setTotalItems] = useState(0);
@@ -77,35 +77,34 @@ export function DataTable<T extends { id: string | number }>({
     open: boolean;
     id: string | number | null;
   }>({ open: false, id: null });
-
   // Memoized fetchData function
   const fetchData = useCallback(async () => {
-    
     setIsLoading(true);
     try {
-     // const token = localStorage.getItem('token');
+      // const token = localStorage.getItem('token');
       console.log('Fetching data from:', apiUrl);
-      const response = await fetchedDataTable(apiUrl,tag);
+      const response = await fetchedDataTable(apiUrl, tag);
       console.log('API response:', response);
-      if(response.error){
-      toast({
-        title:response.error.title,
-        description:response.error.description
-      })
-      return null
+      if (response.error) {
+        toast({
+          title: response.error.title,
+          description: response.error.description,
+        });
+        return null;
       }
       setData(response);
       setTotalItems(response.length);
     } catch (error) {
       console.error('Error fetching data:', error);
       toast({
-        title:'Error',
-        description:error instanceof Error ? error.message : 'An unknown error occurred'
-      })
+        title: 'Error',
+        description:
+          error instanceof Error ? error.message : 'An unknown error occurred',
+      });
     } finally {
       setIsLoading(false);
     }
-  }, [apiUrl, onDataFetched, onError]);
+  }, [apiUrl, onDataFetched, onError, tag]);
 
   // useEffect with dependencies
   useEffect(() => {

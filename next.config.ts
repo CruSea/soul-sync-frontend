@@ -2,7 +2,7 @@
 const nextConfig = {
   experimental: {
     serverActions: true,
-   },
+  },
   images: {
     remotePatterns: [
       { protocol: 'https', hostname: 'lh3.googleusercontent.com' },
@@ -10,7 +10,7 @@ const nextConfig = {
     ],
   },
   reactStrictMode: true, // Helps catch bugs early
- swcMinify: true, // Faster minification for production
+  swcMinify: true, // Faster minification for production
 };
 
 export default nextConfig;

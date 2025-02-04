@@ -1,7 +1,4 @@
-
 import AdminView from '@/components/views/admin/dashboard';
-import withAuth from '@/context/withAuth';
-
 function UserPage() {
   return (
     <>
@@ -9,4 +6,4 @@ function UserPage() {
     </>
   );
 }
-export default UserPage
+export default UserPage;

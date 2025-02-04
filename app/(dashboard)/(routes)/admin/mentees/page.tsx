@@ -1,4 +1,4 @@
-'use server'
+'use server';
 import MenteesTable from '@/components/shared/admin/admin-mentors/mentees';
 function Mentee() {
   return (

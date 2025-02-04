@@ -1,8 +1,7 @@
-'use server'
+'use server';
 
-import { revalidateTag } from "next/cache";
+import { revalidateTag } from 'next/cache';
 
-export async function  revalidate(){
-revalidateTag("admin-mentors");
-
+export async function revalidate() {
+  revalidateTag('admin-mentors');
 }

@@ -1,4 +1,3 @@
-
 import LoginPageCard from '@/components/shared/LoginPage/LoginPageCard';
 import LoginPageSidebar from '@/components/shared/LoginPage/LoginPageSidebar';
 import { Account, role, User_Info } from '@/types/users';
@@ -11,19 +10,20 @@ const LoginPage = async () => {
   const userProfile = (await cookieStore).get('user-profile')?.value;
 
   // Parse user data if cookie exists
-  const user: User_Info | null = userProfile 
-    ? JSON.parse(userProfile)
-    : null;
+  const user: User_Info | null = userProfile ? JSON.parse(userProfile) : null;
 
   // Redirect logged-in users based on role
   if (user) {
     switch (user.roleName) {
       case 'Owner':
         redirect('/admin');
+        break;
       case 'Mentor':
         redirect('/mentor');
+        break;
       default:
         redirect('/admin');
+        break;
     }
   }
 

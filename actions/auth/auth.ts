@@ -6,16 +6,15 @@ import { cookies } from 'next/headers';
 
 export async function setAuthCookie(userData: User_Info) {
   const cookieStore = await cookies();
-  
+
   cookieStore.set({
     name: 'auth-token',
     value: userData?.token as string,
-      httpOnly: true,
-     // secure: process.env.NODE_ENV === 'production',
-      maxAge: 60 * 60 * 24, // 1 day
-      path: '/',
-      sameSite: 'lax'
-    
+    httpOnly: true,
+    // secure: process.env.NODE_ENV === 'production',
+    maxAge: 60 * 60 * 24, // 1 day
+    path: '/',
+    sameSite: 'lax',
   });
 
   // Set non-sensitive user data in separate cookie
@@ -24,13 +23,12 @@ export async function setAuthCookie(userData: User_Info) {
     value: JSON.stringify({
       id: userData.accountId,
       name: userData.userName,
-      role: userData.roleName
+      role: userData.roleName,
     }),
-   
-     // secure: process.env.NODE_ENV === 'production',
-      maxAge: 60 * 60 * 24,
-      path: '/',
-      sameSite: 'lax'
 
+    // secure: process.env.NODE_ENV === 'production',
+    maxAge: 60 * 60 * 24,
+    path: '/',
+    sameSite: 'lax',
   });
 }

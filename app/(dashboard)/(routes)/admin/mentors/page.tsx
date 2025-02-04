@@ -1,4 +1,4 @@
-'use server'
+'use server';
 import MentorsTable from '@/components/shared/admin/admin-mentors/mentors';
 
 function Mentor() {

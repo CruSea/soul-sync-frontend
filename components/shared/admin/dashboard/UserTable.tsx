@@ -95,7 +95,7 @@ const UserTable: React.FC = () => {
             filterOptions={filterOptions}
             itemsPerPage={4}
             apiUrl={endPoint}
-            tag='mentees'
+            tag="mentees"
             enableActions={false}
             enablePagination={false}
             onError={(errorMessage) => {

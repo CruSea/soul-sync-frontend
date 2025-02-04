@@ -1,10 +1,8 @@
-'use server'
+'use server';
 import SessionWrapper from '@/context/providers/SessionWrapper';
 import './globals.css';
 import { ThemeProvider } from '@/context/providers/ThemeProvider';
 import React from 'react';
-import { AuthProvider } from '@/context/AuthContext';
-
 export default async function RootLayout({
   children,
 }: Readonly<{
@@ -19,7 +17,7 @@ export default async function RootLayout({
             defaultTheme="system"
             enableSystem
             disableTransitionOnChange
-           // storageKey="dashboard-theme"
+            // storageKey="dashboard-theme"
           >
             {children}
           </ThemeProvider>
