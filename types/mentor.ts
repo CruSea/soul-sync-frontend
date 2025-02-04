@@ -19,7 +19,6 @@ export interface MentorLayoutProps {
 
 export interface MentorLayoutProps {
   children: React.ReactNode;
-  
 }
 
 export type User = {
