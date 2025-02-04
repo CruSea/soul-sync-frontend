@@ -1,5 +1,3 @@
-import { channel } from 'diagnostics_channel';
-
 export const endPoints = {
   auth: 'auth/google-local',
   adminAccount: 'admin/account',
@@ -14,8 +12,4 @@ export const jsonServer = {
   messages: 'userMessages',
   users: 'users',
   userDetails: 'userDetails',
-};
-export const channelJsonserver = {
-  baseUrl: 'http://localhost:3001',
-  channels: 'channels',
 };
