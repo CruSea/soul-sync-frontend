@@ -162,7 +162,9 @@ export function DataTable<T extends { id: string | number }>({
     if (searchQuery.trim() !== '') {
       updatedData = updatedData.filter((item) =>
         searchFields.some((field) =>
-          String(item[field]).toLowerCase().includes(searchQuery.toLowerCase())
+          String(item[field as keyof typeof item])
+            .toLowerCase()
+            .includes(searchQuery.toLowerCase())
         )
       );
     }
@@ -172,14 +174,16 @@ export function DataTable<T extends { id: string | number }>({
       updatedData = updatedData.filter((item) =>
         filters.every((filter) => {
           const [key, value] = filter.split(':');
-          return String(item[key]).toLowerCase() === value.toLowerCase();
+          return (
+            String((item as Record<string, any>)[key]).toLowerCase() ===
+            value.toLowerCase()
+          );
         })
       );
     }
 
     setFilteredData(updatedData);
-  }, [data, searchQuery, filters]);
-
+  }, [data, searchQuery, filters, searchFields]);
   // useEffect with dependencies
   // useEffect(() => {
   //   fetchData();

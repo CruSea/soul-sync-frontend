@@ -76,20 +76,22 @@ const MentorsTable: React.FC = () => {
   // const userObj = JSON.parse(user);
   // const accountId = String(userObj?.accounts[0]?.id);
   const userObj = user ? JSON.parse(user) : null;
-  const accountId = userObj?.accounts?.[0]?.id ? String(userObj.accounts[0].id) : '';
-  console.log(accountId, '...........................')
+  const accountId = userObj?.accounts?.[0]?.id
+    ? String(userObj.accounts[0].id)
+    : '';
+  console.log(accountId, '...........................');
 
   const endPoint = `${BASE_URL}/${endPoints.adminMentors}?accountId=${accountId}`;
 
   const handleDelete = async (id: string | number) => {
     try {
       const response = await deleteMentor(id as string);
-      console.log("the delete response", response)
+      console.log('the delete response', response);
       if (!response) {
         notification({
           title: 'Error!',
           description: 'Failed to delete the mentor',
-          duration: 0
+          duration: 0,
         });
 
         throw new Error('Failed to delete the mentor.');
@@ -98,7 +100,7 @@ const MentorsTable: React.FC = () => {
       notification({
         title: 'Success!',
         description: 'Mentor Successfully deleted.',
-        duration: 0
+        duration: 0,
       });
     } catch (error) {
       console.error('Error deleting mentor:', error);
@@ -111,7 +113,10 @@ const MentorsTable: React.FC = () => {
       <div className="space-y-6 bg-white p-6 rounded-lg">
         <div className="flex items-center justify-between">
           <h1 className="text-2xl font-semibold">Mentors</h1>
-          <InviteMentorDialog setMentorInviteTrigger={setMentorInviteTrigger} mentorInviteTrigger={mentorInviteTrigger}/>
+          <InviteMentorDialog
+            setMentorInviteTrigger={setMentorInviteTrigger}
+            mentorInviteTrigger={mentorInviteTrigger}
+          />
         </div>
         <DataTable<Mentors>
           apiUrl={endPoint}
@@ -120,10 +125,11 @@ const MentorsTable: React.FC = () => {
           filterOptions={filterOptions}
           itemsPerPage={10}
           onDelete={handleDelete}
-        mentorInviteTrigger={mentorInviteTrigger}
+          mentorInviteTrigger={mentorInviteTrigger}
         />
       </div>
     </div>
   );
 };
+
 export default MentorsTable;
