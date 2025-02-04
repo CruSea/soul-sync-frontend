@@ -11,18 +11,42 @@ import {
   OrgDataValues,
   Page,
 } from '@/types/create-org';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useForm } from 'react-hook-form';
 import CreateOrgSidebar from '@/components/shared/admin/CreateOrg/CreateOrgSidebar';
 import CreateOrgForm from '@/components/shared/admin/CreateOrg/CreateOrgForm';
 import { useAuth } from '@/context/AuthContext';
 import { createOrganazation } from '@/actions/admin/admin';
-import { Account } from '@/types/users';
+import { Account, User_Info } from '@/types/users';
+import { useRouter } from 'next/navigation';
+import { toast } from '@/hooks/use-toast';
 
-const CreateOrgView = () => {
+const CreateOrgView =  (user:User_Info) => {
   const [currentPage, setCurrentPage] = useState<Page>('first');
   const [orgData, setOrgData] = useState<OrgDataValues>({});
-  const { user, notification } = useAuth();
+  const router = useRouter();
+
+  const [clientUser, setClientUser] = useState(user);
+
+  useEffect(() => {
+    if (typeof window !== 'undefined' && !clientUser) {
+      const cookie = document.cookie
+        .split('; ')
+        .find(row => row.startsWith('user-profile='))
+        ?.split('=')[1];
+      
+      if (cookie) {
+        try {
+          setClientUser(JSON.parse(decodeURIComponent(cookie)));
+        } catch (error) {
+          console.error('Invalid user cookie');
+          document.cookie = 'user-profile=; path=/; expires=Thu, 01 Jan 1970 00:00:00 GMT';
+          router.push('/log-in');
+        }
+      }
+    }
+  }, [router, clientUser]);
+
 
   const userAccoutId:Account=JSON.parse(JSON.stringify(user))
   const formOne = useForm<createOrgFormOneValues>({
@@ -68,18 +92,18 @@ const CreateOrgView = () => {
         reqBody
       );
       if (response.ok) {
-        notification({
-          message:{
+        toast({
+          
             title: 'Success!',
           description: 'successfull Created!'
-      },
+    
         });
       } else {
         console.error('Form Submission is wrong',response);
-        notification({
-          message:{
+        toast({
+      
           title: 'Error!',
-          description: 'Form Submission is wrong!'}
+          description: 'Form Submission is wrong!'
         });
         setCurrentPage('first');
       }

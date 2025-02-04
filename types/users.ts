@@ -26,7 +26,8 @@ export type User_Info={
   userName:string|null,
   accountId:string|null,
   roleId:string|null,
-  roleName:string|null
+  roleName:string|null,
+  token?:string|null
 }
 
 export type SortField = 'name' | 'email' | 'joinedDate' | 'location';

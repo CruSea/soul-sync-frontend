@@ -1,3 +1,6 @@
+'use server'
+import { cookies } from "next/headers";
+import { logoutAction } from "../auth/login";
 
 interface CustomError {
   message: string;
@@ -10,34 +13,43 @@ const apiCall = async ({
   url,
   method = "GET",
   data = [],
-  token = "",
+  cache_type  = "no-cache",
   onStart,
   onSuccess,
-  onError
+  onError,
+  tag
 }: {
   url: string;
   method?: string;
   data?: any;
-  token?: string;
   onStart?: () => void;
   onSuccess?: (data: any) => void;
   onError?: (error: string) => void;
+  cache_type?: "no-cache" | "force-cache" | "no-store",
+  tag:string
 }) => {
   // Call onStart callback if provided
   //if (onStart) onStart();
+const cookieStore = await cookies();
+  const token = cookieStore.get('auth-token')?.value;
 
+
+  // Parse user info from cookie
+  console.table(token)
   try {
     const response = await fetch(`${process.env.NEXT_PUBLIC_API_BASE_URL}/${url}`, {
       method: method,
       headers: {
         'Content-Type': 'application/json',
-        'Authorization': `Bearer ${localStorage.getItem('token') || ''}`
+        'Authorization': `Bearer ${token || ''}`
       },
       body: method !== 'GET' ? JSON.stringify(data) : undefined,
+      cache:cache_type, 
+      next:{ tags: [tag] },
     });
 
     const responseData = await response.json();
-console.log('api',responseData)
+console.log('api',responseData,'tag',tag)
     if (!response.ok) {
       throw new Error(responseData?.error.message || 'Something went wrong');
     }
@@ -51,8 +63,7 @@ return responseData
     // Call onError callback if provided
     //if (onError) onError(errorMessage);
     if(errorMessage==='Invalid or expired token'){
-        localStorage.removeItem('token')
-        localStorage.clear()
+      logoutAction();
     }
     return {error:{
         title: 'Error!',

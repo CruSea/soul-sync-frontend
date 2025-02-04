@@ -66,3 +66,14 @@ export function sortUsers(users: Users) {
       new Date(b.lastUpdated).getTime() - new Date(a.lastUpdated).getTime()
   );
 }
+
+// lib/auth.ts
+export async function verifyToken(token: string) {
+  try {
+    // Example JWT verification
+    const decoded = decodeToken(token);
+    return !!decoded;
+  } catch (error) {
+    return false;
+  }
+}

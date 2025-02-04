@@ -12,6 +12,7 @@ import { useEffect } from 'react';
 import { decodeToken } from '@/lib/utils';
 import { endPoints } from '@/data/end-points';
 import { Account, User } from '@/types/users';
+import { setAuthCookie } from '@/actions/auth/auth';
 
 const BASE_URL = process.env.NEXT_PUBLIC_API_BASE_URL;
 
@@ -24,14 +25,17 @@ const LoginPageCard = () => {
     if (token) {
       const decoded = decodeToken(token); // Ensure decodeToken is working properly
       const userInfo = decoded as User;
-    
+      localStorage.setItem("auth-token", token);
+
       // Fix: Correctly access the first account
       const user = {
         userName: userInfo?.email ?? "Guest", // Default to "Guest" if no name
         accountId: userInfo?.accounts?.[0]?.id ?? null, // Ensure we access index 0
         roleId: userInfo?.accounts?.[0]?.role?.id ?? null, // Access role correctly
-        roleName:userInfo?.accounts?.[0]?.role?.name ?? null
+        roleName:userInfo?.accounts?.[0]?.role?.name ?? null,
+        token
       };
+      setAuthCookie(user)
     
       console.log(user);
     

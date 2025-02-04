@@ -38,7 +38,7 @@ import {
 } from '@/components/ui/dropdown-menu';
 import { Column, FilterOption } from '@/types/data-table';
 import { fetchedDataTable } from '@/actions/shared/dataTable';
-import { useAuth } from '@/context/AuthContext';
+import { toast } from '@/hooks/use-toast';
 
 interface DataTableProps<T> {
   apiUrl: string;
@@ -51,6 +51,7 @@ interface DataTableProps<T> {
   enablePagination?: boolean;
   onError?: (error: string) => void;
   onDataFetched?: (data: T[]) => T[];
+  tag:string
 }
 
 export function DataTable<T extends { id: string | number }>({
@@ -64,6 +65,7 @@ export function DataTable<T extends { id: string | number }>({
   enablePagination = true,
   onError,
   onDataFetched,
+  tag
 }: DataTableProps<T>) {
   const [data, setData] = useState<T[]>([]);
   const [totalItems, setTotalItems] = useState(0);
@@ -75,30 +77,31 @@ export function DataTable<T extends { id: string | number }>({
     open: boolean;
     id: string | number | null;
   }>({ open: false, id: null });
-const {notification}=useAuth();
+
   // Memoized fetchData function
   const fetchData = useCallback(async () => {
+    
     setIsLoading(true);
     try {
      // const token = localStorage.getItem('token');
       console.log('Fetching data from:', apiUrl);
-      const response = await fetchedDataTable(apiUrl);
+      const response = await fetchedDataTable(apiUrl,tag);
       console.log('API response:', response);
       if(response.error){
-      notification({message:{
+      toast({
         title:response.error.title,
         description:response.error.description
-      }})
+      })
       return null
       }
       setData(response);
       setTotalItems(response.length);
     } catch (error) {
       console.error('Error fetching data:', error);
-      notification({message:{
+      toast({
         title:'Error',
         description:error instanceof Error ? error.message : 'An unknown error occurred'
-      }})
+      })
     } finally {
       setIsLoading(false);
     }

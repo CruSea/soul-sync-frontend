@@ -1,5 +1,4 @@
-'use client';
-import withAuth from '@/context/withAuth';
+'use server'
 import MentorsTable from '@/components/shared/admin/admin-mentors/mentors';
 
 function Mentor() {
@@ -9,4 +8,4 @@ function Mentor() {
     </>
   );
 }
-export default withAuth(Mentor);
+export default Mentor;

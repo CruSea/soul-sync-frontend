@@ -1,19 +1,18 @@
-'use client';
-
+'use client'
 import React, { useEffect, useState } from 'react';
 import { DataTable } from '@/components/shared/DataTable';
 import { Badge } from '@/components/ui/badge';
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 import { Column, FilterOption } from '@/types/data-table';
-import { useToast } from '@/hooks/use-toast';
+import { toast } from '@/hooks/use-toast';
 import { InviteMentorDialog } from './invite-mentor-dialog';
-import { toast } from 'sonner';
+
 import { endPoints } from '@/data/end-points';
 import { useAuth } from '@/context/AuthContext';
 import { deleteMentor } from '@/actions/admin/admin';
-import { title } from 'process';
-
-const BASE_URL = process.env.NEXT_PUBLIC_API_BASE_URL;
+import { cookies } from 'next/headers';
+import { Account, User_Info } from '@/types/users';
+import { useRouter } from 'next/navigation';
 
 interface Mentors {
   id: string | number;
@@ -69,15 +68,38 @@ const filterOptions: FilterOption<Mentors>[] = [
 ];
 const search = ['name', 'age', 'gender', 'location', 'isActive'];
 const MentorsTable: React.FC = () => {
-  const { user, notification } = useAuth();
- 
-  const endPoint = `${endPoints.adminMentors}?accountId=${user?.accountId as string}`;
+ const [clientUser, setClientUser] = useState(null);
+ const router=useRouter();
+ useEffect(() => {
+  if (typeof window !== 'undefined' && !clientUser) {
+    const cookiesArray = document.cookie.split('; ');
+    const userCookie = cookiesArray.find(row => row.startsWith('user-profile='));
+
+    if (userCookie) {
+      const encodedProfile = userCookie.split('=')[1];
+
+      try {
+        const decodedProfile = decodeURIComponent(encodedProfile);
+        setClientUser(JSON.parse(decodedProfile));
+      } catch (error) {
+        console.error('Invalid user cookie:', error);
+        document.cookie = 'user-profile=; path=/; expires=Thu, 01 Jan 1970 00:00:00 GMT';
+        router.push('/log-in');
+      }
+    }
+  }
+}, [router, clientUser]);
+
+   console.log(clientUser)
+   const userAccoutId:Account=JSON.parse(JSON.stringify(clientUser))
+  const endPoint = `${endPoints.adminMentors}?accountId=${userAccoutId?.id as string}`;
 
   const handleDelete = async (id: string | number) => {
+    
     try {
       const response = await deleteMentor(id as string);
       if (!response.ok) {
-        notification({
+        toast({
           title: 'Error!',
           description: 'Failed to delete the mentor',
         });
@@ -85,10 +107,11 @@ const MentorsTable: React.FC = () => {
         throw new Error('Failed to delete the mentor.');
       }
 
-      notification({
+      toast({
         title: 'Success!',
         description: 'Mentor Successfully deleted.',
       });
+      
     } catch (error) {
       console.error('Error deleting mentor:', error);
       throw error;
@@ -100,15 +123,16 @@ const MentorsTable: React.FC = () => {
       <div className="space-y-6 bg-white p-6 rounded-lg">
         <div className="flex items-center justify-between">
           <h1 className="text-2xl font-semibold">Mentors</h1>
-          <InviteMentorDialog />
+          <InviteMentorDialog userName={userAccoutId?.name as string} accountId={userAccoutId?.id} roleId={userAccoutId?.role?.id as string} roleName={userAccoutId?.role?.name as string} />
         </div>
         <DataTable<Mentors>
+          tag='admin-mentors'
           apiUrl={endPoint}
           columns={columns}
           searchFields={search as []}
           filterOptions={filterOptions}
           itemsPerPage={10}
-          onDelete={handleDelete}
+         onDelete={handleDelete}
         />
       </div>
     </div>

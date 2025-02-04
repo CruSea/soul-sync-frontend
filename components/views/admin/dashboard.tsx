@@ -1,61 +1,52 @@
-'use client';
-
+'use server'
 import { checkAccount } from '@/actions/admin/admin';
 import { GrowthChart } from '@/components/shared/admin/dashboard/GrowthChart';
 import { MentorsChart } from '@/components/shared/admin/dashboard/MentorsChart';
 import { StatsCards } from '@/components/shared/admin/dashboard/StatCard';
 import UsersTable from '@/components/shared/admin/dashboard/UserTable';
-import { useAuth } from '@/context/AuthContext';
-import { endPoints } from '@/data/end-points';
-import { toast } from '@/hooks/use-toast';
-import { useRouter } from 'next/navigation';
-import { useEffect } from 'react';
+import { User_Info } from '@/types/users';
+import { cookies } from 'next/headers';
+import { redirect } from 'next/navigation';
 
-const BASE_URL = process.env.NEXT_PUBLIC_API_BASE_URL;
+export default async function AdminView() {
+  // Get user data from cookies
+  const cookieStore = await cookies();
+  const userProfile = cookieStore.get('user-profile')?.value;
 
-export default function AdminView() {
-  const router = useRouter();
-const {logout,user}= useAuth();
-console.log("user",user)
-  useEffect(() => {
-    const checkAccounts = async () => {
-         // const userObj = JSON.parse(user as string);
-           const response = await checkAccount(user?.accountId as string)
-          if (!response) {
-            console.error("AccountInfo doesn't exist");
-            throw new Error('Account info not found');
-          }
+  // Redirect to login if no user cookie
+ 
 
-          if (!response?.domain) {
-            console.log('Redirecting new user to create org page');
-            router.push('/admin/create-org');
-          }
+  // Parse user info from cookie
+  const user = userProfile&& JSON.parse(userProfile);
+  // Verify account status
+  const response = await checkAccount(user.id);
 
-          if(response?.error?.description==="Invalid or expired token"){
-            logout()
-          }
-      
-    };
-
-   user&& checkAccounts();
-  }, [router,user]);
+  // Handle invalid token
+  if (response?.error?.description === "Invalid or expired token") {
+    redirect('/log-in');
+  }
+  console.table(response)
+  // Redirect to org creation if no domain
+  if (!response?.domain) {
+    redirect('/admin/create-org');
+  }
 
   return (
     <div className="flex-1 p-4 bg-secondary dark:bg-gray-900">
       <div className="flex flex-col lg:flex-row gap-6">
         <div className="flex-1 basis-[40%] bg-white dark:bg-black p-10 rounded-lg ">
-          <StatsCards />
+          <StatsCards  />
         </div>
         <div className="flex-1 basis-[60%]">
-          <GrowthChart />
+          <GrowthChart  />
         </div>
       </div>
       <div className="flex flex-wrap lg:flex-nowrap gap-6 mt-8">
         <div className="flex-1 basis-[70%]">
-          <UsersTable />
+          <UsersTable  />
         </div>
         <div className="flex-1 basis-[30%]">
-          <MentorsChart />
+          <MentorsChart  />
         </div>
       </div>
     </div>

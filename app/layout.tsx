@@ -21,7 +21,7 @@ export default async function RootLayout({
             disableTransitionOnChange
            // storageKey="dashboard-theme"
           >
-            <AuthProvider>{children}</AuthProvider>
+            {children}
           </ThemeProvider>
         </SessionWrapper>
       </body>

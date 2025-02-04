@@ -6,6 +6,7 @@ import { Badge } from '@/components/ui/badge';
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 import { Column, FilterOption } from '@/types/data-table';
 import { toast } from 'sonner';
+import { mentorDelete } from '@/actions/admin/metore';
 
 interface Mentee {
   id: string | number;
@@ -82,17 +83,12 @@ const search = ['name', 'age', 'gender', 'location', 'status', 'platform'];
 
 const MenteesTable: React.FC = () => {
   const [error, setError] = useState<string | null>(null);
-  const endPoint = 'http://localhost:3500/mentees';
+  const endPoint = 'mentees';
 
   const handleDelete = async (id: string | number) => {
     try {
-      const response = await fetch(`${endPoint}/${id}`, {
-        method: 'DELETE',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-      });
-      if (!response.ok) {
+      const response = await mentorDelete(`${endPoint}/${id}`);
+      if (response.error) {
         throw new Error('Failed to delete the mentee.');
       }
       toast.success('Mentee has been deleted.');
@@ -119,6 +115,7 @@ const MenteesTable: React.FC = () => {
             itemsPerPage={10}
             onDelete={handleDelete}
             apiUrl={endPoint}
+            tag='featch-mentees'
             enableActions={true}
             enablePagination={true}
             onError={(errorMessage) => {

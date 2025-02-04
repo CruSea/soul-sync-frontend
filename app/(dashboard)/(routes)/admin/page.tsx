@@ -1,4 +1,4 @@
-'use client';
+
 import AdminView from '@/components/views/admin/dashboard';
 import withAuth from '@/context/withAuth';
 
@@ -9,4 +9,4 @@ function UserPage() {
     </>
   );
 }
-export default withAuth(UserPage);
+export default UserPage
