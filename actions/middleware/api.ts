@@ -67,8 +67,8 @@ const apiCall = async ({
     // Call onError callback if provided
     //if (onError) onError(errorMessage);
     if (errorMessage === 'Invalid or expired token') {
-      logoutAction();
-      redirect('/log-in');
+     //logoutAction();
+   
     }
     return {
       error: {
