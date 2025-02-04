@@ -3,7 +3,7 @@ import {  endPoints } from "@/data/end-points";
 import apiCall from "../middleware/api";
 const Url={
     'adminAccount': `admin/account`,
-    'adminMentors':`${endPoints.adminMentors}/`
+    'adminMentors':`admin/mentor`
 }
 
 export const checkAccount = async (params:string) => {
@@ -20,7 +20,7 @@ export const createOrganazation = async (id:string,body:{name:string,domain:stri
         };
 
     export    const deleteMentor = async (id:string) => {
-            const response= await apiCall({"url":`${Url.adminAccount}/mentor/${id}`,"method":'DELETE','tag':'deleteMentor'});
+            const response= await apiCall({"url":`${Url.adminMentors}/${id}`,"method":'DELETE','tag':'deleteMentor'});
                 const data =  response
                 return data;
                 };

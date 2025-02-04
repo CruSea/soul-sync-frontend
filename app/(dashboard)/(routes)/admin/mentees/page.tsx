@@ -1,7 +1,5 @@
-'use client';
-import withAuth from '@/context/withAuth';
+'use server'
 import MenteesTable from '@/components/shared/admin/admin-mentors/mentees';
-
 function Mentee() {
   return (
     <>
@@ -9,4 +7,4 @@ function Mentee() {
     </>
   );
 }
-export default withAuth(Mentee);
+export default Mentee;

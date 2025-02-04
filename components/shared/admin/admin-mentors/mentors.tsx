@@ -98,10 +98,10 @@ const MentorsTable: React.FC = () => {
     
     try {
       const response = await deleteMentor(id as string);
-      if (!response.ok) {
+      if (response.error) {
         toast({
           title: 'Error!',
-          description: 'Failed to delete the mentor',
+          description: response.error.description,
         });
 
         throw new Error('Failed to delete the mentor.');
