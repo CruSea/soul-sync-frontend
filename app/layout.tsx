@@ -11,7 +11,7 @@ export default async function RootLayout({
   return (
     <html lang="en" suppressHydrationWarning>
       <body className="font-general">
-        <SessionWrapper>
+      
           <ThemeProvider
             attribute="class"
             defaultTheme="system"
@@ -21,7 +21,7 @@ export default async function RootLayout({
           >
             {children}
           </ThemeProvider>
-        </SessionWrapper>
+        
       </body>
     </html>
   );

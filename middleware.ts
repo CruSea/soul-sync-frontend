@@ -13,7 +13,7 @@ export async function middleware(req: NextRequest) {
   const decoded = token && JSON.parse(atob(token?.split('.')[1])); // Decode JWT payload
   const now = Math.floor(Date.now() / 1000);
 
-  if (decoded.exp < now) {
+  if (token&&decoded.exp < now) {
     await logoutAction();
     return NextResponse.redirect(new URL('/', req.url));
   }

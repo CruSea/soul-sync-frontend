@@ -1,10 +1,9 @@
 'use client';
 import MentorLayout from '@/components/shared/layout/mentor-layout';
-import { MentorLayoutProps } from '@/types/mentor';
 import { usePathname } from 'next/navigation';
 import React from 'react';
 
-const MentorFrontPageLayout: React.FC<MentorLayoutProps> = ({ children }) => {
+const MentorFrontPageLayout = ({ children }: { children: React.ReactNode }) => {
   const pathname = usePathname();
 
   // Get the last segment of the URL
