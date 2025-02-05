@@ -18,6 +18,4 @@ export async function logoutAction() {
   const cookieStore = cookies();
   (await cookieStore).delete('user-profile');
   (await cookieStore).delete('auth-token');
-
-  redirect('/log-in');
 }
