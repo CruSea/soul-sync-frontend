@@ -68,7 +68,7 @@ const CreateOrgView = (user: User_Info) => {
   const onSubmit = async (
     data: createOrgFormTwoValues | createOrgFormOneValues
   ) => {
-    setOrgData((prevOrgData: any) => {
+    setOrgData((prevOrgData: OrgDataValues) => {
       const updatedData = { ...prevOrgData, ...data };
       return updatedData;
     });
