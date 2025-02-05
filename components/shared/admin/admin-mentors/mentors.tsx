@@ -17,10 +17,10 @@ interface Mentors {
   age: number;
   gender: string;
   location: string;
-  availability: any;
+  availability: { startDate: string };
   isActive: boolean;
   profileImage: string;
-  user: any;
+  user: { name: string; imageUrl: string };
 }
 
 const columns: Column<Mentors>[] = [
