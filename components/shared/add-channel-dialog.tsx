@@ -31,13 +31,13 @@ import { Input } from '@/components/ui/input';
 import { Button } from '@/components/ui/button';
 import { Textarea } from '@/components/ui/textarea';
 import { Plus } from 'lucide-react';
-import type { Channel } from '@/types/channel';
+import type { Channel, type } from '@/types/channel';
 import { useToast } from '@/hooks/use-toast';
 const formSchema = z.object({
   name: z.string().min(2, {
     message: 'Channel name must be at least 2 characters.',
   }),
-  type: z.enum(['Telegram Bot', 'WhatsApp', 'Negarit', 'Facebook', 'Twilio']),
+  type: z.enum(['TELEGRAM', 'WHATSAPP', 'NEGARIT', 'FACEBOOK', 'TWILIO']),
   api_key: z.string().min(1, {
     message: 'API Key is required.',
   }),
@@ -63,7 +63,7 @@ export function AddChannelDialog({ onAddChannel }: AddChannelDialogProps) {
     resolver: zodResolver(formSchema),
     defaultValues: {
       name: '',
-      type: 'Telegram Bot',
+      type: 'TELEGRAM',
       api_key: '',
       webhookUrl: '',
       customGreeting: 'Welcome to our support bot!',
@@ -74,8 +74,9 @@ export function AddChannelDialog({ onAddChannel }: AddChannelDialogProps) {
     const date = new Date().toLocaleDateString('en-US', format);
     onAddChannel({
       ...values,
-      Date: date,
+      date: date,
       isDeleted: false,
+      type: values.type.toUpperCase() as type,
     });
 
     setOpen(false);
@@ -127,7 +128,7 @@ export function AddChannelDialog({ onAddChannel }: AddChannelDialogProps) {
                       </SelectTrigger>
                     </FormControl>
                     <SelectContent>
-                      <SelectItem value="Telegram Bot">Telegram Bot</SelectItem>
+                      <SelectItem value="Telegram">Telegram Bot</SelectItem>
                       <SelectItem value="WhatsApp">WhatsApp</SelectItem>
                       <SelectItem value="Negarit">Negarit</SelectItem>
                       <SelectItem value="Facebook">Facebook</SelectItem>

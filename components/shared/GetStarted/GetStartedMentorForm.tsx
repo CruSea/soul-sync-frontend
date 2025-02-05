@@ -129,7 +129,7 @@ const GetStartedMentorForm = () => {
             options={getStartedForm.genderOptions}
           />
         </div>
-        <LocationField control={form.control} />
+        <LocationField />
         <SpecializationField
           control={form.control}
           options={getStartedForm.specializationOptions}

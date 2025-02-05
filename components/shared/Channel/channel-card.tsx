@@ -123,7 +123,7 @@ export function ChannelCard({
       <div className="w-auto mb-2 h-auto">
         <Image
           src={iconURL}
-          alt={channel.type}
+          alt={channel.type as string}
           width={80}
           height={80}
           className="object-contain"
@@ -161,7 +161,7 @@ export function ChannelCard({
           </div>
           <div className="text-gray-900 text-xs font-bold font-['Manrope'] ">
             {/* {channel.createdAt} */}
-            {formatDate(channel.createdAt)}
+            {formatDate(channel.createdAt as string)}
           </div>
         </div>
         {channelChange(channel)}
