@@ -37,9 +37,9 @@ const LoginPageCard = () => {
       // Fix: Store user properly in localStorage
     }
   }, [searchParams]);
-
+  console.log(process.env.NEXTAUTH_URL, process.env.NEXT_PUBLIC_API_BASE_URL);
   const handleLogin = async () => {
-    redirect(`${process.env.NEXT_PUBLIC_API_BASE_URL}/${endPoints.auth}`);
+    redirect(`https://api-dev.leyuchat.com/${endPoints.auth}`);
   };
 
   return (
