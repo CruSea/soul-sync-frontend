@@ -64,22 +64,21 @@ export default function ChannelsPage() {
     ? JSON.parse(JSON.stringify(user))
     : null;
 
-  const getChannels = async () => {
-    const response = await fetchedChannels(userAccoutId?.id as string);
-    console.log(response);
-
-    if (!response.error) {
-      setChannels(response);
-      console.log('response found', response);
-    } else {
-      console.log('response NOT found');
-      toast(response.error);
-    }
-  };
-
   useEffect(() => {
+    const getChannels = async () => {
+      const response = await fetchedChannels(userAccoutId?.id as string);
+      console.log(response);
+
+      if (!response.error) {
+        setChannels(response);
+        console.log('response found', response);
+      } else {
+        console.log('response NOT found');
+        toast(response.error);
+      }
+    };
     getChannels();
-  }, [triggerState, getChannels]);
+  }, [userAccoutId?.id]);
 
   const filteredChannel = channels?.filter(
     (item) =>
