@@ -1,15 +1,17 @@
-import { endPoints } from '@/data/end-points';
+'use server';
 import apiCall from '../middleware/api';
-const BASE_URL = process.env.NEXT_PUBLIC_API_BASE_URL;
-
 const Url = {
-  adminAccount: `${BASE_URL}/admin/account`,
-  adminMentors: `${BASE_URL}/${endPoints.adminMentors}/`,
+  adminAccount: `admin/account`,
+  adminMentors: `admin/mentor`,
 };
 
 export const checkAccount = async (params: string) => {
-  const response = await apiCall({ url: `${Url.adminAccount}/${params}` });
+  const response = await apiCall({
+    url: `${Url.adminAccount}/${params}`,
+    tag: 'checkAccount',
+  });
   const data = response;
+
   return data;
 };
 
@@ -21,6 +23,7 @@ export const createOrganazation = async (
     url: `${Url.adminAccount}/${id}`,
     data: body,
     method: 'PATCH',
+    tag: 'createOrg',
   });
   const data = response;
   return data;
@@ -28,9 +31,16 @@ export const createOrganazation = async (
 
 export const deleteMentor = async (id: string) => {
   const response = await apiCall({
-    url: `${Url.adminAccount}/mentor/${id}`,
+    url: `${Url.adminMentors}/${id}`,
     method: 'DELETE',
+    tag: 'deleteMentor',
   });
+  const data = response;
+  return data;
+};
+
+export const TableData = async (url: string, tag: string) => {
+  const response = await apiCall({ url: url, tag: tag });
   const data = response;
   return data;
 };

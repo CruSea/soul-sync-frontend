@@ -4,10 +4,8 @@ import { Toaster } from '@/components/ui/sonner';
 import { DashboardLayoutProps } from '@/types/admin';
 import { usePathname } from 'next/navigation';
 import React from 'react';
-
 const DashboardLayout: React.FC<DashboardLayoutProps> = ({ children }) => {
   const pathname = usePathname();
-
   // Get the last segment of the URL
   const lastSegment = pathname.split('/').filter(Boolean).pop();
 

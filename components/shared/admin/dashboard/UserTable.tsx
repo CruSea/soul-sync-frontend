@@ -62,7 +62,7 @@ const search = ['name', 'location', 'platform'];
 const UserTable: React.FC = () => {
   const [error, setError] = useState<string | null>(null);
   const [allMentees, setAllMentees] = useState<Mentee[]>([]);
-  const endPoint = 'http://localhost:3500/mentees';
+  const endPoint = 'mentees';
 
   const onDataFetched = (data: Mentee[]) => {
     const sortedMentees = data
@@ -95,6 +95,7 @@ const UserTable: React.FC = () => {
             filterOptions={filterOptions}
             itemsPerPage={4}
             apiUrl={endPoint}
+            tag="mentees"
             enableActions={false}
             enablePagination={false}
             onError={(errorMessage) => {

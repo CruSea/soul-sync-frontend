@@ -1,3 +1,4 @@
+'use client';
 import React from 'react';
 import { DataTable } from '@/components/shared/DataTable';
 import { Badge } from '@/components/ui/badge';
@@ -77,11 +78,12 @@ export function MessageTable() {
       <div className="space-y-6 bg-white p-6 rounded-lg">
         <h1 className="text-2xl font-semibold">Message Logs</h1>
         <DataTable
-          data={MESSAGE_DATA}
+          //data={MESSAGE_DATA}
           columns={columns}
           searchFields={['mentorName', 'menteeName', 'status']}
           filterOptions={filterOptions}
           itemsPerPage={10}
+          tag="get-message"
           apiUrl={''}
           onDelete={function (id: string | number): Promise<void> {
             throw new Error('Function not implemented.');

@@ -1,5 +1,4 @@
 'use client';
-
 import { Button } from '@/components/ui/button';
 import {
   Card,
@@ -8,33 +7,46 @@ import {
   CardHeader,
   CardTitle,
 } from '@/components/ui/card';
-import { useRouter, useSearchParams } from 'next/navigation';
+import { redirect, useSearchParams } from 'next/navigation';
 import { useEffect } from 'react';
 import { decodeToken } from '@/lib/utils';
 import { endPoints } from '@/data/end-points';
+import { Account, User } from '@/types/users';
+import { setAuthCookie } from '@/actions/auth/auth';
 
 const BASE_URL = process.env.NEXT_PUBLIC_API_BASE_URL;
 
 const LoginPageCard = () => {
-  const router = useRouter();
   const searchParams = useSearchParams();
 
   useEffect(() => {
     const token = searchParams.get('token'); // Extract the token from the URL
     if (token) {
-      const decoded = decodeToken(token);
-      // You can store the token in state, sessionStorage, or make an API call with it
+      const decoded = decodeToken(token); // Ensure decodeToken is working properly
+      const userInfo = decoded as User;
+      localStorage.setItem('auth-token', token);
 
-      // Store the decoded token in the cookie
-      // Cookies.set("user", JSON.stringify(decoded), { expires: 7 }); // Cookie will expire in 7 days
-      localStorage.setItem('user', JSON.stringify(decoded));
+      // Fix: Correctly access the first account
+      const user = {
+        userName: userInfo?.email ?? 'Guest', // Default to "Guest" if no name
+        accountId: userInfo?.accounts?.[0]?.id ?? null, // Ensure we access index 0
+        roleId: userInfo?.accounts?.[0]?.role?.id ?? null, // Access role correctly
+        roleName: userInfo?.accounts?.[0]?.role?.name ?? null,
+        token,
+      };
+      setAuthCookie(user);
+
+      console.log(user);
+
+      // Fix: Store user properly in localStorage
+      localStorage.setItem('user', JSON.stringify(user));
       localStorage.setItem('token', token);
     }
   }, [searchParams]);
 
   const handleLogin = () => {
-    console.log('redirecting to', `${BASE_URL}/${endPoints.auth}`);
-    router.push(`${BASE_URL}/${endPoints.auth}`);
+    // Login();
+    redirect(`${BASE_URL}/${endPoints.auth}`);
   };
 
   return (

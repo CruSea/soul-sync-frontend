@@ -15,7 +15,6 @@ export interface Mentor {
 
 export interface MentorLayoutProps {
   children: React.ReactNode;
-  title: string;
 }
 
 export interface MentorLayoutProps {
