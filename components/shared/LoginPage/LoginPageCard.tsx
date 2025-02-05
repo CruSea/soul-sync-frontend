@@ -10,11 +10,9 @@ import {
 import { redirect, useSearchParams } from 'next/navigation';
 import { useEffect } from 'react';
 import { decodeToken } from '@/lib/utils';
-import { endPoints } from '@/data/end-points';
+import { BASE_URL, endPoints } from '@/data/end-points';
 import { User } from '@/types/users';
 import { setAuthCookie } from '@/actions/auth/auth';
-
-const BASE_URL = process.env.NEXT_PUBLIC_API_BASE_URL;
 
 const LoginPageCard = () => {
   const searchParams = useSearchParams();
