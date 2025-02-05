@@ -10,12 +10,12 @@ export async function middleware(req: NextRequest) {
 
   // Define the restricted route
   const protectedPath = '/admin';
-  const decoded = token&&JSON.parse(atob(token?.split(".")[1])); // Decode JWT payload
-    const now = Math.floor(Date.now() / 1000);
-    
+  const decoded = token && JSON.parse(atob(token?.split('.')[1])); // Decode JWT payload
+  const now = Math.floor(Date.now() / 1000);
+
   if (decoded.exp < now) {
-    await logoutAction()
-    return NextResponse.redirect(new URL("/", req.url));
+    await logoutAction();
+    return NextResponse.redirect(new URL('/', req.url));
   }
   // Check if the user is accessing the protected route
   if (req.nextUrl.pathname.startsWith(protectedPath)) {
