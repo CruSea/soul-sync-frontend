@@ -24,8 +24,6 @@ const LoginPageCard = () => {
     if (token) {
       const decoded = decodeToken(token); // Ensure decodeToken is working properly
       const userInfo = decoded as User;
-      localStorage.setItem('auth-token', token);
-
       // Fix: Correctly access the first account
       const user = {
         userName: userInfo?.email ?? 'Guest', // Default to "Guest" if no name
@@ -39,8 +37,6 @@ const LoginPageCard = () => {
       console.log(user);
 
       // Fix: Store user properly in localStorage
-      localStorage.setItem('user', JSON.stringify(user));
-      localStorage.setItem('token', token);
     }
   }, [searchParams]);
 

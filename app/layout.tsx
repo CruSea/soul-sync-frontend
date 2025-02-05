@@ -11,17 +11,15 @@ export default async function RootLayout({
   return (
     <html lang="en" suppressHydrationWarning>
       <body className="font-general">
-        <SessionWrapper>
-          <ThemeProvider
-            attribute="class"
-            defaultTheme="system"
-            enableSystem
-            disableTransitionOnChange
-            // storageKey="dashboard-theme"
-          >
-            {children}
-          </ThemeProvider>
-        </SessionWrapper>
+        <ThemeProvider
+          attribute="class"
+          defaultTheme="system"
+          enableSystem
+          disableTransitionOnChange
+          // storageKey="dashboard-theme"
+        >
+          {children}
+        </ThemeProvider>
       </body>
     </html>
   );

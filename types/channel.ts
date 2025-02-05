@@ -15,6 +15,7 @@ export interface Channel {
   is_on?: boolean;
   createdAt: string;
   accountId: string;
+  api_key: string;
 }
 export type telegramConfig = {
   token: string;

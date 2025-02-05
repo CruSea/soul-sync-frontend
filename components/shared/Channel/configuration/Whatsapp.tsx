@@ -16,7 +16,7 @@ function Whatsapp({ channel }: whatsappProp) {
           </div>
         </div>
         <div className="text-gray-900 text-xs font-bold font-['Manrope'] ">
-          {channel.Config.api_key}
+          {channel.api_key}
         </div>
       </div>
     </div>
