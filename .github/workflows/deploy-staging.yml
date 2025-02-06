@@ -25,10 +25,8 @@ jobs:
             cd ~/soul-sync/production/soul-sync-frontend
             git stash
             git clean -f -d
-            cp .env.dev .env
-            cp .env.staging .env
-            cp .env.example .env
             git pull
+            cp .env.dev .env
             pnpm install
             pnpm run build
             pm2 delete dev-soul-sync-web
