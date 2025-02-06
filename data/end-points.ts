@@ -1,5 +1,5 @@
 export const endPoints = {
-  auth: 'auth/google',
+  auth: 'auth/google-local',
   adminAccount: 'admin/account',
   adminUser: 'admin/user',
   adminMentors: 'admin/mentor',
