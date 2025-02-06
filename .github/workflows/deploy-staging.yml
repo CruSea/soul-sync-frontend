@@ -25,6 +25,9 @@ jobs:
             cd ~/soul-sync/production/soul-sync-frontend
             git stash
             git clean -f -d
+            cp .env.dev .env
+            cp .env.staging .env
+            cp .env.example .env
             git pull
             pnpm install
             pnpm run build

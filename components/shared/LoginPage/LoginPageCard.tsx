@@ -39,7 +39,7 @@ const LoginPageCard = () => {
   }, [searchParams]);
   console.log(process.env.NEXTAUTH_URL, process.env.NEXT_PUBLIC_API_BASE_URL);
   const handleLogin = async () => {
-    redirect(`https://api-dev.leyuchat.com/${endPoints.auth}`);
+    redirect(`${process.env.NEXT_PUBLIC_API_BASE_URL}/${endPoints.auth}`);
   };
 
   return (
