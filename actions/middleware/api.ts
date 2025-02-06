@@ -37,19 +37,16 @@ const apiCall = async ({
   // Parse user info from cookie
   console.table(token);
   try {
-    const response = await fetch(
-      `${process.env.NEXT_PUBLIC_API_BASE_URL}/${url}`,
-      {
-        method: method,
-        headers: {
-          'Content-Type': 'application/json',
-          Authorization: `Bearer ${token || ''}`,
-        },
-        body: method !== 'GET' ? JSON.stringify(data) : undefined,
-        cache: cache_type,
-        next: { tags: [tag] },
-      }
-    );
+    const response = await fetch(`${process.env.NEXTAUTH_URL}/${url}`, {
+      method: method,
+      headers: {
+        'Content-Type': 'application/json',
+        Authorization: `Bearer ${token || ''}`,
+      },
+      body: method !== 'GET' ? JSON.stringify(data) : undefined,
+      cache: cache_type,
+      next: { tags: [tag] },
+    });
 
     const responseData = await response.json();
     console.log('api', responseData, 'tag', tag);
