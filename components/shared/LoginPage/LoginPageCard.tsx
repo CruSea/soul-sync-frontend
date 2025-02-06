@@ -12,11 +12,10 @@ import { useEffect } from 'react';
 import { decodeToken } from '@/lib/utils';
 import { User } from '@/types/users';
 import { setAuthCookie } from '@/actions/auth/auth';
-import { endPoints } from '@/data/end-points';
+import { googleAuthCallback } from '@/actions/auth/login';
 
 const LoginPageCard = () => {
   const searchParams = useSearchParams();
-
   useEffect(() => {
     const token = searchParams.get('token'); // Extract the token from the URL
     if (token) {
@@ -37,9 +36,8 @@ const LoginPageCard = () => {
       // Fix: Store user properly in localStorage
     }
   }, [searchParams]);
-  console.log(process.env.NEXTAUTH_URL, process.env.NEXT_PUBLIC_API_BASE_URL);
-  const handleLogin = async () => {
-    redirect(`${process.env.NEXT_PUBLIC_API_BASE_URL}/${endPoints.auth}`);
+  const handleLogin = () => {
+    googleAuthCallback();
   };
 
   return (
