@@ -38,7 +38,7 @@ const apiCall = async ({
   console.table(token);
   try {
     const response = await fetch(
-      `${process.env.NEXT_PUBLIC_API_BASE_URL}/${url}`,
+      `${process.env.NEXTAUTH_URL}/${url}`,
       {
         method: method,
         headers: {
