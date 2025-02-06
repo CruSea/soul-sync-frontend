@@ -1,10 +1,16 @@
 'use server';
 import { cookies } from 'next/headers';
 import apiCall from '../middleware/api';
+import { redirect } from 'next/navigation';
+
 const BASE_URL = process.env.NEXT_PUBLIC_API_BASE_URL;
 
 const Url = {
   login: `${BASE_URL}/auth/google`,
+};
+
+export const googleAuthCallback = async () => {
+  redirect(process.env.GOOGLE_CALLBACK_URL ?? '/');
 };
 
 export const Login = async () => {
