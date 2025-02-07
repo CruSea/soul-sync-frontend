@@ -1,5 +1,5 @@
 'use server';
-import apiCall from '../middleware/api';
+import apiCall from '../base-api/api';
 import { Channel } from '@/types/channel';
 const Url = {
   fetchedChannel: `admin/channel`,
