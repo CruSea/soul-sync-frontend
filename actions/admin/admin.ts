@@ -35,7 +35,7 @@ export const deleteMentor = async (id: string) => {
     method: 'DELETE',
     tag: 'deleteMentor',
   });
-  
+
   const data = response;
   return data;
 };
