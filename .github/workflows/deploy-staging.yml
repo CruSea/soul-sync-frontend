@@ -27,7 +27,6 @@ jobs:
             git clean -f -d
             git pull
             cp .env.dev .env
-            rm -rf .next
             pnpm install
             pnpm run build
             pm2 delete dev-soul-sync-web
