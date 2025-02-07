@@ -1,5 +1,5 @@
 'use server';
-import apiCall from '../middleware/api';
+import apiCall from '../base-api/api';
 
 export const fetchedDataTable = async (url: string, tag: string) => {
   const response = apiCall({ url: url, tag: tag });

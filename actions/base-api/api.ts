@@ -1,6 +1,6 @@
 'use server';
 import { cookies } from 'next/headers';
-import { logoutAction } from '../auth/login';
+import { apiUrl, logoutAction, userToken } from '../auth/login';
 import { redirect } from 'next/navigation';
 
 interface CustomError {
@@ -33,11 +33,11 @@ const apiCall = async ({
   //if (onStart) onStart();
   const cookieStore = await cookies();
   const token = cookieStore.get('auth-token')?.value;
-
-  // Parse user info from cookie
-  console.table(token);
+  // // Parse user info from cookie
+  // console.table(token);
+  const baseUrl = await apiUrl();
   try {
-    const response = await fetch(`${process.env.NEXTAUTH_URL}/${url}`, {
+    const response = await fetch(`${baseUrl}/${url}`, {
       method: method,
       headers: {
         'Content-Type': 'application/json',

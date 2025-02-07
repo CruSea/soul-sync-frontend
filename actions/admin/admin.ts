@@ -1,5 +1,5 @@
 'use server';
-import apiCall from '../middleware/api';
+import apiCall from '../base-api/api';
 const Url = {
   adminAccount: `admin/account`,
   adminMentors: `admin/mentor`,
@@ -35,6 +35,7 @@ export const deleteMentor = async (id: string) => {
     method: 'DELETE',
     tag: 'deleteMentor',
   });
+  
   const data = response;
   return data;
 };
