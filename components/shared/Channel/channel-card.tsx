@@ -19,7 +19,6 @@ import { Button } from '@/components/ui/button';
 import { useState } from 'react';
 import NegaritSMS from './configuration/NegaritSMS';
 import { endPoints } from '@/data/end-points';
-import { connectionRequest } from '@/types/channel';
 import { handleDeleting, handleConnect } from '@/actions/admin/channel';
 
 interface ChannelCardProps {
@@ -34,8 +33,6 @@ interface ChannelCardProps {
   triggerState: boolean;
 }
 
-const BASE_URL = process.env.NEXT_PUBLIC_API_BASE_URL;
-
 const formatDate = (isoString: string) => {
   const date = new Date(isoString);
   return date.toLocaleDateString('en-US', {
@@ -44,13 +41,7 @@ const formatDate = (isoString: string) => {
     day: 'numeric',
   });
 };
-export function ChannelCard({
-  channel,
-  setChannels,
-  toast,
-  triggerState,
-  setTriggerState,
-}: ChannelCardProps) {
+export function ChannelCard({ channel, setChannels, toast }: ChannelCardProps) {
   const [deleteId, setDeleteId] = useState<string | null>(null);
   const [connectedId, setConnectedId] = useState<string | null>(null);
   let iconURL = '';
@@ -79,9 +70,6 @@ export function ChannelCard({
       setDeleteId(channel.id);
     }
   };
-  const user = localStorage.getItem('user');
-  const token = localStorage.getItem;
-  const endpoint = `${BASE_URL}/${endPoints.channel}`;
 
   const confirmDelete = () => {
     handleDeleting(setChannels, deleteId, setDeleteId);
