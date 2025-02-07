@@ -1,5 +1,5 @@
-import LoginPageCard from '@/components/login-page/LoginPageCard';
-import LoginPageSidebar from '@/components/login-page/LoginPageSidebar';
+import LoginPageCard from '@/components/login-page/login-page-card';
+import LoginPageSidebar from '@/components/login-page/login-page-sidebar';
 
 import { User_Info } from '@/types/users';
 import { cookies } from 'next/headers';

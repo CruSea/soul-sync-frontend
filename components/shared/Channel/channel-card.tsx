@@ -3,7 +3,7 @@ import React from 'react';
 import Image from 'next/image';
 import type { Channel } from '@/types/channel';
 import { AiOutlineDelete } from 'react-icons/ai';
-import TelegramBot from './configuration/telegramBot';
+import TelegramBot from './configuration/telegram-bot';
 import { Switch } from '@/components/ui/switch';
 import { Label } from '@/components/ui/label';
 
@@ -17,7 +17,7 @@ import {
 } from '@/components/ui/dialog';
 import { Button } from '@/components/ui/button';
 import { useState } from 'react';
-import NegaritSMS from './configuration/NegaritSMS';
+import NegaritSMS from './configuration/negarit-sms';
 import { endPoints } from '@/data/end-points';
 import { handleDeleting, handleConnect } from '@/actions/admin/channel';
 
