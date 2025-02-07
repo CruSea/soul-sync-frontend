@@ -33,7 +33,6 @@ interface ChannelCardProps {
   triggerState: boolean;
 }
 
-
 const formatDate = (isoString: string) => {
   const date = new Date(isoString);
   return date.toLocaleDateString('en-US', {
@@ -42,11 +41,7 @@ const formatDate = (isoString: string) => {
     day: 'numeric',
   });
 };
-export function ChannelCard({
-  channel,
-  setChannels,
-  toast,
-}: ChannelCardProps) {
+export function ChannelCard({ channel, setChannels, toast }: ChannelCardProps) {
   const [deleteId, setDeleteId] = useState<string | null>(null);
   const [connectedId, setConnectedId] = useState<string | null>(null);
   let iconURL = '';
@@ -75,7 +70,7 @@ export function ChannelCard({
       setDeleteId(channel.id);
     }
   };
- 
+
   const confirmDelete = () => {
     handleDeleting(setChannels, deleteId, setDeleteId);
     toast({
