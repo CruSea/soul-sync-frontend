@@ -112,7 +112,6 @@ const CreateOrgView = () => {
 
     return isValid; // Return the final validation status
   };
-
   return (
     <div className="w-screen h-screen flex flex-col">
       <LandingPageHeader showButton={false} />
