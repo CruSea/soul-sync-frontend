@@ -1,6 +1,6 @@
 'use server';
 import { cookies } from 'next/headers';
-import apiCall from '../base-api/api';
+import apiCall from '../../base-api/api';
 import { redirect } from 'next/navigation';
 import { Account } from '@/types/users';
 

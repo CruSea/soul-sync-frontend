@@ -1,10 +1,10 @@
 'use client';
 import { AdminLayout } from '@/components/shared/layout/admin-layout';
 import { Toaster } from '@/components/ui/sonner';
-import { DashboardLayoutProps } from '@/types/admin';
+import { LayoutProps } from '@/types/admin';
 import { usePathname } from 'next/navigation';
 import React from 'react';
-const DashboardLayout: React.FC<DashboardLayoutProps> = ({ children }) => {
+const Layout: React.FC<LayoutProps> = ({ children }) => {
   const pathname = usePathname();
   // Get the last segment of the URL
   const lastSegment = pathname.split('/').filter(Boolean).pop();
@@ -26,4 +26,4 @@ const DashboardLayout: React.FC<DashboardLayoutProps> = ({ children }) => {
   );
 };
 
-export default DashboardLayout;
+export default Layout;

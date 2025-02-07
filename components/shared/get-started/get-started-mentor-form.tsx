@@ -5,11 +5,11 @@ import { getStartedMentorFormSchema } from '@/types/get-started';
 import { getStartedMentorFormValues } from '@/types/get-started';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { Form } from '@/components/ui/form';
-import { AgeField } from './AgeField';
-import { GenderField } from './GenderField';
+import { AgeField } from './age-field';
+import { GenderField } from './gender-field';
 import { getStartedForm } from '@/data/get-started-data';
-import { LocationField } from './LocationField';
-import { SpecializationField } from './SpecializationField';
+import { LocationField } from './location-field';
+import { SpecializationField } from './specialization-field';
 import {
   FormField,
   FormItem,
@@ -17,13 +17,13 @@ import {
   FormMessage,
   FormLabel,
 } from '@/components/ui/form';
-import { HourField } from './hourField';
-import { MinuteField } from './MinuteField';
-import { DayPeriodField } from './DayPeriod';
+import { HourField } from './hour-field';
+import { MinuteField } from './minute-field';
+import { DayPeriodField } from './day-period';
 import { useEffect } from 'react';
 import { Button } from '@/components/ui/button';
 import { useRouter } from 'next/navigation';
-import { TimeFields } from './TimeFields';
+import { TimeFields } from './time-fields';
 import { endPoints } from '@/data/end-points';
 
 const BASE_URL = process.env.NEXT_PUBLIC_API_BASE_URL;

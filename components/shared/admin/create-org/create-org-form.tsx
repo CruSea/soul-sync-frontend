@@ -4,8 +4,8 @@ import { Form } from '@/components/ui/form';
 
 import React from 'react';
 import { CreateOrgFormProps } from '@/types/create-org';
-import FormOne from './FormOne';
-import FormTwo from './FormTwo';
+import FormOne from './form-one';
+import FormTwo from './form-two';
 
 const CreateOrgForm = ({
   currentPage,

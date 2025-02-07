@@ -1,6 +1,6 @@
-import { SizeField } from './SizeField';
-import { CompanyNameField } from './CompanyNameField';
-import { CompanyDomainField } from './CompanyDomainField';
+import { SizeField } from './size-field';
+import { CompanyNameField } from './company-name-field';
+import { CompanyDomainField } from './company-domain-field';
 import { HiOutlineExclamationCircle } from 'react-icons/hi2';
 import { formOptions } from '@/data/create-org';
 import { FormOneProps } from '@/types/create-org';

@@ -1,6 +1,6 @@
 'use client';
 import { zodResolver } from '@hookform/resolvers/zod';
-import LandingPageHeader from '@/components/shared/landing-page/LandingPageHeader';
+import LandingPageHeader from '@/components/shared/landing-page/landing-page-header';
 import {
   createOrgFormOneSchema,
   createOrgFormOneValues,

@@ -1,8 +1,8 @@
 import { formOptions } from '@/data/create-org';
 import { FormTwoProps } from '@/types/create-org';
 import { Separator } from '@/components/ui/separator';
-import { FocusField } from './FocusField';
-import { RoleField } from './RoleField';
+import { FocusField } from './focus-field';
+import { RoleField } from './role-field';
 
 const FormTwo = ({ formTwo }: FormTwoProps) => {
   return (
