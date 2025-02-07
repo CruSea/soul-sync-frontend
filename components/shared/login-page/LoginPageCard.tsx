@@ -31,7 +31,7 @@ const LoginPageCard = () => {
       };
       setAuthCookie(user);
 
-      console.log(user);
+      
 
       // Fix: Store user properly in localStorage
     }

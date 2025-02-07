@@ -1,7 +1,7 @@
 'use server';
-import LandingPageBody from '../shared/LandingPage/LandingPageBody';
-import LandingPageFooter from '../shared/LandingPage/LandingPageFooter';
-import LandingPageHeader from '../shared/LandingPage/LandingPageHeader';
+import LandingPageBody from '../shared/landing-page/LandingPageBody';
+import LandingPageFooter from '../shared/landing-page/LandingPageFooter';
+import LandingPageHeader from '../shared/landing-page/LandingPageHeader';
 
 const LandingPageView = async () => {
   return (

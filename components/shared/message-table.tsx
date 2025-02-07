@@ -1,6 +1,6 @@
 'use client';
 import React from 'react';
-import { DataTable } from '@/components/shared/DataTable';
+import { DataTable } from '@/components/shared/data-table';
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
 import { MessageCircle } from 'lucide-react';

@@ -16,7 +16,7 @@ async function handler(req: NextApiRequest) {
       body,
       Array.isArray(params) ? params : [params]
     );
-    console.log('GET Response:', getdata);
+
     return NextResponse.json(
       { message: 'GET request successful', getdata },
       { status: 200 }

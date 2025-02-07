@@ -18,7 +18,7 @@ const apiRequest = async (
 
     return response.data; // Return the response data
   } catch (error: unknown) {
-    console.error(`Error in ${method} request to ${endpoint}:`, error);
+  
     throw error;
   }
 };

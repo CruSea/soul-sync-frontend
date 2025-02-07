@@ -1,4 +1,4 @@
-import { colors } from '@/components/shared/Mentor/Info';
+import { colors } from '@/components/shared/mentor/Info';
 
 export interface Mentor {
   id: string;

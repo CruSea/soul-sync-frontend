@@ -1,16 +1,17 @@
 'use client';
 
 import { useState, useRef, useEffect } from 'react';
-import { v4 as uuidv4 } from 'uuid';
-
 import { Card } from '@/components/ui/card';
-import { ScrollArea } from './chat-scrollarea';
-import ChatHeader from './ChatHeader';
-import Message from './Message';
-import { ChatProps, threadType } from '@/types/mentor';
+
+import { ChatProps } from '@/types/mentor';
 import { transformChatData } from '@/lib/utils';
-import InputArea from './InputArea';
+
 import { jsonServer } from '@/data/end-points';
+import ChatHeader from './ChatHeader';
+import { ScrollArea } from './chat-scrollarea';
+
+import InputArea from './InputArea';
+import Message from './message';
 
 const Chat = ({
   userMessages,
@@ -59,13 +60,12 @@ const Chat = ({
         }
       );
 
-      console.log('the patch response', patchResponse);
-
+     
       if (textBox.current) textBox.current.value = ''; // Reset input field
 
       setUserMessages({ ...userMessages, messages: updatedMessages });
     } catch (error) {
-      console.error('Failed to send message:', error);
+     
     }
   };
 

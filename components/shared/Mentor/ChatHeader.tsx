@@ -12,7 +12,7 @@ import {
   SheetTitle,
   SheetTrigger,
 } from './metor-sheet';
-import Profile from './Profile';
+import Profile from './profile';
 
 const ChatHeader = ({
   imageUrl,

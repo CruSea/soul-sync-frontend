@@ -95,17 +95,17 @@ const GetStartedMentorForm = () => {
           });
 
           if (!response.ok) {
-            console.error('Failed to patch the data', response);
+           
             throw new Error('Patch failed');
           }
 
           router.push('/mentor');
         } else {
-          console.error('User or token not found');
+          
           router.push('/log-in');
         }
       } catch (error) {
-        console.error('Error: ', error);
+       
         router.push('/log-in');
       }
     };

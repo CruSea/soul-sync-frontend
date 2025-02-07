@@ -1,5 +1,5 @@
 import React from 'react';
-import { DataTable } from '@/components/shared/DataTable';
+import { DataTable } from '@/components/shared/data-table';
 import { Badge } from '@/components/ui/badge';
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 import { Button } from '@/components/ui/button';
