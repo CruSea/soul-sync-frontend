@@ -2,8 +2,6 @@
 
 import React, { useState, useEffect, useCallback } from 'react';
 import {
-  ChevronDown,
-  ChevronUp,
   Search,
   Filter,
   X,
@@ -82,9 +80,9 @@ export function DataTable<T extends { id: string | number }>({
     setIsLoading(true);
     try {
       // const token = localStorage.getItem('token');
-      console.log('Fetching data from:', apiUrl);
+
       const response = await fetchedDataTable(apiUrl, tag);
-      console.log('API response:', response);
+
       if (response.error) {
         toast({
           title: response.error.title,
@@ -95,7 +93,6 @@ export function DataTable<T extends { id: string | number }>({
       setData(response);
       setTotalItems(response.length);
     } catch (error) {
-      console.error('Error fetching data:', error);
       toast({
         title: 'Error',
         description:
@@ -139,7 +136,6 @@ export function DataTable<T extends { id: string | number }>({
       setData((prev) => prev.filter((item) => item.id !== id));
       setDeleteDialog({ open: false, id: null });
     } catch (error) {
-      console.error('Error deleting data:', error);
       onError?.(
         error instanceof Error
           ? error.message

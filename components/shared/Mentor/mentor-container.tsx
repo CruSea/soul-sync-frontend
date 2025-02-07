@@ -6,12 +6,12 @@ import {
   UserDetails,
   UserMessages,
 } from '@/types/mentor';
-import Chat from './Chat';
-import Profile from './Profile';
+import Profile from './profile';
 import { useEffect, useState } from 'react';
-import UsersList from './users-list';
 import { jsonServer } from '@/data/end-points';
 import { useRouter } from 'next/navigation';
+import UsersList from './users-list';
+import Chat from './chat';
 
 const BASE_URL = process.env.NEXT_PUBLIC_API_BASE_URL;
 const USER_URL = process.env.NEXT_PUBLIC_API_ADMIN_URL;
@@ -40,11 +40,9 @@ const MentorContainer = ({ users }: MentorContainerProps) => {
 
         if (Array.isArray(data) && data.length > 0) {
           setUserDetails(data[0]); // Assuming you want the first item
-        } else {
-          console.warn('No user details found');
         }
       } catch (error) {
-        console.error('Failed to fetch user details:', error);
+        throw new Error(error as string);
       }
     };
 
@@ -62,11 +60,9 @@ const MentorContainer = ({ users }: MentorContainerProps) => {
 
         if (Array.isArray(data) && data.length > 0) {
           setUserMessages(data[0]); // Assuming you want the first item
-        } else {
-          console.warn('No user details found');
         }
       } catch (error) {
-        console.error('Failed to fetch user Messages:', error);
+        throw new Error(error as string);
       }
     };
 
@@ -95,14 +91,12 @@ const MentorContainer = ({ users }: MentorContainerProps) => {
           });
 
           if (!response.ok) {
-            console.error('Failed to fetch user info', response);
             throw new Error('Fetch failed');
           }
 
           const userInfo = await response.json();
 
           if (!userInfo) {
-            console.error("userInfo doesn't exist");
             throw new Error('userInfo not found');
           }
 
@@ -110,11 +104,9 @@ const MentorContainer = ({ users }: MentorContainerProps) => {
             router.push('/mentor/get-started');
           }
         } else {
-          console.error('User or token not found');
           router.push('/log-in');
         }
       } catch (error) {
-        console.error('Error: ', error);
         router.push('/log-in');
       }
     };

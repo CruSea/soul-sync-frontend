@@ -1,5 +1,5 @@
 'use server';
-import { MessageTable } from '@/components/shared/MessageTable';
+import { MessageTable } from '@/components/shared/message-table';
 
 function Message() {
   return (

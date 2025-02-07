@@ -1,7 +1,7 @@
 'use client';
 
 import React, { useState, useMemo } from 'react';
-import { DataTable } from '@/components/shared/DataTable';
+import { DataTable } from '@/components/shared/data-table';
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 import { Column, FilterOption } from '@/types/data-table';
 import { Badge } from '@/components/ui/badge';
@@ -100,7 +100,6 @@ const UserTable: React.FC = () => {
             enablePagination={false}
             onError={(errorMessage) => {
               setError(errorMessage);
-              console.error('DataTable error:', errorMessage);
             }}
             onDataFetched={onDataFetched}
           />

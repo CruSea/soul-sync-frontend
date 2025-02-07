@@ -29,12 +29,9 @@ const apiCall = async ({
   cache_type?: 'no-cache' | 'force-cache' | 'no-store';
   tag: string;
 }) => {
-  // Call onStart callback if provided
-  //if (onStart) onStart();
   const cookieStore = await cookies();
   const token = cookieStore.get('auth-token')?.value;
-  // // Parse user info from cookie
-  // console.table(token);
+
   const baseUrl = await apiUrl();
   try {
     const response = await fetch(`${baseUrl}/${url}`, {
@@ -49,7 +46,7 @@ const apiCall = async ({
     });
 
     const responseData = await response.json();
-    console.log('api', responseData, 'tag', tag);
+
     if (!response.ok) {
       throw new Error(responseData?.error.message || 'Something went wrong');
     }

@@ -1,6 +1,6 @@
 'use client';
 import React, { useEffect, useState } from 'react';
-import { DataTable } from '@/components/shared/DataTable';
+import { DataTable } from '@/components/shared/data-table';
 import { Badge } from '@/components/ui/badge';
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 import { Column, FilterOption } from '@/types/data-table';
@@ -80,7 +80,6 @@ const MentorsTable: React.FC = () => {
           const decodedProfile = decodeURIComponent(encodedProfile);
           setClientUser(JSON.parse(decodedProfile));
         } catch (error) {
-          console.error('Invalid user cookie:', error);
           document.cookie =
             'user-profile=; path=/; expires=Thu, 01 Jan 1970 00:00:00 GMT';
           router.push('/log-in');
@@ -110,8 +109,7 @@ const MentorsTable: React.FC = () => {
         description: 'Mentor Successfully deleted.',
       });
     } catch (error) {
-      console.error('Error deleting mentor:', error);
-      throw error;
+      throw new Error(error as string);
     }
   };
 

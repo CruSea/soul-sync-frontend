@@ -15,7 +15,7 @@ export default async function AdminView() {
   // Verify account status
   const response = await checkAccount(user.id);
   // Handle invalid token
-  console.table(response);
+
   // Redirect to org creation if no domain
   if (!response?.domain) {
     redirect('/admin/create-org');

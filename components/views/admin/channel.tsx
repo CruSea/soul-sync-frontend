@@ -54,7 +54,6 @@ export default function ChannelsPage() {
           const decodedProfile = decodeURIComponent(encodedProfile);
           setUser(JSON.parse(decodedProfile));
         } catch (error) {
-          console.error('Invalid user cookie:', error);
           //  document.cookie = 'user-profile=; path=/; expires=Thu, 01 Jan 1970 00:00:00 GMT';
         }
       }
@@ -67,13 +66,10 @@ export default function ChannelsPage() {
   useEffect(() => {
     const getChannels = async () => {
       const response = await fetchedChannels(userAccoutId?.id as string);
-      console.log(response);
 
       if (!response.error) {
         setChannels(response);
-        console.log('response found', response);
       } else {
-        console.log('response NOT found');
         toast(response.error);
       }
     };
@@ -95,15 +91,13 @@ export default function ChannelsPage() {
     newChannel: Omit<Channel, 'id' | 'icon' | 'createdAt' | 'accountId'>
   ) => {
     if (userAccoutId) {
-      // ✅ Ensure user is defined before using it
       const channelWithId = {
         ...newChannel,
-        accountId: userAccoutId.id, // ✅ userAccoutId is now safe to use
+        accountId: userAccoutId.id,
       } as Channel;
 
-      // setChannels((prevChannels) => [...(prevChannels || []), channelWithId]); // ✅ Ensure channels is always an array
       const response = await handleAddChannel(channelWithId);
-      console.log(response, channelWithId);
+
       toast({
         title: 'Channel added successfully',
         description: 'The channel has been added to the list',

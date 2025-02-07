@@ -1,7 +1,7 @@
 'use client';
 
 import React, { useState } from 'react';
-import { DataTable } from '@/components/shared/DataTable';
+import { DataTable } from '@/components/shared/data-table';
 import { Badge } from '@/components/ui/badge';
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 import { Column, FilterOption } from '@/types/data-table';
@@ -93,7 +93,6 @@ const MenteesTable: React.FC = () => {
       }
       toast.success('Mentee has been deleted.');
     } catch (error) {
-      console.error('Error deleting mentee:', error);
       toast.error('Failed to delete mentee');
       throw error;
     }
@@ -120,7 +119,6 @@ const MenteesTable: React.FC = () => {
             enablePagination={true}
             onError={(errorMessage) => {
               setError(errorMessage);
-              console.error('DataTable error:', errorMessage);
             }}
           />
         )}

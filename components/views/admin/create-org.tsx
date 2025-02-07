@@ -1,6 +1,6 @@
 'use client';
 import { zodResolver } from '@hookform/resolvers/zod';
-import LandingPageHeader from '@/components/shared/LandingPage/LandingPageHeader';
+import LandingPageHeader from '@/components/shared/landing-page/LandingPageHeader';
 import {
   createOrgFormOneSchema,
   createOrgFormOneValues,
@@ -14,16 +14,14 @@ import { useForm } from 'react-hook-form';
 import CreateOrgSidebar from '@/components/shared/admin/CreateOrg/CreateOrgSidebar';
 import CreateOrgForm from '@/components/shared/admin/CreateOrg/CreateOrgForm';
 import { createOrganazation } from '@/actions/admin/admin';
-import { Account, User_Info } from '@/types/users';
-import { useRouter } from 'next/navigation';
+import { Account } from '@/types/users';
+
 import { toast } from '@/hooks/use-toast';
 import { userProfile } from '@/actions/auth/login';
 
 const CreateOrgView = () => {
   const [currentPage, setCurrentPage] = useState<Page>('first');
   const [orgData, setOrgData] = useState<OrgDataValues>({});
-  //const router = useRouter();
-
   const [clientUser, setClientUser] = useState<Account | null>(null);
   useEffect(() => {
     const fetchUserProfile = async () => {
@@ -63,15 +61,13 @@ const CreateOrgView = () => {
 
     if (currentPage === 'second') {
       if (!currentPage) {
-        console.error('user not found');
         return;
       }
-
       const reqBody = {
         name: orgData.companyName as string,
         domain: orgData.companyDomain as string,
       };
-      console.log(reqBody);
+
       const response = await createOrganazation(
         clientUser?.id as string,
         reqBody
@@ -82,7 +78,6 @@ const CreateOrgView = () => {
           description: 'successfull Created!',
         });
       } else {
-        console.error('Form Submission is wrong', response);
         toast({
           title: 'Error!',
           description: 'Form Submission is wrong!',
@@ -99,23 +94,18 @@ const CreateOrgView = () => {
       try {
         // Await the form submission and validation
         await formOne.handleSubmit(onSubmit, (errors) => {
-          // Handle validation failure
-          console.log('Form One validation failed:', errors);
           isValid = false; // Set to false if validation fails
         })();
       } catch (error) {
-        console.error('Error during validation or submission:', error);
         isValid = false;
       }
     } else {
       try {
         // Await the form submission and validation for the second form
         await formTwo.handleSubmit(onSubmit, (errors) => {
-          console.log('Form Two validation failed:', errors);
           isValid = false; // Set to false if validation fails
         })();
       } catch (error) {
-        console.error('Error during validation or submission:', error);
         isValid = false;
       }
     }
