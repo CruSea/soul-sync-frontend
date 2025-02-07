@@ -109,7 +109,7 @@ const MentorsTable: React.FC = () => {
         description: 'Mentor Successfully deleted.',
       });
     } catch (error) {
-      throw error;
+      throw new Error(error as string);
     }
   };
 

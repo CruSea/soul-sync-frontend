@@ -40,9 +40,10 @@ const MentorContainer = ({ users }: MentorContainerProps) => {
 
         if (Array.isArray(data) && data.length > 0) {
           setUserDetails(data[0]); // Assuming you want the first item
-        } else {
         }
-      } catch (error) {}
+      } catch (error) {
+        throw new Error(error as string);
+      }
     };
 
     const fetchUserMesages = async () => {
@@ -59,9 +60,10 @@ const MentorContainer = ({ users }: MentorContainerProps) => {
 
         if (Array.isArray(data) && data.length > 0) {
           setUserMessages(data[0]); // Assuming you want the first item
-        } else {
         }
-      } catch (error) {}
+      } catch (error) {
+        throw new Error(error as string);
+      }
     };
 
     if (currentUser && currentUser.id) {

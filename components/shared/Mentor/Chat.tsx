@@ -63,7 +63,9 @@ const Chat = ({
       if (textBox.current) textBox.current.value = ''; // Reset input field
 
       setUserMessages({ ...userMessages, messages: updatedMessages });
-    } catch (error) {}
+    } catch (error) {
+      throw new Error(error as string);
+    }
   };
 
   useEffect(() => {
