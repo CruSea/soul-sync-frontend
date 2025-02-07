@@ -1,6 +1,6 @@
 import LoginPageCard from '@/components/shared/login-page/LoginPageCard';
 import LoginPageSidebar from '@/components/shared/login-page/LoginPageSidebar';
-import {  User_Info } from '@/types/users';
+import { User_Info } from '@/types/users';
 import { cookies } from 'next/headers';
 import { redirect } from 'next/navigation';
 

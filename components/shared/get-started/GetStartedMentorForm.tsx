@@ -95,17 +95,14 @@ const GetStartedMentorForm = () => {
           });
 
           if (!response.ok) {
-           
             throw new Error('Patch failed');
           }
 
           router.push('/mentor');
         } else {
-          
           router.push('/log-in');
         }
       } catch (error) {
-       
         router.push('/log-in');
       }
     };

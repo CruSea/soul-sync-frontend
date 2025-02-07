@@ -32,7 +32,6 @@ const GetStartedAdminForm = () => {
   const router = useRouter(); // Initialize the useRouter hook
 
   const onSubmit = (data: getStartedAdminFormValues) => {
-  
     // Navigate to /mentor after form submission
     router.push('/admin'); // Use router.push for smooth navigation
   };

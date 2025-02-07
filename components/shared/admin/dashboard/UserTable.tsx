@@ -100,7 +100,6 @@ const UserTable: React.FC = () => {
             enablePagination={false}
             onError={(errorMessage) => {
               setError(errorMessage);
-              
             }}
             onDataFetched={onDataFetched}
           />

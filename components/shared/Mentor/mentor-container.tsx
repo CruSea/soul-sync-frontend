@@ -41,11 +41,8 @@ const MentorContainer = ({ users }: MentorContainerProps) => {
         if (Array.isArray(data) && data.length > 0) {
           setUserDetails(data[0]); // Assuming you want the first item
         } else {
-          
         }
-      } catch (error) {
-      
-      }
+      } catch (error) {}
     };
 
     const fetchUserMesages = async () => {
@@ -63,11 +60,8 @@ const MentorContainer = ({ users }: MentorContainerProps) => {
         if (Array.isArray(data) && data.length > 0) {
           setUserMessages(data[0]); // Assuming you want the first item
         } else {
-        
         }
-      } catch (error) {
-        
-      }
+      } catch (error) {}
     };
 
     if (currentUser && currentUser.id) {
@@ -95,14 +89,12 @@ const MentorContainer = ({ users }: MentorContainerProps) => {
           });
 
           if (!response.ok) {
-         
             throw new Error('Fetch failed');
           }
 
           const userInfo = await response.json();
 
           if (!userInfo) {
-    
             throw new Error('userInfo not found');
           }
 
@@ -110,11 +102,9 @@ const MentorContainer = ({ users }: MentorContainerProps) => {
             router.push('/mentor/get-started');
           }
         } else {
-       
           router.push('/log-in');
         }
       } catch (error) {
-   
         router.push('/log-in');
       }
     };

@@ -96,7 +96,6 @@ export function AddChannelDialog({
     }
   }, [watchedValues]);
 
-  
   const channelChange = () => {
     switch (selectedChannel) {
       case 'TELEGRAM':

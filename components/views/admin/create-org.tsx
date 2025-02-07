@@ -61,14 +61,13 @@ const CreateOrgView = () => {
 
     if (currentPage === 'second') {
       if (!currentPage) {
-       
         return;
       }
       const reqBody = {
         name: orgData.companyName as string,
         domain: orgData.companyDomain as string,
       };
-    
+
       const response = await createOrganazation(
         clientUser?.id as string,
         reqBody
@@ -95,22 +94,18 @@ const CreateOrgView = () => {
       try {
         // Await the form submission and validation
         await formOne.handleSubmit(onSubmit, (errors) => {
-       
           isValid = false; // Set to false if validation fails
         })();
       } catch (error) {
-      
         isValid = false;
       }
     } else {
       try {
         // Await the form submission and validation for the second form
         await formTwo.handleSubmit(onSubmit, (errors) => {
-       
           isValid = false; // Set to false if validation fails
         })();
       } catch (error) {
-    
         isValid = false;
       }
     }

@@ -56,7 +56,6 @@ export function InviteMentorDialog(user?: User_Info) {
       setFormData({ name: '', email: '' });
       setIsOpen(false);
     } catch (error) {
-    
       toast({
         variant: 'destructive',
         title: 'Error!',

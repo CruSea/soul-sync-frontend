@@ -93,7 +93,6 @@ const MenteesTable: React.FC = () => {
       }
       toast.success('Mentee has been deleted.');
     } catch (error) {
-    
       toast.error('Failed to delete mentee');
       throw error;
     }
@@ -120,7 +119,6 @@ const MenteesTable: React.FC = () => {
             enablePagination={true}
             onError={(errorMessage) => {
               setError(errorMessage);
-              
             }}
           />
         )}

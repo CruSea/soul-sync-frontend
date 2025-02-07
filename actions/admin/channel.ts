@@ -11,7 +11,7 @@ export const fetchedChannels = async (id: string) => {
     tag: 'fetchedChannel',
   });
   const data = response;
-  
+
   return data;
 };
 
@@ -23,7 +23,7 @@ export const handleAddChannel = async (body: Channel) => {
     tag: 'addChannel',
   });
   const data = response;
- 
+
   return data;
 };
 
@@ -57,7 +57,6 @@ export const handleConnect = async (
     setConnectedId(channel.id);
   }
   if (connectedId !== null) {
-  
     setChannels((prevItems) =>
       prevItems.map((item) =>
         item.id === connectedId ? { ...item, is_on: true } : item
@@ -66,7 +65,7 @@ export const handleConnect = async (
     const body = {
       url: `message/telegram?id=${connectedId}`,
     };
-   
+
     const response = await apiCall({
       url: `${Url.fetchedChannel}/${connectedId}/connect`,
       method: 'POST',

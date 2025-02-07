@@ -12,7 +12,6 @@ export function decodeToken(token: string) {
   try {
     return jwtDecode(token); // Returns the decoded payload
   } catch (err) {
-  
     return null;
   }
 }

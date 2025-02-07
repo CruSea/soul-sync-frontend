@@ -80,7 +80,6 @@ const MentorsTable: React.FC = () => {
           const decodedProfile = decodeURIComponent(encodedProfile);
           setClientUser(JSON.parse(decodedProfile));
         } catch (error) {
-      
           document.cookie =
             'user-profile=; path=/; expires=Thu, 01 Jan 1970 00:00:00 GMT';
           router.push('/log-in');
@@ -110,7 +109,6 @@ const MentorsTable: React.FC = () => {
         description: 'Mentor Successfully deleted.',
       });
     } catch (error) {
-    
       throw error;
     }
   };

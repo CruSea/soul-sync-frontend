@@ -29,10 +29,9 @@ const apiCall = async ({
   cache_type?: 'no-cache' | 'force-cache' | 'no-store';
   tag: string;
 }) => {
-  
   const cookieStore = await cookies();
   const token = cookieStore.get('auth-token')?.value;
- 
+
   const baseUrl = await apiUrl();
   try {
     const response = await fetch(`${baseUrl}/${url}`, {

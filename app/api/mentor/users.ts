@@ -13,7 +13,6 @@ export async function GET(req: Request) {
     // Return the fetched users
     return new Response(JSON.stringify(users), { status: 200 });
   } catch (error) {
-    
     return new Response(JSON.stringify({ error: 'Internal Server Error' }), {
       status: 500,
     });

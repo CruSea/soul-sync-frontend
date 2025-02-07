@@ -30,6 +30,5 @@ export const mentorDelete = async (url: string) => {
 };
 
 export function revalidateWithLogging(tag: string) {
-  
   return revalidateTag(tag);
 }

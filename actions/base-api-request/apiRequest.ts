@@ -18,7 +18,6 @@ const apiRequest = async (
 
     return response.data; // Return the response data
   } catch (error: unknown) {
-  
     throw error;
   }
 };
