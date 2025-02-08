@@ -11,7 +11,7 @@ import { useEffect, useState } from 'react';
 import { jsonServer } from '@/data/end-points';
 import { useRouter } from 'next/navigation';
 import UsersList from './users-list';
-import Chat from './chat';
+import Chat from './Chat';
 
 const BASE_URL = process.env.NEXT_PUBLIC_API_BASE_URL;
 const USER_URL = process.env.NEXT_PUBLIC_API_ADMIN_URL;
