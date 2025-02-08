@@ -1,6 +1,6 @@
 'use client';
 
-import { useState, useRef, useEffect } from 'react';
+import {  useRef, useEffect } from 'react';
 import { Card } from '@/components/ui/card';
 
 import { ChatProps } from '@/types/mentor';
@@ -12,6 +12,7 @@ import { ScrollArea } from './chat-scrollarea';
 import Message from './message';
 import InputArea from './InputArea';
 
+
 const Chat = ({
   userMessages,
   toggleDrawer,
@@ -19,8 +20,7 @@ const Chat = ({
   setUserMessages,
 }: ChatProps) => {
   // text is where the text box saves what the mentor writes
-  const [text, setText] = useState<string>('');
-
+  
   const chatData = transformChatData(userMessages?.messages);
 
   // an empty div at the end of the thread used to scroll to the bottom on send
