@@ -11,7 +11,7 @@ import {
 import { AvailabilityFieldProps } from '@/types/get-started';
 import { Button } from '@/components/ui/button';
 import { getStartedForm } from '@/data/get-started-data';
-import { DayFields } from './DayFields';
+import { DayFields } from './day-fields';
 
 export function AvailabilityField({
   control,

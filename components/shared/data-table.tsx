@@ -35,7 +35,7 @@ import {
   DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu';
 import { Column, FilterOption } from '@/types/data-table';
-import { fetchedDataTable } from '@/actions/shared/dataTable';
+import { fetchedDataTable } from '@/actions/shared/data-table';
 import { toast } from '@/hooks/use-toast';
 
 interface DataTableProps<T> {

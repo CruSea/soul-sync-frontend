@@ -1,7 +1,7 @@
 'use serevr';
 import { endPoints } from '@/data/end-points';
-import apiCall from '../base-api/api';
-import { revalidatePath, revalidateTag } from 'next/cache';
+import apiCall from '../../base-api/api';
+import { revalidateTag } from 'next/cache';
 interface inviteMentorProps {
   accountId: string;
   name: string;

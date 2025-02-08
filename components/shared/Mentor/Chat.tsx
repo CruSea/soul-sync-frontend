@@ -7,7 +7,7 @@ import { ChatProps } from '@/types/mentor';
 import { transformChatData } from '@/lib/utils';
 
 import { jsonServer } from '@/data/end-points';
-import ChatHeader from './ChatHeader';
+import ChatHeader from './chat-header';
 import { ScrollArea } from './chat-scrollarea';
 
 import InputArea from './InputArea';

@@ -1,6 +1,6 @@
 'use client';
 import { zodResolver } from '@hookform/resolvers/zod';
-import LandingPageHeader from '@/components/shared/landing-page/LandingPageHeader';
+import LandingPageHeader from '@/components/shared/landing-page/landing-page-header';
 import {
   createOrgFormOneSchema,
   createOrgFormOneValues,
@@ -11,8 +11,8 @@ import {
 } from '@/types/create-org';
 import { useEffect, useState } from 'react';
 import { useForm } from 'react-hook-form';
-import CreateOrgSidebar from '@/components/shared/admin/CreateOrg/CreateOrgSidebar';
-import CreateOrgForm from '@/components/shared/admin/CreateOrg/CreateOrgForm';
+import CreateOrgSidebar from '@/components/shared/admin/create-org/create-org-sidebar';
+import CreateOrgForm from '@/components/shared/admin/create-org/create-org-form';
 import { createOrganazation } from '@/actions/admin/admin';
 import { Account } from '@/types/users';
 

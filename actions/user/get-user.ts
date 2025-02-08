@@ -1,5 +1,5 @@
 'use server';
-import apiCall from '../base-api/api';
+import apiCall from '../../base-api/api';
 const Url = {
   getUser: `admin/user`,
 };

@@ -5,24 +5,24 @@ import {
   CommandGroup,
   CommandItem,
   CommandList,
-} from './TimeCommand';
+} from './time-command';
 import {
   FormControl,
   FormField,
   FormItem,
   FormMessage,
 } from '@/components/ui/form';
-import { Popover, PopoverContent, PopoverTrigger } from './TimePopover';
+import { Popover, PopoverContent, PopoverTrigger } from './time-popover';
 import { cn } from '@/lib/utils';
 import { Check, ChevronsUpDown } from 'lucide-react';
 import { getStartedForm } from '@/data/get-started-data';
-import { HourFieldProps } from '@/types/get-started';
+import { MinuteFieldProps } from '@/types/get-started';
 
-export function HourField({ control, type, form }: HourFieldProps) {
+export function MinuteField({ control, type, form }: MinuteFieldProps) {
   return (
     <FormField
       control={control}
-      name={type === 'start' ? 'startHour' : 'endHour'}
+      name={type === 'start' ? 'startMinute' : 'endMinute'}
       render={({ field }) => (
         <FormItem className="flex flex-col">
           <Popover>
@@ -37,10 +37,10 @@ export function HourField({ control, type, form }: HourFieldProps) {
                   )}
                 >
                   {field.value
-                    ? getStartedForm.hours.find(
-                        (hour) => hour.value === field.value
+                    ? getStartedForm.minutes.find(
+                        (minute) => minute.value === field.value
                       )?.label
-                    : 'Select hour'}
+                    : 'Select minute'}
                   <ChevronsUpDown className="ml-2 h-4 w-4 shrink-0 opacity-50" />
                 </Button>
               </FormControl>
@@ -48,25 +48,25 @@ export function HourField({ control, type, form }: HourFieldProps) {
             <PopoverContent className="w-16 p-0">
               <Command>
                 <CommandList>
-                  <CommandEmpty>No hours found.</CommandEmpty>
+                  <CommandEmpty>No minutes found.</CommandEmpty>
                   <CommandGroup>
-                    {getStartedForm.hours.map((hour) => (
+                    {getStartedForm.minutes.map((minute) => (
                       <CommandItem
-                        value={hour.label}
-                        key={hour.value}
+                        value={minute.label}
+                        key={minute.value}
                         onSelect={() => {
                           form.setValue(
-                            type === 'start' ? 'startHour' : 'endHour',
-                            hour.value
+                            type === 'start' ? 'startMinute' : 'endMinute',
+                            minute.value
                           );
                         }}
                         className=" cursor-pointer"
                       >
-                        {hour.label}
+                        {minute.label}
                         <Check
                           className={cn(
                             'ml-[-5px]',
-                            hour.value === field.value
+                            minute.value === field.value
                               ? 'opacity-100'
                               : 'opacity-0'
                           )}

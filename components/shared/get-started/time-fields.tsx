@@ -1,7 +1,7 @@
 import { TimeFieldsProps } from '@/types/get-started';
-import { HourField } from './hourField';
-import { DayPeriodField } from './DayPeriod';
-import { MinuteField } from './MinuteField';
+import { HourField } from './hour-field';
+import { DayPeriodField } from './day-period';
+import { MinuteField } from './minute-field';
 
 export function TimeFields({ form, errors }: TimeFieldsProps) {
   return (

@@ -1,8 +1,8 @@
 import { checkAccount } from '@/actions/admin/admin';
-import { GrowthChart } from '@/components/shared/admin/dashboard/GrowthChart';
-import { MentorsChart } from '@/components/shared/admin/dashboard/MentorsChart';
-import { StatsCards } from '@/components/shared/admin/dashboard/StatCard';
-import UsersTable from '@/components/shared/admin/dashboard/UserTable';
+import { GrowthChart } from '@/components/shared/admin/dashboard/growth-chart';
+import { MentorsChart } from '@/components/shared/admin/dashboard/mentors-chart';
+import { StatsCards } from '@/components/shared/admin/dashboard/stat-card';
+import UsersTable from '@/components/shared/admin/dashboard/user-table';
 import { cookies } from 'next/headers';
 import { redirect } from 'next/navigation';
 export default async function AdminView() {

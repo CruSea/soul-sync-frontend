@@ -5,14 +5,14 @@ import {
   CommandGroup,
   CommandItem,
   CommandList,
-} from './TimeCommand';
+} from './time-command';
 import {
   FormControl,
   FormField,
   FormItem,
   FormMessage,
 } from '@/components/ui/form';
-import { Popover, PopoverContent, PopoverTrigger } from './TimePopover';
+import { Popover, PopoverContent, PopoverTrigger } from './time-popover';
 import { cn } from '@/lib/utils';
 import { Check, ChevronsUpDown } from 'lucide-react';
 import { getStartedForm } from '@/data/get-started-data';

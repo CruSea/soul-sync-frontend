@@ -1,7 +1,6 @@
 'use server';
 import { cookies } from 'next/headers';
-import { apiUrl, logoutAction, userToken } from '../auth/login';
-import { redirect } from 'next/navigation';
+import { apiUrl } from '../actions/auth/login';
 
 interface CustomError {
   message: string;
