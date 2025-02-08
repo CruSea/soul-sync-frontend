@@ -38,6 +38,6 @@ const data= postRequest.postData();
 return data;
 }
 
-export function revalidateWithLogging(tag: string) {
+export async function  revalidateWithLogging(tag: string) {
   return revalidateTag(tag);
 }
