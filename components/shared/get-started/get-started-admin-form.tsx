@@ -5,14 +5,14 @@ import {
   getStartedAdminFormSchema,
   getStartedAdminFormValues,
 } from '@/types/get-started';
-import { getStartedMentorFormValues } from '@/types/get-started';
+
 import { zodResolver } from '@hookform/resolvers/zod';
 import { Form } from '@/components/ui/form';
 import { AgeField } from './age-field';
 import { GenderField } from './gender-field';
 import { getStartedForm } from '@/data/get-started-data';
 import { LocationField } from './location-field';
-import { useEffect } from 'react';
+
 import { Button } from '@/components/ui/button';
 import { useRouter } from 'next/navigation';
 import { PhoneNumberField } from './phone-number-field';
@@ -31,7 +31,7 @@ const GetStartedAdminForm = () => {
 
   const router = useRouter(); // Initialize the useRouter hook
 
-  const onSubmit = (data: getStartedAdminFormValues) => {
+  const onSubmit = () => {
     // Navigate to /mentor after form submission
     router.push('/admin'); // Use router.push for smooth navigation
   };

@@ -1,6 +1,6 @@
 'use client';
 
-import { useState, useRef, useEffect } from 'react';
+import { useRef, useEffect } from 'react';
 import { Card } from '@/components/ui/card';
 
 import { ChatProps } from '@/types/mentor';
@@ -9,9 +9,8 @@ import { transformChatData } from '@/lib/utils';
 import { jsonServer } from '@/data/end-points';
 import ChatHeader from './chat-header';
 import { ScrollArea } from './chat-scrollarea';
-
-import InputArea from './InputArea';
 import Message from './message';
+import InputArea from './InputArea';
 
 const Chat = ({
   userMessages,
@@ -20,7 +19,6 @@ const Chat = ({
   setUserMessages,
 }: ChatProps) => {
   // text is where the text box saves what the mentor writes
-  const [text, setText] = useState<string>('');
 
   const chatData = transformChatData(userMessages?.messages);
 

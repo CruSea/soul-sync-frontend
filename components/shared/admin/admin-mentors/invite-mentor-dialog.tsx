@@ -14,7 +14,7 @@ import { Label } from '@/components/ui/label';
 import { toast } from '@/hooks/use-toast';
 import React from 'react';
 
-import { inviteMentore } from '@/actions/admin/metore';
+import { inviteMentore } from '@/actions/admin/admin';
 import { User_Info } from '@/types/users';
 
 interface InviteMentorFormData {

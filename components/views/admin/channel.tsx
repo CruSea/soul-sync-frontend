@@ -23,6 +23,7 @@ import {
 import { useToast } from '@/hooks/use-toast';
 import { fetchedChannels, handleAddChannel } from '@/actions/admin/channel';
 import { Account } from '@/types/users';
+import { userProfile } from '@/actions/auth/login';
 
 export default function ChannelsPage() {
   const [channels, setChannels] = useState<Channel[]>([]);
@@ -39,33 +40,18 @@ export default function ChannelsPage() {
     'FACEBOOK',
     'TWILIO',
   ];
-  const [user, setUser] = useState(null);
+  const [user, setUser] = useState<Account | null>(null);
   useEffect(() => {
-    if (typeof window !== 'undefined') {
-      const cookiesArray = document.cookie.split('; ');
-      const userCookie = cookiesArray.find((row) =>
-        row.startsWith('user-profile=')
-      );
-
-      if (userCookie) {
-        const encodedProfile = userCookie.split('=')[1];
-
-        try {
-          const decodedProfile = decodeURIComponent(encodedProfile);
-          setUser(JSON.parse(decodedProfile));
-        } catch (error) {
-          //  document.cookie = 'user-profile=; path=/; expires=Thu, 01 Jan 1970 00:00:00 GMT';
-        }
-      }
-    }
+    const fetchUserProfile = async () => {
+      const userAccoutId: Account = await userProfile();
+      setUser(userAccoutId);
+    };
+    fetchUserProfile();
   }, []);
-  const userAccoutId: Account | null = user
-    ? JSON.parse(JSON.stringify(user))
-    : null;
 
   useEffect(() => {
     const getChannels = async () => {
-      const response = await fetchedChannels(userAccoutId?.id as string);
+      const response = await fetchedChannels(user?.id as string);
 
       if (!response.error) {
         setChannels(response);
@@ -74,7 +60,7 @@ export default function ChannelsPage() {
       }
     };
     getChannels();
-  }, [userAccoutId?.id]);
+  }, [user?.id]);
 
   const filteredChannel = channels?.filter(
     (item) =>
@@ -90,14 +76,20 @@ export default function ChannelsPage() {
   const AddChannel = async (
     newChannel: Omit<Channel, 'id' | 'icon' | 'createdAt' | 'accountId'>
   ) => {
-    if (userAccoutId) {
+    if (user) {
       const channelWithId = {
         ...newChannel,
-        accountId: userAccoutId.id,
+        accountId: user.id,
       } as Channel;
 
       const response = await handleAddChannel(channelWithId);
-
+      if (response.error) {
+        toast({
+          title: 'Error',
+          description: response.error.discription,
+          duration: 3000,
+        });
+      }
       toast({
         title: 'Channel added successfully',
         description: 'The channel has been added to the list',

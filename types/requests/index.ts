@@ -14,3 +14,9 @@ export interface NotifyType {
     duration?: number;
   };
 }
+
+export interface inviteMentorProps {
+  accountId: string;
+  name: string;
+  email: string;
+}
