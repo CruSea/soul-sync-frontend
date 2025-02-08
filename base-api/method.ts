@@ -1,9 +1,14 @@
-'use server'
+'use server';
 import apiCall from './api';
 
 class ApiRequest {
   // Constructor to initialize URL and tag
-  constructor(private url: string, private tag: string, private data?: any, private method: string = 'GET') {}
+  constructor(
+    private url: string,
+    private tag: string,
+    private data?: any,
+    private method: string = 'GET'
+  ) {}
 
   // This method will execute the API call
   protected async executeRequest() {

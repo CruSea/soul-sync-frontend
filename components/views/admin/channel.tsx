@@ -40,7 +40,7 @@ export default function ChannelsPage() {
     'FACEBOOK',
     'TWILIO',
   ];
-  const [user, setUser] = useState<Account|null>(null);
+  const [user, setUser] = useState<Account | null>(null);
   useEffect(() => {
     const fetchUserProfile = async () => {
       const userAccoutId: Account = await userProfile();
@@ -48,7 +48,6 @@ export default function ChannelsPage() {
     };
     fetchUserProfile();
   }, []);
- 
 
   useEffect(() => {
     const getChannels = async () => {
@@ -84,13 +83,13 @@ export default function ChannelsPage() {
       } as Channel;
 
       const response = await handleAddChannel(channelWithId);
-if(response.error){
-  toast({
-    title: 'Error',
-    description: response.error.discription,
-    duration: 3000,
-  });
-}
+      if (response.error) {
+        toast({
+          title: 'Error',
+          description: response.error.discription,
+          duration: 3000,
+        });
+      }
       toast({
         title: 'Channel added successfully',
         description: 'The channel has been added to the list',

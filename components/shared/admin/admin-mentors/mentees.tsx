@@ -6,7 +6,7 @@ import { Badge } from '@/components/ui/badge';
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 import { Column, FilterOption } from '@/types/data-table';
 import { toast } from 'sonner';
-import { mentorDelete } from '@/actions/admin/metore';
+import { deleteMentor } from '@/actions/admin/admin';
 
 interface Mentee {
   id: string | number;
@@ -87,7 +87,7 @@ const MenteesTable: React.FC = () => {
 
   const handleDelete = async (id: string | number) => {
     try {
-      const response = await mentorDelete(`${endPoint}/${id}`);
+      const response = await deleteMentor(`${endPoint}/${id}`);
       if (response.error) {
         throw new Error('Failed to delete the mentee.');
       }

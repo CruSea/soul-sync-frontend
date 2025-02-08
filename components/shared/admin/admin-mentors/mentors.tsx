@@ -65,9 +65,9 @@ const filterOptions: FilterOption<Mentors>[] = [
 ];
 const search = ['name', 'age', 'gender', 'location', 'isActive'];
 const MentorsTable: React.FC = () => {
-  const [clientUser, setClientUser] = useState<Account|null>(null);
+  const [clientUser, setClientUser] = useState<Account | null>(null);
   const router = useRouter();
- useEffect(() => {
+  useEffect(() => {
     const fetchUserProfile = async () => {
       const userAccoutId: Account = await userProfile();
       setClientUser(userAccoutId);

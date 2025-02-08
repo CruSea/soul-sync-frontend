@@ -10,17 +10,7 @@ import { GenderField } from './gender-field';
 import { getStartedForm } from '@/data/get-started-data';
 import { LocationField } from './location-field';
 import { SpecializationField } from './specialization-field';
-import {
-  FormField,
-  FormItem,
-  FormControl,
-  FormMessage,
-  FormLabel,
-} from '@/components/ui/form';
-import { HourField } from './hour-field';
-import { MinuteField } from './minute-field';
-import { DayPeriodField } from './day-period';
-import { useEffect } from 'react';
+
 import { Button } from '@/components/ui/button';
 import { useRouter } from 'next/navigation';
 import { TimeFields } from './time-fields';

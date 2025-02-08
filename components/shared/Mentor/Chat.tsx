@@ -9,9 +9,8 @@ import { transformChatData } from '@/lib/utils';
 import { jsonServer } from '@/data/end-points';
 import ChatHeader from './chat-header';
 import { ScrollArea } from './chat-scrollarea';
-
-import InputArea from './InputArea';
 import Message from './message';
+import InputArea from './InputArea';
 
 const Chat = ({
   userMessages,
