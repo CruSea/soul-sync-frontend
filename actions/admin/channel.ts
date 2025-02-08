@@ -1,29 +1,20 @@
 'use server';
-import apiCall from '../../base-api/api';
+import { DeleteRequest, GetRequest, PostRequest } from '@/base-api/method';
 import { Channel } from '@/types/channel';
 const Url = {
   fetchedChannel: `admin/channel`,
+  telegram:`message/telegram?id`
 };
 
 export const fetchedChannels = async (id: string) => {
-  const response = await apiCall({
-    url: `${Url.fetchedChannel}?accountId=${id}`,
-    tag: 'fetchedChannel',
-  });
-  const data = response;
-
+ const getRequest=new GetRequest(`${Url.fetchedChannel}?accountId=${id}`,'fetche-channel')
+  const data = getRequest.getData();
   return data;
 };
 
 export const handleAddChannel = async (body: Channel) => {
-  const response = await apiCall({
-    url: Url.fetchedChannel,
-    method: 'POST',
-    data: body,
-    tag: 'addChannel',
-  });
-  const data = response;
-
+ const postRequest=new PostRequest(`${Url.fetchedChannel}`,'add-channel',body)
+  const data = postRequest.postData();
   return data;
 };
 
@@ -37,12 +28,8 @@ export const handleDeleting = async (
       prevItems.filter((item) => item.id !== deleteId)
     );
   }
-  const response = await apiCall({
-    url: `${Url.fetchedChannel}/${deleteId}`,
-    method: 'DELETE',
-    tag: 'Delete-channel',
-  });
-  const data = response;
+const deleteRequest=new DeleteRequest(`${Url.fetchedChannel}/${deleteId}`,'Delete-channel')
+  const data = deleteRequest.deleteData();
   setDeleteId(null);
   return data;
 };
@@ -62,17 +49,9 @@ export const handleConnect = async (
         item.id === connectedId ? { ...item, is_on: true } : item
       )
     );
-    const body = {
-      url: `message/telegram?id=${connectedId}`,
-    };
-
-    const response = await apiCall({
-      url: `${Url.fetchedChannel}/${connectedId}/connect`,
-      method: 'POST',
-      data: body,
-      tag: 'connect-channel',
-    });
-    const data = response;
+   
+const postRequest=new PostRequest(`${Url.fetchedChannel}/${connectedId}/connect`,'connect-channel',{url:`${Url.telegram}=${connectedId}`})
+    const data = postRequest.postData();
     return data;
   }
 };

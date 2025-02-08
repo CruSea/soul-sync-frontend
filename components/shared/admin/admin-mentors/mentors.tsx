@@ -10,6 +10,7 @@ import { endPoints } from '@/data/end-points';
 import { deleteMentor } from '@/actions/admin/admin';
 import { Account } from '@/types/users';
 import { useRouter } from 'next/navigation';
+import { userProfile } from '@/actions/auth/login';
 interface Mentors {
   id: string | number;
   name: string;
@@ -64,32 +65,17 @@ const filterOptions: FilterOption<Mentors>[] = [
 ];
 const search = ['name', 'age', 'gender', 'location', 'isActive'];
 const MentorsTable: React.FC = () => {
-  const [clientUser, setClientUser] = useState(null);
+  const [clientUser, setClientUser] = useState<Account|null>(null);
   const router = useRouter();
-  useEffect(() => {
-    if (typeof window !== 'undefined' && !clientUser) {
-      const cookiesArray = document.cookie.split('; ');
-      const userCookie = cookiesArray.find((row) =>
-        row.startsWith('user-profile=')
-      );
+ useEffect(() => {
+    const fetchUserProfile = async () => {
+      const userAccoutId: Account = await userProfile();
+      setClientUser(userAccoutId);
+    };
+    fetchUserProfile();
+  }, []);
 
-      if (userCookie) {
-        const encodedProfile = userCookie.split('=')[1];
-
-        try {
-          const decodedProfile = decodeURIComponent(encodedProfile);
-          setClientUser(JSON.parse(decodedProfile));
-        } catch (error) {
-          document.cookie =
-            'user-profile=; path=/; expires=Thu, 01 Jan 1970 00:00:00 GMT';
-          router.push('/log-in');
-        }
-      }
-    }
-  }, [router, clientUser]);
-
-  const userAccoutId: Account = JSON.parse(JSON.stringify(clientUser));
-  const endPoint = `${endPoints.adminMentors}?accountId=${userAccoutId?.id as string}`;
+  const endPoint = `${endPoints.adminMentors}?accountId=${clientUser?.id as string}`;
 
   const handleDelete = async (id: string | number) => {
     try {
@@ -119,10 +105,10 @@ const MentorsTable: React.FC = () => {
         <div className="flex items-center justify-between">
           <h1 className="text-2xl font-semibold">Mentors</h1>
           <InviteMentorDialog
-            userName={userAccoutId?.name as string}
-            accountId={userAccoutId?.id}
-            roleId={userAccoutId?.role?.id as string}
-            roleName={userAccoutId?.role?.name as string}
+            userName={clientUser?.name as string}
+            accountId={clientUser?.id as string}
+            roleId={clientUser?.role?.id as string}
+            roleName={clientUser?.role?.name as string}
           />
         </div>
         <DataTable<Mentors>

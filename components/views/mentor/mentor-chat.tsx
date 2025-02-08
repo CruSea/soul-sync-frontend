@@ -1,6 +1,6 @@
 'use server';
 import { getUser } from '@/actions/user/get-user';
-import MentorContainer from '@/components/shared/mentor/mentor-container';
+import MentorContainer from '@/components/shared/Mentor/mentor-container';
 import { sortUsers } from '@/lib/utils';
 
 const MentorView = async () => {
