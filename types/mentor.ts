@@ -1,4 +1,4 @@
-import { colors } from '@/components/shared/mentor/Info';
+import { colors } from '@/components/shared/Mentor/Info';
 import { Account } from './users';
 
 export interface Mentor {
