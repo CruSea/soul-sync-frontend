@@ -1,0 +1,23 @@
+'use server';
+
+import { GetRequest } from '@/base-api/method';
+
+const Url = {
+  conversation: `conversation`,
+  checkuser: `admin/user`,
+};
+
+export const conversation = async (params: string) => {
+  const getRequest = new GetRequest(
+    `${Url.conversation}/${params}`,
+    'conversation'
+  );
+  const data = await getRequest.getData();
+  return data;
+};
+
+export const checkUser = async (params: string) => {
+  const getRequest = new GetRequest(`${Url.checkuser}/${params}`, 'user check');
+  const data = getRequest.getData();
+  return data;
+};

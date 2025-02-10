@@ -21,16 +21,19 @@ const LoginPageCard = () => {
     if (token) {
       const decoded = decodeToken(token); // Ensure decodeToken is working properly
       const userInfo = decoded as User;
+      console.log(userInfo);
       // Fix: Correctly access the first account
       const user = {
+        userId: userInfo?.sub ?? null,
         userName: userInfo?.email ?? 'Guest', // Default to "Guest" if no name
         accountId: userInfo?.accounts?.[0]?.id ?? null, // Ensure we access index 0
         roleId: userInfo?.accounts?.[0]?.role?.id ?? null, // Access role correctly
         roleName: userInfo?.accounts?.[0]?.role?.name ?? null,
+        imageUrl: userInfo?.imageUrl ?? null,
         token,
       };
+      console.log('login', userInfo);
       setAuthCookie(user);
-
       // Fix: Store user properly in localStorage
     }
   }, [searchParams]);

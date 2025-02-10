@@ -2,6 +2,7 @@
 
 import { revalidateTag } from 'next/cache';
 
-export async function revalidate() {
-  revalidateTag('admin-mentors');
+export async function revalidate(tag: string) {
+  const response = revalidateTag(tag);
+  return response;
 }

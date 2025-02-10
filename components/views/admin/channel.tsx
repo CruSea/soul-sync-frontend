@@ -24,6 +24,7 @@ import { useToast } from '@/hooks/use-toast';
 import { fetchedChannels, handleAddChannel } from '@/actions/admin/channel';
 import { Account } from '@/types/users';
 import { userProfile } from '@/actions/auth/login';
+import { revalidate } from '@/actions/revalidate';
 
 export default function ChannelsPage() {
   const [channels, setChannels] = useState<Channel[]>([]);
@@ -91,11 +92,11 @@ export default function ChannelsPage() {
         });
       }
       toast({
-        title: 'Channel added successfully',
-        description: 'The channel has been added to the list',
+        title: 'Success',
+        description: 'Channel added successfully',
         duration: 3000,
       });
-
+      await revalidate('add-channel');
       setTriggerState(!triggerState);
     }
   };

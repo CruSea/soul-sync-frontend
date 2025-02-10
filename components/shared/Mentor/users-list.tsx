@@ -10,7 +10,8 @@ import {
 import { ScrollArea } from '@/components/ui/scroll-area';
 import { cn, getFallBack } from '@/lib/utils';
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
-import { UsersListProps } from '@/types/mentor';
+import { User, UsersListProps } from '@/types/mentor';
+import { Account, role } from '@/types/users';
 
 const UsersList = ({ users, currentUser, setCurrentUser }: UsersListProps) => {
   return (
@@ -28,32 +29,33 @@ const UsersList = ({ users, currentUser, setCurrentUser }: UsersListProps) => {
             <CommandEmpty>No results found.</CommandEmpty>
             <CommandGroup className="p-3 flex flex-col">
               {/* a an individual user */}
-              {users.map((user) => (
-                <CommandItem
-                  key={user.id}
-                  className={cn(
-                    'flex px-2.5 gap-3.5 items-center h-[70px] outline-none rounded-lg cursor-pointer',
-                    user.id === currentUser.id ? '!bg-gray-300' : 'bg-white'
-                  )} // if user is selected sets the background to gry
-                  onSelect={() => setCurrentUser(user)} // sets the chosen user to the index of the selected item
-                >
-                  {/* Avatar image a user */}
-                  <Avatar className="w-[32px] h-[32px]">
-                    <AvatarImage
-                      src={user.imageUrl}
-                      className="w-full h-full object-cover"
-                    />
-                    <AvatarFallback className="w-full h-full flex items-center justify-center text-base">
-                      {getFallBack(user.fullName)}
-                    </AvatarFallback>
-                  </Avatar>
+              {users?.length > 0 &&
+                users?.map((data) => (
+                  <CommandItem
+                    key={data.id}
+                    className={cn(
+                      'flex px-2.5 gap-3.5 items-center h-[70px] outline-none rounded-lg cursor-pointer',
+                      data.id === currentUser.id ? '!bg-gray-300' : 'bg-white'
+                    )} // if user is selected sets the background to gry
+                    onSelect={() => setCurrentUser(data)} // sets the chosen user to the index of the selected item
+                  >
+                    {/* Avatar image a user */}
+                    <Avatar className="w-[32px] h-[32px]">
+                      <AvatarImage
+                        src={data.imageUrl}
+                        className="w-full h-full object-cover"
+                      />
+                      <AvatarFallback className="w-full h-full flex items-center justify-center text-base">
+                        {getFallBack(data.name)}
+                      </AvatarFallback>
+                    </Avatar>
 
-                  {/* user information */}
-                  <div className="flex flex-col justify-center">
-                    <div className="font-bold text-base">{user.fullName}</div>
-                  </div>
-                </CommandItem>
-              ))}
+                    {/* user information */}
+                    <div className="flex flex-col justify-center">
+                      <div className="font-bold text-base">{data.name}</div>
+                    </div>
+                  </CommandItem>
+                ))}
             </CommandGroup>
           </CommandList>
         </ScrollArea>

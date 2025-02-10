@@ -10,7 +10,7 @@ import { jsonServer } from '@/data/end-points';
 import ChatHeader from './chat-header';
 import { ScrollArea } from './chat-scrollarea';
 import Message from './message';
-import InputArea from './InputArea';
+import InputArea from './input-area';
 
 const Chat = ({
   userMessages,
