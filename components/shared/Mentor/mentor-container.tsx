@@ -1,194 +1,79 @@
 'use client';
 
-import { endPoints, jsonServer } from '@/data/end-points';
-import {
-  Conversation,
-  ConversationInfo,
-  ConversationInfos,
-  MentorContainerProps,
-  Messages,
-  UserMessages,
-  WSMessage,
-  WSSentMessage,
-  webSocketMessages,
-} from '@/types/mentor';
-import Profile from './profile';
+import { User, UserDetails, UserMessages } from '@/types/mentor';
+import Profile from './Profile';
 import { useEffect, useState } from 'react';
-import { jsonServer } from '@/data/end-points';
 import { useRouter } from 'next/navigation';
 import UsersList from './users-list';
 import Chat from './Chat';
-
-const BASE_URL = process.env.NEXT_PUBLIC_API_BASE_URL;
-const USER_URL = process.env.NEXT_PUBLIC_API_ADMIN_URL;
-
-const MentorContainer = ({ conversations }: MentorContainerProps) => {
-  const [currentConversation, setCurrentConversation] = useState<Conversation>(
-    conversations[0]
-  );
-  const [currentConversationMessages, setCurrentConversationMessages] = useState<webSocketMessages>([])
-  const [userMessages, setUserMessages] = useState<Messages>();
-  const [webSocketMessages, setWebSocketMessages] = useState<webSocketMessages>(
-    []
-  );
-  const [socket, setSocket] = useState<Socket | null>(null);
+import { userProfile } from '@/actions/auth/login';
+import { checkUser, conversation } from '@/actions/mentor/mentor';
+import { toast } from '@/hooks/use-toast';
+const MentorContainer = () => {
+  const [currentUser, setCurrentUser] = useState<User | null>(null);
+  const [userDetails, setUserDetails] = useState<UserDetails>();
+  const [userMessages, setUserMessages] = useState<UserMessages>();
 
   // const WS_URL = 'https://1clr2kph-3002.uks1.devtunnels.ms';
 
   const token = localStorage.getItem('token') as string; // get token this way for the actual implementation
   // const token = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIzMmVmMGQ2MS03YTMxLTRjZGMtYWJlNC1kN2VlYWQzNmY0ZGQiLCJlbWFpbCI6ImRlc3RhbmF0aG5hZWxhdGFyb0BnbWFpbC5jb20iLCJpbWFnZVVybCI6bnVsbCwiYWNjb3VudHMiOlt7ImlkIjoiYjBjMTU3YzgtYWYyMy00MzQ0LWE0MzctMTM0ZDIzYTYyNGE5IiwibmFtZSI6Im5hdGhuYWVsIiwiZG9tYWluIjpudWxsfV0sInJvbGVzIjpbIk9XTkVSIl0sImlhdCI6MTczNDk0Mjg5OCwiZXhwIjoxNzM0OTQ2NDk4fQ.S5nSDy3zYmG926BAYaqDWnp0lsGq8scr1t6Db41m1wM';
 
-  useEffect(() => {
-    const token = localStorage.getItem('token') as string;
-    const newSocket: Socket = io(`https://1clr2kph-3002.uks1.devtunnels.ms`, {
-      query: { token },
-    });
+  const fetchUserMesages = async () => {
+    try {
+      const response = await conversation();
 
-    newSocket.on('connect', () => {
-      console.log('Connected to the WebSocket server');
+      const data = await response;
 
-      newSocket.on('message', (message) => {
-        try {
-          let data = JSON.parse(message);
-          setWebSocketMessages((prevMessages) => [...prevMessages, data]);
-        } catch (error) {
-          console.error('Failed to parse message:', error);
-        }
-      });
-    });
-
-    newSocket.on('disconnect', () => {
-      console.log('Disconnected from the WebSocket server');
-    });
-
-    newSocket.on('error', (error) => {
-      console.error('Error occurred:', error);
-    });
-
-    newSocket.on('reconnect_attempt', () => {
-      console.log('Reconnecting to the WebSocket server...');
-    });
-
-    newSocket.on('reconnect_error', (error) => {
-      console.error('Reconnection error:', error);
-    });
-
-    newSocket.on('reconnect_failed', () => {
-      console.log('Reconnection failed');
-    });
-
-    setSocket(newSocket);
-
-    return () => {
-      newSocket.disconnect(); // Clean up when unmounting
-    };
-  }, []);
-
-  //const { sendJsonMessage, lastJsonMessage } = useWebSocket<
-  //  WSMessage | WSSentMessage
-  //>(WS_URL, {
-  //  share: true,
-  //  queryParams: { token: token },
-  //});
-
-  // Effect to log lastJsonMessage
-  //useEffect(() => {
-  //  if (lastJsonMessage) {
-  //    setWebSocketMessages((prevMessages) => [
-  //      // store all the messages recieved by the us
-  //      ...prevMessages,
-  //      lastJsonMessage,
-  //    ]);
-  //  }
-  //}, [lastJsonMessage]);
-
-  useEffect(() => {
-    const filteredMessages: webSocketMessages = webSocketMessages.filter(
-      (message) => message.conversationId === currentConversation.conversation_id
-    );
-
-    setCurrentConversationMessages(filteredMessages);
-  }, [webSocketMessages]);
-
-  useEffect(() => {
-    const fetchUserMesages = async () => {
-      try {
-        // const response = await fetch(
-        //  `${jsonServer.baseUrl}/${jsonServer.thread}?id=${currentConversation.conversation_id}` // for when connecting to local db server
-        // );
-
-        const response = await fetch(
-          // for when connecting to backend
-          `${BASE_URL}/${endPoints.allConversations}/${currentConversation.conversation_id}`
-        );
-
-        if (!response.ok) {
-          throw new Error('Network response was not ok');
-        }
-
-        const data = await response.json();
-
-        if (Array.isArray(data) && data.length > 0) {
-          setUserMessages(data[0]); // Assuming you want the first item
-        }
-      } catch (error) {
-        throw new Error(error as string);
+      if (Array.isArray(data) && data.length > 0) {
+        setUserMessages(data[0]); // Assuming you want the first item
       }
+    } catch (error) {
+      throw new Error(error as string);
+    }
+  };
+  useEffect(() => {
+    const fetchUserProfile = async () => {
+      const userAccoutId = await userProfile();
+      setCurrentUser(userAccoutId as unknown as User);
+      console.table(userAccoutId);
     };
-
-    if (currentConversation && currentConversation.conversation_id) {
+    fetchUserProfile();
+  }, []);
+  useEffect(() => {
+    if (currentUser && currentUser.id) {
       fetchUserMesages();
     }
-  }, [currentConversation]);
+  }, [currentUser]);
+  useEffect(() => {
+    const fetchedUser = async () => {
+      try {
+        const response = await checkUser(currentUser?.userId as string);
 
-  // useEffect(() => {
-  //   const checkUser = async () => {
-  //     try {
-  //       const user = localStorage.getItem('user');
-  //       const token = localStorage.getItem('token');
+        if (response.error) {
+          toast({
+            title: 'Error!',
+            description: response.error.description,
+          });
+        }
 
-  //       if (user && token) {
-  //         const userObj = JSON.parse(user);
-  //         // const endPoint = `${BASE_URL}/${USER_URL}/${userObj.accounts[0].id}/user/${userObj.sub}`;
-  //         const endPoint = `${BASE_URL}/${USER_URL}/${userObj.sub}`;
-  //         const response = await fetch(endPoint, {
-  //           method: 'GET',
-  //           headers: {
-  //             'Content-Type': 'application/json',
-  //             Authorization: `Bearer ${JSON.parse(token)}`,
-  //           },
-  //         });
-
-          if (!response.ok) {
-            throw new Error('Fetch failed');
-          }
-
-  //         const userInfo = await response.json();
-
-          if (!userInfo) {
-            throw new Error('userInfo not found');
-          }
-
-          if (!userInfo.mentors[0].location) {
-            router.push('/mentor/get-started');
-          }
-        } else {
-          router.push('/log-in');
+        if (!response.mentors[0].location) {
+          router.push('/mentor/get-started');
         }
       } catch (error) {
-        router.push('/log-in');
+        // router.push('/log-in');
       }
     };
 
-  //   checkUser();
-  // }, [router]);
+    fetchedUser();
+  }, [router]);
 
   return (
     <>
-      <ConversationsList
-        conversations={conversations}
-        currentConversation={currentConversation}
-        setCurrentConversation={setCurrentConversation}
+      <UsersList
+        users={currentUser as unknown as User[]}
+        currentUser={currentUser as User}
+        setCurrentUser={setCurrentUser}
       />
       <Chat
         currentConversation={currentConversation}

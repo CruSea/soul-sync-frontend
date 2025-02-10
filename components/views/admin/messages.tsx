@@ -1,5 +1,5 @@
 'use client';
-import Chat from '@/components/shared/chat';
+import Chat from '@/components/shared/Chat';
 import { AdminLayout } from '@/components/shared/layout/admin-layout';
 // import Profile from '@/components/shared/Profile';
 // import Search from '@/components/shared/Search';

@@ -24,6 +24,8 @@ export async function setAuthCookie(userData: User_Info) {
       id: userData.accountId,
       name: userData.userName,
       role: userData.roleName,
+      imageUrl: userData.imageUrl,
+      userId: userData.userId,
     }),
 
     // secure: process.env.NODE_ENV === 'production',

@@ -1,7 +1,5 @@
 import { colors } from '@/components/shared/Mentor/Info';
-import type { StaticImageData } from 'next/image';
-import React from 'react';
-import { Socket } from 'socket.io-client';
+import { Account } from './users';
 
 export type Mentor = {
   id: string;
@@ -26,9 +24,10 @@ export interface MentorLayoutProps {
 
 export type User = {
   id: string;
-  fullName: string;
+  name: string;
   imageUrl: string;
   lastUpdated: string;
+  userId: string;
 };
 
 export type MentorLayoutProps = {
@@ -72,11 +71,11 @@ export type MentorContainerProps = {
   conversations: Conversations;
 };
 
-export type ConversationsListProps = {
-  currentConversation: Conversation;
-  conversations: Conversations;
-  setCurrentConversation: (conversation: Conversation) => void;
-};
+export interface UsersListProps {
+  currentUser: User;
+  users: User[];
+  setCurrentUser: (user: User) => void;
+}
 
 export type UserMessages = {
   id: string;

@@ -71,13 +71,26 @@ export function ChannelCard({ channel, setChannels, toast }: ChannelCardProps) {
     }
   };
 
-  const confirmDelete = () => {
-    handleDeleting(setChannels, deleteId, setDeleteId);
+  const confirmDelete = async () => {
+    if (deleteId !== null) {
+      setChannels((prevItems) =>
+        prevItems.filter((item) => item.id !== deleteId)
+      );
+    }
+    const response = await handleDeleting(deleteId as string);
+    if (response.error) {
+      toast({
+        title: 'Error',
+        description: response.error.description,
+        duration: 3000,
+      });
+    }
     toast({
-      title: 'Channel deleted successfully',
-      description: 'The channel has been added to the list',
+      title: 'success',
+      description: 'Channel deleted successfully!',
       duration: 3000,
     });
+    setDeleteId(null);
   };
   const channelChange = (channel: Channel) => {
     switch (channel.type) {
