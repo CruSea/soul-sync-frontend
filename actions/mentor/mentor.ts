@@ -8,10 +8,7 @@ const Url = {
 };
 
 export const conversation = async () => {
-  const getRequest = new GetRequest(
-    `${Url.conversation}`,
-    'conversation'
-  );
+  const getRequest = new GetRequest(`${Url.conversation}`, 'conversation');
   const data = await getRequest.getData();
   return data;
 };
