@@ -10,7 +10,7 @@ const nextConfig = {
     ],
   },
   // reactStrictMode: true, // Helps catch bugs early
- // swcMinify: true, // Faster minification for production
+  // swcMinify: true, // Faster minification for production
 };
 
 export default nextConfig;
