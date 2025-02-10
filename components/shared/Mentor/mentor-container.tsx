@@ -1,18 +1,15 @@
 'use client';
 
 import {
-  MentorContainerProps,
   User,
   UserDetails,
   UserMessages,
 } from '@/types/mentor';
 import Profile from './profile';
 import { useEffect, useState } from 'react';
-import { jsonServer } from '@/data/end-points';
 import { useRouter } from 'next/navigation';
 import UsersList from './users-list';
 import Chat from './chat';
-import { Account } from '@/types/users';
 import { userProfile } from '@/actions/auth/login';
 import { checkUser, conversation } from '@/actions/mentor/mentor';
 import { toast } from '@/hooks/use-toast';
