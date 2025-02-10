@@ -7,9 +7,9 @@ const Url = {
   checkuser: `admin/user`,
 };
 
-export const conversation = async (params: string) => {
+export const conversation = async () => {
   const getRequest = new GetRequest(
-    `${Url.conversation}/${params}`,
+    `${Url.conversation}`,
     'conversation'
   );
   const data = await getRequest.getData();
