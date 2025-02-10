@@ -1,20 +1,16 @@
 'use client';
-
 import React, { useEffect, useState } from 'react';
-import { DataTable } from '@/components/shared/DataTable';
+import { DataTable } from '@/components/shared/data-table';
 import { Badge } from '@/components/ui/badge';
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 import { Column, FilterOption } from '@/types/data-table';
-import { useToast } from '@/hooks/use-toast';
+import { toast } from '@/hooks/use-toast';
 import { InviteMentorDialog } from './invite-mentor-dialog';
-import { toast } from 'sonner';
 import { endPoints } from '@/data/end-points';
-import { useAuth } from '@/context/AuthContext';
 import { deleteMentor } from '@/actions/admin/admin';
-import { title } from 'process';
-
-const BASE_URL = process.env.NEXT_PUBLIC_API_BASE_URL;
-
+import { Account } from '@/types/users';
+import { useRouter } from 'next/navigation';
+import { userProfile } from '@/actions/auth/login';
 interface Mentors {
   id: string | number;
   name: string;
@@ -22,10 +18,10 @@ interface Mentors {
   age: number;
   gender: string;
   location: string;
-  availability: any;
+  availability: { startDate: string };
   isActive: boolean;
   profileImage: string;
-  user: any;
+  user: { name: string; imageUrl: string };
 }
 
 const columns: Column<Mentors>[] = [
@@ -69,30 +65,37 @@ const filterOptions: FilterOption<Mentors>[] = [
 ];
 const search = ['name', 'age', 'gender', 'location', 'isActive'];
 const MentorsTable: React.FC = () => {
-  const { user, notification } = useAuth();
-  const userObj = JSON.parse(user);
-  const accountId = String(userObj?.accounts[0]?.id);
-  const endPoint = `${BASE_URL}/${endPoints.adminMentors}?accountId=${accountId}`;
+  const [clientUser, setClientUser] = useState<Account | null>(null);
+  const router = useRouter();
+  useEffect(() => {
+    const fetchUserProfile = async () => {
+      const userAccoutId: Account = await userProfile();
+      setClientUser(userAccoutId);
+    };
+    fetchUserProfile();
+  }, []);
+
+  const endPoint = `${endPoints.adminMentors}?accountId=${clientUser?.id as string}`;
 
   const handleDelete = async (id: string | number) => {
     try {
       const response = await deleteMentor(id as string);
-      if (!response.ok) {
-        notification({
+      if (response.error) {
+        toast({
+          variant: 'destructive',
           title: 'Error!',
-          description: 'Failed to delete the mentor',
+          description: response.error.description,
         });
 
         throw new Error('Failed to delete the mentor.');
       }
 
-      notification({
+      toast({
         title: 'Success!',
         description: 'Mentor Successfully deleted.',
       });
     } catch (error) {
-      console.error('Error deleting mentor:', error);
-      throw error;
+      throw new Error(error as string);
     }
   };
 
@@ -101,9 +104,15 @@ const MentorsTable: React.FC = () => {
       <div className="space-y-6 bg-white p-6 rounded-lg">
         <div className="flex items-center justify-between">
           <h1 className="text-2xl font-semibold">Mentors</h1>
-          <InviteMentorDialog />
+          <InviteMentorDialog
+            userName={clientUser?.name as string}
+            accountId={clientUser?.id as string}
+            roleId={clientUser?.role?.id as string}
+            roleName={clientUser?.role?.name as string}
+          />
         </div>
         <DataTable<Mentors>
+          tag="admin-mentors"
           apiUrl={endPoint}
           columns={columns}
           searchFields={search as []}

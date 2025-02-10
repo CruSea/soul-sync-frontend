@@ -10,10 +10,14 @@ export type connectionRequest = {
 export interface Channel {
   id: string;
   name: string;
-  type: type;
-  configuration: telegramConfig | NegaritConfig;
-  createdAt: string;
-  accountId: string;
+  type?: type;
+  configuration?: telegramConfig | NegaritConfig;
+  is_on?: boolean;
+  date?: string;
+  isDeleted?: boolean;
+  createdAt?: string;
+  accountId?: string;
+  api_key?: string;
 }
 export type telegramConfig = {
   token: string;

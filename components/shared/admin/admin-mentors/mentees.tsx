@@ -1,11 +1,12 @@
 'use client';
 
 import React, { useState } from 'react';
-import { DataTable } from '@/components/shared/DataTable';
+import { DataTable } from '@/components/shared/data-table';
 import { Badge } from '@/components/ui/badge';
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 import { Column, FilterOption } from '@/types/data-table';
 import { toast } from 'sonner';
+import { deleteMentor } from '@/actions/admin/admin';
 
 interface Mentee {
   id: string | number;
@@ -82,22 +83,16 @@ const search = ['name', 'age', 'gender', 'location', 'status', 'platform'];
 
 const MenteesTable: React.FC = () => {
   const [error, setError] = useState<string | null>(null);
-  const endPoint = 'http://localhost:3500/mentees';
+  const endPoint = 'mentees';
 
   const handleDelete = async (id: string | number) => {
     try {
-      const response = await fetch(`${endPoint}/${id}`, {
-        method: 'DELETE',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-      });
-      if (!response.ok) {
+      const response = await deleteMentor(`${endPoint}/${id}`);
+      if (response.error) {
         throw new Error('Failed to delete the mentee.');
       }
       toast.success('Mentee has been deleted.');
     } catch (error) {
-      console.error('Error deleting mentee:', error);
       toast.error('Failed to delete mentee');
       throw error;
     }
@@ -119,11 +114,11 @@ const MenteesTable: React.FC = () => {
             itemsPerPage={10}
             onDelete={handleDelete}
             apiUrl={endPoint}
+            tag="featch-mentees"
             enableActions={true}
             enablePagination={true}
             onError={(errorMessage) => {
               setError(errorMessage);
-              console.error('DataTable error:', errorMessage);
             }}
           />
         )}

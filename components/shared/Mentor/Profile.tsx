@@ -1,9 +1,10 @@
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
-import Info from './Info';
+
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { ProfileProps, ProfileTypes } from '@/types/mentor';
 import { getFallBack } from '@/lib/utils';
 import React from 'react';
+import Info from './Info';
 
 const Profile: React.FC<ProfileProps> = ({ userDetails }) => {
   return (

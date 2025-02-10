@@ -21,9 +21,9 @@ import {
   DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu';
 import { useToast } from '@/hooks/use-toast';
-import { channelJsonserver } from '@/data/end-points';
 import { fetchedChannels, handleAddChannel } from '@/actions/admin/channel';
-import { v4 as uuidv4 } from 'uuid';
+import { Account } from '@/types/users';
+import { userProfile } from '@/actions/auth/login';
 
 export default function ChannelsPage() {
   const [channels, setChannels] = useState<Channel[]>([]);
@@ -31,6 +31,7 @@ export default function ChannelsPage() {
   const [selectedCategory, setSelectedCategory] = useState('All');
   const { toast } = useToast();
   const [selectedChannel, setSelectedChannel] = useState<string>('TELEGRAM');
+  const [triggerState, setTriggerState] = useState<boolean>(true);
   const categories = [
     'All',
     'TELEGRAM',
@@ -39,18 +40,27 @@ export default function ChannelsPage() {
     'FACEBOOK',
     'TWILIO',
   ];
+  const [user, setUser] = useState<Account | null>(null);
+  useEffect(() => {
+    const fetchUserProfile = async () => {
+      const userAccoutId: Account = await userProfile();
+      setUser(userAccoutId);
+    };
+    fetchUserProfile();
+  }, []);
 
   useEffect(() => {
     const getChannels = async () => {
-      const response = await fetchedChannels();
-      if (response.responseData) {
-        setChannels(response.responseData);
+      const response = await fetchedChannels(user?.id as string);
+
+      if (!response.error) {
+        setChannels(response);
       } else {
         toast(response.error);
       }
     };
     getChannels();
-  }, []);
+  }, [user?.id]);
 
   const filteredChannel = channels?.filter(
     (item) =>
@@ -63,23 +73,31 @@ export default function ChannelsPage() {
     day: 'numeric',
   };
 
-  const AddChannel = (
+  const AddChannel = async (
     newChannel: Omit<Channel, 'id' | 'icon' | 'createdAt' | 'accountId'>
   ) => {
-    const channelWithId: Channel = {
-      ...newChannel,
-      id: `${uuidv4().toString()}`,
-      createdAt: new Date().toLocaleDateString('en-US', format),
-      accountId: '4211a09b-b42a-4b1d-85f9-a6598d8ff585',
-    };
-    setChannels(channels ? [...channels, channelWithId] : [channelWithId]);
-    handleAddChannel(channelWithId);
+    if (user) {
+      const channelWithId = {
+        ...newChannel,
+        accountId: user.id,
+      } as Channel;
 
-    toast({
-      title: 'Channel added successfully',
-      description: 'The channel has been added to the list',
-      duration: 3000,
-    });
+      const response = await handleAddChannel(channelWithId);
+      if (response.error) {
+        toast({
+          title: 'Error',
+          description: response.error.discription,
+          duration: 3000,
+        });
+      }
+      toast({
+        title: 'Channel added successfully',
+        description: 'The channel has been added to the list',
+        duration: 3000,
+      });
+
+      setTriggerState(!triggerState);
+    }
   };
 
   return (
@@ -123,18 +141,21 @@ export default function ChannelsPage() {
               <CommandEmpty>No results found.</CommandEmpty>
               <CommandGroup className="h-full">
                 <div className="grid lg:grid-cols-4 3xl:grid-cols-5 md:grid-cols-3 grid-cols-[repeat(auto-fit,minmax(min-content,1fr))] gap-4 p-4 h-full">
-                  {filteredChannel?.map((channel, index) => (
-                    <CommandItem
-                      key={channel.id || `channel-${index}`}
-                      className="w-auto items-center justify-center h-full min-h-[100px] rounded-xl"
-                    >
-                      <ChannelCard
-                        channel={channel}
-                        setChannels={setChannels}
-                        toast={toast}
-                      />
-                    </CommandItem>
-                  ))}
+                  {filteredChannel.length > 0 &&
+                    filteredChannel?.map((channel, index) => (
+                      <CommandItem
+                        key={channel.id || `channel-${index}`}
+                        className="w-auto items-center justify-center h-full min-h-[100px] rounded-xl"
+                      >
+                        <ChannelCard
+                          channel={channel}
+                          setChannels={setChannels}
+                          toast={toast}
+                          setTriggerState={setTriggerState}
+                          triggerState={triggerState}
+                        />
+                      </CommandItem>
+                    ))}
                   <AddChannelDialog
                     onAddChannel={AddChannel}
                     setSelectedChannel={setSelectedChannel}

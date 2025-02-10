@@ -1,5 +1,5 @@
 import React from 'react';
-import { DataTable } from '@/components/shared/DataTable';
+import { DataTable } from '@/components/shared/data-table';
 import { Badge } from '@/components/ui/badge';
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 import { Button } from '@/components/ui/button';
@@ -75,7 +75,7 @@ export function AdminsTable() {
           <InviteAdminDialog />
         </div>
         <DataTable
-          data={ALL_ADMINS}
+          //  data={ALL_ADMINS }
           columns={columns}
           searchFields={[
             'name',
@@ -88,6 +88,7 @@ export function AdminsTable() {
           filterOptions={filterOptions}
           itemsPerPage={10}
           apiUrl={''}
+          tag="addmin-tabele"
           onDelete={function (id: string | number): Promise<void> {
             throw new Error('Function not implemented.');
           }}

@@ -12,7 +12,6 @@ export function decodeToken(token: string) {
   try {
     return jwtDecode(token); // Returns the decoded payload
   } catch (err) {
-    console.error('Invalid token:', err);
     return null;
   }
 }
@@ -81,4 +80,15 @@ export function transformWSData(
       id: uuidv4(),
     };
   });
+}
+
+// lib/auth.ts
+export async function verifyToken(token: string) {
+  try {
+    // Example JWT verification
+    const decoded = decodeToken(token);
+    return !!decoded;
+  } catch (error) {
+    return false;
+  }
 }

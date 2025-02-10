@@ -14,6 +14,21 @@ export type Mentor = {
   location: string;
   status: string;
   profileImage: string;
+}
+
+export interface MentorLayoutProps {
+  children: React.ReactNode;
+}
+
+export interface MentorLayoutProps {
+  children: React.ReactNode;
+}
+
+export type User = {
+  id: string;
+  fullName: string;
+  imageUrl: string;
+  lastUpdated: string;
 };
 
 export type MentorLayoutProps = {

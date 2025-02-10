@@ -1,5 +1,4 @@
 'use client';
-
 import { useState } from 'react';
 import {
   Dialog,
@@ -12,21 +11,18 @@ import {
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
-import { useToast } from '@/hooks/use-toast';
-import { useAuth } from '@/context/AuthContext';
-//import handler from '@/app/api/[...params]/route';
-import { endPoints, jsonServer } from '@/data/end-points';
+import { toast } from '@/hooks/use-toast';
 import React from 'react';
-import { toast } from 'sonner';
 
-const BASE_URL = process.env.NEXT_PUBLIC_API_BASE_URL;
+import { inviteMentore } from '@/actions/admin/admin';
+import { User_Info } from '@/types/users';
 
 interface InviteMentorFormData {
   name: string;
   email: string;
 }
 
-export function InviteMentorDialog() {
+export function InviteMentorDialog(user?: User_Info) {
   const [isOpen, setIsOpen] = useState(false);
   const [formData, setFormData] = useState<InviteMentorFormData>({
     name: '',
@@ -36,52 +32,35 @@ export function InviteMentorDialog() {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
 
+    const requestBody = {
+      accountId: user?.accountId as string,
+      name: formData.name,
+      email: formData.email,
+    };
+
     try {
-      const user = localStorage.getItem('user');
-      const token = localStorage.getItem('token');
-
-      if (user && token) {
-        const endPoint = `${BASE_URL}/${endPoints.adminMentors}`; // move base to env
-        const userObj = JSON.parse(user);
-        const requestBody = {
-          accountId: userObj.accounts[0].id,
-          name: formData.name,
-          email: formData.email,
-        };
-
-        console.log('endPoint', endPoint);
-
-        fetch(endPoint, {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json',
-            Authorization: `Bearer ${JSON.parse(token)}`,
-          },
-          body: JSON.stringify(requestBody),
-        })
-          .then((response) => {
-            if (!response.ok) {
-              return response.text().then((text) => {
-                throw new Error(`Bad Request: ${text}`);
-              });
-            }
-            return response.json();
-          })
-          .then((data) => {
-            console.log('Response from server:', data);
-          })
-          .catch((error) => {
-            console.error('Error making POST request:', error);
-          });
-        toast(`Invitation has been sent to ${formData.email}`);
-
-        setFormData({ name: '', email: '' });
-        setIsOpen(false);
-      } else {
-        console.error('user not found');
+      const response = await inviteMentore(requestBody);
+      if (response.error) {
+        toast({
+          variant: 'destructive',
+          title: 'Error!',
+          description: response.error.message,
+        });
+        return;
       }
+
+      toast({
+        title: 'Success!',
+        description: `Invitation sent to ${formData.email}`,
+      });
+      setFormData({ name: '', email: '' });
+      setIsOpen(false);
     } catch (error) {
-      toast('Failed to send invitation. Please try again.');
+      toast({
+        variant: 'destructive',
+        title: 'Error!',
+        description: 'Failed to send invitation.',
+      });
     }
   };
 

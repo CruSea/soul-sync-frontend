@@ -12,12 +12,12 @@ import {
   WSSentMessage,
   webSocketMessages,
 } from '@/types/mentor';
+import Profile from './profile';
 import { useEffect, useState } from 'react';
-import useWebSocket from 'react-use-websocket';
+import { jsonServer } from '@/data/end-points';
+import { useRouter } from 'next/navigation';
+import UsersList from './users-list';
 import Chat from './Chat';
-import ConversationsList from './conversations-list';
-import { io, Socket } from 'socket.io-client';
-import readline from 'readline';
 
 const BASE_URL = process.env.NEXT_PUBLIC_API_BASE_URL;
 const USER_URL = process.env.NEXT_PUBLIC_API_ADMIN_URL;
@@ -129,13 +129,10 @@ const MentorContainer = ({ conversations }: MentorContainerProps) => {
         const data = await response.json();
 
         if (Array.isArray(data) && data.length > 0) {
-          // setUserMessages(data[0].messages); // for when connecting to json server
-          setUserMessages(data); // for when connecting to backend
-        } else {
-          console.warn('No user details found');
+          setUserMessages(data[0]); // Assuming you want the first item
         }
       } catch (error) {
-        console.error('Failed to fetch user Messages:', error);
+        throw new Error(error as string);
       }
     };
 
@@ -162,30 +159,26 @@ const MentorContainer = ({ conversations }: MentorContainerProps) => {
   //           },
   //         });
 
-  //         if (!response.ok) {
-  //           console.error('Failed to fetch user info', response);
-  //           throw new Error('Fetch failed');
-  //         }
+          if (!response.ok) {
+            throw new Error('Fetch failed');
+          }
 
   //         const userInfo = await response.json();
 
-  //         if (!userInfo) {
-  //           console.error("userInfo doesn't exist");
-  //           throw new Error('userInfo not found');
-  //         }
+          if (!userInfo) {
+            throw new Error('userInfo not found');
+          }
 
-  //         if (!userInfo.mentors[0].location) {
-  //           router.push('/mentor/get-started');
-  //         }
-  //       } else {
-  //         console.error('User or token not found');
-  //         router.push('/log-in');
-  //       }
-  //     } catch (error) {
-  //       console.error('Error: ', error);
-  //       router.push('/log-in');
-  //     }
-  //   };
+          if (!userInfo.mentors[0].location) {
+            router.push('/mentor/get-started');
+          }
+        } else {
+          router.push('/log-in');
+        }
+      } catch (error) {
+        router.push('/log-in');
+      }
+    };
 
   //   checkUser();
   // }, [router]);

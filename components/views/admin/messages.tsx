@@ -1,9 +1,8 @@
 'use client';
-
-import Chat from '@/components/shared/Chat';
+import Chat from '@/components/shared/chat';
 import { AdminLayout } from '@/components/shared/layout/admin-layout';
-import Profile from '@/components/shared/Profile';
-import Search from '@/components/shared/Search';
+// import Profile from '@/components/shared/Profile';
+// import Search from '@/components/shared/Search';
 import { cn } from '@/lib/utils';
 import { useState } from 'react';
 
@@ -13,7 +12,7 @@ export default function MessagesView() {
   return (
     <AdminLayout title="Messages">
       <div className="flex p-5 gap-5 w-full h-full overflow-hidden bg-gray-100">
-        <Search />
+        {/* <Search /> */}
         <Chat toggleProfileInView={() => setProfileInView(!profileInView)} />
         <div
           className={cn(
@@ -21,7 +20,7 @@ export default function MessagesView() {
             !profileInView ? 'hidden' : ''
           )}
         >
-          <Profile type="mentor" />
+          {/* <Profile type="mentor" /> */}
         </div>
       </div>
     </AdminLayout>

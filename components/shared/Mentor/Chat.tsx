@@ -1,23 +1,16 @@
 'use client';
 
-import { useState, useRef, useEffect } from 'react';
-import { v4 as uuidv4 } from 'uuid';
-
+import { useRef, useEffect } from 'react';
 import { Card } from '@/components/ui/card';
-import { ScrollArea } from './chat-scrollarea';
-import ChatHeader from './ChatHeader';
-import Message from './Message';
-import {
-  ChatProps,
-  threadType,
-  WSMessage,
-  WSSentMessage,
-  webSocketMessages,
-  transformedMessage
-} from '@/types/mentor';
-import { transformChatData, transformWSData } from '@/lib/utils';
-import InputArea from './InputArea';
+
+import { ChatProps } from '@/types/mentor';
+import { transformChatData } from '@/lib/utils';
+
 import { jsonServer } from '@/data/end-points';
+import ChatHeader from './chat-header';
+import { ScrollArea } from './chat-scrollarea';
+import Message from './message';
+import InputArea from './InputArea';
 
 
 const Chat = ({
@@ -27,9 +20,7 @@ const Chat = ({
   setWebSocketMessages,
   socket,
 }: ChatProps) => {
-  // const chatData = userMessages
-  //  ? transformChatData(userMessages[0]?.messages) //                                                      //for when connecting to json server
-  //  : [];
+  // text is where the text box saves what the mentor writes
 
   const [WSData, setWSData] = useState<transformedMessage[]>([]);
 
@@ -69,11 +60,32 @@ const Chat = ({
       payload: messageText,
     };
 
-    const WSFormatMessage: WSMessage = {
-      conversationId: currentConversation.conversation_id,
-      type: 'SENT',
-      body: messageText,
-      createdAt: createdAt
+    try {
+      // Find the current id from props
+      if (!userMessages) {
+        return;
+      }
+
+      // Append the new message to the messages array
+      const updatedMessages = [...userMessages.messages, newMessage];
+
+      // Update the backend
+      const patchResponse = await fetch(
+        `${jsonServer.baseUrl}/${jsonServer.messages}/${userMessages.id}`,
+        {
+          method: 'PATCH',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({ messages: updatedMessages }),
+        }
+      );
+
+      if (textBox.current) textBox.current.value = ''; // Reset input field
+
+      setUserMessages({ ...userMessages, messages: updatedMessages });
+    } catch (error) {
+      throw new Error(error as string);
     }
 
     socket.emit('message', JSON.stringify(newMessage));

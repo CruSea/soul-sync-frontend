@@ -15,7 +15,7 @@ import React from 'react';
 
 import { Button } from '@/components/ui/button';
 import { Plus } from 'lucide-react';
-import type { Channel, formSchemaType } from '@/types/channel';
+import type { Channel } from '@/types/channel';
 import ChannelNameForm from './channel-name-form';
 import { formSchema } from '@/types/channel';
 import TypeForm from './channel-type-form';
@@ -95,8 +95,6 @@ export function AddChannelDialog({
       previousWatchedValues.current = watchedValues; // Update ref with the new values
     }
   }, [watchedValues]);
-
-  console.log('Current Channel State:', currentChannel);
 
   const channelChange = () => {
     switch (selectedChannel) {

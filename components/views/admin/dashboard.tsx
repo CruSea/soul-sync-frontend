@@ -1,47 +1,25 @@
-'use client';
-
 import { checkAccount } from '@/actions/admin/admin';
-import { GrowthChart } from '@/components/shared/admin/dashboard/GrowthChart';
-import { MentorsChart } from '@/components/shared/admin/dashboard/MentorsChart';
-import { StatsCards } from '@/components/shared/admin/dashboard/StatCard';
-import UsersTable from '@/components/shared/admin/dashboard/UserTable';
-import { useAuth } from '@/context/AuthContext';
-import { endPoints } from '@/data/end-points';
-import { toast } from '@/hooks/use-toast';
-import { useRouter } from 'next/navigation';
-import { useEffect } from 'react';
+import { GrowthChart } from '@/components/shared/admin/dashboard/growth-chart';
+import { MentorsChart } from '@/components/shared/admin/dashboard/mentors-chart';
+import { StatsCards } from '@/components/shared/admin/dashboard/stat-card';
+import UsersTable from '@/components/shared/admin/dashboard/user-table';
+import { cookies } from 'next/headers';
+import { redirect } from 'next/navigation';
+export default async function AdminView() {
+  // Get user data from cookies
+  const cookieStore = await cookies();
+  const userProfile = cookieStore.get('user-profile')?.value;
+  // Redirect to login if no user cookie
+  // Parse user info from cookie
+  const user = userProfile && JSON.parse(userProfile);
+  // Verify account status
+  const response = await checkAccount(user.id);
+  // Handle invalid token
 
-const BASE_URL = process.env.NEXT_PUBLIC_API_BASE_URL;
-
-export default function AdminView() {
-  const router = useRouter();
-  const { logout, user } = useAuth();
-  console.log('user', user);
-  useEffect(() => {
-    const checkAccounts = async () => {
-      // const user = localStorage.getItem('user');
-
-      const userObj = JSON.parse(user as string);
-
-      const response = await checkAccount(userObj.accounts[0].id);
-
-      if (!response) {
-        console.error("AccountInfo doesn't exist");
-        throw new Error('Account info not found');
-      }
-
-      if (!response?.domain) {
-        console.log('Redirecting new user to create org page');
-        router.push('/admin/create-org');
-      }
-
-      if (response?.error?.description === 'Invalid or expired token') {
-        logout();
-      }
-    };
-
-    checkAccounts();
-  }, [router, user]);
+  // Redirect to org creation if no domain
+  if (!response?.domain) {
+    redirect('/admin/create-org');
+  }
 
   return (
     <div className="flex-1 p-4 bg-secondary dark:bg-gray-900">

@@ -1,3 +1,3 @@
-import { icon } from './BellIcon';
+import { icon } from './bellIcon';
 const baseIcons = icon;
 export default baseIcons;

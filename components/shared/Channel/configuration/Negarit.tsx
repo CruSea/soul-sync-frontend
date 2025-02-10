@@ -1,4 +1,4 @@
-import type { Channel, NegaritConfig, telegramConfig } from '@/types/channel';
+import type { Channel, NegaritConfig } from '@/types/channel';
 type NegaritProp = {
   channel: Channel;
 };

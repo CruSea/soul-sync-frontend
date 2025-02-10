@@ -7,9 +7,6 @@ import { Card } from '@/components/ui/card';
 import { ScrollArea } from '@/components/ui/scroll-area';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
-
-import ChatHeader from './ChatHeader';
-import Message from './Message';
 import React from 'react';
 
 // type for the group of message threads between user and mentor
@@ -131,13 +128,14 @@ const Chat: React.FC<ChatProps> = ({ toggleProfileInView }) => {
   return (
     <Card className="flex-1 rounded-[10px] flex flex-col ">
       {/* the header that shows user name*/}
-      <ChatHeader toggleProfileInView={toggleProfileInView} />
+      {/* <ChatHeader toggleProfileInView={toggleProfileInView} /> */}
 
       {/* the chat thread between the user and mentor*/}
       <ScrollArea>
         <div className={`relative flex-1 w-full pt-3 px-6 flex flex-col gap-6`}>
           {thread.map((message) => (
-            <Message key={message.id} {...message} />
+            <>message components here</>
+            // <Message key={message.id} {...message} />
           ))}
           <div ref={bottomOfPanelRef} className="h-10 w-full p-5"></div>
         </div>

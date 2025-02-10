@@ -1,31 +1,20 @@
+'use server';
+import { getUser } from '@/actions/user/get-user';
 import MentorContainer from '@/components/shared/Mentor/mentor-container';
-import { endPoints, jsonServer } from '@/data/end-points';
-import { ChartNoAxesColumnDecreasing } from 'lucide-react';
-
-const BASE_URL = process.env.NEXT_PUBLIC_API_BASE_URL;
+import { sortUsers } from '@/lib/utils';
 
 const MentorView = async () => {
   // Fetch users from the JSON Server
-  //const response = await fetch(
-  //  `${jsonServer.baseUrl}/${jsonServer.conversation}`
-  //); // for when connecting to local db server
-  const response = await fetch(`${BASE_URL}/${endPoints.allConversations}`); // for when connecting to backend
-  if (!response.ok) {
+  const response = await getUser();
+  if (response.error) {
     throw new Error('Failed to fetch users from JSON Server');
   }
 
-  const conversations = await response.json();
-
-  if (conversations.length === 0) {
-    throw new Error('No conversations found');
+  if (response.length === 0) {
+    throw new Error('No users found');
   }
 
-  console.log(
-    'the conversatoins',
-    conversations,
-    'the url',
-    `${BASE_URL}/${endPoints.allConversations}`
-  );
+  const sortedUsers = sortUsers(response); // backend will send a sorted list in actual implementation
 
   return (
     <>

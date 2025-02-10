@@ -1,5 +1,5 @@
-import GetStartedCard from '@/components/shared/GetStarted/GetStartedCard';
-import GetStartedSidebar from '@/components/shared/GetStarted/GetStartedSidebar';
+import GetStartedCard from '@/components/shared/get-started/get-started-card';
+import GetStartedSidebar from '@/components/shared/get-started/get-started-sidebar';
 import { GetStartedProps } from '@/types/get-started';
 
 const GetStartedView = ({ type }: GetStartedProps) => {

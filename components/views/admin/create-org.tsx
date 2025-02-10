@@ -1,8 +1,6 @@
 'use client';
-
 import { zodResolver } from '@hookform/resolvers/zod';
-
-import LandingPageHeader from '@/components/shared/LandingPage/LandingPageHeader';
+import LandingPageHeader from '@/components/shared/landing-page/landing-page-header';
 import {
   createOrgFormOneSchema,
   createOrgFormOneValues,
@@ -11,22 +9,28 @@ import {
   OrgDataValues,
   Page,
 } from '@/types/create-org';
-import { useState, useRef, useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import { useForm } from 'react-hook-form';
-import CreateOrgSidebar from '@/components/shared/admin/CreateOrg/CreateOrgSidebar';
-import CreateOrgForm from '@/components/shared/admin/CreateOrg/CreateOrgForm';
-import { endPoints } from '@/data/end-points';
-import { useAuth } from '@/context/AuthContext';
+import CreateOrgSidebar from '@/components/shared/admin/create-org/create-org-sidebar';
+import CreateOrgForm from '@/components/shared/admin/create-org/create-org-form';
 import { createOrganazation } from '@/actions/admin/admin';
-import { title } from 'process';
-import { DessertIcon } from 'lucide-react';
+import { Account } from '@/types/users';
 
-const BASE_URL = process.env.NEXT_PUBLIC_API_BASE_URL;
+import { toast } from '@/hooks/use-toast';
+import { userProfile } from '@/actions/auth/login';
 
 const CreateOrgView = () => {
   const [currentPage, setCurrentPage] = useState<Page>('first');
   const [orgData, setOrgData] = useState<OrgDataValues>({});
-  const { user, notification } = useAuth();
+  const [clientUser, setClientUser] = useState<Account | null>(null);
+  useEffect(() => {
+    const fetchUserProfile = async () => {
+      const userAccoutId: Account = await userProfile();
+      setClientUser(userAccoutId);
+    };
+    fetchUserProfile();
+  }, []);
+
   const formOne = useForm<createOrgFormOneValues>({
     resolver: zodResolver(createOrgFormOneSchema),
     mode: 'onChange',
@@ -50,35 +54,31 @@ const CreateOrgView = () => {
   const onSubmit = async (
     data: createOrgFormTwoValues | createOrgFormOneValues
   ) => {
-    setOrgData((prevOrgData: any) => {
+    setOrgData((prevOrgData: OrgDataValues) => {
       const updatedData = { ...prevOrgData, ...data };
       return updatedData;
     });
 
     if (currentPage === 'second') {
-      if (!user) {
-        console.error('user not found');
+      if (!currentPage) {
         return;
       }
-
-      const userData = JSON.parse(user);
-
       const reqBody = {
-        name: orgData.companyName,
-        domain: orgData.companyDomain,
+        name: orgData.companyName as string,
+        domain: orgData.companyDomain as string,
       };
+
       const response = await createOrganazation(
-        userData?.accounts[0]?.id,
+        clientUser?.id as string,
         reqBody
       );
-      if (response.ok) {
-        notification({
+      if (response) {
+        toast({
           title: 'Success!',
           description: 'successfull Created!',
         });
       } else {
-        console.error('Form Submission is wrong');
-        notification({
+        toast({
           title: 'Error!',
           description: 'Form Submission is wrong!',
         });
@@ -94,30 +94,24 @@ const CreateOrgView = () => {
       try {
         // Await the form submission and validation
         await formOne.handleSubmit(onSubmit, (errors) => {
-          // Handle validation failure
-          console.log('Form One validation failed:', errors);
           isValid = false; // Set to false if validation fails
         })();
       } catch (error) {
-        console.error('Error during validation or submission:', error);
         isValid = false;
       }
     } else {
       try {
         // Await the form submission and validation for the second form
         await formTwo.handleSubmit(onSubmit, (errors) => {
-          console.log('Form Two validation failed:', errors);
           isValid = false; // Set to false if validation fails
         })();
       } catch (error) {
-        console.error('Error during validation or submission:', error);
         isValid = false;
       }
     }
 
     return isValid; // Return the final validation status
   };
-
   return (
     <div className="w-screen h-screen flex flex-col">
       <LandingPageHeader showButton={false} />
