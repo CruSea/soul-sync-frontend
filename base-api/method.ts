@@ -50,9 +50,9 @@ class PostRequest extends ApiRequest {
 }
 
 // PUT request subclass
-class PutRequest extends ApiRequest {
+class PutchRequest extends ApiRequest {
   constructor(url: string, tag: string, data: any) {
-    super(url, tag, data, 'PUT');
+    super(url, tag, data, 'PUTCH');
   }
 
   public async putData() {
@@ -71,4 +71,4 @@ class DeleteRequest extends ApiRequest {
   }
 }
 
-export { GetRequest, PostRequest, PutRequest, DeleteRequest };
+export { GetRequest, PostRequest, PutchRequest, DeleteRequest };

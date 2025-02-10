@@ -3,7 +3,7 @@ import {
   DeleteRequest,
   GetRequest,
   PostRequest,
-  PutRequest,
+  PutchRequest,
 } from '@/base-api/method';
 import { inviteMentorProps } from '@/types/requests';
 import { revalidateTag } from 'next/cache';
@@ -25,7 +25,7 @@ export const createOrganazation = async (
   id: string,
   body: { name: string; domain: string }
 ) => {
-  const putRequest = new PutRequest(
+  const putRequest = new PutchRequest(
     `${Url.adminAccount}/${id}`,
     'createOrg',
     body
