@@ -1,6 +1,6 @@
 'use client';
 import { AdminLayout } from '@/components/shared/layout/admin-layout';
-import { Toaster } from '@/components/ui/sonner';
+import { Toaster } from '@/components/ui/toaster';
 import { LayoutProps } from '@/types/admin';
 import { usePathname } from 'next/navigation';
 import React from 'react';

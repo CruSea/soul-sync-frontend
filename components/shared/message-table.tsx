@@ -7,7 +7,6 @@ import { MessageCircle } from 'lucide-react';
 import type { Message } from '@/types/message';
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 import { Column, FilterOption } from '@/types/data-table';
-import { MESSAGE_DATA } from '@/data/message_data';
 
 const columns: Array<Column<Message>> = [
   {

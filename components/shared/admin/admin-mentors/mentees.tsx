@@ -5,7 +5,7 @@ import { DataTable } from '@/components/shared/data-table';
 import { Badge } from '@/components/ui/badge';
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 import { Column, FilterOption } from '@/types/data-table';
-import { toast } from 'sonner';
+import { useToast } from '@/hooks/use-toast';
 import { deleteMentor } from '@/actions/admin/admin';
 
 interface Mentee {
@@ -84,6 +84,7 @@ const search = ['name', 'age', 'gender', 'location', 'status', 'platform'];
 const MenteesTable: React.FC = () => {
   const [error, setError] = useState<string | null>(null);
   const endPoint = 'mentees';
+  const { toast } = useToast();
 
   const handleDelete = async (id: string | number) => {
     try {
@@ -91,9 +92,17 @@ const MenteesTable: React.FC = () => {
       if (response.error) {
         throw new Error('Failed to delete the mentee.');
       }
-      toast.success('Mentee has been deleted.');
+      toast({
+        variant: 'success',
+        title: 'Success',
+        description: 'Fetched successfully',
+      });
     } catch (error) {
-      toast.error('Failed to delete mentee');
+      toast({
+        variant: 'destructive',
+        title: 'Failed',
+        description: 'Fetch Failed',
+      });
       throw error;
     }
   };

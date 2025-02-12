@@ -74,11 +74,13 @@ const CreateOrgView = () => {
       );
       if (response) {
         toast({
+          variant: 'success',
           title: 'Success!',
           description: 'successfull Created!',
         });
       } else {
         toast({
+          variant: 'destructive',
           title: 'Error!',
           description: 'Form Submission is wrong!',
         });

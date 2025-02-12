@@ -51,6 +51,7 @@ const MentorContainer = () => {
 
         if (response.error) {
           toast({
+            variant: 'destructive',
             title: 'Error!',
             description: response.error.description,
           });
