@@ -5,7 +5,6 @@ import { DataTable } from '@/components/shared/data-table';
 import { Badge } from '@/components/ui/badge';
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 import { Column, FilterOption } from '@/types/data-table';
-// import { toast } from 'sonner';
 import { useToast } from '@/hooks/use-toast';
 import { deleteMentor } from '@/actions/admin/admin';
 
