@@ -103,7 +103,7 @@ export function DataTable<T extends { id: string | number }>({
     } finally {
       setIsLoading(false);
     }
-  }, [apiUrl, onDataFetched, onError, tag]);
+  }, []);
 
   // useEffect with dependencies
   useEffect(() => {
