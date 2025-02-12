@@ -1,7 +1,8 @@
 'use server';
 import { DeleteRequest, GetRequest, PostRequest } from '@/base-api/method';
 import { Channel } from '@/types/channel';
-import { revalidate } from '../revalidate';
+
+import { revalidateData } from '@/actions/revalidate';
 const Url = {
   fetchedChannel: `admin/channel`,
   telegram: `message/telegram?id`,
@@ -10,7 +11,7 @@ const Url = {
 export const fetchedChannels = async (id: string) => {
   const getRequest = new GetRequest(
     `${Url.fetchedChannel}?accountId=${id}`,
-    'fetche-channel'
+    'fetch-channel'
   );
   const data = getRequest.getData();
   return data;

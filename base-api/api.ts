@@ -5,7 +5,7 @@ import { apiUrl } from '../actions/auth/login';
 interface CustomError {
   message: string;
   response: {
-    data: any;
+    data: unknown;
   };
 }
 
@@ -21,9 +21,9 @@ const apiCall = async ({
 }: {
   url: string;
   method?: string;
-  data?: any;
+  data?: unknown;
   onStart?: () => void;
-  onSuccess?: (data: any) => void;
+  onSuccess?: (data: unknown) => void;
   onError?: (error: string) => void;
   cache_type?: 'no-cache' | 'force-cache' | 'no-store';
   tag: string;
@@ -45,7 +45,6 @@ const apiCall = async ({
     });
 
     const responseData = await response.json();
-
     if (!response.ok) {
       throw new Error(responseData?.error.message || 'Something went wrong');
     }

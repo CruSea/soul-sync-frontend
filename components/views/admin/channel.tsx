@@ -6,6 +6,7 @@ import { ChannelCard } from '@/components/shared/Channel/channel-card';
 import type { Channel } from '@/types/channel';
 import { ChevronDown } from 'lucide-react';
 import { Button } from '@/components/ui/button';
+
 import {
   Command,
   CommandEmpty,
@@ -24,7 +25,7 @@ import { useToast } from '@/hooks/use-toast';
 import { fetchedChannels, handleAddChannel } from '@/actions/admin/channel';
 import { Account } from '@/types/users';
 import { userProfile } from '@/actions/auth/login';
-import { revalidate } from '@/actions/revalidate';
+import { revalidateData } from '@/actions/revalidate';
 // import { channel } from 'diagnostics_channel';
 
 export default function ChannelsPage() {
@@ -94,7 +95,8 @@ export default function ChannelsPage() {
         description: `Channel ${channelWithId.name} added successfully`,
         duration: 3000,
       });
-      await revalidate('add-channel');
+      await revalidateData('add-channel');
+
       setTriggerState(!triggerState);
     }
   };
