@@ -12,7 +12,7 @@ export default async function RootLayout({
       <body className="font-general">
         <ThemeProvider
           attribute="class"
-          defaultTheme="system"
+          defaultTheme="light"
           enableSystem
           disableTransitionOnChange
           // storageKey="dashboard-theme"

@@ -91,6 +91,7 @@ const MentorsTable: React.FC = () => {
       }
 
       toast({
+        variant: 'success',
         title: 'Success!',
         description: 'Mentor Successfully deleted.',
       });

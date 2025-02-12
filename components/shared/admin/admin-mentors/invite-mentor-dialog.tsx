@@ -50,6 +50,7 @@ export function InviteMentorDialog(user?: User_Info) {
       }
 
       toast({
+        variant: 'success',
         title: 'Success!',
         description: `Invitation sent to ${formData.email}`,
       });

@@ -85,6 +85,7 @@ export function DataTable<T extends { id: string | number }>({
 
       if (response.error) {
         toast({
+          variant: 'destructive',
           title: response.error.title,
           description: response.error.description,
         });
@@ -94,6 +95,7 @@ export function DataTable<T extends { id: string | number }>({
       setTotalItems(response.length);
     } catch (error) {
       toast({
+        variant: 'destructive',
         title: 'Error',
         description:
           error instanceof Error ? error.message : 'An unknown error occurred',
