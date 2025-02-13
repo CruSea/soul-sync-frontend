@@ -38,7 +38,11 @@ const formatDate = (isoString: string) => {
     day: 'numeric',
   });
 };
-export function ChannelCard({ channel, setChannels }: ChannelCardProps) {
+export function ChannelCard({
+  channel,
+  setChannels,
+  setTriggerState,
+}: ChannelCardProps) {
   const [deleteId, setDeleteId] = useState<string | null>(null);
   const [connectedId, setConnectedId] = useState<string | null>(null);
   const { toast } = useToast();
@@ -85,6 +89,7 @@ export function ChannelCard({ channel, setChannels }: ChannelCardProps) {
         duration: 3000,
       });
     }
+    setTriggerState((prev) => !prev);
     toast({
       variant: 'success',
       title: 'Success',
@@ -108,7 +113,32 @@ export function ChannelCard({ channel, setChannels }: ChannelCardProps) {
   };
 
   const handleToggle = () => {
-    handleConnect(channel, setChannels, connectedId, setConnectedId);
+    if (channel.id) {
+      setConnectedId(channel.id);
+    }
+    if (connectedId !== null) {
+      setChannels((prevItems) =>
+        prevItems.map((item) =>
+          item.id === connectedId ? { ...item, isOn: true } : item
+        )
+      );
+      handleConnect(connectedId);
+    } else {
+      toast({
+        variant: 'destructive',
+        title: 'Error',
+        description: 'Channel id not found',
+        duration: 3000,
+      });
+    }
+    setTriggerState((prev) => !prev);
+    toast({
+      variant: 'success',
+      title: 'Success',
+      description: `Channel ${channel.name} connected successfully`,
+      duration: 3000,
+    });
+    setConnectedId(null);
   };
   return (
     <div className="h-full w-full  gap-4  pb-5 flex flex-col items-center justify-between px-2.5 pt-1 border rounded-xl bg-white hover:shadow-md hover:rounded-xl transition-shadow ">
@@ -170,11 +200,11 @@ export function ChannelCard({ channel, setChannels }: ChannelCardProps) {
           <div className="flex items-center justify-between space-x-2 w-full ">
             <Switch
               id="connect"
-              checked={channel.is_on}
+              checked={channel.isOn}
               onCheckedChange={() => handleToggle()}
             />
             <Label htmlFor="connect">
-              {channel.is_on ? 'Connected' : 'Not Connected'}
+              {channel.isOn ? 'Connected' : 'Not Connected'}
             </Label>
           </div>
         </div>
