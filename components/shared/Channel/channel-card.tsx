@@ -38,7 +38,11 @@ const formatDate = (isoString: string) => {
     day: 'numeric',
   });
 };
-export function ChannelCard({ channel, setChannels }: ChannelCardProps) {
+export function ChannelCard({
+  channel,
+  setChannels,
+  setTriggerState,
+}: ChannelCardProps) {
   const [deleteId, setDeleteId] = useState<string | null>(null);
   const [connectedId, setConnectedId] = useState<string | null>(null);
   const { toast } = useToast();
@@ -85,6 +89,7 @@ export function ChannelCard({ channel, setChannels }: ChannelCardProps) {
         duration: 3000,
       });
     }
+    setTriggerState((prev) => !prev);
     toast({
       variant: 'success',
       title: 'Success',

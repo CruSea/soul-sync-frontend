@@ -62,7 +62,8 @@ export default function ChannelsPage() {
       }
     };
     getChannels();
-  }, [user?.id]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [user?.id, triggerState]);
 
   const filteredChannel = channels?.filter(
     (item) =>
@@ -88,6 +89,7 @@ export default function ChannelsPage() {
           duration: 3000,
         });
       }
+      setTriggerState(!triggerState);
       toast({
         variant: 'success',
         title: 'Success',
@@ -95,7 +97,6 @@ export default function ChannelsPage() {
         duration: 3000,
       });
       await revalidate('add-channel');
-      setTriggerState(!triggerState);
     }
   };
 
