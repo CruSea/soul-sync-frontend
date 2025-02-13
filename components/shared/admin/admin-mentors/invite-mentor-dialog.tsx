@@ -21,8 +21,23 @@ interface InviteMentorFormData {
   name: string;
   email: string;
 }
+interface InviteMentorDialogProps {
+  userName: string;
+  accountId: string;
+  roleId: string;
+  roleName: string;
+  triggerState: boolean;
+  setTriggerState: React.Dispatch<React.SetStateAction<boolean>>;
+}
 
-export function InviteMentorDialog(user?: User_Info) {
+export function InviteMentorDialog({
+  userName,
+  accountId,
+  roleId,
+  roleName,
+  triggerState,
+  setTriggerState,
+}: InviteMentorDialogProps) {
   const [isOpen, setIsOpen] = useState(false);
   const [formData, setFormData] = useState<InviteMentorFormData>({
     name: '',
@@ -33,7 +48,7 @@ export function InviteMentorDialog(user?: User_Info) {
     e.preventDefault();
 
     const requestBody = {
-      accountId: user?.accountId as string,
+      accountId: accountId as string,
       name: formData.name,
       email: formData.email,
     };
@@ -48,7 +63,6 @@ export function InviteMentorDialog(user?: User_Info) {
         });
         return;
       }
-
       toast({
         variant: 'success',
         title: 'Success!',
@@ -63,6 +77,7 @@ export function InviteMentorDialog(user?: User_Info) {
         description: 'Failed to send invitation.',
       });
     }
+    setTriggerState(!triggerState);
   };
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {

@@ -52,7 +52,7 @@ export const TableData = async (url: string, tag: string) => {
 export const inviteMentore = async (body: inviteMentorProps) => {
   const postRequest = new PostRequest(
     `${Url.adminMentors}`,
-    'invite-menter',
+    'invite-mentor',
     body
   );
   const data = postRequest.postData();

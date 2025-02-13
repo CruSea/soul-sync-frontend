@@ -39,7 +39,7 @@ import { fetchedDataTable } from '@/actions/shared/data-table';
 import { toast } from '@/hooks/use-toast';
 
 interface DataTableProps<T> {
-  apiUrl: string;
+  apiUrl: string | null;
   columns: Column<T>[];
   searchFields?: (keyof T)[];
   filterOptions?: FilterOption<T>[];
@@ -50,6 +50,8 @@ interface DataTableProps<T> {
   onError?: (error: string) => void;
   onDataFetched?: (data: T[]) => T[];
   tag: string;
+  triggerState: boolean;
+  setTriggerState: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
 export function DataTable<T extends { id: string | number }>({
@@ -64,6 +66,8 @@ export function DataTable<T extends { id: string | number }>({
   onError,
   onDataFetched,
   tag,
+  triggerState,
+  setTriggerState,
 }: DataTableProps<T>) {
   const [data, setData] = useState<T[]>([]);
   const [totalItems, setTotalItems] = useState(0);
@@ -75,40 +79,45 @@ export function DataTable<T extends { id: string | number }>({
     open: boolean;
     id: string | number | null;
   }>({ open: false, id: null });
+
   // Memoized fetchData function
-  const fetchData = useCallback(async () => {
-    setIsLoading(true);
-    try {
-      // const token = localStorage.getItem('token');
-
-      const response = await fetchedDataTable(apiUrl, tag);
-
-      if (response.error) {
-        toast({
-          variant: 'destructive',
-          title: response.error.title,
-          description: response.error.description,
-        });
-        return null;
-      }
-      setData(response);
-      setTotalItems(response.length);
-    } catch (error) {
-      toast({
-        variant: 'destructive',
-        title: 'Error',
-        description:
-          error instanceof Error ? error.message : 'An unknown error occurred',
-      });
-    } finally {
-      setIsLoading(false);
-    }
-  }, []);
 
   // useEffect with dependencies
   useEffect(() => {
+    const fetchData = async () => {
+      setIsLoading(true);
+      try {
+        // const token = localStorage.getItem('token');
+
+        const response = await fetchedDataTable(apiUrl as string, tag);
+
+        if (response.error) {
+          toast({
+            variant: 'destructive',
+            title: response.error.title,
+            description: response.error.description,
+          });
+          return null;
+        }
+        setData(response);
+        setTotalItems(response.length);
+      } catch (error) {
+        toast({
+          variant: 'destructive',
+          title: 'Error',
+          description:
+            error instanceof Error
+              ? error.message
+              : 'An unknown error occurred',
+        });
+      } finally {
+        setIsLoading(false);
+      }
+    };
     fetchData();
-  }, [fetchData]);
+
+    console.log(apiUrl);
+  }, [apiUrl, triggerState]);
 
   const filteredData = data.filter((item) =>
     searchFields.some((field) =>
@@ -137,6 +146,7 @@ export function DataTable<T extends { id: string | number }>({
       await onDelete?.(id);
       setData((prev) => prev.filter((item) => item.id !== id));
       setDeleteDialog({ open: false, id: null });
+      setTriggerState(!triggerState);
     } catch (error) {
       onError?.(
         error instanceof Error
