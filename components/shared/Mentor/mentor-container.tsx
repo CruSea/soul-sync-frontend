@@ -10,7 +10,6 @@ import ConversationsList from './conversations-list';
 import { userProfile } from '@/actions/auth/login';
 const MentorContainer = () => {
   const [currentUser, setCurrentUser] = useState<User | null>(null);
-  const [userMessages, setUserMessages] = useState<UserMessages>();
   const [conversations, setConversations] = useState<Conversation[]>([]); 
   const [currentConversation, setCurrentConversation] = useState<Conversation>();
 
@@ -35,7 +34,7 @@ const MentorContainer = () => {
     const fetchUserMesages = async () => {
       try {
         const response = await conversation();
-        console.log("message", response)
+        console.log("conversation", response)
         const data = await response;
   
         if (Array.isArray(data) && data.length > 0) {
@@ -71,11 +70,7 @@ const MentorContainer = () => {
       />
       {/* <Chat
         currentConversation={currentConversation}
-        userMessages={userMessages}
-        // sendJsonMessage={sendJsonMessage}
-        currentConversationMessages={currentConversationMessages}
-        socket={socket}
-        setWebSocketMessages={setWebSocketMessages}
+
       /> */}
     </>
   );

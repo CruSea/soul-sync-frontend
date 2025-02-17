@@ -1,5 +1,5 @@
 export const platformIcons: Record<string, string> = {
-  Telegram: '/telegram.png',
+  TELEGRAM: '/telegram.png',
   Negarit: '/negarit.png',
   Twilio: '/Twilio.png',
   Facebook: '/facebook.png',

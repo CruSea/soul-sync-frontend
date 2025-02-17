@@ -11,6 +11,7 @@ import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 import { ScrollArea } from '@/components/ui/scroll-area';
 import { cn, getFallBack } from '@/lib/utils';
 import { ConversationsListProps } from '@/types/mentor';
+import { platformIcons } from '@/data/mentor';
 
 const ConversationsList = ({
     conversations,
@@ -35,27 +36,27 @@ const ConversationsList = ({
               {conversations?.length > 0 &&
                 conversations?.map((data) => (
                   <CommandItem
-                    key={data.id}
+                    key={data.conversation_id}
                     className={cn(
                       'flex px-2.5 gap-3.5 items-center h-[70px] outline-none rounded-lg cursor-pointer',
-                      data.id === currentConversation?.id ? '!bg-gray-300' : 'bg-white'
+                      data.conversation_id === currentConversation?.conversation_id ? '!bg-gray-300' : 'bg-white'
                     )} // if user is selected sets the background to gry
                     onSelect={() => setCurrentConversation(data)} // sets the chosen user to the index of the selected item
                   >
                     {/* Avatar image a user */}
-                    {/* <Avatar className="w-[32px] h-[32px]">
+                    <Avatar className="w-[32px] h-[32px]">
                       <AvatarImage
-                        src={data.imageUrl}
+                        src={platformIcons[data.platform]}
                         className="w-full h-full object-cover"
                       />
                       <AvatarFallback className="w-full h-full flex items-center justify-center text-base">
-                        {getFallBack(data.name)}
+                        {getFallBack(platformIcons[data.platform])}
                       </AvatarFallback>
-                    </Avatar> */}
+                    </Avatar>
 
                     {/* user information */}
                     <div className="flex flex-col justify-center">
-                      <div className="font-bold text-base">{data.id}</div>
+                      <div className="font-bold text-base">{data.conversation_id}</div>
                     </div>
                   </CommandItem>
                 ))}

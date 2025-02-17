@@ -30,17 +30,14 @@ export type MentorLayoutProps = {
 export type ConversationsListProps = {
   conversations: Conversation[];
   currentConversation: Conversation | undefined;
-  setCurrentConversation:  React.Dispatch<React.SetStateAction<Conversation>>;
+  setCurrentConversation:  React.Dispatch<React.SetStateAction<Conversation | undefined>>;
 }
 
 type Platform = 'Telegram' | 'WhatsApp' | 'Negarit' | 'Facebook' | 'Twilio';
 
 export type Conversation = {
-  id: string;
-  mentorId: string;
-  address: string;
-  channelId: string;
-  isActive: boolean;
+  conversation_id: string,
+  platform: Platform
 };
 
 export type Conversations = Conversation[];
@@ -118,7 +115,6 @@ export type ChatProps = {
   userMessages: any;
   currentConversationMessages: webSocketMessages;
   setWebSocketMessages: React.Dispatch<React.SetStateAction<webSocketMessages>>;
-  socket: Socket | null;
 };
 
 export type transformedMessage = {
