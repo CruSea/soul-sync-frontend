@@ -39,7 +39,7 @@ const MentorContainer = () => {
         const data = await response;
   
         if (Array.isArray(data) && data.length > 0) {
-          setConversations((prevConversations => [...prevConversations, data[0]]));
+          setConversations((prevConversations => [...prevConversations, ...data]));
           setCurrentConversation(data[0]);
         }
       } catch (error) {

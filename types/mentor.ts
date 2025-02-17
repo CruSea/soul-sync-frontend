@@ -159,6 +159,12 @@ export type MessageProps = {
   newDay: string;
 };
 
+export type InputAreaProps = {
+  sendText: () => void;
+  message: string;
+  setMessage: React.Dispatch<React.SetStateAction<string>>;
+}
+
 export type PlatformIcon = StaticImageData | string;
 
 export type PlatformIconsType = Record<string, PlatformIcon>;

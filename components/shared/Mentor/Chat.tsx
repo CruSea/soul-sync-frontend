@@ -1,6 +1,6 @@
 'use client';
 
-import { useRef, useEffect } from 'react';
+import { useRef, useEffect, useState } from 'react';
 import { Card } from '@/components/ui/card';
 
 import { ChatProps } from '@/types/mentor';
@@ -11,6 +11,7 @@ import ChatHeader from './chat-header';
 import { ScrollArea } from './chat-scrollarea';
 import Message from './Message';
 import InputArea from './input-area';
+import { useSocket } from '@/context/providers/SocketProvider';
 
 
 const Chat = ({
@@ -18,6 +19,22 @@ const Chat = ({
   conversationMessages,
 }: ChatProps) => {
   // text is where the text box saves what the mentor writes
+  const socket = useSocket();
+  const [message, setMessage] = useState("");
+
+  useEffect(() => {
+    if (!socket) return;
+
+    console.log("socket", socket)
+
+    socket.on("message", (msg) => {
+      setMessage(msg);
+    });
+
+    return () => {
+      socket?.off("message");
+    };
+  }, [socket]);
 
   const chatData = conversationMessages
     ? transformChatData(conversationMessages) // for when connecting to backend
@@ -39,6 +56,21 @@ const Chat = ({
 
   // a referance for where the you will write the text
   const textBox = useRef<HTMLInputElement | null>(null);
+
+  const sendText = () => {
+    if (socket && message.trim() !== "") {
+      const messageObject = {
+        type:"CHAT",
+        metadata: {
+          conversationId: currentConversation?.conversation_id
+        },
+        payload: message
+      }
+      socket.emit("chat_message", messageObject); 
+      console.log("message", messageObject)
+      setMessage("");
+    }
+  }
 
   // const sendText = async (messageText: string) => {
   //   if (!messageText.trim() || !socket) return; // Don't send empty messages
@@ -122,7 +154,7 @@ const Chat = ({
           </div>
 
           {/*textbox where you input text */}
-          <InputArea  />
+          <InputArea  sendText={sendText} message={message} setMessage={setMessage}/>
         </Card>
       )}
     </>
