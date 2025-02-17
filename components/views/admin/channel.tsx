@@ -25,6 +25,7 @@ import { fetchedChannels, handleAddChannel } from '@/actions/admin/channel';
 import { Account } from '@/types/users';
 import { userProfile } from '@/actions/auth/login';
 import { revalidate } from '@/actions/revalidate';
+// import { channel } from 'diagnostics_channel';
 
 export default function ChannelsPage() {
   const [channels, setChannels] = useState<Channel[]>([]);
@@ -61,18 +62,13 @@ export default function ChannelsPage() {
       }
     };
     getChannels();
-  }, [user?.id]);
+  }, [user?.id, triggerState]);
 
   const filteredChannel = channels?.filter(
     (item) =>
       (selectedCategory === 'All' || item.type === selectedCategory) &&
       item.name.toLowerCase().includes(search.toLowerCase())
   );
-  const format: Intl.DateTimeFormatOptions = {
-    year: 'numeric',
-    month: 'short',
-    day: 'numeric',
-  };
 
   const AddChannel = async (
     newChannel: Omit<Channel, 'id' | 'icon' | 'createdAt' | 'accountId'>
@@ -86,18 +82,20 @@ export default function ChannelsPage() {
       const response = await handleAddChannel(channelWithId);
       if (response.error) {
         toast({
+          variant: 'destructive',
           title: 'Error',
           description: response.error.discription,
           duration: 3000,
         });
       }
+      setTriggerState(!triggerState);
       toast({
+        variant: 'success',
         title: 'Success',
-        description: 'Channel added successfully',
+        description: `Channel ${channelWithId.name} added successfully`,
         duration: 3000,
       });
       await revalidate('add-channel');
-      setTriggerState(!triggerState);
     }
   };
 
@@ -151,7 +149,6 @@ export default function ChannelsPage() {
                         <ChannelCard
                           channel={channel}
                           setChannels={setChannels}
-                          toast={toast}
                           setTriggerState={setTriggerState}
                           triggerState={triggerState}
                         />

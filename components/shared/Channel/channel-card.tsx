@@ -18,17 +18,14 @@ import {
 import { Button } from '@/components/ui/button';
 import { useState } from 'react';
 import NegaritSMS from './configuration/negarit-sms';
-import { endPoints } from '@/data/end-points';
+import { useToast } from '@/hooks/use-toast';
+
+// import { endPoints } from '@/data/end-points';
 import { handleDeleting, handleConnect } from '@/actions/admin/channel';
 
 interface ChannelCardProps {
   channel: Channel;
   setChannels: React.Dispatch<React.SetStateAction<Channel[]>>;
-  toast: (props: {
-    title: string;
-    description: string;
-    duration?: number;
-  }) => void;
   setTriggerState: React.Dispatch<React.SetStateAction<boolean>>;
   triggerState: boolean;
 }
@@ -41,9 +38,15 @@ const formatDate = (isoString: string) => {
     day: 'numeric',
   });
 };
-export function ChannelCard({ channel, setChannels, toast }: ChannelCardProps) {
+export function ChannelCard({
+  channel,
+  setChannels,
+  setTriggerState,
+}: ChannelCardProps) {
   const [deleteId, setDeleteId] = useState<string | null>(null);
   const [connectedId, setConnectedId] = useState<string | null>(null);
+  const { toast } = useToast();
+
   let iconURL = '';
   switch (channel.type) {
     case 'TELEGRAM':
@@ -80,14 +83,17 @@ export function ChannelCard({ channel, setChannels, toast }: ChannelCardProps) {
     const response = await handleDeleting(deleteId as string);
     if (response.error) {
       toast({
+        variant: 'destructive',
         title: 'Error',
         description: response.error.description,
         duration: 3000,
       });
     }
+    setTriggerState((prev) => !prev);
     toast({
-      title: 'success',
-      description: 'Channel deleted successfully!',
+      variant: 'success',
+      title: 'Success',
+      description: `Channel ${channel.name} deleted successfully`,
       duration: 3000,
     });
     setDeleteId(null);
@@ -107,9 +113,33 @@ export function ChannelCard({ channel, setChannels, toast }: ChannelCardProps) {
   };
 
   const handleToggle = () => {
-    handleConnect(channel, setChannels, connectedId, setConnectedId);
+    if (channel.id) {
+      setConnectedId(channel.id);
+    }
+    if (connectedId !== null) {
+      setChannels((prevItems) =>
+        prevItems.map((item) =>
+          item.id === connectedId ? { ...item, isOn: true } : item
+        )
+      );
+      handleConnect(connectedId);
+    } else {
+      toast({
+        variant: 'destructive',
+        title: 'Error',
+        description: 'Channel id not found',
+        duration: 3000,
+      });
+    }
+    setTriggerState((prev) => !prev);
+    toast({
+      variant: 'success',
+      title: 'Success',
+      description: `Channel ${channel.name} connected successfully`,
+      duration: 3000,
+    });
+    setConnectedId(null);
   };
-  const check = true; //temporary
   return (
     <div className="h-full w-full  gap-4  pb-5 flex flex-col items-center justify-between px-2.5 pt-1 border rounded-xl bg-white hover:shadow-md hover:rounded-xl transition-shadow ">
       <div className="h-auto px-1 py-2 rounded-tl-lg rounded-tr-lg justify-between items-center inline-flex w-full">
@@ -170,11 +200,11 @@ export function ChannelCard({ channel, setChannels, toast }: ChannelCardProps) {
           <div className="flex items-center justify-between space-x-2 w-full ">
             <Switch
               id="connect"
-              checked={channel.is_on}
+              checked={channel.isOn}
               onCheckedChange={() => handleToggle()}
             />
             <Label htmlFor="connect">
-              {channel.is_on ? 'Connected' : 'Not Connected'}
+              {channel.isOn ? 'Connected' : 'Not Connected'}
             </Label>
           </div>
         </div>

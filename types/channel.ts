@@ -12,7 +12,7 @@ export interface Channel {
   name: string;
   type?: type;
   configuration?: telegramConfig | NegaritConfig;
-  is_on?: boolean;
+  isOn?: boolean;
   date?: string;
   isDeleted?: boolean;
   createdAt?: string;

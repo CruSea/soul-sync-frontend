@@ -35,6 +35,7 @@ export function InviteAdminDialog() {
       await new Promise((resolve) => setTimeout(resolve, 1000));
 
       toast({
+        variant: 'success',
         title: 'Invitation sent',
         description: `Invitation has been sent to ${formData.email}`,
       });

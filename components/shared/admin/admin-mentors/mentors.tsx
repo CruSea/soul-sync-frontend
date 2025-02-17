@@ -9,7 +9,6 @@ import { InviteMentorDialog } from './invite-mentor-dialog';
 import { endPoints } from '@/data/end-points';
 import { deleteMentor } from '@/actions/admin/admin';
 import { Account } from '@/types/users';
-import { useRouter } from 'next/navigation';
 import { userProfile } from '@/actions/auth/login';
 interface Mentors {
   id: string | number;
@@ -64,18 +63,20 @@ const filterOptions: FilterOption<Mentors>[] = [
   { key: 'location', label: 'Addis Ababa' },
 ];
 const search = ['name', 'age', 'gender', 'location', 'isActive'];
-const MentorsTable: React.FC = () => {
+const MentorsTable = () => {
   const [clientUser, setClientUser] = useState<Account | null>(null);
-  const router = useRouter();
+  const [triggerState, setTriggerState] = useState<boolean>(false);
+
   useEffect(() => {
     const fetchUserProfile = async () => {
       const userAccoutId: Account = await userProfile();
       setClientUser(userAccoutId);
+      console.table(userAccoutId);
     };
     fetchUserProfile();
   }, []);
 
-  const endPoint = `${endPoints.adminMentors}?accountId=${clientUser?.id as string}`;
+  const endPoint = `${endPoints.adminMentors}?accountId=${clientUser?.id}`;
 
   const handleDelete = async (id: string | number) => {
     try {
@@ -89,8 +90,9 @@ const MentorsTable: React.FC = () => {
 
         throw new Error('Failed to delete the mentor.');
       }
-
+      setTriggerState(!triggerState);
       toast({
+        variant: 'success',
         title: 'Success!',
         description: 'Mentor Successfully deleted.',
       });
@@ -109,6 +111,10 @@ const MentorsTable: React.FC = () => {
             accountId={clientUser?.id as string}
             roleId={clientUser?.role?.id as string}
             roleName={clientUser?.role?.name as string}
+            triggerState={triggerState as boolean}
+            setTriggerState={
+              setTriggerState as React.Dispatch<React.SetStateAction<boolean>>
+            }
           />
         </div>
         <DataTable<Mentors>
@@ -119,6 +125,10 @@ const MentorsTable: React.FC = () => {
           filterOptions={filterOptions}
           itemsPerPage={10}
           onDelete={handleDelete}
+          triggerState={triggerState as boolean}
+          setTriggerState={
+            setTriggerState as React.Dispatch<React.SetStateAction<boolean>>
+          }
         />
       </div>
     </div>
