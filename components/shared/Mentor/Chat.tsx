@@ -3,8 +3,8 @@
 import { useRef, useEffect, useState } from 'react';
 import { Card } from '@/components/ui/card';
 
-import { ChatProps } from '@/types/mentor';
-import { transformChatData } from '@/lib/utils';
+import { ChatProps, webSocketMessages, WSMessage } from '@/types/mentor';
+import { transformChatData, transformWSData } from '@/lib/utils';
 
 import { jsonServer } from '@/data/end-points';
 import ChatHeader from './chat-header';
@@ -21,6 +21,7 @@ const Chat = ({
   // text is where the text box saves what the mentor writes
   const socket = useSocket();
   const [message, setMessage] = useState("");
+  const [webSocketMessages, setWebSocketMessages] = useState<webSocketMessages>([])
 
   useEffect(() => {
     if (!socket) return;
@@ -28,7 +29,8 @@ const Chat = ({
     console.log("socket", socket)
 
     socket.on("message", (msg) => {
-      setMessage(msg);
+      setWebSocketMessages((prevMessages) => [...prevMessages, JSON.parse(msg)])
+      console.log("new message", msg)
     });
 
     return () => {
@@ -39,6 +41,8 @@ const Chat = ({
   const chatData = conversationMessages
     ? transformChatData(conversationMessages) // for when connecting to backend
     : [];
+
+    const WSData = transformWSData(webSocketMessages as WSMessage[]);
 
   // useEffect(() => {
   //   console.log("curent messages", currentConversationMessages)
@@ -66,7 +70,22 @@ const Chat = ({
         },
         payload: message
       }
-      socket.emit("chat_message", messageObject); 
+      socket.emit("message", JSON.stringify(messageObject)); 
+
+      const now = new Date();
+      const createdAt = now.toISOString();
+
+      if (currentConversation) {
+        const websocketMessage: WSMessage = {
+          conversationId: currentConversation.conversation_id,
+          type: 'SENT',
+          body: message,
+          createdAt: createdAt
+        }
+  
+        setWebSocketMessages((prevMessages) => [...prevMessages, websocketMessage])
+      }
+
       console.log("message", messageObject)
       setMessage("");
     }
@@ -143,7 +162,7 @@ const Chat = ({
 
             {/* the chat thread between the user and mentor */}
             <ScrollArea className="flex-1 overflow-hidden relative w-full pt-3 px-6 flex flex-col gap-8">
-              {[...chatData]?.map((message) => (
+              {[...chatData, ...WSData]?.map((message) => (
                 <div key={message.id} className="w-full relative py-4">
                   <Message {...message} />
                 </div>
