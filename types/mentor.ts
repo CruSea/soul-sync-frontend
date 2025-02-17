@@ -14,14 +14,6 @@ export type Mentor = {
   profileImage: string;
 }
 
-export interface MentorLayoutProps {
-  children: React.ReactNode;
-}
-
-export interface MentorLayoutProps {
-  children: React.ReactNode;
-}
-
 export type User = {
   id: string;
   name: string;
@@ -35,11 +27,20 @@ export type MentorLayoutProps = {
   title: string;
 };
 
+export type ConversationsListProps = {
+  conversations: Conversation[];
+  currentConversation: Conversation | undefined;
+  setCurrentConversation:  React.Dispatch<React.SetStateAction<Conversation>>;
+}
+
 type Platform = 'Telegram' | 'WhatsApp' | 'Negarit' | 'Facebook' | 'Twilio';
 
 export type Conversation = {
-  conversation_id: string;
-  platform: Platform;
+  id: string;
+  mentorId: string;
+  address: string;
+  channelId: string;
+  isActive: boolean;
 };
 
 export type Conversations = Conversation[];

@@ -2,7 +2,7 @@
 
 import { checkUser, conversation } from '@/actions/mentor/mentor';
 import { toast } from '@/hooks/use-toast';
-import { User, UserMessages } from '@/types/mentor';
+import { Conversation, User, UserMessages } from '@/types/mentor';
 import router from 'next/router';
 import { useEffect, useState } from 'react';
 import Chat from './Chat';
@@ -11,6 +11,8 @@ import { userProfile } from '@/actions/auth/login';
 const MentorContainer = () => {
   const [currentUser, setCurrentUser] = useState<User | null>(null);
   const [userMessages, setUserMessages] = useState<UserMessages>();
+  const [conversations, setConversations] = useState<Conversation[]>([]); 
+  const [currentConversation, setCurrentConversation] = useState<Conversation>();
 
   useEffect(() => {
     const fetchUserProfile = async () => {
@@ -29,22 +31,23 @@ const MentorContainer = () => {
   }, []);
 
 
-  const fetchUserMesages = async () => {
-    try {
-      const response = await conversation();
-
-      const data = await response;
-
-      if (Array.isArray(data) && data.length > 0) {
-        setUserMessages(data[0]); // Assuming you want the first item
-      }
-    } catch (error) {
-      throw new Error(error as string);
-    }
-  };
-
   useEffect(() => {
-    if (currentUser && currentUser.id) {
+    const fetchUserMesages = async () => {
+      try {
+        const response = await conversation();
+        console.log("message", response)
+        const data = await response;
+  
+        if (Array.isArray(data) && data.length > 0) {
+          setConversations((prevConversations => [...prevConversations, data[0]]));
+          setCurrentConversation(data[0]);
+        }
+      } catch (error) {
+        throw new Error(error as string);
+      }
+    };
+
+    if (currentUser && currentUser.userId) {
       fetchUserMesages();
     }
   }, [currentUser]);
@@ -61,12 +64,12 @@ const MentorContainer = () => {
 
   return (
     <>
-      {/* <ConversationsList
-        users={currentUser as unknown as User[]}
-        currentUser={currentUser as User}
-        setCurrentUser={setCurrentUser}
+      <ConversationsList
+        conversations={conversations}
+        currentConversation={currentConversation}
+        setCurrentConversation={setCurrentConversation}
       />
-      <Chat
+      {/* <Chat
         currentConversation={currentConversation}
         userMessages={userMessages}
         // sendJsonMessage={sendJsonMessage}
