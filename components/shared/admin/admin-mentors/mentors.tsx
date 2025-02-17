@@ -115,7 +115,6 @@ const MentorsTable: React.FC = () => {
           <InviteMentorDialog
             userName={clientUser?.name as string}
             accountId={clientUser?.id || ''}
-            roleId={clientUser?.role?.id || ''}
             role={clientUser?.role?.name as string}
             triggerState={triggerState as boolean}
             setTriggerState={
