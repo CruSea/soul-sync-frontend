@@ -1,12 +1,12 @@
 'use client';
 import React from 'react';
-import { DataTable } from '@/components/shared/data-table';
+import DataTable, { type Column } from '@/components/shared/data-table';
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
 import { MessageCircle } from 'lucide-react';
 import type { Message } from '@/types/message';
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
-import { Column, FilterOption } from '@/types/data-table';
+import { FilterOption } from '@/types/data-table';
 
 const columns: Array<Column<Message>> = [
   {
@@ -90,6 +90,10 @@ export function MessageTable() {
           }}
           triggerState={triggerState}
           setTriggerState={setTriggerState}
+          currentPage={0}
+          onPageChange={function (page: number): void {
+            throw new Error('Function not implemented.');
+          }}
         />
       </div>
     </div>
