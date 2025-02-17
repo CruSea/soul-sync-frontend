@@ -8,8 +8,8 @@ interface InputAreaProps {
   sendText: (message: string) => void;
 }
 
-const InputArea = forwardRef<HTMLInputElement, InputAreaProps>(
-  ({ sendText }, ref) => {
+const InputArea = (
+  () => {
     const [inputText, setInputText] = useState<string>('');
 
     return (
@@ -26,7 +26,7 @@ const InputArea = forwardRef<HTMLInputElement, InputAreaProps>(
             // sends the text value when pressing enter
             if (e.key === 'Enter') {
               e.preventDefault(); // Prevents newline on enter in the textarea
-              sendText(inputText);
+              //sendText(inputText);
               setInputText('');
             }
           }}
@@ -37,7 +37,7 @@ const InputArea = forwardRef<HTMLInputElement, InputAreaProps>(
           className="h-full"
           onClick={() => {
             // sends the text value when clicking send
-            sendText(inputText);
+            //sendText(inputText);
             setInputText('');
           }}
         >
@@ -53,8 +53,5 @@ const InputArea = forwardRef<HTMLInputElement, InputAreaProps>(
     );
   }
 );
-
-// Add a display name for the forwardRef component
-InputArea.displayName = 'InputArea';
 
 export default InputArea;

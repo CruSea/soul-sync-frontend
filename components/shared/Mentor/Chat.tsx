@@ -14,25 +14,21 @@ import InputArea from './input-area';
 
 
 const Chat = ({
-  userMessages,
   currentConversation,
-  currentConversationMessages,
+  conversationMessages,
 }: ChatProps) => {
   // text is where the text box saves what the mentor writes
 
-  const [WSData, setWSData] = useState<transformedMessage[]>([]);
-
-
-  const chatData = userMessages
-    ? transformChatData(userMessages) // for when connecting to backend
+  const chatData = conversationMessages
+    ? transformChatData(conversationMessages) // for when connecting to backend
     : [];
 
-  useEffect(() => {
-    console.log("curent messages", currentConversationMessages)
-    const transformedWSData = transformWSData(currentConversationMessages as WSMessage[]);
+  // useEffect(() => {
+  //   console.log("curent messages", currentConversationMessages)
+  //   const transformedWSData = transformWSData(currentConversationMessages as WSMessage[]);
 
-    setWSData(transformedWSData);
-  }, [currentConversationMessages, currentConversation]);
+  //   setWSData(transformedWSData);
+  // }, [currentConversationMessages, currentConversation]);
 
 
 
@@ -44,51 +40,51 @@ const Chat = ({
   // a referance for where the you will write the text
   const textBox = useRef<HTMLInputElement | null>(null);
 
-  const sendText = async (messageText: string) => {
-    if (!messageText.trim() || !socket) return; // Don't send empty messages
+  // const sendText = async (messageText: string) => {
+  //   if (!messageText.trim() || !socket) return; // Don't send empty messages
 
-    const now = new Date();
-    const createdAt = now.toISOString();
+  //   const now = new Date();
+  //   const createdAt = now.toISOString();
 
-    const newMessage: WSSentMessage = {
-      type: 'CHAT',
-      metadata: {
-        conversationId: currentConversation.conversation_id,
-      },
-      payload: messageText,
-    };
+  //   const newMessage: WSSentMessage = {
+  //     type: 'CHAT',
+  //     metadata: {
+  //       conversationId: currentConversation.conversation_id,
+  //     },
+  //     payload: messageText,
+  //   };
 
-    try {
-      // Find the current id from props
-      if (!userMessages) {
-        return;
-      }
+  //   try {
+  //     // Find the current id from props
+  //     if (!userMessages) {
+  //       return;
+  //     }
 
-      // Append the new message to the messages array
-      const updatedMessages = [...userMessages.messages, newMessage];
+  //     // Append the new message to the messages array
+  //     const updatedMessages = [...userMessages.messages, newMessage];
 
-      // Update the backend
-      const patchResponse = await fetch(
-        `${jsonServer.baseUrl}/${jsonServer.messages}/${userMessages.id}`,
-        {
-          method: 'PATCH',
-          headers: {
-            'Content-Type': 'application/json',
-          },
-          body: JSON.stringify({ messages: updatedMessages }),
-        }
-      );
+  //     // Update the backend
+  //     const patchResponse = await fetch(
+  //       `${jsonServer.baseUrl}/${jsonServer.messages}/${userMessages.id}`,
+  //       {
+  //         method: 'PATCH',
+  //         headers: {
+  //           'Content-Type': 'application/json',
+  //         },
+  //         body: JSON.stringify({ messages: updatedMessages }),
+  //       }
+  //     );
 
-      if (textBox.current) textBox.current.value = ''; // Reset input field
+  //     if (textBox.current) textBox.current.value = ''; // Reset input field
 
-      setUserMessages({ ...userMessages, messages: updatedMessages });
-    } catch (error) {
-      throw new Error(error as string);
-    }
+  //     setUserMessages({ ...userMessages, messages: updatedMessages });
+  //   } catch (error) {
+  //     throw new Error(error as string);
+  //   }
 
-    socket.emit('message', JSON.stringify(newMessage));
-    setWebSocketMessages((prevMessages) => [...prevMessages, WSFormatMessage]);
-  };
+  //   socket.emit('message', JSON.stringify(newMessage));
+  //   setWebSocketMessages((prevMessages) => [...prevMessages, WSFormatMessage]);
+  // };
 
   useEffect(() => {
     // Scroll to the bottom whenever `thread` changes
@@ -100,11 +96,11 @@ const Chat = ({
     // if (textBox.current) {
     //   textBox.current.value = "";
     // }
-  }, [userMessages, currentConversationMessages]);
+  }, [currentConversation, conversationMessages]);
 
   return (
     <>
-      {userMessages && (
+      {currentConversation && (
         <Card className="flex-1 h-full rounded-[10px] flex flex-col justify-between overflow-hidden">
           <div className="flex-1 flex flex-col overflow-hidden">
             {/* the header that shows user name*/}
@@ -115,7 +111,7 @@ const Chat = ({
 
             {/* the chat thread between the user and mentor */}
             <ScrollArea className="flex-1 overflow-hidden relative w-full pt-3 px-6 flex flex-col gap-8">
-              {[...chatData, ...WSData]?.map((message) => (
+              {[...chatData]?.map((message) => (
                 <div key={message.id} className="w-full relative py-4">
                   <Message {...message} />
                 </div>
@@ -126,7 +122,7 @@ const Chat = ({
           </div>
 
           {/*textbox where you input text */}
-          <InputArea ref={textBox} sendText={sendText} />
+          <InputArea  />
         </Card>
       )}
     </>

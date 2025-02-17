@@ -111,10 +111,8 @@ export type ConversationInfos = {
 };
 
 export type ChatProps = {
-  currentConversation: Conversation;
-  userMessages: any;
-  currentConversationMessages: webSocketMessages;
-  setWebSocketMessages: React.Dispatch<React.SetStateAction<webSocketMessages>>;
+  currentConversation: Conversation | undefined;
+  conversationMessages: Message[];
 };
 
 export type transformedMessage = {

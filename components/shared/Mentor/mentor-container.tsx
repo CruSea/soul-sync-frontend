@@ -86,10 +86,10 @@ const MentorContainer = () => {
         currentConversation={currentConversation}
         setCurrentConversation={setCurrentConversation}
       />
-      {/* <Chat
+      <Chat
         currentConversation={currentConversation}
-
-      /> */}
+        conversationMessages={conversationMessages}
+      />
     </>
   );
 };
