@@ -16,7 +16,7 @@ const LoginPage = async () => {
   console.log("the user", user)
   // Redirect logged-in users based on role
   if (user) {
-    switch (user.roleName) {
+    switch (user.role) {
       case 'Owner':
         redirect('/admin');
         break;

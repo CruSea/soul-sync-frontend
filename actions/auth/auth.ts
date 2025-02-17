@@ -23,7 +23,7 @@ export async function setAuthCookie(userData: User_Info) {
     value: JSON.stringify({
       id: userData.accountId,
       name: userData.userName,
-      role: userData.roleName,
+      role: userData.role,
       imageUrl: userData.imageUrl,
       userId: userData.userId,
     }),
