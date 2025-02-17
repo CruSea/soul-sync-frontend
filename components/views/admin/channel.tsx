@@ -88,6 +88,7 @@ export default function ChannelsPage() {
           duration: 3000,
         });
       }
+      setTriggerState(!triggerState);
       toast({
         variant: 'success',
         title: 'Success',
@@ -95,7 +96,6 @@ export default function ChannelsPage() {
         duration: 3000,
       });
       await revalidate('add-channel');
-      setTriggerState(!triggerState);
     }
   };
 

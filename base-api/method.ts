@@ -6,7 +6,7 @@ class ApiRequest {
   constructor(
     private url: string,
     private tag: string,
-    private data?: any,
+    private data?: unknown,
     private method: string = 'GET'
   ) {}
 
@@ -40,7 +40,7 @@ class GetRequest extends ApiRequest {
 
 // POST request subclass
 class PostRequest extends ApiRequest {
-  constructor(url: string, tag: string, data: any) {
+  constructor(url: string, tag: string, data: unknown) {
     super(url, tag, data, 'POST');
   }
 
@@ -51,7 +51,7 @@ class PostRequest extends ApiRequest {
 
 // PUT request subclass
 class PatchRequest extends ApiRequest {
-  constructor(url: string, tag: string, data: any) {
+  constructor(url: string, tag: string, data: unknown) {
     super(url, tag, data, 'PATCH');
   }
 
