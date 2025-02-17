@@ -62,7 +62,6 @@ export default function ChannelsPage() {
       }
     };
     getChannels();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [user?.id, triggerState]);
 
   const filteredChannel = channels?.filter(

@@ -1,7 +1,6 @@
 'use server';
 import { DeleteRequest, GetRequest, PostRequest } from '@/base-api/method';
 import { Channel } from '@/types/channel';
-import { revalidate } from '../revalidate';
 const Url = {
   fetchedChannel: `admin/channel`,
   telegram: `message/telegram?id`,
@@ -18,15 +17,15 @@ export const fetchedChannels = async (id: string) => {
 
 export const handleAddChannel = async (body: Channel) => {
   console.table(body);
-  const tempRequest = {
-    name: body.name,
-    configuration: body.configuration,
-    accountId: body.accountId,
-  };
+  // const tempRequest = {
+  //   name: body.name,
+  //   configuration: body.configuration,
+  //   accountId: body.accountId,
+  // };
   const postRequest = new PostRequest(
     `${Url.fetchedChannel}`,
     'add-channel',
-    tempRequest
+    body
   );
   const data = postRequest.postData();
   return data;
@@ -42,28 +41,12 @@ export const handleDeleting = async (deleteId: string) => {
   return data;
 };
 
-export const handleConnect = async (
-  channel: Channel,
-  setChannels: React.Dispatch<React.SetStateAction<Channel[]>>,
-  connectedId: string | null,
-  setConnectedId: React.Dispatch<React.SetStateAction<string | null>>
-) => {
-  if (channel.id) {
-    setConnectedId(channel.id);
-  }
-  if (connectedId !== null) {
-    setChannels((prevItems) =>
-      prevItems.map((item) =>
-        item.id === connectedId ? { ...item, is_on: true } : item
-      )
-    );
-
-    const postRequest = new PostRequest(
-      `${Url.fetchedChannel}/${connectedId}/connect`,
-      'connect-channel',
-      { url: `${Url.telegram}=${connectedId}` }
-    );
-    const data = postRequest.postData();
-    return data;
-  }
+export const handleConnect = async (connectedId: string | null) => {
+  const postRequest = new PostRequest(
+    `${Url.fetchedChannel}/${connectedId}/connect`,
+    'connect-channel',
+    { url: `${Url.telegram}=${connectedId}` }
+  );
+  const data = postRequest.postData();
+  return data;
 };

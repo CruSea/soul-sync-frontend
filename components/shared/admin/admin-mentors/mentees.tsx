@@ -85,6 +85,7 @@ const MenteesTable: React.FC = () => {
   const [error, setError] = useState<string | null>(null);
   const endPoint = 'mentees';
   const { toast } = useToast();
+  const [triggerState, setTriggerState] = useState<boolean>(false);
 
   const handleDelete = async (id: string | number) => {
     try {
@@ -129,6 +130,10 @@ const MenteesTable: React.FC = () => {
             onError={(errorMessage) => {
               setError(errorMessage);
             }}
+            triggerState={triggerState as boolean}
+            setTriggerState={
+              setTriggerState as React.Dispatch<React.SetStateAction<boolean>>
+            }
           />
         )}
       </div>
