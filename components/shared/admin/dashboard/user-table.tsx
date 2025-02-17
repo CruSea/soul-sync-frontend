@@ -63,6 +63,7 @@ const UserTable: React.FC = () => {
   const [error, setError] = useState<string | null>(null);
   const [allMentees, setAllMentees] = useState<Mentee[]>([]);
   const endPoint = 'mentees';
+  const [triggerState, setTriggerState] = useState<boolean>(false);
 
   const onDataFetched = (data: Mentee[]) => {
     const sortedMentees = data
@@ -102,6 +103,8 @@ const UserTable: React.FC = () => {
               setError(errorMessage);
             }}
             onDataFetched={onDataFetched}
+            triggerState={triggerState as boolean}
+            setTriggerState={setTriggerState}
           />
         )}
       </div>

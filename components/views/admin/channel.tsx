@@ -62,7 +62,7 @@ export default function ChannelsPage() {
       }
     };
     getChannels();
-  }, [user?.id]);
+  }, [user?.id, triggerState]);
 
   const filteredChannel = channels?.filter(
     (item) =>
