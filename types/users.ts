@@ -32,7 +32,7 @@ export type User_Info = {
   userName: string | null;
   accountId: string | null;
   roleId: string | null;
-  roleName: string | null;
+  role: string | null;
   token?: string | null;
   imageUrl?: string | null;
   userId?: string | null;
