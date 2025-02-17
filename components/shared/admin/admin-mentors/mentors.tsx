@@ -12,21 +12,7 @@ import { deleteMentor } from '@/actions/admin/admin';
 import type { Account } from '@/types/users';
 import { useRouter } from 'next/navigation';
 import { userProfile } from '@/actions/auth/login';
-
-interface Mentor {
-  id: string | number;
-  accountId: string;
-  name: string;
-  email: string;
-  expertise?: string | null;
-  age?: number | null;
-  gender: string;
-  location?: string | null;
-  availability?: { startDate: string } | null;
-  isActive: boolean;
-  createdAt: string;
-  updatedAt: string;
-}
+import { Mentor } from '@/types/mentor';
 
 const columns: Column<Mentor>[] = [
   {
@@ -42,13 +28,35 @@ const columns: Column<Mentor>[] = [
     ),
   },
   { key: 'email', header: 'Email' },
-  { key: 'age', header: 'Age' },
+  {
+    key: 'age',
+    header: 'Age',
+    render: (mentor: Mentor) => (mentor.age === null ? 'null' : mentor.age),
+  },
   { key: 'gender', header: 'Gender' },
-  { key: 'expertise', header: 'Expertise' },
-  { key: 'location', header: 'Location' },
+  {
+    key: 'expertise',
+    header: 'Expertise',
+    render: (mentor: Mentor) =>
+      mentor.expertise === null ? 'null' : mentor.expertise,
+  },
+  {
+    key: 'availability',
+    header: 'Availability',
+    render: (mentor: Mentor) =>
+      mentor.availability === null
+        ? 'null'
+        : mentor.availability?.startDate || 'null',
+  },
+  {
+    key: 'location',
+    header: 'Location',
+    render: (mentor: Mentor) =>
+      mentor.location === null ? 'null' : mentor.location,
+  },
   {
     key: 'isActive',
-    header: 'Is Active',
+    header: 'Status',
     render: (mentor: Mentor) => (
       <Badge variant="secondary">{mentor.isActive ? 'Yes' : 'No'}</Badge>
     ),
@@ -94,11 +102,8 @@ const MentorsTable: React.FC = () => {
         title: 'Success!',
         description: 'Mentor Successfully deleted.',
       });
-
-      // Refresh the data after deletion
-      router.refresh();
     } catch (error) {
-      console.error(error);
+      // console.error(error);
     }
   };
 
@@ -108,10 +113,10 @@ const MentorsTable: React.FC = () => {
         <div className="flex items-center justify-between">
           <h1 className="text-2xl font-semibold">Mentors</h1>
           <InviteMentorDialog
-            userName={clientUser?.name || ''}
+            userName={clientUser?.name as string}
             accountId={clientUser?.id || ''}
             roleId={clientUser?.role?.id || ''}
-            role={clientUser?.role?.name || ''}
+            role={clientUser?.role?.name as string}
             triggerState={triggerState as boolean}
             setTriggerState={
               setTriggerState as React.Dispatch<React.SetStateAction<boolean>>

@@ -15,7 +15,8 @@ import {
   TableRow,
 } from '@/components/ui/table';
 import { Skeleton } from '@/components/ui/skeleton';
-import type { FilterOption } from '@/types/data-table';
+import type { DataTableProps } from '@/types/data-table';
+
 import { fetchedDataTable } from '@/actions/shared/data-table';
 import Pagination from './pagination';
 import {
@@ -32,31 +33,6 @@ import {
   DropdownMenuContent,
   DropdownMenuTrigger,
 } from '@radix-ui/react-dropdown-menu';
-
-// ... other imports
-
-export interface Column<T> {
-  key: keyof T;
-  header: string;
-  render?: (value: T) => React.ReactNode;
-}
-
-interface DataTableProps<T> {
-  tag: string;
-  apiUrl: string;
-  columns: Column<T>[];
-  searchFields?: (keyof T)[];
-  filterOptions?: FilterOption<T>[];
-  itemsPerPage: number;
-  currentPage: number;
-  onPageChange: (page: number) => void;
-  onDelete?: (id: string | number) => Promise<void>;
-  enableActions?: boolean;
-  enablePagination?: boolean;
-  onError?: (error: string) => void;
-  triggerState: boolean;
-  setTriggerState: React.Dispatch<React.SetStateAction<boolean>>;
-}
 
 const DataTable = <T extends { id: string | number }>({
   tag,
@@ -94,24 +70,21 @@ const DataTable = <T extends { id: string | number }>({
           currentPage,
           itemsPerPage
         );
-        console.log(response);
-        console.log(
-          'fetching from',
-          // `${apiUrl}&page=${currentPage}&limit=${itemsPerPage}`
-          `${apiUrl}&limit=${itemsPerPage}&page=${currentPage}`
-        );
-        console.log('with tag', tag);
-
-        if (response && response.data) {
-          setData(response.data);
-          setTotalPages(response.meta.totalPages); // Use meta.totalPages for pagination
-        } else {
-          throw new Error('Invalid response format');
+        if (!response) {
+          throw new Error('No response received from the server.');
         }
+        if (!response.data || !Array.isArray(response.data)) {
+          throw new Error('Unexpected response format: Data is missing.');
+        }
+        setData(response.data);
+        setTotalPages(response.meta?.totalPages ?? 1); // Use meta.totalPages or default to 1
       } catch (error) {
-        if (onError) {
-          onError('Error fetching data');
-        }
+        console.error('Error fetching data:', error);
+        onError?.(
+          error instanceof Error
+            ? error.message
+            : 'Something went wrong while fetching data. Please try again later.'
+        );
         setData([]);
       } finally {
         setLoading(false);
@@ -119,7 +92,6 @@ const DataTable = <T extends { id: string | number }>({
     };
     fetchData();
   }, [apiUrl, currentPage, itemsPerPage, tag, onError, triggerState]);
-
   const handleSearchChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     setSearchTerm(event.target.value);
   };
@@ -138,13 +110,6 @@ const DataTable = <T extends { id: string | number }>({
 
     return matchesSearch && matchesFilters;
   });
-
-  // Filter data based on search term
-  // const filteredData = data.filter((item) =>
-  //   searchFields.some((field) =>
-  //     item[field]?.toString().toLowerCase().includes(searchTerm.toLowerCase())
-  //   )
-  // );
 
   const handleDelete = (id: string | number) => {
     setDeleteDialog({ open: true, id });
@@ -212,12 +177,16 @@ const DataTable = <T extends { id: string | number }>({
             </DropdownMenuContent>
           </DropdownMenu>
         )}
-        {filters.map((filter) => (
-          <Badge key={filter} variant="secondary" className="gap-2">
-            {filter.split(':')[1]}
+        {filters.map((currentFilter) => (
+          <Badge key={currentFilter} variant="secondary" className="gap-2">
+            {currentFilter.split(':')[1]}
             <Button
               onClick={() => {
-                setFilters((prev) => prev.filter((f) => f !== filter));
+                setFilters((previousFilters) =>
+                  previousFilters.filter(
+                    (existingFilter) => existingFilter !== currentFilter
+                  )
+                );
               }}
               className="focus:outline-none"
             >

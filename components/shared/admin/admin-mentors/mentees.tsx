@@ -122,11 +122,8 @@ const MenteesTable: React.FC = () => {
         title: 'Success!',
         description: 'Mentee successfully deleted.',
       });
-
-      // Refresh the data after deletion
-      router.refresh();
     } catch (error) {
-      console.error(error);
+      // console.error(error);
     }
   };
 
