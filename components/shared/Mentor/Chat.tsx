@@ -17,8 +17,6 @@ const Chat = ({
   userMessages,
   currentConversation,
   currentConversationMessages,
-  setWebSocketMessages,
-  socket,
 }: ChatProps) => {
   // text is where the text box saves what the mentor writes
 

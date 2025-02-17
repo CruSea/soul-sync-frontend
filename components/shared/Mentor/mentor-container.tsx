@@ -1,8 +1,8 @@
 'use client';
 
-import { checkUser, conversation } from '@/actions/mentor/mentor';
+import { checkUser, conversation, getMessages } from '@/actions/mentor/mentor';
 import { toast } from '@/hooks/use-toast';
-import { Conversation, User, UserMessages } from '@/types/mentor';
+import { Conversation, Message, User, UserMessages } from '@/types/mentor';
 import router from 'next/router';
 import { useEffect, useState } from 'react';
 import Chat from './Chat';
@@ -12,6 +12,7 @@ const MentorContainer = () => {
   const [currentUser, setCurrentUser] = useState<User | null>(null);
   const [conversations, setConversations] = useState<Conversation[]>([]); 
   const [currentConversation, setCurrentConversation] = useState<Conversation>();
+  const [conversationMessages, setConversationMessages] = useState<Message[]>([]);
 
   useEffect(() => {
     const fetchUserProfile = async () => {
@@ -31,7 +32,7 @@ const MentorContainer = () => {
 
 
   useEffect(() => {
-    const fetchUserMesages = async () => {
+    const fetchConversation = async () => {
       try {
         const response = await conversation();
         console.log("conversation", response)
@@ -47,13 +48,30 @@ const MentorContainer = () => {
     };
 
     if (currentUser && currentUser.userId) {
-      fetchUserMesages();
+      fetchConversation();
     }
   }, [currentUser]);
 
+  useEffect(() => {
+    const fetchConversationMessages = async (conversation: Conversation) => {
+      try {
+        const messagedData = await getMessages(conversation.conversation_id);
+        if (Array.isArray(messagedData) && messagedData.length > 0) {
+          setConversationMessages(messagedData);
+        }
+      } catch (error) {
+        throw new Error(error as string);
+      }
+    }
+
+    if (currentUser && currentConversation) {
+      fetchConversationMessages(currentConversation);
+    }
+  }, [currentConversation])
 
 
-  const token = localStorage.getItem('token') as string; // get token this way for the actual implementation
+
+  // const token = localStorage.getItem('token') as string; // get token this way for the actual implementation
   // const WS_URL = 'https://1clr2kph-3002.uks1.devtunnels.ms';
   // const token = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIzMmVmMGQ2MS03YTMxLTRjZGMtYWJlNC1kN2VlYWQzNmY0ZGQiLCJlbWFpbCI6ImRlc3RhbmF0aG5hZWxhdGFyb0BnbWFpbC5jb20iLCJpbWFnZVVybCI6bnVsbCwiYWNjb3VudHMiOlt7ImlkIjoiYjBjMTU3YzgtYWYyMy00MzQ0LWE0MzctMTM0ZDIzYTYyNGE5IiwibmFtZSI6Im5hdGhuYWVsIiwiZG9tYWluIjpudWxsfV0sInJvbGVzIjpbIk9XTkVSIl0sImlhdCI6MTczNDk0Mjg5OCwiZXhwIjoxNzM0OTQ2NDk4fQ.S5nSDy3zYmG926BAYaqDWnp0lsGq8scr1t6Db41m1wM';
 

@@ -19,3 +19,9 @@ export const checkUser = async (params: string) => {
   const data = getRequest.getData();
   return data;
 };
+
+export const getMessages = async (params: string) => {
+  const getRequest = new GetRequest(`${Url.conversation}/${params}`, 'current conversation messages');
+  const data = await getRequest.getData();
+  return data;
+}
