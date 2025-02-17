@@ -10,9 +10,6 @@ import {
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 import { ScrollArea } from '@/components/ui/scroll-area';
 import { cn, getFallBack } from '@/lib/utils';
-import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
-import { User, UsersListProps } from '@/types/mentor';
-import { Account, role } from '@/types/users';
 
 const ConversationsList = ({
   conversations,

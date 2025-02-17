@@ -1,23 +1,33 @@
 'use client';
 
-import { User, UserDetails, UserMessages } from '@/types/mentor';
-import Profile from './Profile';
-import { useEffect, useState } from 'react';
-import { useRouter } from 'next/navigation';
-import UsersList from './users-list';
-import Chat from './Chat';
-import { userProfile } from '@/actions/auth/login';
 import { checkUser, conversation } from '@/actions/mentor/mentor';
 import { toast } from '@/hooks/use-toast';
+import { User, UserMessages } from '@/types/mentor';
+import router from 'next/router';
+import { useEffect, useState } from 'react';
+import Chat from './Chat';
+import ConversationsList from './conversations-list';
+import { userProfile } from '@/actions/auth/login';
 const MentorContainer = () => {
   const [currentUser, setCurrentUser] = useState<User | null>(null);
-  const [userDetails, setUserDetails] = useState<UserDetails>();
   const [userMessages, setUserMessages] = useState<UserMessages>();
 
-  // const WS_URL = 'https://1clr2kph-3002.uks1.devtunnels.ms';
+  useEffect(() => {
+    const fetchUserProfile = async () => {
+      const user = await userProfile();
+      setCurrentUser(user as unknown as User);
 
-  const token = localStorage.getItem('token') as string; // get token this way for the actual implementation
-  // const token = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIzMmVmMGQ2MS03YTMxLTRjZGMtYWJlNC1kN2VlYWQzNmY0ZGQiLCJlbWFpbCI6ImRlc3RhbmF0aG5hZWxhdGFyb0BnbWFpbC5jb20iLCJpbWFnZVVybCI6bnVsbCwiYWNjb3VudHMiOlt7ImlkIjoiYjBjMTU3YzgtYWYyMy00MzQ0LWE0MzctMTM0ZDIzYTYyNGE5IiwibmFtZSI6Im5hdGhuYWVsIiwiZG9tYWluIjpudWxsfV0sInJvbGVzIjpbIk9XTkVSIl0sImlhdCI6MTczNDk0Mjg5OCwiZXhwIjoxNzM0OTQ2NDk4fQ.S5nSDy3zYmG926BAYaqDWnp0lsGq8scr1t6Db41m1wM';
+      if (!user) {
+        toast({
+          variant: 'destructive',
+          title: 'Error!',
+          description: 'User not found',
+        });
+      }
+    };
+    fetchUserProfile();
+  }, []);
+
 
   const fetchUserMesages = async () => {
     try {
@@ -32,46 +42,26 @@ const MentorContainer = () => {
       throw new Error(error as string);
     }
   };
-  useEffect(() => {
-    const fetchUserProfile = async () => {
-      const userAccoutId = await userProfile();
-      setCurrentUser(userAccoutId as unknown as User);
-      console.table(userAccoutId);
-    };
-    fetchUserProfile();
-  }, []);
+
   useEffect(() => {
     if (currentUser && currentUser.id) {
       fetchUserMesages();
     }
   }, [currentUser]);
-  useEffect(() => {
-    const fetchedUser = async () => {
-      try {
-        const response = await checkUser(currentUser?.userId as string);
 
-        if (response.error) {
-          toast({
-            variant: 'destructive',
-            title: 'Error!',
-            description: response.error.description,
-          });
-        }
 
-        if (!response.mentors[0].location) {
-          router.push('/mentor/get-started');
-        }
-      } catch (error) {
-        // router.push('/log-in');
-      }
-    };
 
-    fetchedUser();
-  }, [router]);
+  const token = localStorage.getItem('token') as string; // get token this way for the actual implementation
+  // const WS_URL = 'https://1clr2kph-3002.uks1.devtunnels.ms';
+  // const token = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIzMmVmMGQ2MS03YTMxLTRjZGMtYWJlNC1kN2VlYWQzNmY0ZGQiLCJlbWFpbCI6ImRlc3RhbmF0aG5hZWxhdGFyb0BnbWFpbC5jb20iLCJpbWFnZVVybCI6bnVsbCwiYWNjb3VudHMiOlt7ImlkIjoiYjBjMTU3YzgtYWYyMy00MzQ0LWE0MzctMTM0ZDIzYTYyNGE5IiwibmFtZSI6Im5hdGhuYWVsIiwiZG9tYWluIjpudWxsfV0sInJvbGVzIjpbIk9XTkVSIl0sImlhdCI6MTczNDk0Mjg5OCwiZXhwIjoxNzM0OTQ2NDk4fQ.S5nSDy3zYmG926BAYaqDWnp0lsGq8scr1t6Db41m1wM';
+
+
+
+
 
   return (
     <>
-      <UsersList
+      {/* <ConversationsList
         users={currentUser as unknown as User[]}
         currentUser={currentUser as User}
         setCurrentUser={setCurrentUser}
@@ -83,7 +73,7 @@ const MentorContainer = () => {
         currentConversationMessages={currentConversationMessages}
         socket={socket}
         setWebSocketMessages={setWebSocketMessages}
-      />
+      /> */}
     </>
   );
 };
