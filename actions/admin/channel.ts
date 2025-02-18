@@ -10,7 +10,7 @@ export const fetchedChannels = async (id: string) => {
   console.log('id:', id);
 
   const getRequest = new GetRequest(
-    `${Url.fetchedChannel}?accountId=${id}&page=1&limit=1`,
+    `${Url.fetchedChannel}?accountId=${id}&page=1&limit=10`,
     'fetche-channel'
   );
 
@@ -47,8 +47,7 @@ export const handleDeleting = async (deleteId: string) => {
 export const handleConnect = async (connectedId: string | null) => {
   const postRequest = new PostRequest(
     `${Url.fetchedChannel}/${connectedId}/connect`,
-    'connect-channel',
-    { url: `${Url.telegram}=${connectedId}` }
+    'connect-channel'
   );
   const data = postRequest.postData();
   return data;
