@@ -47,16 +47,20 @@ export default function ChannelsPage() {
     const fetchUserProfile = async () => {
       const userAccoutId: Account = await userProfile();
       setUser(userAccoutId);
+      console.log('user:', userAccoutId);
     };
     fetchUserProfile();
   }, []);
 
   useEffect(() => {
     const getChannels = async () => {
+      console.log('user:', user);
+
       const response = await fetchedChannels(user?.id as string);
+      console.log(response);
 
       if (!response.error) {
-        setChannels(response);
+        setChannels(response.data);
       } else {
         toast(response.error);
       }

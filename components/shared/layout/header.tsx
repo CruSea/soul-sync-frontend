@@ -1,3 +1,5 @@
+'use client';
+
 import { FiBell } from 'react-icons/fi';
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 import {

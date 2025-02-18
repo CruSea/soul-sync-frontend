@@ -5,6 +5,7 @@ export const endPoints = {
   adminMentors: 'admin/mentor',
   mentor: 'mentors',
   channel: 'admin/channel',
+  message: 'admin/messages',
 };
 
 export const jsonServer = {
