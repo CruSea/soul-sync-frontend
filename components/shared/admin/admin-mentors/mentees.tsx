@@ -1,15 +1,14 @@
 'use client';
 
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import DataTable from '@/components/shared/data-table';
 import { Badge } from '@/components/ui/badge';
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 import type { Column, FilterOption } from '@/types/data-table';
 import { toast } from '@/hooks/use-toast';
 import { deleteMentor } from '@/actions/admin/admin';
-import type { Account } from '@/types/users';
-import { useRouter } from 'next/navigation';
-import { userProfile } from '@/actions/auth/login';
+import Image from 'next/image';
+import confused from 'public/assets/confused.jpg';
 
 interface Mentee {
   id: string | number;
@@ -95,60 +94,25 @@ const searchFields: (keyof Mentee)[] = [
   'status',
   'platform',
 ];
+const temp = false;
 
 const MenteesTable: React.FC = () => {
-  const [clientUser, setClientUser] = useState<Account | null>(null);
-  const [currentPage, setCurrentPage] = useState(1);
-  const [triggerState, setTriggerState] = useState<boolean>(false);
-  const router = useRouter();
-
-  const endPoint = `http://localhost:3500/data`;
-
-  const handleDelete = async (id: string | number) => {
-    try {
-      const response = await deleteMentor(id as string);
-      if (response.error) {
-        toast({
-          variant: 'destructive',
-          title: 'Error!',
-          description: response.error.description,
-        });
-        throw new Error('Failed to delete the mentee.');
-      }
-
-      setTriggerState(!triggerState);
-      toast({
-        variant: 'success',
-        title: 'Success!',
-        description: 'Mentee successfully deleted.',
-      });
-    } catch (error) {
-      // console.error(error);
-    }
-  };
-
   return (
-    <div className="flex-1 p-4 bg-secondary dark:bg-gray-900">
-      <div className="space-y-6 bg-white p-6 rounded-lg">
+    <div className="flex-1 p-4 bg-secondary dark:bg-gray-900 min-h-full">
+      <div className="space-y-6 bg-white p-6 rounded-lg h-full">
         <div className="flex items-center justify-between">
           <h1 className="text-2xl font-semibold">List of Mentees</h1>
         </div>
-        {clientUser && (
-          <DataTable<Mentee>
-            tag="fetch-mentees"
-            apiUrl={endPoint}
-            columns={columns}
-            searchFields={searchFields}
-            filterOptions={filterOptions}
-            itemsPerPage={10}
-            currentPage={currentPage}
-            onPageChange={setCurrentPage}
-            onDelete={handleDelete}
-            triggerState={triggerState as boolean}
-            setTriggerState={
-              setTriggerState as React.Dispatch<React.SetStateAction<boolean>>
-            }
-          />
+        {temp ? (
+          <div className="text-red-500">Error</div>
+        ) : (
+          //
+          <div className="flex flex-col items-center justify-center">
+            <h1 className="text-center mb-4 text-3xl font-bold">
+              I don’t Think This page is built yet
+            </h1>
+            <Image src={confused} alt="confused" width={320} height={480} />
+          </div>
         )}
       </div>
     </div>

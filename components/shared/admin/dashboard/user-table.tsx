@@ -92,7 +92,7 @@ const UserTable: React.FC = () => {
         <div className="flex items-center justify-between">
           <h1 className="text-2xl font-semibold">New Mentees</h1>
         </div>
-        {error ? (
+        {/* {error ? (
           <div className="text-red-500">{error}</div>
         ) : (
           <DataTable<Mentee>
@@ -116,7 +116,7 @@ const UserTable: React.FC = () => {
               throw new Error('Function not implemented.');
             }}
           />
-        )}
+        )} */}
       </div>
     </div>
   );

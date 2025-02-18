@@ -4,7 +4,7 @@ import apiCall from '../../base-api/api';
 
 export const fetchedDataTable = async (url: string, tag: string) => {
   const response = apiCall({
-    url: `${url}`,
+    url: url,
     tag: tag,
   });
 
