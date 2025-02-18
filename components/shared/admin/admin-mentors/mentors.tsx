@@ -74,7 +74,7 @@ const MentorsTable: React.FC = () => {
   const [clientUser, setClientUser] = useState<Account | null>(null);
   const [currentPage, setCurrentPage] = useState(1);
   const [triggerState, setTriggerState] = useState<boolean>(false);
-  
+
   useEffect(() => {
     const fetchUserProfile = async () => {
       const userAccount: Account = await userProfile();
