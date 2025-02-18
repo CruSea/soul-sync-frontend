@@ -1,6 +1,6 @@
 'use client';
 import React from 'react';
-import { DataTable } from '@/components/shared/data-table';
+import DataTable from '@/components/shared/data-table';
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
 import { MessageCircle } from 'lucide-react';
@@ -90,6 +90,10 @@ export function MessageTable() {
           }}
           triggerState={triggerState}
           setTriggerState={setTriggerState}
+          currentPage={0}
+          onPageChange={function (page: number): void {
+            throw new Error('Function not implemented.');
+          }}
         />
       </div>
     </div>

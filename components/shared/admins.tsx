@@ -1,5 +1,5 @@
 import React from 'react';
-import { DataTable } from '@/components/shared/data-table';
+import DataTable from '@/components/shared/data-table';
 import { Badge } from '@/components/ui/badge';
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 import { Button } from '@/components/ui/button';
@@ -95,6 +95,10 @@ export function AdminsTable() {
           }}
           triggerState={triggerState}
           setTriggerState={setTriggerState}
+          currentPage={0}
+          onPageChange={function (page: number): void {
+            throw new Error('Function not implemented.');
+          }}
         />
       </div>
     </div>
