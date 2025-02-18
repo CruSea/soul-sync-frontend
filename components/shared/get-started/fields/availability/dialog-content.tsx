@@ -7,14 +7,14 @@ import {
   DialogDescription,
   DialogHeader,
   DialogTitle,
-} from "./TimeDialog";
-import { DayField } from "./DayFields";
+} from "./time-dialog";
+import { DayField } from "./day-fields";
 import { getStartedForm } from "@/data/get-started-data";
-import { TimeFields } from "./TimeFields";
-import ErrorMessage from "./ErrorHandling";
+import { TimeFields } from "./time-fields";
+import ErrorMessage from "./error-handling";
 import { useFormContext } from "react-hook-form";
 import { LuX } from "react-icons/lu";
-import ConfirmExit from "./comfirmExit";
+import ConfirmExit from "./comfirm-exit";
 import { useState } from "react";
 
 export default function AvailabilityDialogContent({

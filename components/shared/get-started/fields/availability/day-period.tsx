@@ -1,32 +1,42 @@
-import { Button } from '@/components/ui/button';
+import { Button } from "@/components/ui/button";
 import {
   Command,
   CommandEmpty,
   CommandGroup,
+  CommandInput,
   CommandItem,
   CommandList,
-} from "./TimeCommand";
+} from "./time-command";
 import {
+  Form,
   FormControl,
+  FormDescription,
   FormField,
   FormItem,
+  FormLabel,
   FormMessage,
 } from "@/components/ui/form";
-import { Popover, PopoverContent, PopoverTrigger } from "./TimePopover";
+import { Popover, PopoverContent, PopoverTrigger } from "./time-popover";
 import { cn } from "@/lib/utils";
 import { Check, ChevronsUpDown } from "lucide-react";
 import { getStartedForm } from "@/data/get-started-data";
-import { HourFieldProps } from "@/types/get-started";
+import { DayPeriodFieldProps } from "@/types/get-started";
 
-export function HourField({ control, type, form, day, timeError }: HourFieldProps) {
+export function DayPeriodField({
+  control,
+  type,
+  form,
+  day,
+  timeError
+}: DayPeriodFieldProps) {
   return (
     <FormField
       control={control}
       name={`availability.${day.value}${
-        type === "start" ? ".startTime.hour" : ".endTime.hour"
-      }`} // sets the name to the specific form data value
+        type === "start" ? ".startTime.dayPeriod" : ".endTime.dayPeriod"
+      }`}
       render={({ field }) => (
-        <FormItem className="flex flex-col">
+        <FormItem className="flex flex-col ml-[3px]">
           <Popover>
             <PopoverTrigger asChild>
               <FormControl>
@@ -34,8 +44,8 @@ export function HourField({ control, type, form, day, timeError }: HourFieldProp
                   variant="outline"
                   role="combobox"
                   className={cn(
-                    ' w-16 px-2 gap-0',
-                    !field.value && 'text-muted-foreground'
+                    " w-16 px-2 gap-0",
+                    !field.value && "text-muted-foreground"
                   )}
                 >
                   {field.value}
@@ -46,32 +56,32 @@ export function HourField({ control, type, form, day, timeError }: HourFieldProp
             <PopoverContent className="w-16 p-0">
               <Command>
                 <CommandList>
-                  <CommandEmpty>No hours found.</CommandEmpty>
+                  <CommandEmpty>No dayPeriod found.</CommandEmpty>
                   <CommandGroup>
-                    {getStartedForm.hours.map((hour) => (
+                    {getStartedForm.dayPeriods.map((dayPeriod) => (
                       <CommandItem
-                        value={hour.label}
-                        key={hour.value}
+                        value={dayPeriod.label}
+                        key={dayPeriod.value}
                         onSelect={() => {
                           form.setValue(
                             `availability.${day.value}${
                               type === "start"
-                                ? ".startTime.hour"
-                                : ".endTime.hour"
+                                ? ".startTime.dayPeriod"
+                                : ".endTime.dayPeriod"
                             }`,
-                            hour.value
-                          ); // sets the hour value selected on the popout on the form
+                            dayPeriod.value
+                          ); // sets the name to the specific form data value
                           timeError()
                         }}
                         className=" cursor-pointer"
                       >
-                        {hour.label}
+                        {dayPeriod.label}
                         <Check
                           className={cn(
-                            'ml-[-5px]',
-                            hour.value === field.value
-                              ? 'opacity-100'
-                              : 'opacity-0'
+                            "ml-[-5px]",
+                            dayPeriod.value === field.value
+                              ? "opacity-100"
+                              : "opacity-0"
                           )}
                         />
                       </CommandItem>

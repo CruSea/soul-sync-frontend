@@ -1,9 +1,9 @@
 "use client";
 
 import { TimeProp } from "@/types/get-started";
-import { HourField } from "./hourField";
-import { MinuteField } from "./MinuteField";
-import { DayPeriodField } from "./DayPeriod";
+import { HourField } from "./hour-field";
+import { MinuteField } from "./minute-field";
+import { DayPeriodField } from "./day-period";
 import { parseTime } from "@/lib/utils";
 import { useState } from "react";
 

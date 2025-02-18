@@ -1,7 +1,7 @@
 "use client";
 
 import { TimeFieldsProps } from "@/types/get-started";
-import { Time } from "./Time";
+import { Time } from "./time";
 import { useFormContext } from "react-hook-form";
 import { useState } from "react";
 

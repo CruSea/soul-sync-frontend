@@ -6,11 +6,11 @@ import {
 } from "@/types/get-started";
 import { useEffect, useState } from "react";
 import { FormProvider } from "react-hook-form";
-import AvailabilityHeader from "./AvailabilityHeader";
-import AvailabilityDialogContent from "./DialogContent";
+import AvailabilityHeader from "./availability-header";
+import AvailabilityDialogContent from "./dialog-content";
 import {
   Dialog
-} from "./TimeDialog";
+} from "./time-dialog";
 
 export function AvailabilityFields({form}: AvailabilityTypes) {
   const [isErrorStates, setIsErrorStatesAction] = useState<boolean[]>([

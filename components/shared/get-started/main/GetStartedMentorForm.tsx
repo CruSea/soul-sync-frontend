@@ -5,15 +5,15 @@ import { getStartedMentorFormSchema } from "@/types/get-started";
 import { getStartedMentorFormValues } from "@/types/get-started";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Form } from "@/components/ui/form";
-import { AgeField } from "../fields/AgeField";
-import { GenderField } from "../fields/GenderField";
+import { AgeField } from "../fields/age-field";
+import { GenderField } from "../fields/gender-field";
 import { getStartedForm } from "@/data/get-started-data";
-import { LocationField } from "../fields/LocationField";
-import { SpecializationField } from "../fields/SpecializationField";
+import { LocationField } from "../fields/location-field";
+import { SpecializationField } from "../fields/specialization-field";
 import { useEffect } from "react";
 import { Button } from "@/components/ui/button";
 import { useRouter } from "next/navigation";
-import { AvailabilityFields } from "../fields/availability/AvailabilityFields";
+import { AvailabilityFields } from "../fields/availability/availability-fields";
 
 const GetStartedMentorForm = () => {
   const form = useForm<getStartedMentorFormValues>({

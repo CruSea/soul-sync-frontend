@@ -8,14 +8,14 @@ import {
 import { getStartedMentorFormValues } from "@/types/get-started";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Form } from "@/components/ui/form";
-import { AgeField } from "../fields/AgeField";
-import { GenderField } from "../fields/GenderField";
+import { AgeField } from "../fields/age-field";
+import { GenderField } from "../fields/gender-field";
 import { getStartedForm } from "@/data/get-started-data";
-import { LocationField } from "../fields/LocationField";
+import { LocationField } from "../fields/location-field";
 import { useEffect } from "react";
 import { Button } from "@/components/ui/button";
 import { useRouter } from "next/navigation";
-import { PhoneNumberField } from "../fields/PhoneNumberField";
+import { PhoneNumberField } from "../fields/phone-number-field";
 
 const GetStartedAdminForm = () => {
   const form = useForm<getStartedAdminFormValues>({
