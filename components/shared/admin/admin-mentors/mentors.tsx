@@ -84,10 +84,10 @@ const MentorsTable: React.FC = () => {
     fetchUserProfile();
   }, []);
   const endPoint = `${endPoints.adminMentors}?accountId=${clientUser?.id}`;
- // const endpoint = `${endPoints.message}/${clientUser?.id}`;
+  // const endpoint = `${endPoints.message}/${clientUser?.id}`;
   const page = currentPage;
   const [itemsPerPage, onItemsPerPageChange] = useState<number>(10);
-  
+
   const apiUrl = `${endPoint}?page=${page}&limit=${itemsPerPage}`;
 
   const handleDelete = async (id: string | number) => {
@@ -137,7 +137,6 @@ const MentorsTable: React.FC = () => {
             filterOptions={filterOptions}
             itemsPerPage={itemsPerPage}
             onItemsPerPageChange={onItemsPerPageChange}
-
             currentPage={currentPage}
             onPageChange={setCurrentPage}
             onDelete={handleDelete}
