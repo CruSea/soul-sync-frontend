@@ -1,40 +1,43 @@
 'use client';
 
-import { useRef, useEffect, useState } from 'react';
 import { Card } from '@/components/ui/card';
+import { useEffect, useRef, useState } from 'react';
 
-import { ChatProps, webSocketMessages, WSMessage } from '@/types/mentor';
 import { transformChatData, transformWSData } from '@/lib/utils';
+import { ChatProps, webSocketMessages, WSMessage } from '@/types/mentor';
 
-import { jsonServer } from '@/data/end-points';
+import { useSocket } from '@/context/providers/SocketProvider';
 import ChatHeader from './chat-header';
 import { ScrollArea } from './chat-scrollarea';
-import Message from './Message';
 import InputArea from './input-area';
-import { useSocket } from '@/context/providers/SocketProvider';
+import Message from './Message';
 
-
-const Chat = ({
-  currentConversation,
-  conversationMessages,
-}: ChatProps) => {
+const Chat = ({ currentConversation, conversationMessages }: ChatProps) => {
   // text is where the text box saves what the mentor writes
   const socket = useSocket();
-  const [message, setMessage] = useState("");
-  const [webSocketMessages, setWebSocketMessages] = useState<webSocketMessages>([])
+  const [message, setMessage] = useState('');
+  const [webSocketMessages, setWebSocketMessages] = useState<webSocketMessages>(
+    []
+  );
+  // an empty div at the end of the thread used to scroll to the bottom on send
+  const bottomOfPanelRef = useRef<HTMLDivElement | null>(null);
+  const textBox = useRef<HTMLInputElement | null>(null);
 
   useEffect(() => {
     if (!socket) return;
 
-    console.log("socket", socket)
+    console.log('socket', socket);
 
-    socket.on("message", (msg) => {
-      setWebSocketMessages((prevMessages) => [...prevMessages, JSON.parse(msg)])
-      console.log("new message", msg)
+    socket.on('message', (msg) => {
+      setWebSocketMessages((prevMessages) => [
+        ...prevMessages,
+        JSON.parse(msg),
+      ]);
+      console.log('new message', msg);
     });
 
     return () => {
-      socket?.off("message");
+      socket?.off('message');
     };
   }, [socket]);
 
@@ -42,35 +45,23 @@ const Chat = ({
     ? transformChatData(conversationMessages) // for when connecting to backend
     : [];
 
-    const WSData = transformWSData(webSocketMessages as WSMessage[]);
-
-  // useEffect(() => {
-  //   console.log("curent messages", currentConversationMessages)
-  //   const transformedWSData = transformWSData(currentConversationMessages as WSMessage[]);
-
-  //   setWSData(transformedWSData);
-  // }, [currentConversationMessages, currentConversation]);
-
-
-
-  // const WSData = transformWSData(webSocketMessages as WSMessage[]); // get the mentorId from the token next time
-
-  // an empty div at the end of the thread used to scroll to the bottom on send
-  const bottomOfPanelRef = useRef<HTMLDivElement | null>(null);
-
-  // a referance for where the you will write the text
-  const textBox = useRef<HTMLInputElement | null>(null);
+  const WSData = transformWSData(
+    webSocketMessages.filter(
+      (message) =>
+        message.conversationId == currentConversation?.conversation_id
+    ) as WSMessage[]
+  );
 
   const sendText = () => {
-    if (socket && message.trim() !== "") {
+    if (socket && message.trim() !== '') {
       const messageObject = {
-        type:"CHAT",
+        type: 'CHAT',
         metadata: {
-          conversationId: currentConversation?.conversation_id
+          conversationId: currentConversation?.conversation_id,
         },
-        payload: message
-      }
-      socket.emit("message", JSON.stringify(messageObject)); 
+        payload: message,
+      };
+      socket.emit('message', JSON.stringify(messageObject));
 
       const now = new Date();
       const createdAt = now.toISOString();
@@ -80,62 +71,19 @@ const Chat = ({
           conversationId: currentConversation.conversation_id,
           type: 'SENT',
           body: message,
-          createdAt: createdAt
-        }
-  
-        setWebSocketMessages((prevMessages) => [...prevMessages, websocketMessage])
+          createdAt: createdAt,
+        };
+
+        setWebSocketMessages((prevMessages) => [
+          ...prevMessages,
+          websocketMessage,
+        ]);
       }
 
-      console.log("message", messageObject)
-      setMessage("");
+      console.log('message', messageObject);
+      setMessage('');
     }
-  }
-
-  // const sendText = async (messageText: string) => {
-  //   if (!messageText.trim() || !socket) return; // Don't send empty messages
-
-  //   const now = new Date();
-  //   const createdAt = now.toISOString();
-
-  //   const newMessage: WSSentMessage = {
-  //     type: 'CHAT',
-  //     metadata: {
-  //       conversationId: currentConversation.conversation_id,
-  //     },
-  //     payload: messageText,
-  //   };
-
-  //   try {
-  //     // Find the current id from props
-  //     if (!userMessages) {
-  //       return;
-  //     }
-
-  //     // Append the new message to the messages array
-  //     const updatedMessages = [...userMessages.messages, newMessage];
-
-  //     // Update the backend
-  //     const patchResponse = await fetch(
-  //       `${jsonServer.baseUrl}/${jsonServer.messages}/${userMessages.id}`,
-  //       {
-  //         method: 'PATCH',
-  //         headers: {
-  //           'Content-Type': 'application/json',
-  //         },
-  //         body: JSON.stringify({ messages: updatedMessages }),
-  //       }
-  //     );
-
-  //     if (textBox.current) textBox.current.value = ''; // Reset input field
-
-  //     setUserMessages({ ...userMessages, messages: updatedMessages });
-  //   } catch (error) {
-  //     throw new Error(error as string);
-  //   }
-
-  //   socket.emit('message', JSON.stringify(newMessage));
-  //   setWebSocketMessages((prevMessages) => [...prevMessages, WSFormatMessage]);
-  // };
+  };
 
   useEffect(() => {
     // Scroll to the bottom whenever `thread` changes
@@ -173,7 +121,11 @@ const Chat = ({
           </div>
 
           {/*textbox where you input text */}
-          <InputArea  sendText={sendText} message={message} setMessage={setMessage}/>
+          <InputArea
+            sendText={sendText}
+            message={message}
+            setMessage={setMessage}
+          />
         </Card>
       )}
     </>

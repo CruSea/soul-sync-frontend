@@ -12,7 +12,7 @@ export type Mentor = {
   location: string;
   status: string;
   profileImage: string;
-}
+};
 
 export type User = {
   id: string;
@@ -30,14 +30,16 @@ export type MentorLayoutProps = {
 export type ConversationsListProps = {
   conversations: Conversation[];
   currentConversation: Conversation | undefined;
-  setCurrentConversation:  React.Dispatch<React.SetStateAction<Conversation | undefined>>;
-}
+  setCurrentConversation: React.Dispatch<
+    React.SetStateAction<Conversation | undefined>
+  >;
+};
 
 type Platform = 'Telegram' | 'WhatsApp' | 'Negarit' | 'Facebook' | 'Twilio';
 
 export type Conversation = {
-  conversation_id: string,
-  platform: Platform
+  conversation_id: string;
+  platform: Platform;
 };
 
 export type Conversations = Conversation[];
@@ -163,9 +165,9 @@ export type InputAreaProps = {
   sendText: () => void;
   message: string;
   setMessage: React.Dispatch<React.SetStateAction<string>>;
-}
+};
 
-export type PlatformIcon = StaticImageData | string;
+export type PlatformIcon = string;
 
 export type PlatformIconsType = Record<string, PlatformIcon>;
 

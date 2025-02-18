@@ -14,9 +14,9 @@ import { ConversationsListProps } from '@/types/mentor';
 import { platformIcons } from '@/data/mentor';
 
 const ConversationsList = ({
-    conversations,
-    currentConversation,
-    setCurrentConversation
+  conversations,
+  currentConversation,
+  setCurrentConversation,
 }: ConversationsListProps) => {
   return (
     <div className="w-80 overflow-y-auto bg-white rounded-[10px] py-4 shadow-sidebar">
@@ -39,7 +39,10 @@ const ConversationsList = ({
                     key={data.conversation_id}
                     className={cn(
                       'flex px-2.5 gap-3.5 items-center h-[70px] outline-none rounded-lg cursor-pointer',
-                      data.conversation_id === currentConversation?.conversation_id ? '!bg-gray-300' : 'bg-white'
+                      data.conversation_id ===
+                        currentConversation?.conversation_id
+                        ? '!bg-gray-300'
+                        : 'bg-white'
                     )} // if user is selected sets the background to gry
                     onSelect={() => setCurrentConversation(data)} // sets the chosen user to the index of the selected item
                   >
@@ -56,7 +59,9 @@ const ConversationsList = ({
 
                     {/* user information */}
                     <div className="flex flex-col justify-center">
-                      <div className="font-bold text-base">{data.conversation_id}</div>
+                      <div className="font-bold text-base">
+                        {data.conversation_id}
+                      </div>
                     </div>
                   </CommandItem>
                 ))}

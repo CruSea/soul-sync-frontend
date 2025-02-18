@@ -68,7 +68,7 @@ export function transformWSData(
   if (!Messages) {
     return [];
   }
-  
+
   return Messages.map((Message, index, arr) => {
     const currentDay = formatDate(Message.createdAt);
     const previousDay = index > 0 ? formatDate(arr[index - 1].createdAt) : null;
