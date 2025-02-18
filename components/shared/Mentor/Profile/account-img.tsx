@@ -1,5 +1,5 @@
-import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
-import { LuCamera } from "react-icons/lu";
+import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
+import { LuCamera } from 'react-icons/lu';
 
 const AccountImage = () => {
   return (
@@ -20,4 +20,4 @@ const AccountImage = () => {
   );
 };
 
-export default AccountImage
+export default AccountImage;

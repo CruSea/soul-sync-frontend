@@ -1,4 +1,4 @@
-import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
+import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 import {
   Card,
   CardContent,
@@ -6,10 +6,10 @@ import {
   CardFooter,
   CardHeader,
   CardTitle,
-} from "@/components/ui/card";
-import { Input } from "@/components/ui/input";
-import { LuCamera } from "react-icons/lu";
-import AccountImage from "./account-img";
+} from '@/components/ui/card';
+import { Input } from '@/components/ui/input';
+import { LuCamera } from 'react-icons/lu';
+import AccountImage from './account-img';
 
 const BasicInfo = () => {
   return (

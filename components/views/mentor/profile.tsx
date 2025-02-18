@@ -1,16 +1,16 @@
-import BasicInfo from "@/components/shared/Mentor/Profile/basic-info";
-import Specialization from "@/components/shared/Mentor/Profile/specialization";
-import { Button } from "@/components/ui/button";
+import BasicInfo from '@/components/shared/Mentor/Profile/basic-info';
+import Specialization from '@/components/shared/Mentor/Profile/specialization';
+import { Button } from '@/components/ui/button';
 import {
   Card,
   CardContent,
   CardFooter,
   CardHeader,
   CardTitle,
-} from "@/components/ui/card";
-import { Checkbox } from "@/components/ui/checkbox";
-import { getStartedForm } from "@/data/get-started-data";
-import { LuClock } from "react-icons/lu";
+} from '@/components/ui/card';
+import { Checkbox } from '@/components/ui/checkbox';
+import { getStartedForm } from '@/data/get-started-data';
+import { LuClock } from 'react-icons/lu';
 
 const ProfileView = () => {
   return (
