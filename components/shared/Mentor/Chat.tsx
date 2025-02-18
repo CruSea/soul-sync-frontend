@@ -1,15 +1,14 @@
 'use client';
 
-import { useRef, useEffect } from 'react';
 import { Card } from '@/components/ui/card';
-
-import { ChatProps } from '@/types/mentor';
-import { transformChatData } from '@/lib/utils';
+import { useEffect, useRef } from 'react';
 
 import { jsonServer } from '@/data/end-points';
-import ChatHeader from './chat-header';
+import { transformChatData } from '@/lib/utils';
+import { ChatProps } from '@/types/mentor';
 import { ScrollArea } from './chat-scrollarea';
 import Message from './Message';
+import ChatHeader from './chat-header';
 import InputArea from './input-area';
 
 const Chat = ({
@@ -59,6 +58,8 @@ const Chat = ({
       );
 
       if (textBox.current) textBox.current.value = ''; // Reset input field
+
+      setUserMessages({ ...userMessages, messages: updatedMessages });
 
       setUserMessages({ ...userMessages, messages: updatedMessages });
     } catch (error) {

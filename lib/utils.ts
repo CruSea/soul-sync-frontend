@@ -1,8 +1,9 @@
+import { timeType } from '@/types/get-started';
 import { Messages, Users } from '@/types/mentor';
 import { clsx, type ClassValue } from 'clsx';
+import { jwtDecode } from 'jwt-decode';
 import { twMerge } from 'tailwind-merge';
 import { v4 as uuidv4 } from 'uuid';
-import { jwtDecode } from 'jwt-decode';
 
 export function cn(...inputs: ClassValue[]) {
   return twMerge(clsx(inputs));
@@ -66,6 +67,11 @@ export function sortUsers(users: Users) {
   );
 }
 
+export const parseTime = (time: timeType) => {
+  const hour = parseInt(time.hour, 10);
+  const minute = parseInt(time.minute, 10);
+  return (time.dayPeriod === 'PM' ? (hour % 12) + 12 : hour % 12) * 60 + minute;
+};
 // lib/auth.ts
 export async function verifyToken(token: string) {
   try {

@@ -1,3 +1,4 @@
+import { dailyAvailabilityType } from '@/types/get-started';
 import { Value } from '@radix-ui/react-select';
 
 const genderOptions = [
@@ -8,10 +9,13 @@ const genderOptions = [
 const specializationOptions = [
   { label: 'Marriage Counseling', value: 'marriageCounseling' },
   { label: 'Discipleship', value: 'discipleship' },
-  { label: 'Spiritual', value: 'spritual' },
+  { label: 'Spiritual Life', value: 'spritual' },
+  { label: 'Day to Day', value: 'dayToDay' },
+  { label: 'Life Coach', value: 'lifeCoach' },
+  { label: 'Psychology', value: 'psychology' },
 ];
 
-const dayOptions = [
+const DayOptions = [
   { label: 'Monday', value: 'monday' },
   { label: 'Tuesday', value: 'tuesday' },
   { label: 'Wednesday', value: 'wednesday' },
@@ -51,7 +55,20 @@ const minutes = [
   { label: '55', value: '55' },
 ];
 
-const dayPeriod = [
+export const defaultAvailabilityTime: dailyAvailabilityType = {
+  startTime: {
+    hour: '09',
+    minute: '00',
+    dayPeriod: 'AM',
+  },
+  endTime: {
+    hour: '05',
+    minute: '00',
+    dayPeriod: 'PM',
+  },
+};
+
+const dayPeriods = [
   { label: 'AM', value: 'AM' },
   { label: 'PM', value: 'PM' },
 ];
@@ -61,6 +78,7 @@ export const getStartedForm = {
   specializationOptions,
   hours,
   minutes,
-  dayPeriod,
-  dayOptions,
+  dayPeriods,
+  DayOptions,
+  defaultAvailabilityTime,
 };
