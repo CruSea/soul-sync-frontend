@@ -1,10 +1,10 @@
 'use client';
 
 import React, { useEffect, useState } from 'react';
-import DataTable, { type Column } from '@/components/shared/data-table';
+import DataTable from '@/components/shared/data-table';
 import { Badge } from '@/components/ui/badge';
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
-import type { FilterOption } from '@/types/data-table';
+import type { Column, FilterOption } from '@/types/data-table';
 import { toast } from '@/hooks/use-toast';
 import { deleteMentor } from '@/actions/admin/admin';
 import type { Account } from '@/types/users';

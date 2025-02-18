@@ -1,12 +1,12 @@
 'use client';
 import React from 'react';
-import DataTable, { type Column } from '@/components/shared/data-table';
+import DataTable from '@/components/shared/data-table';
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
 import { MessageCircle } from 'lucide-react';
 import type { Message } from '@/types/message';
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
-import { FilterOption } from '@/types/data-table';
+import { Column, FilterOption } from '@/types/data-table';
 
 const columns: Array<Column<Message>> = [
   {

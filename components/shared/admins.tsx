@@ -1,12 +1,12 @@
 import React from 'react';
-import DataTable, { type Column } from '@/components/shared/data-table';
+import DataTable from '@/components/shared/data-table';
 import { Badge } from '@/components/ui/badge';
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 import { Button } from '@/components/ui/button';
 import { Trash2 } from 'lucide-react';
 import { InviteAdminDialog } from './invite-admin-dialog';
 import type { Admin } from '@/types/admin';
-import { FilterOption } from '@/types/data-table';
+import { Column, FilterOption } from '@/types/data-table';
 
 const ALL_ADMINS: Admin[] = Array.from({ length: 50 }, (_, i) => ({
   id: `admin-${i + 1}`,

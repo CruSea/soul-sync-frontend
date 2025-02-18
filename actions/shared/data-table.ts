@@ -2,17 +2,11 @@
 
 import apiCall from '../../base-api/api';
 
-export const fetchedDataTable = async (
-  url: string,
-  tag: string,
-  page: number,
-  limit: number
-) => {
+export const fetchedDataTable = async (url: string, tag: string) => {
   const response = apiCall({
-    url: `${url}&limit=${limit}&page=${page}`,
+    url: `${url}`,
     tag: tag,
   });
-  console.log(`${url}?page=${page}&limit=${limit}`);
 
   // console.log(response);
   const data = await response;

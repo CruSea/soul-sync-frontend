@@ -1,9 +1,9 @@
 'use client';
 
 import React, { useState, useMemo } from 'react';
-import DataTable, { type Column } from '@/components/shared/data-table';
+import DataTable from '@/components/shared/data-table';
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
-import type { FilterOption } from '@/types/data-table';
+import type { Column, FilterOption } from '@/types/data-table';
 import { Badge } from '@/components/ui/badge';
 
 interface Mentee {

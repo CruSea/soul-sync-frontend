@@ -15,8 +15,7 @@ import {
   TableRow,
 } from '@/components/ui/table';
 import { Skeleton } from '@/components/ui/skeleton';
-import type { DataTableProps } from '@/types/data-table';
-
+import type { FilterOption } from '@/types/data-table';
 import { fetchedDataTable } from '@/actions/shared/data-table';
 import Pagination from './pagination';
 import {
@@ -34,6 +33,32 @@ import {
   DropdownMenuTrigger,
 } from '@radix-ui/react-dropdown-menu';
 
+// ... other imports
+
+export interface Column<T> {
+  key: keyof T;
+  header: string;
+  render?: (value: T) => React.ReactNode;
+}
+
+interface DataTableProps<T> {
+  tag: string;
+  apiUrl: string;
+  columns: Column<T>[];
+  searchFields?: (keyof T)[];
+  filterOptions?: FilterOption<T>[];
+  currentPage: number;
+  onPageChange: (page: number) => void;
+  onDelete?: (id: string | number) => Promise<void>;
+  enableActions?: boolean;
+  enablePagination?: boolean;
+  onError?: (error: string) => void;
+  triggerState: boolean;
+  setTriggerState: React.Dispatch<React.SetStateAction<boolean>>;
+  itemsPerPage?: number;
+  onItemsPerPageChange?: React.Dispatch<React.SetStateAction<number>>;
+}
+
 const DataTable = <T extends { id: string | number }>({
   tag,
   apiUrl,
@@ -48,6 +73,7 @@ const DataTable = <T extends { id: string | number }>({
   enablePagination = true,
   onError,
   triggerState,
+  onItemsPerPageChange,
   setTriggerState,
 }: DataTableProps<T>) => {
   const [data, setData] = useState<T[]>([]);
@@ -64,26 +90,19 @@ const DataTable = <T extends { id: string | number }>({
     const fetchData = async () => {
       setLoading(true);
       try {
-        const response = await fetchedDataTable(
-          apiUrl,
-          tag,
-          currentPage,
-          itemsPerPage
-        );
-        if (!response) {
-          throw new Error('No response received from the server.');
+        const response = await fetchedDataTable(apiUrl, tag);
+
+        if (response && response.data) {
+          setData(response.data);
+          setTotalPages(response.meta.totalPages); // Use meta.totalPages for pagination
+        } else {
+          throw new Error('Invalid response format');
         }
-        if (!response.data || !Array.isArray(response.data)) {
-          throw new Error('Unexpected response format: Data is missing.');
-        }
-        setData(response.data);
-        setTotalPages(response.meta?.totalPages ?? 1); // Use meta.totalPages or default to 1
       } catch (error) {
-        console.error('Error fetching data:', error);
         onError?.(
           error instanceof Error
             ? error.message
-            : 'Something went wrong while fetching data. Please try again later.'
+            : 'An error occurred while fetching data'
         );
         setData([]);
       } finally {
@@ -92,6 +111,7 @@ const DataTable = <T extends { id: string | number }>({
     };
     fetchData();
   }, [apiUrl, currentPage, itemsPerPage, tag, onError, triggerState]);
+
   const handleSearchChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     setSearchTerm(event.target.value);
   };
@@ -110,6 +130,13 @@ const DataTable = <T extends { id: string | number }>({
 
     return matchesSearch && matchesFilters;
   });
+
+  // Filter data based on search term
+  // const filteredData = data.filter((item) =>
+  //   searchFields.some((field) =>
+  //     item[field]?.toString().toLowerCase().includes(searchTerm.toLowerCase())
+  //   )
+  // );
 
   const handleDelete = (id: string | number) => {
     setDeleteDialog({ open: true, id });
@@ -177,16 +204,12 @@ const DataTable = <T extends { id: string | number }>({
             </DropdownMenuContent>
           </DropdownMenu>
         )}
-        {filters.map((currentFilter) => (
-          <Badge key={currentFilter} variant="secondary" className="gap-2">
-            {currentFilter.split(':')[1]}
+        {filters.map((filter) => (
+          <Badge key={filter} variant="secondary" className="gap-2">
+            {filter.split(':')[1]}
             <Button
               onClick={() => {
-                setFilters((previousFilters) =>
-                  previousFilters.filter(
-                    (existingFilter) => existingFilter !== currentFilter
-                  )
-                );
+                setFilters((prev) => prev.filter((f) => f !== filter));
               }}
               className="focus:outline-none"
             >
@@ -207,7 +230,7 @@ const DataTable = <T extends { id: string | number }>({
           </TableHeader>
           <TableBody>
             {loading ? (
-              Array.from({ length: itemsPerPage }).map((_, index) => (
+              Array.from({ length: itemsPerPage ?? 0 }).map((_, index) => (
                 <TableRow key={index}>
                   {columns.map((col) => (
                     <TableCell key={col.key as string}>
@@ -263,6 +286,8 @@ const DataTable = <T extends { id: string | number }>({
           currentPage={currentPage}
           totalPages={totalPages}
           onPageChange={onPageChange}
+          itemsPerPage={itemsPerPage}
+          onItemsPerPageChange={onItemsPerPageChange}
         />
       )}
       <Dialog
