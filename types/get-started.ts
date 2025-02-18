@@ -307,4 +307,5 @@ export interface ConfirmExitType {
   setIsOpen: Dispatch<SetStateAction<boolean>>;
   prevAvailability: AvailabilityType;
   form: UseFormReturn<getStartedMentorFormValues>;
+  setIsErrorStatesAction: Dispatch<SetStateAction<boolean[]>>;
 }

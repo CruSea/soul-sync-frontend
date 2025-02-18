@@ -38,11 +38,10 @@ export default function AvailabilityDialogContent({
       setErrorWhileAdd(true);
     } else {
       setIsOpen(false);
+      setPrevAvailability(JSON.parse(JSON.stringify(availability)));  
+      // we set the confirmed availability that the user has set as the default we will return to 
+      // in the future if we discard changes on the availability dialog
     }
-
-    setPrevAvailability(availability);  
-     // we set the confirmed availability that the user has set as the default we will return to 
-     // in the future if we discard changes on the availability dialog
 
   };
 
@@ -87,6 +86,7 @@ export default function AvailabilityDialogContent({
         setIsConfirmExit={setIsConfirmExit}
         setIsOpen={setIsOpen}
         prevAvailability={prevAvailability}
+        setIsErrorStatesAction={setIsErrorStatesAction}
         form={form}
       />
     </DialogContent>

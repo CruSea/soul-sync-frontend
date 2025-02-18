@@ -23,7 +23,8 @@ export function AvailabilityFields({form}: AvailabilityTypes) {
     false,
   ]); // gives us the error state for each day
 
-  const [prevAvailability, setPrevAvailability] = useState<AvailabilityType>(form.getValues("availability"))   
+  const [prevAvailability, setPrevAvailability] = useState<AvailabilityType>(form.getValues("availability"))  
+
   // holds the previouse availability data before the dialog was opened
   // useful if we decard changes and go back to old data
 

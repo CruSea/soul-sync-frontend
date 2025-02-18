@@ -14,13 +14,20 @@ export default function ConfirmExit({
   setIsConfirmExit,
   setIsOpen,
   prevAvailability,
-  form
+  form,
+  setIsErrorStatesAction
 }: ConfirmExitType) {
   const resetTime = () => {
     // if we choose discgard changes, we will exit both the exit dialog and availability dialog and set the availability to the prev data
     setIsConfirmExit(false);
     setIsOpen(false);
-    form.setValue("availability", prevAvailability)
+    setIsErrorStatesAction((prevIsErrorStates) =>
+      prevIsErrorStates.map((isError, i) =>
+        false
+      )
+    )
+    form.setValue("availability", prevAvailability);
+
   }
 
   return (
