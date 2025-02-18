@@ -54,13 +54,13 @@ export default function ChannelsPage() {
 
   useEffect(() => {
     const getChannels = async () => {
-      console.log('user:', user?.id);
+      console.log('user:', user);
 
       const response = await fetchedChannels(user?.id as string);
       console.log(response);
 
       if (!response.error) {
-        setChannels(response);
+        setChannels(response.data);
       } else {
         toast(response.error);
       }

@@ -74,8 +74,7 @@ const MentorsTable: React.FC = () => {
   const [clientUser, setClientUser] = useState<Account | null>(null);
   const [currentPage, setCurrentPage] = useState(1);
   const [triggerState, setTriggerState] = useState<boolean>(false);
-  const router = useRouter();
-
+  
   useEffect(() => {
     const fetchUserProfile = async () => {
       const userAccount: Account = await userProfile();
@@ -88,7 +87,7 @@ const MentorsTable: React.FC = () => {
   const page = currentPage;
   const [itemsPerPage, onItemsPerPageChange] = useState<number>(10);
 
-  const apiUrl = `${endPoint}?page=${page}&limit=${itemsPerPage}`;
+  const apiUrl = `${endPoint}&page=${page}&limit=${itemsPerPage}`;
 
   const handleDelete = async (id: string | number) => {
     try {
