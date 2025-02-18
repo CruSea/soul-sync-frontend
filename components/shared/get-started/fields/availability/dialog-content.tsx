@@ -1,21 +1,21 @@
-"use client";
+'use client';
 
-import { AvailabilityDialogContentType } from "@/types/get-started";
-import { Button } from "@/components/ui/button";
+import { AvailabilityDialogContentType } from '@/types/get-started';
+import { Button } from '@/components/ui/button';
 import {
   DialogContent,
   DialogDescription,
   DialogHeader,
   DialogTitle,
-} from "./time-dialog";
-import { DayField } from "./day-fields";
-import { getStartedForm } from "@/data/get-started-data";
-import { TimeFields } from "./time-fields";
-import ErrorMessage from "./error-handling";
-import { useFormContext } from "react-hook-form";
-import { LuX } from "react-icons/lu";
-import ConfirmExit from "./comfirm-exit";
-import { useState } from "react";
+} from './time-dialog';
+import { DayField } from './day-fields';
+import { getStartedForm } from '@/data/get-started-data';
+import { TimeFields } from './time-fields';
+import ErrorMessage from './error-handling';
+import { useFormContext } from 'react-hook-form';
+import { LuX } from 'react-icons/lu';
+import ConfirmExit from './comfirm-exit';
+import { useState } from 'react';
 
 export default function AvailabilityDialogContent({
   form,
@@ -28,21 +28,20 @@ export default function AvailabilityDialogContent({
   prevAvailability,
   setPrevAvailability,
 }: AvailabilityDialogContentType) {
-  const [isConfirmExit, setIsConfirmExit] = useState(false);   // are we in the exit dialog
-  const hasError = isErrorStates.some((isError) => isError);    // checks if any of the days have errors
+  const [isConfirmExit, setIsConfirmExit] = useState(false); // are we in the exit dialog
+  const hasError = isErrorStates.some((isError) => isError); // checks if any of the days have errors
 
-  const availability = useFormContext().getValues("availability");
+  const availability = useFormContext().getValues('availability');
   const AddAvailability = () => {
     // when addinf, if there is an error show text if not close
     if (hasError) {
       setErrorWhileAdd(true);
     } else {
       setIsOpen(false);
-      setPrevAvailability(JSON.parse(JSON.stringify(availability)));  
-      // we set the confirmed availability that the user has set as the default we will return to 
+      setPrevAvailability(JSON.parse(JSON.stringify(availability)));
+      // we set the confirmed availability that the user has set as the default we will return to
       // in the future if we discard changes on the availability dialog
     }
-
   };
 
   return (

@@ -3,15 +3,13 @@
 import { Card } from '@/components/ui/card';
 import { useEffect, useRef } from 'react';
 
-
-import { jsonServer } from "@/data/end-points";
-import { transformChatData } from "@/lib/utils";
-import { ChatProps } from "@/types/mentor";
-import { ScrollArea } from "./chat-scrollarea";
-import Message from "./Message";
+import { jsonServer } from '@/data/end-points';
+import { transformChatData } from '@/lib/utils';
+import { ChatProps } from '@/types/mentor';
+import { ScrollArea } from './chat-scrollarea';
+import Message from './Message';
 import ChatHeader from './chat-header';
 import InputArea from './input-area';
-
 
 const Chat = ({
   userMessages,
@@ -48,18 +46,20 @@ const Chat = ({
       const updatedMessages = [...userMessages.messages, newMessage];
 
       // Update the backend
-      const patchResponse = await fetch(`${jsonServer.baseUrl}/${jsonServer.messages}/${userMessages.id}`, {
-        method: "PATCH",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({ messages: updatedMessages }),
-      });
-      
-      if (textBox.current) textBox.current.value = ""; // Reset input field
+      const patchResponse = await fetch(
+        `${jsonServer.baseUrl}/${jsonServer.messages}/${userMessages.id}`,
+        {
+          method: 'PATCH',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({ messages: updatedMessages }),
+        }
+      );
 
+      if (textBox.current) textBox.current.value = ''; // Reset input field
 
-      setUserMessages({...userMessages, messages: updatedMessages})
+      setUserMessages({ ...userMessages, messages: updatedMessages });
 
       setUserMessages({ ...userMessages, messages: updatedMessages });
     } catch (error) {

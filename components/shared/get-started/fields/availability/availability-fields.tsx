@@ -1,18 +1,13 @@
-"use client";
+'use client';
 
-import {
-  AvailabilityType,
-  AvailabilityTypes,
-} from "@/types/get-started";
-import { useEffect, useState } from "react";
-import { FormProvider } from "react-hook-form";
-import AvailabilityHeader from "./availability-header";
-import AvailabilityDialogContent from "./dialog-content";
-import {
-  Dialog
-} from "./time-dialog";
+import { AvailabilityType, AvailabilityTypes } from '@/types/get-started';
+import { useEffect, useState } from 'react';
+import { FormProvider } from 'react-hook-form';
+import AvailabilityHeader from './availability-header';
+import AvailabilityDialogContent from './dialog-content';
+import { Dialog } from './time-dialog';
 
-export function AvailabilityFields({form}: AvailabilityTypes) {
+export function AvailabilityFields({ form }: AvailabilityTypes) {
   const [isErrorStates, setIsErrorStatesAction] = useState<boolean[]>([
     false,
     false,
@@ -23,12 +18,14 @@ export function AvailabilityFields({form}: AvailabilityTypes) {
     false,
   ]); // gives us the error state for each day
 
-  const [prevAvailability, setPrevAvailability] = useState<AvailabilityType>(form.getValues("availability"))  
+  const [prevAvailability, setPrevAvailability] = useState<AvailabilityType>(
+    form.getValues('availability')
+  );
 
   // holds the previouse availability data before the dialog was opened
   // useful if we decard changes and go back to old data
 
-  const [isOpen, setIsOpen] = useState(false);  // is the dailog open
+  const [isOpen, setIsOpen] = useState(false); // is the dailog open
 
   const [errorWhileAdd, setErrorWhileAdd] = useState(false); // shows an error next to the add button if there are incorrect timefields
 
@@ -42,7 +39,7 @@ export function AvailabilityFields({form}: AvailabilityTypes) {
   }, [isErrorStates]);
 
   const isDaySelected = () =>
-    Object.values(form.watch("availability")).some(Boolean); // gets the availabily array and checks if there is atleast one value truthy
+    Object.values(form.watch('availability')).some(Boolean); // gets the availabily array and checks if there is atleast one value truthy
 
   return (
     <FormProvider {...form}>

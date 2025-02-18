@@ -1,13 +1,19 @@
-"use client";
+'use client';
 
-import { TimeProp } from "@/types/get-started";
-import { HourField } from "./hour-field";
-import { MinuteField } from "./minute-field";
-import { DayPeriodField } from "./day-period";
-import { parseTime } from "@/lib/utils";
-import { useState } from "react";
+import { TimeProp } from '@/types/get-started';
+import { HourField } from './hour-field';
+import { MinuteField } from './minute-field';
+import { DayPeriodField } from './day-period';
+import { parseTime } from '@/lib/utils';
+import { useState } from 'react';
 
-export function Time({ control, form, day, setIsErrorAction, isError }: TimeProp) {
+export function Time({
+  control,
+  form,
+  day,
+  setIsErrorAction,
+  isError,
+}: TimeProp) {
   const dayAvailability = form.watch(`availability.${day.value}`);
 
   const timeError = () => {

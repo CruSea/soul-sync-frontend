@@ -1,4 +1,4 @@
-import { Button } from "@/components/ui/button";
+import { Button } from '@/components/ui/button';
 import {
   Dialog,
   DialogContent,
@@ -6,8 +6,8 @@ import {
   DialogFooter,
   DialogHeader,
   DialogTitle,
-} from "@/components/ui/dialog";
-import { ConfirmExitType } from "@/types/get-started";
+} from '@/components/ui/dialog';
+import { ConfirmExitType } from '@/types/get-started';
 
 export default function ConfirmExit({
   isConfirmExit,
@@ -15,20 +15,17 @@ export default function ConfirmExit({
   setIsOpen,
   prevAvailability,
   form,
-  setIsErrorStatesAction
+  setIsErrorStatesAction,
 }: ConfirmExitType) {
   const resetTime = () => {
     // if we choose discgard changes, we will exit both the exit dialog and availability dialog and set the availability to the prev data
     setIsConfirmExit(false);
     setIsOpen(false);
     setIsErrorStatesAction((prevIsErrorStates) =>
-      prevIsErrorStates.map((isError, i) =>
-        false
-      )
-    )
-    form.setValue("availability", prevAvailability);
-
-  }
+      prevIsErrorStates.map((isError, i) => false)
+    );
+    form.setValue('availability', prevAvailability);
+  };
 
   return (
     <Dialog open={isConfirmExit} onOpenChange={() => setIsConfirmExit(false)}>
@@ -50,7 +47,11 @@ export default function ConfirmExit({
             >
               Cancel
             </Button>
-            <Button variant="destructive" className="w-28 hover:bg-[#c83a3a]" onClick={resetTime}>
+            <Button
+              variant="destructive"
+              className="w-28 hover:bg-[#c83a3a]"
+              onClick={resetTime}
+            >
               Confirm
             </Button>
           </div>

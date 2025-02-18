@@ -1,12 +1,18 @@
-"use client";
+'use client';
 
-import { TimeFieldsProps } from "@/types/get-started";
-import { Time } from "./time";
-import { useFormContext } from "react-hook-form";
-import { useState } from "react";
+import { TimeFieldsProps } from '@/types/get-started';
+import { Time } from './time';
+import { useFormContext } from 'react-hook-form';
+import { useState } from 'react';
 
-export function TimeFields({ control, form, options, setIsErrorStatesAction, isErrorStates }: TimeFieldsProps) {
-  const availability = useFormContext().getValues("availability");
+export function TimeFields({
+  control,
+  form,
+  options,
+  setIsErrorStatesAction,
+  isErrorStates,
+}: TimeFieldsProps) {
+  const availability = useFormContext().getValues('availability');
 
   return (
     <div className="space-y-4">
@@ -20,7 +26,9 @@ export function TimeFields({ control, form, options, setIsErrorStatesAction, isE
               form={form}
               day={day}
               isError={isErrorStates[index]}
-              setIsErrorAction={(value: boolean) =>    // sets the error state for each time component by the true / false value they input
+              setIsErrorAction={(
+                value: boolean // sets the error state for each time component by the true / false value they input
+              ) =>
                 setIsErrorStatesAction((prevIsErrorStates) =>
                   prevIsErrorStates.map((isError, i) =>
                     i === index ? value : isError

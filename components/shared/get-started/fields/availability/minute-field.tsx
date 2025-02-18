@@ -5,28 +5,32 @@ import {
   CommandGroup,
   CommandItem,
   CommandList,
-
-} from "./time-command";
+} from './time-command';
 import {
   FormControl,
   FormField,
   FormItem,
   FormMessage,
-} from "@/components/ui/form";
-import { Popover, PopoverContent, PopoverTrigger } from "./time-popover";
-import { cn } from "@/lib/utils";
-import { Check, ChevronsUpDown } from "lucide-react";
-import { getStartedForm } from "@/data/get-started-data";
-import { getStartedMentorFormValues } from "@/types/get-started";
-import { MinuteFieldProps } from "@/types/get-started";
+} from '@/components/ui/form';
+import { Popover, PopoverContent, PopoverTrigger } from './time-popover';
+import { cn } from '@/lib/utils';
+import { Check, ChevronsUpDown } from 'lucide-react';
+import { getStartedForm } from '@/data/get-started-data';
+import { getStartedMentorFormValues } from '@/types/get-started';
+import { MinuteFieldProps } from '@/types/get-started';
 
-
-export function MinuteField({ control, type, form, day, timeError }: MinuteFieldProps) {
+export function MinuteField({
+  control,
+  type,
+  form,
+  day,
+  timeError,
+}: MinuteFieldProps) {
   return (
     <FormField
       control={control}
       name={`availability.${day.value}${
-        type === "start" ? ".startTime.minute" : ".endTime.minute"
+        type === 'start' ? '.startTime.minute' : '.endTime.minute'
       }`} // sets the name to the specific form data value
       render={({ field }) => (
         <FormItem className="flex flex-col">
@@ -58,16 +62,14 @@ export function MinuteField({ control, type, form, day, timeError }: MinuteField
                         key={minute.value}
                         onSelect={() => {
                           form.setValue(
-
                             `availability.${day.value}${
-                              type === "start"
-                                ? ".startTime.minute"
-                                : ".endTime.minute"
+                              type === 'start'
+                                ? '.startTime.minute'
+                                : '.endTime.minute'
                             }`,
                             minute.value
                           ); // sets the minute value selected on the popout on the form
-                          timeError()
-
+                          timeError();
                         }}
                         className=" cursor-pointer"
                       >

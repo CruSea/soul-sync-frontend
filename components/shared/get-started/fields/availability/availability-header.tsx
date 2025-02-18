@@ -1,14 +1,13 @@
-"use client";
+'use client';
 
-import { LuPlus } from "react-icons/lu";
-import {
+import { LuPlus } from 'react-icons/lu';
+import { DialogTrigger } from './time-dialog';
+import { AiTwotoneCheckCircle } from 'react-icons/ai';
+import { AvailabilityHeaderTypes } from '@/types/get-started';
 
-  DialogTrigger,
-} from "./time-dialog";
-import { AiTwotoneCheckCircle } from "react-icons/ai";
-import { AvailabilityHeaderTypes } from "@/types/get-started";
-
-export default function AvailabilityHeader({ isDaySelected }: AvailabilityHeaderTypes) {
+export default function AvailabilityHeader({
+  isDaySelected,
+}: AvailabilityHeaderTypes) {
   return (
     <div className="w-full">
       {!isDaySelected ? (
