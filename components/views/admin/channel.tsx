@@ -25,6 +25,7 @@ import { fetchedChannels, handleAddChannel } from '@/actions/admin/channel';
 import { Account } from '@/types/users';
 import { userProfile } from '@/actions/auth/login';
 import { revalidate } from '@/actions/revalidate';
+import Pagination from '@/components/shared/pagination';
 // import { channel } from 'diagnostics_channel';
 
 export default function ChannelsPage() {
@@ -43,6 +44,10 @@ export default function ChannelsPage() {
     'TWILIO',
   ];
   const [user, setUser] = useState<Account | null>(null);
+  const [itemsPerPage, onItemsPerPageChange] = useState<number>(6);
+  const [totalPages, setTotalPages] = useState(1);
+  const [currentPage, setCurrentPage] = useState(1);
+  const page = currentPage;
   useEffect(() => {
     const fetchUserProfile = async () => {
       const userAccoutId: Account = await userProfile();
@@ -56,17 +61,23 @@ export default function ChannelsPage() {
     const getChannels = async () => {
       console.log('user:', user);
 
-      const response = await fetchedChannels(user?.id as string);
+      const response = await fetchedChannels(
+        user?.id as string,
+        itemsPerPage,
+        page
+      );
       console.log(response);
 
       if (!response.error) {
         setChannels(response.data);
+        setTotalPages(response.meta.totalPages);
       } else {
         toast(response.error);
       }
+      console.log('totalPages:', totalPages);
     };
     getChannels();
-  }, [user?.id, triggerState]);
+  }, [user?.id, triggerState, itemsPerPage, page]);
 
   const filteredChannel = channels?.filter(
     (item) =>
@@ -168,6 +179,13 @@ export default function ChannelsPage() {
             </CommandList>
           </Command>
         </div>
+        <Pagination
+          currentPage={currentPage}
+          totalPages={totalPages}
+          onPageChange={setCurrentPage}
+          itemsPerPage={itemsPerPage}
+          onItemsPerPageChange={onItemsPerPageChange}
+        />
       </div>
     </div>
   );

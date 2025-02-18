@@ -6,11 +6,15 @@ const Url = {
   telegram: `message/telegram?id`,
 };
 
-export const fetchedChannels = async (id: string) => {
+export const fetchedChannels = async (
+  id: string,
+  itemsPerPage: number,
+  page: number
+) => {
   console.log('id:', id);
 
   const getRequest = new GetRequest(
-    `${Url.fetchedChannel}?accountId=${id}&page=1&limit=10`,
+    `${Url.fetchedChannel}?accountId=${id}&page=${page}&limit=${itemsPerPage}`,
     'fetche-channel'
   );
 
