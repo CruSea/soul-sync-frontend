@@ -7,6 +7,7 @@ import { cookies } from 'next/headers';
 export async function setAuthCookie(userData: User_Info) {
   const cookieStore = await cookies();
 
+
   cookieStore.set({
     name: 'auth-token',
     value: userData?.token as string,

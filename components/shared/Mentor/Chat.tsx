@@ -1,27 +1,17 @@
 'use client';
 
-import { useRef, useEffect } from 'react';
 import { Card } from '@/components/ui/card';
+import { useEffect, useRef } from 'react';
 
-<<<<<<< HEAD
-import { Card } from "@/components/ui/card";
-import { ScrollArea } from "./chat-scrollarea";
-import ChatHeader from "./ChatHeader";
-import Message from "./Message";
-import { ChatProps, threadType } from "@/types/mentor";
-import { transformChatData } from "@/lib/utils";
-import InputArea from "./InputArea";
+
 import { jsonServer } from "@/data/end-points";
-=======
-import { ChatProps } from '@/types/mentor';
-import { transformChatData } from '@/lib/utils';
->>>>>>> origin/release-01
-
-import { jsonServer } from '@/data/end-points';
+import { transformChatData } from "@/lib/utils";
+import { ChatProps } from "@/types/mentor";
+import { ScrollArea } from "./chat-scrollarea";
+import Message from "./Message";
 import ChatHeader from './chat-header';
-import { ScrollArea } from './chat-scrollarea';
-import Message from './Message';
 import InputArea from './input-area';
+
 
 const Chat = ({
   userMessages,
@@ -58,7 +48,6 @@ const Chat = ({
       const updatedMessages = [...userMessages.messages, newMessage];
 
       // Update the backend
-<<<<<<< HEAD
       const patchResponse = await fetch(`${jsonServer.baseUrl}/${jsonServer.messages}/${userMessages.id}`, {
         method: "PATCH",
         headers: {
@@ -71,20 +60,6 @@ const Chat = ({
 
 
       setUserMessages({...userMessages, messages: updatedMessages})
-=======
-      const patchResponse = await fetch(
-        `${jsonServer.baseUrl}/${jsonServer.messages}/${userMessages.id}`,
-        {
-          method: 'PATCH',
-          headers: {
-            'Content-Type': 'application/json',
-          },
-          body: JSON.stringify({ messages: updatedMessages }),
-        }
-      );
-
-      if (textBox.current) textBox.current.value = ''; // Reset input field
->>>>>>> origin/release-01
 
       setUserMessages({ ...userMessages, messages: updatedMessages });
     } catch (error) {

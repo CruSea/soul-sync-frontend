@@ -5,43 +5,26 @@ import {
   CommandGroup,
   CommandItem,
   CommandList,
-<<<<<<<< HEAD:components/shared/GetStarted/fields/availability/hourField.tsx
 } from "./TimeCommand";
-========
-} from './time-command';
->>>>>>>> origin/release-01:components/shared/get-started/hour-field.tsx
 import {
   FormControl,
   FormField,
   FormItem,
   FormMessage,
-<<<<<<<< HEAD:components/shared/GetStarted/fields/availability/hourField.tsx
 } from "@/components/ui/form";
 import { Popover, PopoverContent, PopoverTrigger } from "./TimePopover";
 import { cn } from "@/lib/utils";
 import { Check, ChevronsUpDown } from "lucide-react";
 import { getStartedForm } from "@/data/get-started-data";
 import { HourFieldProps } from "@/types/get-started";
-========
-} from '@/components/ui/form';
-import { Popover, PopoverContent, PopoverTrigger } from './time-popover';
-import { cn } from '@/lib/utils';
-import { Check, ChevronsUpDown } from 'lucide-react';
-import { getStartedForm } from '@/data/get-started-data';
-import { HourFieldProps } from '@/types/get-started';
->>>>>>>> origin/release-01:components/shared/get-started/hour-field.tsx
 
 export function HourField({ control, type, form, day, timeError }: HourFieldProps) {
   return (
     <FormField
       control={control}
-<<<<<<<< HEAD:components/shared/GetStarted/fields/availability/hourField.tsx
       name={`availability.${day.value}${
         type === "start" ? ".startTime.hour" : ".endTime.hour"
       }`} // sets the name to the specific form data value
-========
-      name={type === 'start' ? 'startHour' : 'endHour'}
->>>>>>>> origin/release-01:components/shared/get-started/hour-field.tsx
       render={({ field }) => (
         <FormItem className="flex flex-col">
           <Popover>
@@ -55,15 +38,7 @@ export function HourField({ control, type, form, day, timeError }: HourFieldProp
                     !field.value && 'text-muted-foreground'
                   )}
                 >
-<<<<<<<< HEAD:components/shared/GetStarted/fields/availability/hourField.tsx
                   {field.value}
-========
-                  {field.value
-                    ? getStartedForm.hours.find(
-                        (hour) => hour.value === field.value
-                      )?.label
-                    : 'Select hour'}
->>>>>>>> origin/release-01:components/shared/get-started/hour-field.tsx
                   <ChevronsUpDown className="ml-2 h-4 w-4 shrink-0 opacity-50" />
                 </Button>
               </FormControl>
@@ -79,7 +54,6 @@ export function HourField({ control, type, form, day, timeError }: HourFieldProp
                         key={hour.value}
                         onSelect={() => {
                           form.setValue(
-<<<<<<<< HEAD:components/shared/GetStarted/fields/availability/hourField.tsx
                             `availability.${day.value}${
                               type === "start"
                                 ? ".startTime.hour"
@@ -88,11 +62,6 @@ export function HourField({ control, type, form, day, timeError }: HourFieldProp
                             hour.value
                           ); // sets the hour value selected on the popout on the form
                           timeError()
-========
-                            type === 'start' ? 'startHour' : 'endHour',
-                            hour.value
-                          );
->>>>>>>> origin/release-01:components/shared/get-started/hour-field.tsx
                         }}
                         className=" cursor-pointer"
                       >

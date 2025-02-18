@@ -1,7 +1,7 @@
 import { getStartedForm } from "@/data/get-started-data";
 import { Dispatch, SetStateAction } from "react";
-import { Control, FieldErrors, UseFormReturn } from 'react-hook-form';
-import { z } from 'zod';
+import { UseFormReturn } from "react-hook-form";
+import { z } from "zod";
 
 const hourValues = getStartedForm.hours.map((hour) => hour.value) as [
   string,
@@ -37,27 +37,27 @@ export type dailyAvailabilityType = z.infer<
 export const getStartedMentorFormSchema = z
   .object({
     age: z.preprocess(
-      (value) => (value === '' ? undefined : Number(value)), // changes the shadcn input which returns a string for the age to a number
+      (value) => (value === "" ? undefined : Number(value)), // changes the shadcn input which returns a string for the age to a number
       z
         .number()
-        .min(9, { message: 'Age must be at least 9.' })
-        .max(120, { message: 'Age must be no more than 120.' })
+        .min(9, { message: "Age must be at least 9." })
+        .max(120, { message: "Age must be no more than 120." })
     ),
-    gender: z.enum(['male', 'female'], {
-      required_error: 'You need to select your gender',
+    gender: z.enum(["male", "female"], {
+      required_error: "You need to select your gender",
     }),
     location: z
       .string()
       .min(2, {
-        message: 'location must be at least 2 characters.',
+        message: "location must be at least 2 characters.",
       })
       .max(30, {
-        message: 'location must not be longer than 30 characters.',
+        message: "location must not be longer than 30 characters.",
       }),
     specialization: z
-      .array(z.enum(['marriageCounseling', 'discipleship', 'spritual']), {
+      .array(z.enum(["marriageCounseling", "discipleship", "spritual"]), {
         // is an array that can have one or more of these fields
-        required_error: 'You need to select at least one specialization',
+        required_error: "You need to select at least one specialization",
       })
       .min(1, "You need to select at least one specialization"),
     availability: z.object({
@@ -169,26 +169,26 @@ export type AvailabilityType = z.infer<
 
 export const getStartedAdminFormSchema = z.object({
   age: z.preprocess(
-    (value) => (value === '' ? undefined : Number(value)), // changes the shadcn input which returns a string for the age to a number
+    (value) => (value === "" ? undefined : Number(value)), // changes the shadcn input which returns a string for the age to a number
     z
       .number()
-      .min(9, { message: 'Age must be at least 9.' })
-      .max(120, { message: 'Age must be no more than 120.' })
+      .min(9, { message: "Age must be at least 9." })
+      .max(120, { message: "Age must be no more than 120." })
   ),
-  gender: z.enum(['male', 'female'], {
-    required_error: 'You need to select your gender',
+  gender: z.enum(["male", "female"], {
+    required_error: "You need to select your gender",
   }),
   location: z
     .string()
     .min(2, {
-      message: 'location must be at least 2 characters.',
+      message: "location must be at least 2 characters.",
     })
     .max(30, {
-      message: 'location must not be longer than 30 characters.',
+      message: "location must not be longer than 30 characters.",
     }),
   phoneNumber: z.string().refine(
     (value) => {
-      if (value.startsWith('+')) {
+      if (value.startsWith("+")) {
         return value.length === 13 && /^\+\d{12}$/.test(value); // Starts with + and followed by 12 digits
       } else {
         return value.length === 10 && /^\d{10}$/.test(value); // Exactly 10 digits with no +
@@ -205,25 +205,21 @@ export type getStartedAdminFormValues = z.infer<
 >;
 
 export interface AgeFieldProps {
-  control:
-    | Control<getStartedMentorFormValues>
-    | Control<getStartedAdminFormValues>;
+  control: any;
   className?: string;
 }
 
 export interface SpecializationFieldProps {
-  control: Control<getStartedMentorFormValues>;
+  control: any;
   options: { label: string; value: string }[];
 }
 
 export interface LocationFieldProps {
-  control:
-    | Control<getStartedMentorFormValues>
-    | Control<getStartedAdminFormValues>;
+  control: any;
 }
 
 export interface PhoneNumberFieldProps {
-  control: Control<getStartedAdminFormValues>;
+  control: any;
 }
 
 export interface HourFieldProps {
@@ -256,9 +252,7 @@ export interface AvailabilityFieldsProps {
 }
 
 export interface GenderFieldProps {
-  control:
-    | Control<getStartedMentorFormValues>
-    | Control<getStartedAdminFormValues>;
+  control: any;
   options: { label: string; value: string }[];
   className?: string;
 }
