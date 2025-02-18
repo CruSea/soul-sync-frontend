@@ -22,6 +22,7 @@ import { useToast } from '@/hooks/use-toast';
 
 // import { endPoints } from '@/data/end-points';
 import { handleDeleting, handleConnect } from '@/actions/admin/channel';
+import { set } from 'zod';
 
 interface ChannelCardProps {
   channel: Channel;
@@ -45,6 +46,7 @@ export function ChannelCard({
 }: ChannelCardProps) {
   const [deleteId, setDeleteId] = useState<string | null>(null);
   const [connectedId, setConnectedId] = useState<string | null>(null);
+  const [id, setid] = useState<string | null>(null);
   const { toast } = useToast();
 
   let iconURL = '';
@@ -112,9 +114,13 @@ export function ChannelCard({
     setDeleteId(null);
   };
 
-  const handleToggle = () => {
-    if (channel.id) {
-      setConnectedId(channel.id);
+  const handleToggle = (channelId: string) => {
+    if (channelId) {
+      console.log('channelId:', channelId);
+      setConnectedId(channelId);
+      console.log('connectedId:', connectedId);
+      setid(channelId);
+      console.log('id:', id);
     }
     if (connectedId !== null) {
       setChannels((prevItems) =>
@@ -138,7 +144,6 @@ export function ChannelCard({
       description: `Channel ${channel.name} connected successfully`,
       duration: 3000,
     });
-    setConnectedId(null);
   };
   return (
     <div className="h-full w-full  gap-4  pb-5 flex flex-col items-center justify-between px-2.5 pt-1 border rounded-xl bg-white hover:shadow-md hover:rounded-xl transition-shadow ">
@@ -201,7 +206,7 @@ export function ChannelCard({
             <Switch
               id="connect"
               checked={channel.isOn}
-              onCheckedChange={() => handleToggle()}
+              onCheckedChange={() => handleToggle(channel.id as string)}
             />
             <Label htmlFor="connect">
               {channel.isOn ? 'Connected' : 'Not Connected'}
