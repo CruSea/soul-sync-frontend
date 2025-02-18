@@ -55,7 +55,7 @@ export const getStartedMentorFormSchema = z
         message: "location must not be longer than 30 characters.",
       }),
     specialization: z
-      .array(z.enum(["marriageCounseling", "discipleship", "spritual"]), {
+      .array(z.enum(["marriageCounseling", "discipleship", "spritual", "dayToDay", "lifeCoach", "psychology"]), {
         // is an array that can have one or more of these fields
         required_error: "You need to select at least one specialization",
       })
