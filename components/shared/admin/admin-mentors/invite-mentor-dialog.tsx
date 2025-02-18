@@ -24,8 +24,7 @@ interface InviteMentorFormData {
 interface InviteMentorDialogProps {
   userName: string;
   accountId: string;
-  roleId: string;
-  roleName: string;
+  role: string;
   triggerState: boolean;
   setTriggerState: React.Dispatch<React.SetStateAction<boolean>>;
 }
@@ -33,8 +32,7 @@ interface InviteMentorDialogProps {
 export function InviteMentorDialog({
   userName,
   accountId,
-  roleId,
-  roleName,
+  role,
   triggerState,
   setTriggerState,
 }: InviteMentorDialogProps) {

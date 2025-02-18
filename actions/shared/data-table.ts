@@ -10,6 +10,7 @@ export const fetchedDataTable = async (url: string, tag: string) => {
 
   // console.log(response);
   const data = await response;
+  console.log(data);
   return data;
 };
 
