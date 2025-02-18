@@ -1,0 +1,25 @@
+{
+  "channels": [
+    {
+      "id": "a74a9fec-0e0c-4a45-879b-8e7ceafa91d3",
+      "name": "Soul sync - bot",
+      "type": "TELEGRAM",
+      "configuration": {
+        "token": "Telegram Token"
+      },
+      "createdAt": "Jan 8, 2025",
+      "accountId": "4211a09b-b42a-4b1d-85f9-a6598d8ff585"
+    },
+    {
+      "id": "7e73cc97-ba50-473a-ad59-bd6da5ad5533",
+      "name": "Eyosias Solomon",
+      "type": "NEGARIT",
+      "configuration": {
+        "api_key": "Negarit Api",
+        "campaign_id": "Negarit Campaign Id"
+      },
+      "createdAt": "Jan 8, 2025",
+      "accountId": "4211a09b-b42a-4b1d-85f9-a6598d8ff585"
+    }
+  ]
+}

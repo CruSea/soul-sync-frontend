@@ -1,75 +1,78 @@
-"use client";
+'use client';
 
-import { MentorContainerProps, User, UserDetails, UserMessages } from "@/types/mentor";
-import Chat from "./Chat";
-import Profile from "./Profile";
-import { useEffect, useState } from "react";
-import UsersList from "./users-list";
-import { jsonServer } from "@/data/end-points";
-
-const MentorContainer = ({ users }: MentorContainerProps) => {
-  const [currentUser, setCurrentUser] = useState<User>(users[0]);
+import { User, UserDetails, UserMessages } from '@/types/mentor';
+import Profile from './Profile';
+import { useEffect, useState } from 'react';
+import { useRouter } from 'next/navigation';
+import UsersList from './users-list';
+import Chat from './Chat';
+import { userProfile } from '@/actions/auth/login';
+import { checkUser, conversation } from '@/actions/mentor/mentor';
+import { toast } from '@/hooks/use-toast';
+const MentorContainer = () => {
+  const [currentUser, setCurrentUser] = useState<User | null>(null);
   const [userDetails, setUserDetails] = useState<UserDetails>();
   const [userMessages, setUserMessages] = useState<UserMessages>();
 
   const [isDrawerOpen, setIsDrawerOpen] = useState<boolean>(false);
 
+  const router = useRouter();
+
+  const fetchUserMesages = async () => {
+    try {
+      const response = await conversation();
+
+      const data = await response;
+
+      if (Array.isArray(data) && data.length > 0) {
+        setUserMessages(data[0]); // Assuming you want the first item
+      }
+    } catch (error) {
+      throw new Error(error as string);
+    }
+  };
   useEffect(() => {
-    const fetchUserDetails = async () => {
-      try {
-        // fetches the userDetails from db
-        const response = await fetch(
-          `${jsonServer.baseUrl}/${jsonServer.userDetails}?id=${currentUser.id}`
-        );
-
-        if (!response.ok) {
-          throw new Error("Network response was not ok");
-        }
-        const data = await response.json();
-
-        if (Array.isArray(data) && data.length > 0) {
-          setUserDetails(data[0]); // Assuming you want the first item
-        } else {
-          console.warn("No user details found");
-        }
-      } catch (error) {
-        console.error("Failed to fetch user details:", error);
-      }
+    const fetchUserProfile = async () => {
+      const userAccoutId = await userProfile();
+      setCurrentUser(userAccoutId as unknown as User);
+      console.table(userAccoutId);
     };
-
-    const fetchUserMesages = async () => {
-      try {
-        const response = await fetch(
-          `${jsonServer.baseUrl}/${jsonServer.messages}?id=${currentUser.id}`
-        );
-
-        if (!response.ok) {
-          throw new Error("Network response was not ok");
-        }
-
-        const data = await response.json();
-
-        if (Array.isArray(data) && data.length > 0) {
-          setUserMessages(data[0]); // Assuming you want the first item
-        } else {
-          console.warn("No user details found");
-        }
-      } catch (error) {
-        console.error("Failed to fetch user Messages:", error);
-      }
-    };
-
+    fetchUserProfile();
+  }, []);
+  useEffect(() => {
     if (currentUser && currentUser.id) {
       fetchUserMesages();
-      fetchUserDetails();
     }
   }, [currentUser]);
+  useEffect(() => {
+    const fetchedUser = async () => {
+      try {
+        const response = await checkUser(currentUser?.userId as string);
+
+        if (response.error) {
+          toast({
+            variant: 'destructive',
+            title: 'Error!',
+            description: response.error.description,
+          });
+        }
+
+        if (!response.mentors[0].location) {
+          router.push('/mentor/get-started');
+        }
+      } catch (error) {
+        // router.push('/log-in');
+      }
+    };
+
+    fetchedUser();
+  }, [router]);
 
   return (
     <>
       <UsersList
-        users={users}
-        currentUser={currentUser}
+        users={currentUser as unknown as User[]}
+        currentUser={currentUser as User}
         setCurrentUser={setCurrentUser}
       />
       <Chat

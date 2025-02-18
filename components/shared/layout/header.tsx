@@ -12,7 +12,7 @@ import { LuUser } from "react-icons/lu";
 import { LuLogOut } from "react-icons/lu";
 import Link from "next/link";
 
-export function Header({ title }: HeaderProps) {
+export function Header({ title }: { title: string }) {
   return (
     <header className="flex h-14 items-center justify-between border-b px-4">
       <h1 className="text-base font-normal">{title}</h1>

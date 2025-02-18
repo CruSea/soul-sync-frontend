@@ -1,7 +1,11 @@
-import { Header } from "@/components/shared/layout/header";
-import { MentorLayoutProps } from "@/types/mentor";
+import React from 'react';
+import { Header } from '@/components/shared/layout/header';
+interface MentorLayoutProp {
+  children: React.ReactNode;
+  title: string;
+}
 
-export default function MentorLayout({ children, title }: MentorLayoutProps) {
+export default function MentorLayout({ children, title }: MentorLayoutProp) {
   return (
     <div className="flex flex-1 flex-col h-screen">
       <Header title={title} />
