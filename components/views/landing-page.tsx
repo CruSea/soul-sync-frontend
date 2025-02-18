@@ -1,16 +1,16 @@
-import LandingPageBody from "../shared/LandingPage/LandingPageBody";
-import LandingPageFooter from "../shared/LandingPage/LandingPageFooter";
-import LandingPageHeader from "../shared/LandingPage/LandingPageHeader";
+'use server';
+import LandingPageBody from '../shared/landing-page/landing-page-body';
+import LandingPageFooter from '../shared/landing-page/landing-page-footer';
+import LandingPageHeader from '../shared/landing-page/landing-page-header';
 
-const LandingPageView = () => {
-
+const LandingPageView = async () => {
   return (
     <div className=" flex flex-col min-h-screen">
-      <LandingPageHeader/>
+      <LandingPageHeader />
       <LandingPageBody />
       <LandingPageFooter />
     </div>
   );
 };
 
-export default LandingPageView
+export default LandingPageView;

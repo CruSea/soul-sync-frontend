@@ -1,18 +1,16 @@
-import type { NextConfig } from "next";
-
-const nextConfig: NextConfig = {
-  images: { // so that profile pictures will show 
+/** @type {import('next').NextConfig} */
+const nextConfig = {
+  // experimental: {
+  //   serverActions: true,
+  // },
+  images: {
     remotePatterns: [
-        {
-            protocol: 'https',
-            hostname: 'lh3.googleusercontent.com',
-        },
-        {
-            protocol: 'https',
-            hostname: 'avatars.githubusercontent.com',
-        },
+      { protocol: 'https', hostname: 'lh3.googleusercontent.com' },
+      { protocol: 'https', hostname: 'avatars.githubusercontent.com' },
     ],
-},
+  },
+  // reactStrictMode: true, // Helps catch bugs early
+  // swcMinify: true, // Faster minification for production
 };
 
 export default nextConfig;

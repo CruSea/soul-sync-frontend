@@ -1,11 +1,12 @@
-import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
-import Info from "./Info";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { ProfileProps, ProfileTypes } from "@/types/mentor";
-import { getFallBack } from "@/lib/utils";
+import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
+
+import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
+import { ProfileProps, ProfileTypes } from '@/types/mentor';
+import { getFallBack } from '@/lib/utils';
+import React from 'react';
+import Info from './Info';
 
 const Profile: React.FC<ProfileProps> = ({ userDetails }) => {
-
   return (
     <Card className="p-6 bg-white rounded-lg shadow-sidebar flex flex-col justify-center gap-5">
       <CardHeader className="p-0">
@@ -19,7 +20,7 @@ const Profile: React.FC<ProfileProps> = ({ userDetails }) => {
             className="w-full h-full object-cover"
           />
           <AvatarFallback className="w-full h-full flex items-center justify-center text-xl">
-            {getFallBack(userDetails?.fullName || "John Doe")}
+            {getFallBack(userDetails?.fullName || 'John Doe')}
           </AvatarFallback>
         </Avatar>
 
@@ -32,12 +33,10 @@ const Profile: React.FC<ProfileProps> = ({ userDetails }) => {
           <Info title="Email" value={userDetails?.email} color="yellow" />
           <Info title="Phone" value={userDetails?.phoneNumber} color="blue" />
           <Info title="Platform" value={userDetails?.platform} color="blue" />
-
         </div>
       </CardContent>
-
     </Card>
-  )
-}
+  );
+};
 
-export default Profile
+export default Profile;

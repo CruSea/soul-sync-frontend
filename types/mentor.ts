@@ -1,4 +1,5 @@
-import { colors } from "@/components/shared/Mentor/Info";
+import { colors } from '@/components/shared/Mentor/Info';
+import { Account } from './users';
 
 export interface Mentor {
   id: string;
@@ -15,7 +16,6 @@ export interface Mentor {
 
 export interface MentorLayoutProps {
   children: React.ReactNode;
-  title: string;
 }
 
 export interface MentorLayoutProps {
@@ -24,9 +24,10 @@ export interface MentorLayoutProps {
 
 export type User = {
   id: string;
-  fullName: string;
+  name: string;
   imageUrl: string;
   lastUpdated: string;
+  userId: string;
 };
 
 export type Users = User[];
@@ -58,7 +59,7 @@ export interface MentorContainerProps {
 
 export interface UsersListProps {
   currentUser: User;
-  users: Users;
+  users: User[];
   setCurrentUser: (user: User) => void;
 }
 
@@ -73,7 +74,9 @@ export type UserMessages = {
 export interface ChatProps {
   userMessages: UserMessages | undefined;
   userDetails: UserDetails | undefined;
-  setUserMessages: React.Dispatch<React.SetStateAction<UserMessages | undefined>>;
+  setUserMessages: React.Dispatch<
+    React.SetStateAction<UserMessages | undefined>
+  >;
   toggleDrawer: () => void;
 }
 

@@ -1,29 +1,30 @@
-"use client";
+'use client';
 
-import { useState } from "react";
-import Link from "next/link";
-import { usePathname } from "next/navigation";
-import { FiChevronLeft, FiHelpCircle } from "react-icons/fi";
+import { useState } from 'react';
+import Link from 'next/link';
+import { usePathname } from 'next/navigation';
+import { FiChevronLeft, FiHelpCircle } from 'react-icons/fi';
 
-import { LuUser, LuMessagesSquare, LuMic2, LuLibrary } from "react-icons/lu";
-import { RxLinkNone2 } from "react-icons/rx";
-import { CiSettings } from "react-icons/ci";
-import { LayoutDashboardIcon as LuLayoutDashboard } from "lucide-react";
-import { cn } from "@/lib/utils";
-import { Button } from "@/components/ui/button";
+import { LuUser, LuMessagesSquare, LuMic, LuLibrary } from 'react-icons/lu';
+import { RxLinkNone2 } from 'react-icons/rx';
+import { CiSettings } from 'react-icons/ci';
+import { LayoutDashboardIcon as LuLayoutDashboard } from 'lucide-react';
+import { cn } from '@/lib/utils';
+import { Button } from '@/components/ui/button';
 
 const menuItems = [
-  { icon: LuLayoutDashboard, label: "Dashboard", href: "/admin/dashboard" },
-  { icon: LuUser, label: "Mentors", href: "/admin/mentors" },
-  { icon: LuMessagesSquare, label: "Messages", href: "/admin/messages" },
-  { icon: RxLinkNone2, label: "Channels", href: "/admin/channels" },
-  { icon: LuMic2, label: "Admins", href: "/admin/users" },
-  { icon: LuLibrary, label: "Agents", href: "/admin/agents" },
+  { icon: LuLayoutDashboard, label: 'Dashboard', href: '/admin' },
+  { icon: LuUser, label: 'Mentors', href: '/admin/mentors' },
+  { icon: LuUser, label: 'Mentees', href: '/admin/mentees' },
+  { icon: LuMessagesSquare, label: 'Messages', href: '/admin/messages' },
+  { icon: RxLinkNone2, label: 'Channels', href: '/admin/channels' },
+  { icon: LuMic, label: 'Admins', href: '/admin/admins' },
+  { icon: LuLibrary, label: 'Agents', href: '/admin/agents' },
 ];
 
 const footerItems = [
-  { icon: FiHelpCircle, label: "Help and Support", href: "/support" },
-  { icon: CiSettings, label: "Setting", href: "/settings" },
+  { icon: FiHelpCircle, label: 'Help and Support', href: '/support' },
+  { icon: CiSettings, label: 'Setting', href: '/settings' },
 ];
 
 export function Sidebar() {
@@ -33,8 +34,8 @@ export function Sidebar() {
   return (
     <div
       className={cn(
-        "flex h-screen flex-col border-r bg-white transition-all duration-300",
-        isCollapsed ? "w-[60px]" : "w-[240px]"
+        'flex h-screen flex-col border-r bg-white transition-all duration-300',
+        isCollapsed ? 'w-[60px]' : 'w-[240px]'
       )}
     >
       <div className="flex h-14 items-center justify-between border-b px-4">
@@ -47,8 +48,8 @@ export function Sidebar() {
         >
           <FiChevronLeft
             className={cn(
-              "h-4 w-4 transition-transform",
-              isCollapsed && "rotate-180"
+              'h-4 w-4 transition-transform',
+              isCollapsed && 'rotate-180'
             )}
           />
         </Button>
@@ -59,9 +60,9 @@ export function Sidebar() {
             key={item.href}
             href={item.href}
             className={cn(
-              "flex items-center space-x-2 rounded-md px-2 py-2 text-sm font-medium text-gray-900 hover:bg-gray-100",
-              pathname === item.href && "bg-gray-100",
-              isCollapsed && "justify-center"
+              'flex items-center space-x-2 rounded-md px-2 py-2 text-sm font-medium text-gray-900 hover:bg-gray-100',
+              pathname === item.href && 'bg-gray-100',
+              isCollapsed && 'justify-center'
             )}
           >
             <item.icon className="h-5 w-5 shrink-0" />
@@ -75,9 +76,9 @@ export function Sidebar() {
             key={item.href}
             href={item.href}
             className={cn(
-              "flex items-center space-x-2 rounded-md px-2 py-2 text-sm font-medium text-gray-900 hover:bg-gray-100",
-              pathname === item.href && "bg-gray-100",
-              isCollapsed && "justify-center"
+              'flex items-center space-x-2 rounded-md px-2 py-2 text-sm font-medium text-gray-900 hover:bg-gray-100',
+              pathname === item.href && 'bg-gray-100',
+              isCollapsed && 'justify-center'
             )}
           >
             <item.icon className="h-5 w-5 shrink-0" />
