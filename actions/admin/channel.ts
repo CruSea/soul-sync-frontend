@@ -7,10 +7,13 @@ const Url = {
 };
 
 export const fetchedChannels = async (id: string) => {
+  console.log('id:', id);
+
   const getRequest = new GetRequest(
-    `${Url.fetchedChannel}?accountId=${id}`,
+    `${Url.fetchedChannel}?accountId=${id}&page=10&limit=2`,
     'fetche-channel'
   );
+
   const data = getRequest.getData();
   return data;
 };

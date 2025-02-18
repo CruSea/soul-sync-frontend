@@ -1,12 +1,14 @@
 'use client';
 
 import React, { useState } from 'react';
-import { DataTable } from '@/components/shared/data-table';
+import DataTable from '@/components/shared/data-table';
 import { Badge } from '@/components/ui/badge';
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 import { Column, FilterOption } from '@/types/data-table';
 import { useToast } from '@/hooks/use-toast';
 import { deleteMentor } from '@/actions/admin/admin';
+import Image from 'next/image';
+import confused from 'public/assets/confused.jpg';
 
 interface Mentee {
   id: string | number;
@@ -117,24 +119,13 @@ const MenteesTable: React.FC = () => {
         {error ? (
           <div className="text-red-500">{error}</div>
         ) : (
-          <DataTable<Mentee>
-            columns={columns}
-            filterOptions={filterOptions}
-            searchFields={search as []}
-            itemsPerPage={10}
-            onDelete={handleDelete}
-            apiUrl={endPoint}
-            tag="featch-mentees"
-            enableActions={true}
-            enablePagination={true}
-            onError={(errorMessage) => {
-              setError(errorMessage);
-            }}
-            triggerState={triggerState as boolean}
-            setTriggerState={
-              setTriggerState as React.Dispatch<React.SetStateAction<boolean>>
-            }
-          />
+          //
+          <div className="flex flex-col items-center justify-center">
+            <h1 className="text-center mb-4">
+              I don’t Think This page is built yet
+            </h1>
+            <Image src={confused} alt="confused" width={320} height={480} />
+          </div>
         )}
       </div>
     </div>

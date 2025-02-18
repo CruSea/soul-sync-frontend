@@ -1,14 +1,12 @@
 'use client';
 import React, { useEffect, useState } from 'react';
 import DataTable from '@/components/shared/data-table';
-import { Badge } from '@/components/ui/badge';
-import { Button } from '@/components/ui/button';
-import { MessageCircle } from 'lucide-react';
 import { Column, FilterOption } from '@/types/data-table';
 import { userProfile } from '@/actions/auth/login';
 import messageType from '@/types/message';
 import type { Account } from '@/types/users';
 import { endPoints } from '@/data/end-points';
+
 const columns: Array<Column<messageType>> = [
   {
     key: 'body',
@@ -56,7 +54,7 @@ const columns: Array<Column<messageType>> = [
 
 const filterOptions: Array<FilterOption<messageType>> = [
   { key: 'type', label: 'Sent' },
-  { key: 'type', label: 'Recieved' },
+  { key: 'type', label: 'Received' },
 ];
 
 export function MessageTable() {
@@ -71,27 +69,30 @@ export function MessageTable() {
     };
     fetchUserProfile();
   }, []);
+
   const endpoint = `${endPoints.message}/${clientUser?.id}`;
+  const page = currentPage;
+  const [itemsPerPage, onItemsPerPageChange] = useState<number>(10);
+
+  const apiUrl = `${endpoint}?page=${page}&limit=${itemsPerPage}`;
+
   return (
     <div className="flex-1 p-4 bg-secondary dark:bg-gray-900">
       <div className="space-y-6 bg-white p-6 rounded-lg">
         <h1 className="text-2xl font-semibold">Message Logs</h1>
         {clientUser && (
           <DataTable
-            //data={MESSAGE_DATA}
             columns={columns}
             searchFields={['name', 'platform', 'type']}
             filterOptions={filterOptions}
-            itemsPerPage={10}
             tag="get-message"
-            apiUrl={endpoint}
-            onDelete={function (id: string | number): Promise<void> {
-              throw new Error('Function not implemented.');
-            }}
+            apiUrl={apiUrl}
             currentPage={currentPage}
             onPageChange={setCurrentPage}
             triggerState={triggerState}
             setTriggerState={setTriggerState}
+            itemsPerPage={itemsPerPage}
+            onItemsPerPageChange={onItemsPerPageChange}
           />
         )}
       </div>

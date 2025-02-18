@@ -47,7 +47,6 @@ interface DataTableProps<T> {
   columns: Column<T>[];
   searchFields?: (keyof T)[];
   filterOptions?: FilterOption<T>[];
-  itemsPerPage: number;
   currentPage: number;
   onPageChange: (page: number) => void;
   onDelete?: (id: string | number) => Promise<void>;
@@ -56,6 +55,8 @@ interface DataTableProps<T> {
   onError?: (error: string) => void;
   triggerState: boolean;
   setTriggerState: React.Dispatch<React.SetStateAction<boolean>>;
+  itemsPerPage?: number;
+  onItemsPerPageChange?: React.Dispatch<React.SetStateAction<number>>;
 }
 
 const DataTable = <T extends { id: string | number }>({
@@ -72,6 +73,7 @@ const DataTable = <T extends { id: string | number }>({
   enablePagination = true,
   onError,
   triggerState,
+  onItemsPerPageChange,
   setTriggerState,
 }: DataTableProps<T>) => {
   const [data, setData] = useState<T[]>([]);
@@ -88,19 +90,7 @@ const DataTable = <T extends { id: string | number }>({
     const fetchData = async () => {
       setLoading(true);
       try {
-        const response = await fetchedDataTable(
-          apiUrl,
-          tag,
-          currentPage,
-          itemsPerPage
-        );
-        console.log(response);
-        console.log(
-          'fetching from',
-          // `${apiUrl}&page=${currentPage}&limit=${itemsPerPage}`
-          `${apiUrl}&limit=${itemsPerPage}&page=${currentPage}`
-        );
-        console.log('with tag', tag);
+        const response = await fetchedDataTable(apiUrl, tag);
 
         if (response && response.data) {
           setData(response.data);
@@ -109,9 +99,11 @@ const DataTable = <T extends { id: string | number }>({
           throw new Error('Invalid response format');
         }
       } catch (error) {
-        if (onError) {
-          onError('Error fetching data');
-        }
+        onError?.(
+          error instanceof Error
+            ? error.message
+            : 'An error occurred while fetching data'
+        );
         setData([]);
       } finally {
         setLoading(false);
@@ -238,7 +230,7 @@ const DataTable = <T extends { id: string | number }>({
           </TableHeader>
           <TableBody>
             {loading ? (
-              Array.from({ length: itemsPerPage }).map((_, index) => (
+              Array.from({ length: itemsPerPage ?? 0 }).map((_, index) => (
                 <TableRow key={index}>
                   {columns.map((col) => (
                     <TableCell key={col.key as string}>
@@ -294,6 +286,8 @@ const DataTable = <T extends { id: string | number }>({
           currentPage={currentPage}
           totalPages={totalPages}
           onPageChange={onPageChange}
+          itemsPerPage={itemsPerPage}
+          onItemsPerPageChange={onItemsPerPageChange}
         />
       )}
       <Dialog
