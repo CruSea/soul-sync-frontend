@@ -13,13 +13,13 @@ export default async function AdminView() {
   // Parse user info from cookie
   const user = userProfile && JSON.parse(userProfile);
   // Verify account status
-  const response = await checkAccount(user.id);
-  // Handle invalid token
+  // const response = await checkAccount(user.id);
+  // // Handle invalid token
 
-  // Redirect to org creation if no domain
-  if (!response?.domain) {
-    redirect('/admin/create-org');
-  }
+  // // Redirect to org creation if no domain
+  // if (!response?.domain) {
+  //   redirect('/admin/create-org');
+  // }
 
   return (
     <div className="flex-1 p-4 bg-secondary dark:bg-gray-900">
