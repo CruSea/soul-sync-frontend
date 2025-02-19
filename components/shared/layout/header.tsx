@@ -2,6 +2,7 @@
 
 import { FiBell } from 'react-icons/fi';
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
+import { useEffect, useState } from 'react';
 import {
   Dialog,
   DialogContent,
@@ -15,8 +16,15 @@ import { LuLogOut } from 'react-icons/lu';
 import Link from 'next/link';
 import { removeUserProfile } from '@/actions/auth/auth';
 import { useRouter } from 'next/navigation';
+import type { Account } from '@/types/users';
+import { endPoints } from '@/data/end-points';
+import { userProfile } from '@/actions/auth/login';
+import { fetchUserProfile } from '@/actions/shared/user-profile';
+import { toast } from '@/hooks/use-toast';
 
 export function Header({ title }: { title: string }) {
+  const [clientUser, setClientUser] = useState<Account | null>(null);
+  const [profileData, setProfileData] = useState<Account | null>(null);
   const router = useRouter();
 
   const logOut = async () => {
@@ -25,6 +33,44 @@ export function Header({ title }: { title: string }) {
     // Navigate to logout page
     router.push('/log-in');
   };
+
+  useEffect(() => {
+    const fetchUserProfile = async () => {
+      const userAccount: Account = await userProfile();
+      setClientUser(userAccount);
+    };
+    fetchUserProfile();
+  }, []);
+
+  const endPoint = `${endPoints.userProfile}?accountId=${clientUser?.id}/user/${clientUser?.userId}`;
+
+  const profile = async () => {
+    try {
+      const response = await fetchUserProfile(endPoint);
+      if (response.error) {
+        toast({
+          variant: 'destructive',
+          title: 'Error!',
+          description: response.error.description,
+        });
+        throw new Error('Failed to fetch profile.');
+      }
+
+      setProfileData(response);
+
+      toast({
+        variant: 'success',
+        title: 'Success!',
+        description: 'Their is Profile.',
+      });
+    } catch (error) {
+      // console.error(error);
+    }
+  };
+
+  useEffect(() => {
+    profile();
+  }, []);
 
   return (
     <header className="flex h-14 items-center justify-between border-b px-4">
@@ -37,21 +83,21 @@ export function Header({ title }: { title: string }) {
           <DialogTrigger>
             <Avatar className="w-8 h-8 cursor-pointer">
               <AvatarImage
-                src="/assets/avatars/woman1.png"
+                src={profileData?.imageUrl}
                 className="w-full h-full object-cover"
               />
               <AvatarFallback className="w-full h-full flex items-center justify-center text-xl">
-                CN
+                {profileData?.name.slice(0, 2)}
               </AvatarFallback>
             </Avatar>
           </DialogTrigger>
           <DialogContent className="rounded-[6px] pt-4 pb-0 px-0 w-min translate-x-0 translate-y-0 top-12 left-auto right-2.5 ">
             <DialogHeader className="space-y-0 px-4">
               <DialogTitle className="text-start text-lg">
-                Nathnael Desta
+                {profileData?.name}
               </DialogTitle>
               <DialogDescription className="text-base">
-                nathnaeldesta@gmail.com
+                {profileData?.email}{' '}
               </DialogDescription>
             </DialogHeader>
             <div className="flex flex-col">
