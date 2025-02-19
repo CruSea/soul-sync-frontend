@@ -16,12 +16,13 @@ export interface User {
   sub?: string;
 }
 export type Account = {
-  id: string;
-  name: string;
-  role?: role;
-  imageUrl?: string;
-  lastUpdated?: string;
-  userId?: string;
+  userName: string | null;
+  id: string | null;
+  roleId: string | null;
+  role: string | null;
+  token?: string | null;
+  imageUrl?: string | null;
+  userId?: string | null;
 };
 export type role = {
   id: string;

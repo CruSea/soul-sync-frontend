@@ -1,11 +1,28 @@
 'use client';
+import { userProfile } from '@/actions/auth/login';
 import { AdminLayout } from '@/components/shared/layout/admin-layout';
 import { Toaster } from '@/components/ui/toaster';
 import { LayoutProps } from '@/types/admin';
-import { usePathname } from 'next/navigation';
-import React from 'react';
+import { usePathname, useRouter } from 'next/navigation';
+import React, { useEffect } from 'react';
 const Layout: React.FC<LayoutProps> = ({ children }) => {
   const pathname = usePathname();
+  const router = useRouter();
+
+  useEffect(() => {
+    const checkRole = async () => {
+      // Fetch user profile
+      const userProfileData = await userProfile();
+      const userRole = userProfileData?.role;
+
+      if (userRole !== "Owner") {
+        router.push('/mentor')
+      }
+    }
+
+    checkRole();
+  }, [])
+
   // Get the last segment of the URL
   const lastSegment = pathname.split('/').filter(Boolean).pop();
 

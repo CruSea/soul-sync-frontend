@@ -1,4 +1,5 @@
 import { checkAccount } from '@/actions/admin/admin';
+import { userProfile } from '@/actions/auth/login';
 import { GrowthChart } from '@/components/shared/admin/dashboard/growth-chart';
 import { MentorsChart } from '@/components/shared/admin/dashboard/mentors-chart';
 import { StatsCards } from '@/components/shared/admin/dashboard/stat-card';
@@ -7,19 +8,9 @@ import { User_Info } from '@/types/users';
 import { cookies } from 'next/headers';
 import { redirect } from 'next/navigation';
 export default async function AdminView() {
-  // Get user data from cookies
-  const cookieStore = await cookies();
-  const userProfile = cookieStore.get('user-profile')?.value;
-  // Redirect to login if no user cookie
-  if (!userProfile) {
-    redirect('/log-in');
-  }
-  // Parse user info from cookie
-  const user: User_Info | null = userProfile ? JSON.parse(userProfile) : null;
 
-  if (user?.role !== 'Owner') {
-    redirect('/log-in');
-  }
+  // Parse user info from cookie
+  const user: User_Info | null = await userProfile();
 
   // Verify account status
   const response = await checkAccount(user.id as string);
