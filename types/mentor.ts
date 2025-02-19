@@ -17,14 +17,6 @@ export interface Mentor {
   updatedAt: string;
 }
 
-export interface MentorLayoutProps {
-  children: React.ReactNode;
-}
-
-export interface MentorLayoutProps {
-  children: React.ReactNode;
-}
-
 export type User = {
   id: string;
   name: string;
