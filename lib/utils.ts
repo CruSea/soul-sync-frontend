@@ -1,6 +1,5 @@
 import { Messages, transformedMessage, WSMessage } from '@/types/mentor';
 import { timeType } from '@/types/get-started';
-import { Messages, Users } from '@/types/mentor';
 import { clsx, type ClassValue } from 'clsx';
 import { jwtDecode } from 'jwt-decode';
 import { twMerge } from 'tailwind-merge';
