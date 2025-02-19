@@ -59,7 +59,7 @@ const filterOptions: Array<FilterOption<messageType>> = [
 
 export function MessageTable() {
   const [clientUser, setClientUser] = useState<Account | null>(null);
-  const [currentPage, setCurrentPage] = useState(1);
+  const [currentPage, setCurrentPage] = useState<number>(1);
   const [triggerState, setTriggerState] = React.useState<boolean>(false);
 
   useEffect(() => {
@@ -70,11 +70,9 @@ export function MessageTable() {
     fetchUserProfile();
   }, []);
 
-  const endpoint = `${endPoints.message}/${clientUser?.id}`;
-  const page = currentPage;
-  const [itemsPerPage, onItemsPerPageChange] = useState<number>(10);
+  const endPoint = `${endPoints.message}?accountId=${clientUser?.id}`;
 
-  const apiUrl = `${endpoint}?page=${page}&limit=${itemsPerPage}`;
+  const [itemsPerPage, onItemsPerPageChange] = useState<number>(10);
 
   return (
     <div className="flex-1 p-4 bg-secondary dark:bg-gray-900">
@@ -86,7 +84,7 @@ export function MessageTable() {
             searchFields={['name', 'platform', 'type']}
             filterOptions={filterOptions}
             tag="get-message"
-            apiUrl={apiUrl}
+            apiUrl={endPoint}
             currentPage={currentPage}
             onPageChange={setCurrentPage}
             triggerState={triggerState}

@@ -90,7 +90,12 @@ const DataTable = <T extends { id: string | number }>({
     const fetchData = async () => {
       setLoading(true);
       try {
-        const response = await fetchedDataTable(apiUrl, tag);
+        const response = await fetchedDataTable(
+          apiUrl,
+          tag,
+          currentPage,
+          itemsPerPage ?? 10
+        );
 
         if (response && response.data) {
           setData(response.data);

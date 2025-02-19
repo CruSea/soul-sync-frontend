@@ -3,14 +3,13 @@ import type React from 'react';
 import { useEffect, useState } from 'react';
 import DataTable from '@/components/shared/data-table';
 import { Badge } from '@/components/ui/badge';
-import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
+import { Avatar, AvatarFallback } from '@/components/ui/avatar';
 import type { Column, FilterOption } from '@/types/data-table';
 import { toast } from '@/hooks/use-toast';
 import { InviteMentorDialog } from './invite-mentor-dialog';
 import { endPoints } from '@/data/end-points';
 import { deleteMentor } from '@/actions/admin/admin';
 import type { Account } from '@/types/users';
-import { useRouter } from 'next/navigation';
 import { userProfile } from '@/actions/auth/login';
 import { Mentor } from '@/types/mentor';
 
@@ -83,11 +82,7 @@ const MentorsTable: React.FC = () => {
     fetchUserProfile();
   }, []);
   const endPoint = `${endPoints.adminMentors}?accountId=${clientUser?.id}`;
-  // const endpoint = `${endPoints.message}/${clientUser?.id}`;
-  const page = currentPage;
   const [itemsPerPage, onItemsPerPageChange] = useState<number>(10);
-
-  const apiUrl = `${endPoint}&page=${page}&limit=${itemsPerPage}`;
 
   const handleDelete = async (id: string | number) => {
     try {
@@ -107,8 +102,12 @@ const MentorsTable: React.FC = () => {
         title: 'Success!',
         description: 'Mentor Successfully deleted.',
       });
-    } catch (error) {
-      // console.error(error);
+    } catch {
+      toast({
+        variant: 'destructive',
+        title: 'Error!',
+        description: 'An error occurred while deleting the mentor.',
+      });
     }
   };
 
@@ -130,7 +129,7 @@ const MentorsTable: React.FC = () => {
         {clientUser && (
           <DataTable<Mentor>
             tag="admin-mentors"
-            apiUrl={apiUrl}
+            apiUrl={endPoint}
             columns={columns}
             searchFields={searchFields}
             filterOptions={filterOptions}
