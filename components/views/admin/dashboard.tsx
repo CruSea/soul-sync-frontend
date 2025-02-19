@@ -3,6 +3,7 @@ import { GrowthChart } from '@/components/shared/admin/dashboard/growth-chart';
 import { MentorsChart } from '@/components/shared/admin/dashboard/mentors-chart';
 import { StatsCards } from '@/components/shared/admin/dashboard/stat-card';
 import UsersTable from '@/components/shared/admin/dashboard/user-table';
+import { User_Info } from '@/types/users';
 import { cookies } from 'next/headers';
 import { redirect } from 'next/navigation';
 export default async function AdminView() {
@@ -10,10 +11,18 @@ export default async function AdminView() {
   const cookieStore = await cookies();
   const userProfile = cookieStore.get('user-profile')?.value;
   // Redirect to login if no user cookie
+  if (!userProfile) {
+    redirect('/log-in')
+  }
   // Parse user info from cookie
-  const user = userProfile && JSON.parse(userProfile);
-  // Verify account status
-  // const response = await checkAccount(user.id);
+  const user: User_Info | null = userProfile ? JSON.parse(userProfile) : null;
+
+  if (user?.role !== "Owner") {
+    redirect('/log-in')
+  }
+
+  // // Verify account status
+  // const response = await checkAccount(user.accountId as string);
   // // Handle invalid token
 
   // // Redirect to org creation if no domain
