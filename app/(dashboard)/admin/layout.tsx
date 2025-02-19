@@ -15,13 +15,13 @@ const Layout: React.FC<LayoutProps> = ({ children }) => {
       const userProfileData = await userProfile();
       const userRole = userProfileData?.role;
 
-      if (userRole !== "Owner") {
-        router.push('/mentor')
+      if (userRole !== 'Owner') {
+        router.push('/mentor');
       }
-    }
+    };
 
     checkRole();
-  }, [])
+  }, []);
 
   // Get the last segment of the URL
   const lastSegment = pathname.split('/').filter(Boolean).pop();

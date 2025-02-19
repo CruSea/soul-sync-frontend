@@ -8,7 +8,6 @@ import { User_Info } from '@/types/users';
 import { cookies } from 'next/headers';
 import { redirect } from 'next/navigation';
 export default async function AdminView() {
-
   // Parse user info from cookie
   const user: User_Info | null = await userProfile();
 

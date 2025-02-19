@@ -5,7 +5,6 @@ import { cookies } from 'next/headers';
 import { redirect } from 'next/navigation';
 
 const MentorView = async () => {
-
   return (
     <>
       <MentorContainer />
