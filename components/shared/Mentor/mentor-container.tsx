@@ -5,7 +5,7 @@ import { toast } from '@/hooks/use-toast';
 import { Conversation, Message, User, UserMessages } from '@/types/mentor';
 import router from 'next/router';
 import { useEffect, useState } from 'react';
-import Chat from './Chat';
+import Chat from './chat';
 import ConversationsList from './conversations-list';
 import { userProfile } from '@/actions/auth/login';
 const MentorContainer = () => {
