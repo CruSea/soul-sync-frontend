@@ -1,6 +1,6 @@
 "use client"; // Only this file runs on the client side
 
-import { userToken } from "@/actions/auth/login";
+import { apiUrl, userToken } from "@/actions/auth/login";
 import { createContext, useContext, useEffect, useState } from "react";
 import { io, Socket } from "socket.io-client";
 
@@ -15,9 +15,9 @@ export default function SocketProvider({ children }: { children: React.ReactNode
     const setupSocket = async () => {
       try {
         const token = await userToken();
-        console.log("my token", token);
+        const baseUrl = await apiUrl();
 
-        const newSocket = io("https://1clr2kph-3002.uks1.devtunnels.ms", {
+        const newSocket = io(baseUrl, {
           query: { token },
         });
 
