@@ -21,7 +21,11 @@ import NegaritSMS from './configuration/negarit-sms';
 import { useToast } from '@/hooks/use-toast';
 
 // import { endPoints } from '@/data/end-points';
-import { handleDeleting, handleConnect } from '@/actions/admin/channel';
+import {
+  handleDeleting,
+  handleConnect,
+  handleDisconnect,
+} from '@/actions/admin/channel';
 
 interface ChannelCardProps {
   channel: Channel;
@@ -121,18 +125,33 @@ export function ChannelCard({
       setid(channelId);
     }
     if (connectedId !== null) {
-      setChannels((prevItems) =>
-        prevItems.map((item) =>
-          item.id === connectedId ? { ...item, isOn: true } : item
-        )
-      );
-      handleConnect(connectedId);
-      toast({
-        variant: 'success',
-        title: 'Success',
-        description: `Channel ${channel.name} connected successfully`,
-        duration: 3000,
-      });
+      if (channel.isOn === false) {
+        setChannels((prevItems) =>
+          prevItems.map((item) =>
+            item.id === connectedId ? { ...item, isOn: true } : item
+          )
+        );
+        handleConnect(connectedId);
+        toast({
+          variant: 'success',
+          title: 'Success',
+          description: `Channel ${channel.name} connected successfully`,
+          duration: 3000,
+        });
+      } else {
+        setChannels((prevItems) =>
+          prevItems.map((item) =>
+            item.id === connectedId ? { ...item, isOn: false } : item
+          )
+        );
+        handleDisconnect(connectedId);
+        toast({
+          variant: 'success',
+          title: 'Success',
+          description: `Channel ${channel.name} disconnected successfully`,
+          duration: 3000,
+        });
+      }
     } else {
       toast({
         variant: 'destructive',
@@ -205,7 +224,6 @@ export function ChannelCard({
               id="connect"
               checked={channel.isOn}
               onCheckedChange={() => handleToggle(channel.id as string)}
-              disabled={channel.isOn}
             />
             <Label htmlFor="connect">
               {channel.isOn ? 'Connected' : 'Not Connected'}
