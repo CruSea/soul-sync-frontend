@@ -17,8 +17,22 @@ export default function SocketProvider({ children }: { children: React.ReactNode
         const token = await userToken();
         const baseUrl = await apiUrl();
 
-        const newSocket = io(baseUrl, {
+        const newSocket = io("https://1clr2kph-3002.uks1.devtunnels.ms", {
           query: { token },
+        });
+
+        newSocket.on("message", (message) => {
+          try {
+            const data = typeof message === "object" ? message : JSON.parse(message);
+            if (data) {
+              console.log("Received message:", data);
+            } else {
+              console.log("Received message with unexpected format:", data);
+            }
+          } catch (error) {
+            console.error("Failed to parse message:", error);
+          }
+          rl.prompt();
         });
 
         setSocket(newSocket);
