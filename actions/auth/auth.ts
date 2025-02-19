@@ -21,7 +21,7 @@ export async function setAuthCookie(userData: User_Info) {
   cookieStore.set({
     name: 'user-profile',
     value: JSON.stringify({
-      id: userData.accountId,
+      id: userData.id,
       name: userData.userName,
       role: userData.role,
       imageUrl: userData.imageUrl,

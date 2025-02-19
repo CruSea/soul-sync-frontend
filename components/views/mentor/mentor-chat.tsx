@@ -10,13 +10,13 @@ const MentorView = async () => {
   const userProfile = cookieStore.get('user-profile')?.value;
   // Redirect to login if no user cookie
   if (!userProfile) {
-    redirect('/log-in')
+    redirect('/log-in');
   }
   // Parse user info from cookie
   const user: User_Info | null = userProfile ? JSON.parse(userProfile) : null;
 
-  if (user?.role !== "Mentor") {
-    redirect('/log-in')
+  if (user?.role !== 'Mentor') {
+    redirect('/log-in');
   }
 
   return (

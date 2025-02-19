@@ -12,23 +12,23 @@ export default async function AdminView() {
   const userProfile = cookieStore.get('user-profile')?.value;
   // Redirect to login if no user cookie
   if (!userProfile) {
-    redirect('/log-in')
+    redirect('/log-in');
   }
   // Parse user info from cookie
   const user: User_Info | null = userProfile ? JSON.parse(userProfile) : null;
 
-  if (user?.role !== "Owner") {
-    redirect('/log-in')
+  if (user?.role !== 'Owner') {
+    redirect('/log-in');
   }
 
-  // // Verify account status
-  // const response = await checkAccount(user.accountId as string);
-  // // Handle invalid token
+  // Verify account status
+  const response = await checkAccount(user.id as string);
+  // Handle invalid token
 
-  // // Redirect to org creation if no domain
-  // if (!response?.domain) {
-  //   redirect('/admin/create-org');
-  // }
+  // Redirect to org creation if no domain
+  if (!response?.domain) {
+    redirect('/admin/create-org');
+  }
 
   return (
     <div className="flex-1 p-4 bg-secondary dark:bg-gray-900">
