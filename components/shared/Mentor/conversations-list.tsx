@@ -34,7 +34,7 @@ const ConversationsList = ({
             <CommandGroup className="p-3 flex flex-col">
               {/* a an individual user */}
               {conversations?.length > 0 &&
-                conversations?.map((data) => (
+                conversations?.map((data, index) => (
                   <CommandItem
                     key={data.conversation_id}
                     className={cn(
@@ -60,7 +60,10 @@ const ConversationsList = ({
                     {/* user information */}
                     <div className="flex flex-col justify-center">
                       <div className="font-bold text-base">
-                        {data.conversation_id}
+                        <p>Leyu Chat</p>
+                        <p className="text-[10px] px-1 bg-green-100 rounded-[8px] ">
+                          {data.conversation_id}
+                        </p>
                       </div>
                     </div>
                   </CommandItem>

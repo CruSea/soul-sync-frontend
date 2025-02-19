@@ -16,9 +16,7 @@ const Chat = ({ currentConversation, conversationMessages }: ChatProps) => {
   // text is where the text box saves what the mentor writes
   const socket = useSocket();
   const [message, setMessage] = useState('');
-  const [webSocketMessages, setWebSocketMessages] = useState<webSocketMessages>(
-    []
-  );
+  const [webSocketMessages, setWebSocketMessages] = useState<WSMessage[]>([]);
   // an empty div at the end of the thread used to scroll to the bottom on send
   const bottomOfPanelRef = useRef<HTMLDivElement | null>(null);
   const textBox = useRef<HTMLInputElement | null>(null);
@@ -29,10 +27,9 @@ const Chat = ({ currentConversation, conversationMessages }: ChatProps) => {
     console.log('socket', socket);
 
     socket.on('message', (msg) => {
-      setWebSocketMessages((prevMessages) => [
-        ...prevMessages,
-        JSON.parse(msg),
-      ]);
+      console.log(msg);
+      const data = msg;
+      setWebSocketMessages((prevMessages) => [...prevMessages, data]);
       console.log('new message', msg);
     });
 
