@@ -1,9 +1,9 @@
 'use client';
 
-import { checkUser, conversation, getMessages } from '@/actions/mentor/mentor';
+import { conversation, getMessages } from '@/actions/mentor/mentor';
 import { toast } from '@/hooks/use-toast';
-import { Conversation, Message, User, UserMessages } from '@/types/mentor';
-import router from 'next/router';
+import { Conversation, Message, User } from '@/types/mentor';
+
 import { useEffect, useState } from 'react';
 import Chat from './Chat';
 import ConversationsList from './conversations-list';
@@ -20,7 +20,8 @@ const MentorContainer = () => {
   useEffect(() => {
     const fetchUserProfile = async () => {
       const user = await userProfile();
-      setCurrentUser(user as unknown as User);
+
+      setCurrentUser(user as User);
 
       if (!user) {
         toast({
@@ -33,44 +34,42 @@ const MentorContainer = () => {
     fetchUserProfile();
   }, []);
 
+  const fetchConversationMessages = async (conversation_id: string) => {
+    try {
+      const messagedData = await getMessages(conversation_id);
+
+      if (Array.isArray(messagedData) && messagedData.length > 0) {
+        setConversationMessages(messagedData);
+      }
+    } catch (error) {
+      console.log('error', error);
+    }
+  };
+
   useEffect(() => {
     const fetchConversation = async () => {
       try {
         const response = await conversation();
         console.log('conversation', response);
-        const data = await response;
+        const data: Conversation = await response;
 
         if (Array.isArray(data) && data.length > 0) {
-          setConversations((prevConversations) => [
-            ...prevConversations,
-            ...data,
-          ]);
-          setCurrentConversation(data[0]);
+          setConversations(data);
+          console.log('user-9', data);
+          fetchConversationMessages(data[0]?.conversation_id as string);
+          setCurrentConversation(data);
         }
       } catch (error) {
         throw new Error(error as string);
       }
     };
 
-    if (currentUser && currentUser.userId) {
-      fetchConversation();
-    }
-  }, [currentUser]);
+    fetchConversation();
+  }, [currentUser?.userId]);
 
   useEffect(() => {
-    const fetchConversationMessages = async (conversation: Conversation) => {
-      try {
-        const messagedData = await getMessages(conversation.conversation_id);
-        if (Array.isArray(messagedData) && messagedData.length > 0) {
-          setConversationMessages(messagedData);
-        }
-      } catch (error) {
-        throw new Error(error as string);
-      }
-    };
-
-    if (currentUser && currentConversation) {
-      fetchConversationMessages(currentConversation);
+    if (currentConversation?.conversation_id) {
+      fetchConversationMessages(currentConversation.conversation_id);
     }
   }, [currentConversation]);
 
@@ -81,10 +80,12 @@ const MentorContainer = () => {
         currentConversation={currentConversation}
         setCurrentConversation={setCurrentConversation}
       />
-      <Chat
-        currentConversation={currentConversation}
-        conversationMessages={conversationMessages}
-      />
+      {conversationMessages.length > 0 && (
+        <Chat
+          currentConversation={currentConversation}
+          conversationMessages={conversationMessages}
+        />
+      )}
     </>
   );
 };

@@ -25,6 +25,7 @@ export const getMessages = async (params: string) => {
     `${Url.conversation}/${params}`,
     'current conversation messages'
   );
+
   const data = await getRequest.getData();
   return data;
 };
