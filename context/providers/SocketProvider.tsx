@@ -1,4 +1,4 @@
-"use client"; // Only this file runs on the client side
+"use client"; // Ensures this file runs only on the client side
 
 import { apiUrl, userToken } from "@/actions/auth/login";
 import { createContext, useContext, useEffect, useState } from "react";
@@ -12,27 +12,29 @@ export default function SocketProvider({ children }: { children: React.ReactNode
   const [socket, setSocket] = useState<Socket | null>(null);
 
   useEffect(() => {
+    let newSocket: Socket | null = null; // Scoped variable for cleanup
+
     const setupSocket = async () => {
       try {
         const token = await userToken();
-        const baseUrl = await apiUrl();
 
-        const newSocket = io("https://1clr2kph-3002.uks1.devtunnels.ms", {
+        newSocket = io("https://1clr2kph-3002.uks1.devtunnels.ms", {
           query: { token },
+          transports: ["websocket"], // Ensure WebSocket connection
+          reconnection: true, // Enable reconnection attempts
+          reconnectionAttempts: 5, // Max retries
+          reconnectionDelay: 2000, // Delay between retries
         });
 
+        newSocket.on("connect", () => console.log("Connected to WebSocket"));
+        newSocket.on("disconnect", () => console.log("Disconnected from WebSocket"));
         newSocket.on("message", (message) => {
           try {
             const data = typeof message === "object" ? message : JSON.parse(message);
-            if (data) {
-              console.log("Received message:", data);
-            } else {
-              console.log("Received message with unexpected format:", data);
-            }
+            console.log("Received message:", data);
           } catch (error) {
             console.error("Failed to parse message:", error);
           }
-          rl.prompt();
         });
 
         setSocket(newSocket);
@@ -44,8 +46,9 @@ export default function SocketProvider({ children }: { children: React.ReactNode
     setupSocket();
 
     return () => {
-      if (socket) {
-        socket.disconnect();
+      if (newSocket) {
+        newSocket.off("message"); // Remove message listener
+        newSocket.disconnect(); // Proper cleanup
       }
     };
   }, []);
