@@ -1,12 +1,10 @@
-export interface Message {
+export default interface Message {
   id: string;
-  mentorName: string;
-  menteeName: string;
-  mentorProfileImage: string;
-  menteeProfileImage: string;
-  startDate: string;
-  startTime: string;
-  status: 'On Going' | 'Ended';
-  endDate: string | 'N/A';
-  endTime: string | 'N/A';
+  channelId: string;
+  address: string;
+  type: string;
+  body: string;
+  createdAt: string;
+  name: string;
+  platform: string;
 }

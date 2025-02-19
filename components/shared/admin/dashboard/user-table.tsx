@@ -1,9 +1,9 @@
 'use client';
 
 import React, { useState, useMemo } from 'react';
-import { DataTable } from '@/components/shared/data-table';
+import DataTable from '@/components/shared/data-table';
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
-import { Column, FilterOption } from '@/types/data-table';
+import type { Column, FilterOption } from '@/types/data-table';
 import { Badge } from '@/components/ui/badge';
 
 interface Mentee {
@@ -54,8 +54,14 @@ const columns: Column<Mentee>[] = [
 ];
 
 const filterOptions: FilterOption<Mentee>[] = [
-  { key: 'status', label: 'Joined' },
-  { key: 'status', label: 'Pending' },
+  {
+    key: 'status',
+    label: 'Joined',
+  },
+  {
+    key: 'status',
+    label: 'Pending',
+  },
 ];
 const search = ['name', 'location', 'platform'];
 
@@ -63,7 +69,6 @@ const UserTable: React.FC = () => {
   const [error, setError] = useState<string | null>(null);
   const [allMentees, setAllMentees] = useState<Mentee[]>([]);
   const endPoint = 'mentees';
-  const [triggerState, setTriggerState] = useState<boolean>(false);
 
   const onDataFetched = (data: Mentee[]) => {
     const sortedMentees = data
@@ -87,7 +92,7 @@ const UserTable: React.FC = () => {
         <div className="flex items-center justify-between">
           <h1 className="text-2xl font-semibold">New Mentees</h1>
         </div>
-        {error ? (
+        {/* {error ? (
           <div className="text-red-500">{error}</div>
         ) : (
           <DataTable<Mentee>
@@ -99,14 +104,19 @@ const UserTable: React.FC = () => {
             tag="mentees"
             enableActions={false}
             enablePagination={false}
+            currentPage={1}
+            onPageChange={() => {}}
             onError={(errorMessage) => {
               setError(errorMessage);
             }}
-            onDataFetched={onDataFetched}
-            triggerState={triggerState as boolean}
-            setTriggerState={setTriggerState}
+            triggerState={false}
+            setTriggerState={function (
+              value: React.SetStateAction<boolean>
+            ): void {
+              throw new Error('Function not implemented.');
+            }}
           />
-        )}
+        )} */}
       </div>
     </div>
   );

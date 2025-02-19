@@ -5,9 +5,9 @@ import {
   CardHeader,
   CardTitle,
 } from '@/components/ui/card';
-import GetStartedMentorForm from './get-started-mentor-form';
+import GetStartedMentorForm from './GetStartedMentorForm';
 import { GetStartedProps } from '@/types/get-started';
-import GetStartedAdminForm from './get-started-admin-form';
+import GetStartedAdminForm from './GetStartedAdminForm';
 
 const GetStartedCard = ({ type }: GetStartedProps) => {
   return (

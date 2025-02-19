@@ -1,22 +1,9 @@
 'use client';
 
-import React, { useState, useEffect, useCallback } from 'react';
-import {
-  Search,
-  Filter,
-  X,
-  ChevronLeft,
-  ChevronRight,
-  Trash2,
-} from 'lucide-react';
-import {
-  Dialog,
-  DialogContent,
-  DialogDescription,
-  DialogFooter,
-  DialogHeader,
-  DialogTitle,
-} from '@/components/ui/dialog';
+import type React from 'react';
+import { useState, useEffect } from 'react';
+import { Filter, Search, Trash2, X } from 'lucide-react';
+import { Badge } from '@/components/ui/badge';
 import { Input } from '@/components/ui/input';
 import { Button } from '@/components/ui/button';
 import {
@@ -27,112 +14,134 @@ import {
   TableHeader,
   TableRow,
 } from '@/components/ui/table';
-import { Badge } from '@/components/ui/badge';
+import { Skeleton } from '@/components/ui/skeleton';
+import type { FilterOption } from '@/types/data-table';
+import { fetchedDataTable } from '@/actions/shared/data-table';
+import Pagination from './pagination';
+import {
+  Dialog,
+  DialogContent,
+  DialogDescription,
+  DialogFooter,
+  DialogHeader,
+  DialogTitle,
+} from '@/components/ui/dialog';
 import {
   DropdownMenu,
   DropdownMenuCheckboxItem,
   DropdownMenuContent,
   DropdownMenuTrigger,
-} from '@/components/ui/dropdown-menu';
-import { Column, FilterOption } from '@/types/data-table';
-import { fetchedDataTable } from '@/actions/shared/data-table';
-import { toast } from '@/hooks/use-toast';
+} from '@radix-ui/react-dropdown-menu';
+
+// ... other imports
+
+export interface Column<T> {
+  key: keyof T;
+  header: string;
+  render?: (value: T) => React.ReactNode;
+}
 
 interface DataTableProps<T> {
-  apiUrl: string | null;
+  tag: string;
+  apiUrl: string;
   columns: Column<T>[];
   searchFields?: (keyof T)[];
   filterOptions?: FilterOption<T>[];
-  itemsPerPage: number;
+  currentPage: number;
+  onPageChange: (page: number) => void;
   onDelete?: (id: string | number) => Promise<void>;
   enableActions?: boolean;
   enablePagination?: boolean;
   onError?: (error: string) => void;
-  onDataFetched?: (data: T[]) => T[];
-  tag: string;
   triggerState: boolean;
   setTriggerState: React.Dispatch<React.SetStateAction<boolean>>;
+  itemsPerPage?: number;
+  onItemsPerPageChange?: React.Dispatch<React.SetStateAction<number>>;
 }
 
-export function DataTable<T extends { id: string | number }>({
+const DataTable = <T extends { id: string | number }>({
+  tag,
   apiUrl,
   columns,
   searchFields = [],
   filterOptions = [],
   itemsPerPage,
+  currentPage,
+  onPageChange,
   onDelete,
   enableActions = true,
   enablePagination = true,
   onError,
-  onDataFetched,
-  tag,
   triggerState,
+  onItemsPerPageChange,
   setTriggerState,
-}: DataTableProps<T>) {
+}: DataTableProps<T>) => {
   const [data, setData] = useState<T[]>([]);
-  const [totalItems, setTotalItems] = useState(0);
-  const [searchQuery, setSearchQuery] = useState('');
-  const [currentPage, setCurrentPage] = useState(1);
+  const [loading, setLoading] = useState(true);
+  const [searchTerm, setSearchTerm] = useState('');
   const [filters, setFilters] = useState<string[]>([]);
-  const [isLoading, setIsLoading] = useState(false);
+  const [totalPages, setTotalPages] = useState(1);
   const [deleteDialog, setDeleteDialog] = useState<{
     open: boolean;
     id: string | number | null;
   }>({ open: false, id: null });
 
-  // Memoized fetchData function
-
-  // useEffect with dependencies
   useEffect(() => {
     const fetchData = async () => {
-      setIsLoading(true);
+      setLoading(true);
       try {
-        // const token = localStorage.getItem('token');
+        const response = await fetchedDataTable(
+          apiUrl,
+          tag,
+          currentPage,
+          itemsPerPage ?? 10
+        );
 
-        const response = await fetchedDataTable(apiUrl as string, tag);
-
-        if (response.error) {
-          toast({
-            variant: 'destructive',
-            title: response.error.title,
-            description: response.error.description,
-          });
-          return null;
+        if (response && response.data) {
+          setData(response.data);
+          setTotalPages(response.meta.totalPages); // Use meta.totalPages for pagination
+        } else {
+          throw new Error('Invalid response format');
         }
-        setData(response);
-        setTotalItems(response.length);
       } catch (error) {
-        toast({
-          variant: 'destructive',
-          title: 'Error',
-          description:
-            error instanceof Error
-              ? error.message
-              : 'An unknown error occurred',
-        });
+        onError?.(
+          error instanceof Error
+            ? error.message
+            : 'An error occurred while fetching data'
+        );
+        setData([]);
       } finally {
-        setIsLoading(false);
+        setLoading(false);
       }
     };
     fetchData();
+  }, [apiUrl, currentPage, itemsPerPage, tag, onError, triggerState]);
 
-    console.log(apiUrl);
-  }, [apiUrl, triggerState]);
+  const handleSearchChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    setSearchTerm(event.target.value);
+  };
+  // Apply search and filters to the data
+  const filteredData = data.filter((item) => {
+    // Apply search
+    const matchesSearch = searchFields.some((field) =>
+      item[field]?.toString().toLowerCase().includes(searchTerm.toLowerCase())
+    );
 
-  const filteredData = data.filter((item) =>
-    searchFields.some((field) =>
-      String(item[field]).toLowerCase().includes(searchQuery.toLowerCase())
-    )
-  );
+    // Apply filters
+    const matchesFilters = filters.every((filter) => {
+      const [key, value] = filter.split(':');
+      return item[key as keyof T]?.toString() === value;
+    });
 
-  const paginatedData = enablePagination
-    ? filteredData.slice(
-        (currentPage - 1) * itemsPerPage,
-        currentPage * itemsPerPage
-      )
-    : filteredData;
+    return matchesSearch && matchesFilters;
+  });
 
-  const totalPages = Math.ceil(filteredData.length / itemsPerPage);
+  // Filter data based on search term
+  // const filteredData = data.filter((item) =>
+  //   searchFields.some((field) =>
+  //     item[field]?.toString().toLowerCase().includes(searchTerm.toLowerCase())
+  //   )
+  // );
 
   const handleDelete = (id: string | number) => {
     setDeleteDialog({ open: true, id });
@@ -162,12 +171,9 @@ export function DataTable<T extends { id: string | number }>({
         <div className="relative flex-1 min-w-[200px]">
           <Search className="absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-muted-foreground" />
           <Input
-            placeholder="Search"
-            value={searchQuery}
-            onChange={(e) => {
-              setSearchQuery(e.target.value);
-              setCurrentPage(1);
-            }}
+            placeholder="Search..."
+            value={searchTerm}
+            onChange={handleSearchChange}
             className="pl-10"
           />
         </div>
@@ -195,7 +201,6 @@ export function DataTable<T extends { id: string | number }>({
                         ? prev.filter((f) => f !== filterString)
                         : [...prev, filterString]
                     );
-                    setCurrentPage(1);
                   }}
                 >
                   {option.label}
@@ -210,7 +215,6 @@ export function DataTable<T extends { id: string | number }>({
             <Button
               onClick={() => {
                 setFilters((prev) => prev.filter((f) => f !== filter));
-                setCurrentPage(1);
               }}
               className="focus:outline-none"
             >
@@ -219,28 +223,33 @@ export function DataTable<T extends { id: string | number }>({
           </Badge>
         ))}
       </div>
-
       <div className="rounded-lg border">
         <Table>
           <TableHeader>
             <TableRow>
-              {columns.map((column) => (
-                <TableHead key={String(column.key)}>{column.header}</TableHead>
+              {columns.map((col) => (
+                <TableHead key={col.key as string}>{col.header}</TableHead>
               ))}
-              {enableActions && <TableHead>Action</TableHead>}
+              {enableActions && <TableHead>Actions</TableHead>}
             </TableRow>
           </TableHeader>
           <TableBody>
-            {isLoading ? (
-              <TableRow>
-                <TableCell
-                  colSpan={columns.length + (enableActions ? 1 : 0)}
-                  className="text-center"
-                >
-                  Loading...
-                </TableCell>
-              </TableRow>
-            ) : paginatedData.length === 0 ? (
+            {loading ? (
+              Array.from({ length: itemsPerPage ?? 0 }).map((_, index) => (
+                <TableRow key={index}>
+                  {columns.map((col) => (
+                    <TableCell key={col.key as string}>
+                      <Skeleton className="h-6 w-24" />
+                    </TableCell>
+                  ))}
+                  {enableActions && (
+                    <TableCell>
+                      <Skeleton className="h-6 w-6" />
+                    </TableCell>
+                  )}
+                </TableRow>
+              ))
+            ) : filteredData.length === 0 ? (
               <TableRow>
                 <TableCell
                   colSpan={columns.length + (enableActions ? 1 : 0)}
@@ -250,13 +259,13 @@ export function DataTable<T extends { id: string | number }>({
                 </TableCell>
               </TableRow>
             ) : (
-              paginatedData.map((item) => (
+              filteredData.map((item) => (
                 <TableRow key={item.id}>
-                  {columns.map((column) => (
-                    <TableCell key={String(column.key)}>
-                      {column.render
-                        ? column.render(item)
-                        : String(item[column.key])}
+                  {columns.map((col) => (
+                    <TableCell key={col.key as string}>
+                      {col.render
+                        ? col.render(item)
+                        : (item[col.key] as React.ReactNode)}
                     </TableCell>
                   ))}
                   {enableActions && (
@@ -277,44 +286,15 @@ export function DataTable<T extends { id: string | number }>({
           </TableBody>
         </Table>
       </div>
-
       {enablePagination && (
-        <div className="flex items-center justify-between">
-          <p className="text-sm text-muted-foreground">
-            Showing {paginatedData.length} out of {filteredData.length} items
-          </p>
-          <div className="flex items-center gap-2">
-            <Button
-              variant="outline"
-              size="icon"
-              onClick={() => setCurrentPage((p) => Math.max(1, p - 1))}
-              disabled={currentPage === 1}
-            >
-              <ChevronLeft className="h-4 w-4" />
-            </Button>
-            {Array.from({ length: Math.min(3, totalPages) }, (_, i) => (
-              <Button
-                key={i + 1}
-                variant={currentPage === i + 1 ? 'default' : 'outline'}
-                size="icon"
-                onClick={() => setCurrentPage(i + 1)}
-              >
-                {i + 1}
-              </Button>
-            ))}
-            {totalPages > 3 && <span className="px-2">...</span>}
-            <Button
-              variant="outline"
-              size="icon"
-              onClick={() => setCurrentPage((p) => Math.min(totalPages, p + 1))}
-              disabled={currentPage === totalPages}
-            >
-              <ChevronRight className="h-4 w-4" />
-            </Button>
-          </div>
-        </div>
+        <Pagination
+          currentPage={currentPage}
+          totalPages={totalPages}
+          onPageChange={onPageChange}
+          itemsPerPage={itemsPerPage}
+          onItemsPerPageChange={onItemsPerPageChange}
+        />
       )}
-
       <Dialog
         open={deleteDialog.open}
         onOpenChange={(open) => setDeleteDialog({ ...deleteDialog, open })}
@@ -342,4 +322,6 @@ export function DataTable<T extends { id: string | number }>({
       </Dialog>
     </div>
   );
-}
+};
+
+export default DataTable;

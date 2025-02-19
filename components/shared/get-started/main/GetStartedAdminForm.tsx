@@ -5,17 +5,17 @@ import {
   getStartedAdminFormSchema,
   getStartedAdminFormValues,
 } from '@/types/get-started';
-
+import { getStartedMentorFormValues } from '@/types/get-started';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { Form } from '@/components/ui/form';
-import { AgeField } from './age-field';
-import { GenderField } from './gender-field';
+import { AgeField } from '../fields/age-field';
+import { GenderField } from '../fields/gender-field';
 import { getStartedForm } from '@/data/get-started-data';
-import { LocationField } from './location-field';
-
+import { LocationField } from '../fields/location-field';
+import { useEffect } from 'react';
 import { Button } from '@/components/ui/button';
 import { useRouter } from 'next/navigation';
-import { PhoneNumberField } from './phone-number-field';
+import { PhoneNumberField } from '../fields/phone-number-field';
 
 const GetStartedAdminForm = () => {
   const form = useForm<getStartedAdminFormValues>({
@@ -31,7 +31,9 @@ const GetStartedAdminForm = () => {
 
   const router = useRouter(); // Initialize the useRouter hook
 
-  const onSubmit = () => {
+  const onSubmit = (data: getStartedAdminFormValues) => {
+    console.log('Admin form data', data);
+
     // Navigate to /mentor after form submission
     router.push('/admin'); // Use router.push for smooth navigation
   };
@@ -39,6 +41,10 @@ const GetStartedAdminForm = () => {
   const {
     formState: { errors },
   } = form;
+
+  useEffect(() => {
+    console.log(errors);
+  }, []);
 
   return (
     <Form {...form}>
@@ -54,7 +60,7 @@ const GetStartedAdminForm = () => {
           />
         </div>
         <PhoneNumberField control={form.control} />
-        <LocationField />
+        <LocationField control={form.control} />
         <Button type="submit" className="w-4/5 mx-auto h-12 ">
           Submit
         </Button>

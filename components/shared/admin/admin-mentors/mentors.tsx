@@ -1,82 +1,88 @@
 'use client';
-import React, { useEffect, useState } from 'react';
-import { DataTable } from '@/components/shared/data-table';
+import type React from 'react';
+import { useEffect, useState } from 'react';
+import DataTable from '@/components/shared/data-table';
 import { Badge } from '@/components/ui/badge';
-import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
-import { Column, FilterOption } from '@/types/data-table';
+import { Avatar, AvatarFallback } from '@/components/ui/avatar';
+import type { Column, FilterOption } from '@/types/data-table';
 import { toast } from '@/hooks/use-toast';
 import { InviteMentorDialog } from './invite-mentor-dialog';
 import { endPoints } from '@/data/end-points';
 import { deleteMentor } from '@/actions/admin/admin';
-import { Account } from '@/types/users';
+import type { Account } from '@/types/users';
 import { userProfile } from '@/actions/auth/login';
-interface Mentors {
-  id: string | number;
-  name: string;
-  expertise: string;
-  age: number;
-  gender: string;
-  location: string;
-  availability: { startDate: string };
-  isActive: boolean;
-  profileImage: string;
-  user: { name: string; imageUrl: string };
-}
+import { Mentor } from '@/types/mentor';
 
-const columns: Column<Mentors>[] = [
+const columns: Column<Mentor>[] = [
   {
     key: 'name',
     header: 'Name',
-    render: (mentor) => (
+    render: (mentor: Mentor) => (
       <div className="flex items-center gap-2">
         <Avatar className="h-8 w-8">
-          <AvatarImage src={mentor?.user.imageUrl} alt={mentor.user.name} />
-          <AvatarFallback>{mentor?.user.name?.slice(0, 2)}</AvatarFallback>
+          <AvatarFallback>{mentor.name.slice(0, 2)}</AvatarFallback>
         </Avatar>
-        {mentor.user.name}
+        {mentor.name}
       </div>
     ),
   },
-  { key: 'age', header: 'Age' },
+  { key: 'email', header: 'Email' },
+  {
+    key: 'age',
+    header: 'Age',
+    render: (mentor: Mentor) => (mentor.age === null ? 'null' : mentor.age),
+  },
   { key: 'gender', header: 'Gender' },
-  { key: 'expertise', header: 'Expertise' },
+  {
+    key: 'expertise',
+    header: 'Expertise',
+    render: (mentor: Mentor) =>
+      mentor.expertise === null ? 'null' : mentor.expertise,
+  },
   {
     key: 'availability',
     header: 'Availability',
-    render: (mentor) => mentor.availability?.startDate,
+    render: (mentor: Mentor) =>
+      mentor.availability === null
+        ? 'null'
+        : mentor.availability?.startDate || 'null',
   },
-  { key: 'location', header: 'Location' },
+  {
+    key: 'location',
+    header: 'Location',
+    render: (mentor: Mentor) =>
+      mentor.location === null ? 'null' : mentor.location,
+  },
   {
     key: 'isActive',
-    header: 'Is Active',
-    render: (mentor) => (
-      <Badge variant="secondary">
-        {mentor?.isActive
-          ? 'Yes'
-          : 'isActive Not found, change to No when you fix the schema'}
-      </Badge>
+    header: 'Status',
+    render: (mentor: Mentor) => (
+      <Badge variant="secondary">{mentor.isActive ? 'Yes' : 'No'}</Badge>
     ),
   },
 ];
 
-const filterOptions: FilterOption<Mentors>[] = [
-  { key: 'location', label: 'Addis Ababa' },
+const filterOptions: FilterOption<Mentor>[] = [
+  { key: 'isActive', label: 'Yes' },
+  { key: 'isActive', label: 'No' },
 ];
-const search = ['name', 'age', 'gender', 'location', 'isActive'];
-const MentorsTable = () => {
+
+const searchFields: (keyof Mentor)[] = ['name', 'email', 'gender', 'isActive'];
+
+const MentorsTable: React.FC = () => {
   const [clientUser, setClientUser] = useState<Account | null>(null);
+  const [currentPage, setCurrentPage] = useState(1);
   const [triggerState, setTriggerState] = useState<boolean>(false);
 
   useEffect(() => {
     const fetchUserProfile = async () => {
-      const userAccoutId: Account = await userProfile();
-      setClientUser(userAccoutId);
-      console.table(userAccoutId);
+      const userAccount: Account = await userProfile();
+      setClientUser(userAccount);
     };
     fetchUserProfile();
   }, []);
-
   const endPoint = `${endPoints.adminMentors}?accountId=${clientUser?.id}`;
+  const [itemsPerPage, onItemsPerPageChange] = useState<number>(10);
 
   const handleDelete = async (id: string | number) => {
     try {
@@ -87,17 +93,21 @@ const MentorsTable = () => {
           title: 'Error!',
           description: response.error.description,
         });
-
         throw new Error('Failed to delete the mentor.');
       }
+
       setTriggerState(!triggerState);
       toast({
         variant: 'success',
         title: 'Success!',
         description: 'Mentor Successfully deleted.',
       });
-    } catch (error) {
-      throw new Error(error as string);
+    } catch {
+      toast({
+        variant: 'destructive',
+        title: 'Error!',
+        description: 'An error occurred while deleting the mentor.',
+      });
     }
   };
 
@@ -108,30 +118,35 @@ const MentorsTable = () => {
           <h1 className="text-2xl font-semibold">Mentors</h1>
           <InviteMentorDialog
             userName={clientUser?.name as string}
-            accountId={clientUser?.id as string}
-            roleId={clientUser?.role?.id as string}
-            roleName={clientUser?.role?.name as string}
+            accountId={clientUser?.id || ''}
+            role={clientUser?.role?.name as string}
             triggerState={triggerState as boolean}
             setTriggerState={
               setTriggerState as React.Dispatch<React.SetStateAction<boolean>>
             }
           />
         </div>
-        <DataTable<Mentors>
-          tag="admin-mentors"
-          apiUrl={endPoint}
-          columns={columns}
-          searchFields={search as []}
-          filterOptions={filterOptions}
-          itemsPerPage={10}
-          onDelete={handleDelete}
-          triggerState={triggerState as boolean}
-          setTriggerState={
-            setTriggerState as React.Dispatch<React.SetStateAction<boolean>>
-          }
-        />
+        {clientUser && (
+          <DataTable<Mentor>
+            tag="admin-mentors"
+            apiUrl={endPoint}
+            columns={columns}
+            searchFields={searchFields}
+            filterOptions={filterOptions}
+            itemsPerPage={itemsPerPage}
+            onItemsPerPageChange={onItemsPerPageChange}
+            currentPage={currentPage}
+            onPageChange={setCurrentPage}
+            onDelete={handleDelete}
+            triggerState={triggerState as boolean}
+            setTriggerState={
+              setTriggerState as React.Dispatch<React.SetStateAction<boolean>>
+            }
+          />
+        )}
       </div>
     </div>
   );
 };
+
 export default MentorsTable;

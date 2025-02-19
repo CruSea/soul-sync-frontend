@@ -28,12 +28,7 @@ export function SpecializationField({
                   <Checkbox
                     className="!bg-white !w-4 !h-4"
                     value={option.value}
-                    checked={field.value?.includes(
-                      option.value as
-                        | 'marriageCounseling'
-                        | 'discipleship'
-                        | 'spritual'
-                    )}
+                    checked={field.value?.includes(option.value)}
                     onCheckedChange={(checked) => {
                       const newValue = checked
                         ? [...(field.value || []), option.value]
@@ -43,7 +38,6 @@ export function SpecializationField({
                       field.onChange(newValue);
                     }}
                   />
-
                   <FormLabel className="ml-3 font-medium text-lg cursor-pointer">
                     {option.label}
                   </FormLabel>

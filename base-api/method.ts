@@ -40,7 +40,7 @@ class GetRequest extends ApiRequest {
 
 // POST request subclass
 class PostRequest extends ApiRequest {
-  constructor(url: string, tag: string, data: unknown) {
+  constructor(url: string, tag: string, data?: unknown) {
     super(url, tag, data, 'POST');
   }
 

@@ -12,8 +12,6 @@ const LoginPage = async () => {
 
   // Parse user data if cookie exists
   const user: User_Info | null = userProfile ? JSON.parse(userProfile) : null;
-  console.table(user);
-  console.log('the user', user);
   // Redirect logged-in users based on role
   if (user) {
     switch (user.role) {
@@ -24,7 +22,7 @@ const LoginPage = async () => {
         redirect('/mentor');
         break;
       default:
-        redirect('/admin');
+        redirect('/log-in');
         break;
     }
   }

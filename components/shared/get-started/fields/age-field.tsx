@@ -9,9 +9,10 @@ import { Input } from '@/components/ui/input';
 import { cn } from '@/lib/utils';
 import { AgeFieldProps } from '@/types/get-started';
 
-export function AgeField({ className }: AgeFieldProps) {
+export function AgeField({ control, className }: AgeFieldProps) {
   return (
     <FormField
+      control={control}
       name="age"
       render={({ field }) => (
         <FormItem className="">

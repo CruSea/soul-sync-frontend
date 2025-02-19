@@ -1,18 +1,29 @@
 import { colors } from '@/components/shared/Mentor/Info';
 import { Account } from './users';
 
-export type Mentor = {
-  id: string;
+// types/mentor.ts
+export interface Mentor {
+  id: string | number;
+  accountId: string;
   name: string;
-  age: number;
-  gender: string;
   email: string;
-  phoneNumber: string;
-  specialization: string;
-  location: string;
-  status: string;
-  profileImage: string;
-};
+  expertise?: string | null;
+  age?: number | null;
+  gender: string;
+  location?: string | null;
+  availability?: { startDate: string } | null;
+  isActive: boolean;
+  createdAt: string;
+  updatedAt: string;
+}
+
+export interface MentorLayoutProps {
+  children: React.ReactNode;
+}
+
+export interface MentorLayoutProps {
+  children: React.ReactNode;
+}
 
 export type User = {
   id: string;

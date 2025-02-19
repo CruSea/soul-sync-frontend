@@ -34,3 +34,10 @@ export async function setAuthCookie(userData: User_Info) {
     sameSite: 'lax',
   });
 }
+
+export async function removeUserProfile() {
+  const cookieStore = await cookies();
+
+  cookieStore.delete('auth-token');
+  cookieStore.delete('user-profile');
+}
