@@ -91,12 +91,14 @@ export function ChannelCard({
       });
     }
     setTriggerState((prev) => !prev);
+
     toast({
       variant: 'success',
       title: 'Success',
       description: `Channel ${channel.name} deleted successfully`,
       duration: 3000,
     });
+
     setDeleteId(null);
   };
   const channelChange = (channel: Channel) => {
@@ -125,21 +127,21 @@ export function ChannelCard({
         )
       );
       handleConnect(connectedId);
+      toast({
+        variant: 'success',
+        title: 'Success',
+        description: `Channel ${channel.name} connected successfully`,
+        duration: 3000,
+      });
     } else {
       toast({
         variant: 'destructive',
         title: 'Error',
-        description: 'Channel id not found',
-        duration: 3000,
+        description: 'try again',
+        duration: 500,
       });
     }
     setTriggerState((prev) => !prev);
-    toast({
-      variant: 'success',
-      title: 'Success',
-      description: `Channel ${channel.name} connected successfully`,
-      duration: 3000,
-    });
   };
   return (
     <div className="h-full w-full  gap-4  pb-5 flex flex-col items-center justify-between px-2.5 pt-1 border rounded-xl bg-white hover:shadow-md hover:rounded-xl transition-shadow ">
