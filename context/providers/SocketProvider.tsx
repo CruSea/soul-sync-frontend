@@ -19,7 +19,7 @@ export default function SocketProvider({ children }: { children: React.ReactNode
         const token = await userToken();
         
         
-        newSocket = io(process.env.API_URL, {
+        newSocket = io("https://1clr2kph-3002.uks1.devtunnels.ms", {
           query: { token },
           transports: ["websocket"], // Ensure WebSocket connection
           reconnection: true, // Enable reconnection attempts
@@ -30,10 +30,10 @@ export default function SocketProvider({ children }: { children: React.ReactNode
         newSocket.on("connect", () => console.log("Connected to WebSocket"));
         newSocket.on("disconnect", () => console.log("Disconnected from WebSocket"));
         newSocket.on("message", (message) => {
-          
+          console.log("Received message:", message);
           try {
             const data = typeof message === "object" ? message : message;
-            
+            console.log("Received message:", data);
           } catch (error) {
             console.error("Failed to parse message:", error);
           }
