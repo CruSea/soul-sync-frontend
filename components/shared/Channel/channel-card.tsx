@@ -22,7 +22,6 @@ import { useToast } from '@/hooks/use-toast';
 
 // import { endPoints } from '@/data/end-points';
 import { handleDeleting, handleConnect } from '@/actions/admin/channel';
-import { set } from 'zod';
 
 interface ChannelCardProps {
   channel: Channel;
@@ -116,11 +115,8 @@ export function ChannelCard({
 
   const handleToggle = (channelId: string) => {
     if (channelId) {
-      console.log('channelId:', channelId);
       setConnectedId(channelId);
-      console.log('connectedId:', connectedId);
       setid(channelId);
-      console.log('id:', id);
     }
     if (connectedId !== null) {
       setChannels((prevItems) =>
