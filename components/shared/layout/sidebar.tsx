@@ -39,7 +39,9 @@ export function Sidebar() {
       )}
     >
       <div className="flex h-14 items-center justify-between border-b px-4">
-        {!isCollapsed && <span className="text-xl font-semibold">TURUMBA</span>}
+        {!isCollapsed && (
+          <span className="text-xl font-semibold">LEYU-CHAT</span>
+        )}
         <Button
           variant="ghost"
           size="icon"
