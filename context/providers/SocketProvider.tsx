@@ -17,11 +17,11 @@ export default function SocketProvider({ children }: { children: React.ReactNode
 
     const setupSocket = async () => {
     
-      
-      console.log('url',await socket_address())
+      console.log('url',process.env.NEXT_PUBLIC_API_SOCKET_URL)
+      const URL=process.env.NEXT_PUBLIC_API_SOCKET_URL
       try {
         const token = await userToken();
-        newSocket = io(await socket_address(), {
+        newSocket = io(URL, {
             query: { token },
             transports: ["websocket"], // Ensure WebSocket connection
             reconnection: true, // Enable reconnection attempts
