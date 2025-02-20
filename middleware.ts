@@ -17,8 +17,6 @@ export async function middleware(req: NextRequest) {
     return NextResponse.redirect(new URL('/', req.url));
   }
 
-
-
   if (!token) {
     const signInUrl = new URL('/log-in', req.url);
     return NextResponse.redirect(signInUrl);

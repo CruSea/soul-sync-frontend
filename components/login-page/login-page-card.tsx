@@ -26,7 +26,7 @@ const LoginPageCard = () => {
       const user = {
         userId: userInfo?.sub ?? null,
         userName: userInfo?.email ?? 'Guest', // Default to "Guest" if no name
-        id: userInfo?.accounts?.[0]?.id ?? null, // Ensure we access index 0
+        accountId: userInfo?.accounts?.[0]?.id ?? null, // Ensure we access index 0
         roleId: userInfo?.accounts?.[0]?.role?.id ?? null, // Access role correctly
         role: userInfo?.accounts?.[0]?.role?.name ?? null,
         imageUrl: userInfo?.imageUrl ?? null,
