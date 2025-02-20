@@ -22,7 +22,7 @@ import {
 } from '@/components/ui/dropdown-menu';
 import { useToast } from '@/hooks/use-toast';
 import { fetchedChannels, handleAddChannel } from '@/actions/admin/channel';
-import { Account, User_Info } from '@/types/users';
+import { Account } from '@/types/users';
 import { userProfile } from '@/actions/auth/login';
 import { revalidate } from '@/actions/revalidate';
 import Pagination from '@/components/shared/pagination';
@@ -43,14 +43,14 @@ export default function ChannelsPage() {
     'FACEBOOK',
     'TWILIO',
   ];
-  const [user, setUser] = useState<User_Info | null>(null);
+  const [user, setUser] = useState<Account | null>(null);
   const [itemsPerPage, onItemsPerPageChange] = useState<number>(6);
   const [totalPages, setTotalPages] = useState(1);
   const [currentPage, setCurrentPage] = useState(1);
   const page = currentPage;
   useEffect(() => {
     const fetchUserProfile = async () => {
-      const userAccoutId: User_Info = await userProfile();
+      const userAccoutId: Account = await userProfile();
       setUser(userAccoutId);
       console.log('user:', userAccoutId);
     };
@@ -62,7 +62,7 @@ export default function ChannelsPage() {
       console.log('user:', user);
 
       const response = await fetchedChannels(
-        user?.accountId as string,
+        user?.id as string,
         itemsPerPage,
         page
       );
@@ -77,7 +77,7 @@ export default function ChannelsPage() {
       console.log('totalPages:', totalPages);
     };
     getChannels();
-  }, [user?.accountId, triggerState, itemsPerPage, page]);
+  }, [user?.id, triggerState, itemsPerPage, page]);
 
   const filteredChannel = channels?.filter(
     (item) =>
@@ -91,7 +91,7 @@ export default function ChannelsPage() {
     if (user) {
       const channelWithId = {
         ...newChannel,
-        accountId: user.accountId,
+        accountId: user.id,
       } as Channel;
 
       const response = await handleAddChannel(channelWithId);
