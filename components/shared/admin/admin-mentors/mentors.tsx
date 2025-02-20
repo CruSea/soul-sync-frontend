@@ -1,7 +1,8 @@
 'use client';
-import type React from 'react';
-import { useEffect, useState } from 'react';
+import { deleteMentor } from '@/actions/admin/admin';
+import { userProfile } from '@/actions/auth/login';
 import DataTable from '@/components/shared/data-table';
+import { Avatar, AvatarFallback } from '@/components/ui/avatar';
 import { Badge } from '@/components/ui/badge';
 import { Avatar, AvatarFallback } from '@/components/ui/avatar';
 import type { Column, FilterOption } from '@/types/data-table';
@@ -12,6 +13,10 @@ import { deleteMentor } from '@/actions/admin/admin';
 import type { Account } from '@/types/users';
 import { userProfile } from '@/actions/auth/login';
 import { Mentor } from '@/types/mentor';
+import type { User_Info } from '@/types/users';
+import type React from 'react';
+import { useEffect, useState } from 'react';
+import { InviteMentorDialog } from './invite-mentor-dialog';
 
 const columns: Column<Mentor>[] = [
   {
@@ -70,18 +75,20 @@ const filterOptions: FilterOption<Mentor>[] = [
 const searchFields: (keyof Mentor)[] = ['name', 'email', 'gender', 'isActive'];
 
 const MentorsTable: React.FC = () => {
-  const [clientUser, setClientUser] = useState<Account | null>(null);
+  const [clientUser, setClientUser] = useState<User_Info | null>(null);
   const [currentPage, setCurrentPage] = useState(1);
   const [triggerState, setTriggerState] = useState<boolean>(false);
 
   useEffect(() => {
     const fetchUserProfile = async () => {
-      const userAccount: Account = await userProfile();
+      const userAccount: User_Info = await userProfile();
       setClientUser(userAccount);
     };
     fetchUserProfile();
   }, []);
-  const endPoint = `${endPoints.adminMentors}?accountId=${clientUser?.id}`;
+  const endPoint = `${endPoints.adminMentors}?accountId=${clientUser?.accountId}`;
+  // const endpoint = `${endPoints.message}/${clientUser?.id}`;
+  const page = currentPage;
   const [itemsPerPage, onItemsPerPageChange] = useState<number>(10);
 
   const handleDelete = async (id: string | number) => {
@@ -117,9 +124,9 @@ const MentorsTable: React.FC = () => {
         <div className="flex items-center justify-between">
           <h1 className="text-2xl font-semibold">Mentors</h1>
           <InviteMentorDialog
-            userName={clientUser?.name as string}
-            accountId={clientUser?.id || ''}
-            role={clientUser?.role?.name as string}
+            userName={clientUser?.userName as string}
+            accountId={clientUser?.accountId || ''}
+            role={clientUser?.role as string}
             triggerState={triggerState as boolean}
             setTriggerState={
               setTriggerState as React.Dispatch<React.SetStateAction<boolean>>

@@ -17,15 +17,16 @@ const MentorFrontPageLayout = ({ children }: { children: React.ReactNode }) => {
     const checkRole = async () => {
       // Fetch user profile
       const userProfileData = await userProfile();
-      const userRole = userProfileData?.role as unknown as string;
+      const userRole = userProfileData?.role;
 
-      if (userRole !== 'Owner') {
-        router.push('/mentor');
+      if (userRole !== 'Mentor') {
+        router.push('/admin');
       }
     };
 
     checkRole();
-  }, []);
+  }, [router]);
+
   if (excludedRoutes.includes(pathname)) {
     return <>{children}</>; // Render without the layout
   }
