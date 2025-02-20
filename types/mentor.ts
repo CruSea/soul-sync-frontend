@@ -17,14 +17,6 @@ export interface Mentor {
   updatedAt: string;
 }
 
-export interface MentorLayoutProps {
-  children: React.ReactNode;
-}
-
-export interface MentorLayoutProps {
-  children: React.ReactNode;
-}
-
 export type User = {
   id: string;
   name: string;
@@ -33,12 +25,34 @@ export type User = {
   userId: string;
 };
 
-export type Users = User[];
+export type MentorLayoutProps = {
+  children: React.ReactNode;
+  title: string;
+};
+
+export type ConversationsListProps = {
+  conversations: Conversation[];
+  currentConversation: Conversation | undefined;
+  setCurrentConversation: React.Dispatch<
+    React.SetStateAction<Conversation | undefined>
+  >;
+};
+
+type Platform = 'Telegram' | 'WhatsApp' | 'Negarit' | 'Facebook' | 'Twilio';
+
+export type Conversation = {
+  conversation_id: string;
+  platform: Platform;
+};
+
+export type Conversations = Conversation[];
+
+type ISODateString = string & { __brand: 'ISODate' };
 
 export type Message = {
-  sender: string;
-  dateTime: string;
-  content: string;
+  type: string;
+  createdAt: string;
+  body: string;
 };
 
 export type Messages = Message[];
@@ -50,15 +64,15 @@ export type UserDetails = {
   location: string;
   phoneNumber: string;
   email: string;
-  platform: string;
+  platform: Platform;
   imageUrl: string;
   lastUpdated: string;
   messages: Message[];
 };
 
-export interface MentorContainerProps {
-  users: Users;
-}
+export type MentorContainerProps = {
+  conversations: Conversations;
+};
 
 export interface UsersListProps {
   currentUser: User;
@@ -69,65 +83,104 @@ export interface UsersListProps {
 export type UserMessages = {
   id: string;
   messages: Messages;
-  email: string;
-  imageUrl: string;
-  fullName: string;
 };
 
-export interface ChatProps {
-  userMessages: UserMessages | undefined;
-  userDetails: UserDetails | undefined;
-  setUserMessages: React.Dispatch<
-    React.SetStateAction<UserMessages | undefined>
-  >;
-  toggleDrawer: () => void;
-}
+type Metadata = {
+  conversationId: string;
+};
 
-export interface ProfileProps {
-  userDetails: UserDetails | undefined;
-}
+export type WSMessage = {
+  conversationId: string; // Unique identifier for the message
+  type: 'RECIEVED' | 'SENT'; // Type of the message, which can be a union of types if needed
+  body: string;
+  createdAt: string;
+};
 
-// type for the group of message threads between user and mentor
-export interface threadType {
-  isUser: boolean;
+export type WSSentMessage = {
+  type: 'CHAT';
+  metadata: Metadata;
+  payload: string;
+};
+
+export type webSocketMessages = Array<WSMessage>;
+
+export type ConversationInfo = {
+  channelId: string;
+  address: string;
+  socket: string;
+  userId: string;
+};
+
+export type ConversationInfos = {
+  [conversationId: string]: ConversationInfo;
+};
+
+export type ChatProps = {
+  currentConversation: Conversation | undefined;
+  conversationMessages: Message[];
+};
+
+export type transformedMessage = {
+  isMentor: boolean;
   text: string;
   time: string;
   newDay: string;
   id: string;
-}
+};
 
-export interface ProfileTypes {
+export type ProfileProps = {
+  userDetails: UserDetails | undefined;
+};
+
+export type ProfileTypes = {
   title: string;
   fullName: string;
   gender: string;
   location: string;
   email: string;
   phone: string;
-  platform: string | undefined;
+  platform: Platform | undefined;
   Expertise: string | undefined;
   src: string;
   abrivation: string;
   age: string;
-}
+};
 
-export interface ChatHeaderProps {
-  imageUrl: string;
-  fullName: string;
-  email: string;
-  toggleDrawer: () => void;
-  userDetails: UserDetails | undefined;
-}
+export type ChatHeaderProps = {
+  platform: Platform;
+  id: string;
+};
 
-export interface InfoProps {
+export type InfoProps = {
   title: string | undefined;
   value: string | undefined;
   color: keyof typeof colors;
-}
+};
 
-export interface MessageProps {
+export type MessageProps = {
   text: string;
-  isUser: boolean;
+  isMentor: boolean;
   time: string;
   newDay: string;
-  imageUrl: string;
-}
+};
+
+export type InputAreaProps = {
+  sendText: () => void;
+  message: string;
+  setMessage: React.Dispatch<React.SetStateAction<string>>;
+};
+
+export type PlatformIcon = string;
+
+export type PlatformIconsType = Record<string, PlatformIcon>;
+
+// type for the group of message threads between user and mentor
+export type threadType = {
+  isMentor: boolean;
+  text: string;
+  time: string;
+  newDay: string;
+  id: string;
+};
+
+export type chatData = threadType[];

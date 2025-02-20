@@ -4,13 +4,14 @@ export const endPoints = {
   adminUser: 'admin/user',
   adminMentors: 'admin/mentor',
   mentor: 'mentors',
+  allConversations: 'conversation',
   channel: 'admin/channel',
   message: 'admin/messages',
 };
 
 export const jsonServer = {
   baseUrl: 'http://localhost:3001',
-  messages: 'userMessages',
-  users: 'users',
+  thread: 'thread',
+  conversation: 'conversation',
   userDetails: 'userDetails',
 };

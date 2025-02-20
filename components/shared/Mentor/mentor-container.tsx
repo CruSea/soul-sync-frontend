@@ -1,89 +1,91 @@
 'use client';
 
-import { User, UserDetails, UserMessages } from '@/types/mentor';
-import Profile from './Profile';
-import { useEffect, useState } from 'react';
-import { useRouter } from 'next/navigation';
-import UsersList from './users-list';
-import Chat from './Chat';
-import { userProfile } from '@/actions/auth/login';
-import { checkUser, conversation } from '@/actions/mentor/mentor';
+import { conversation, getMessages } from '@/actions/mentor/mentor';
 import { toast } from '@/hooks/use-toast';
+import { Conversation, Message, User } from '@/types/mentor';
+
+import { useEffect, useState } from 'react';
+import Chat from './Chat';
+import ConversationsList from './conversations-list';
+import { userProfile } from '@/actions/auth/login';
 const MentorContainer = () => {
   const [currentUser, setCurrentUser] = useState<User | null>(null);
-  const [userDetails, setUserDetails] = useState<UserDetails>();
-  const [userMessages, setUserMessages] = useState<UserMessages>();
+  const [conversations, setConversations] = useState<Conversation[]>([]);
+  const [currentConversation, setCurrentConversation] =
+    useState<Conversation>();
+  const [conversationMessages, setConversationMessages] = useState<Message[]>(
+    []
+  );
 
-  const [isDrawerOpen, setIsDrawerOpen] = useState<boolean>(false);
-
-  const router = useRouter();
-
-  const fetchUserMesages = async () => {
-    try {
-      const response = await conversation();
-
-      const data = await response;
-
-      if (Array.isArray(data) && data.length > 0) {
-        setUserMessages(data[0]); // Assuming you want the first item
-      }
-    } catch (error) {
-      throw new Error(error as string);
-    }
-  };
   useEffect(() => {
     const fetchUserProfile = async () => {
-      const userAccoutId = await userProfile();
-      setCurrentUser(userAccoutId as unknown as User);
-      console.table(userAccoutId);
+      const user = await userProfile();
+
+      setCurrentUser(user as User);
+
+      if (!user) {
+        toast({
+          variant: 'destructive',
+          title: 'Error!',
+          description: 'User not found',
+        });
+      }
     };
     fetchUserProfile();
   }, []);
-  useEffect(() => {
-    if (currentUser && currentUser.id) {
-      fetchUserMesages();
+
+  const fetchConversationMessages = async (conversation_id: string) => {
+    try {
+      const messagedData = await getMessages(conversation_id);
+
+      if (Array.isArray(messagedData) && messagedData.length > 0) {
+        setConversationMessages(messagedData);
+      }
+    } catch (error) {
+      console.log('error', error);
     }
-  }, [currentUser]);
+  };
+
   useEffect(() => {
-    const fetchedUser = async () => {
+    const fetchConversation = async () => {
       try {
-        const response = await checkUser(currentUser?.userId as string);
+        const response = await conversation();
+        console.log('conversation', response);
+        const data: Conversation = await response;
 
-        if (response.error) {
-          toast({
-            variant: 'destructive',
-            title: 'Error!',
-            description: response.error.description,
-          });
-        }
-
-        if (!response.mentors[0].location) {
-          router.push('/mentor/get-started');
+        if (Array.isArray(data) && data.length > 0) {
+          setConversations(data);
+          console.log('user-9', data);
+          fetchConversationMessages(data[0]?.conversation_id as string);
+          setCurrentConversation(data);
         }
       } catch (error) {
-        // router.push('/log-in');
+        throw new Error(error as string);
       }
     };
 
-    fetchedUser();
-  }, [router]);
+    fetchConversation();
+  }, [currentUser?.userId]);
+
+  useEffect(() => {
+    if (currentConversation?.conversation_id) {
+      fetchConversationMessages(currentConversation.conversation_id);
+    }
+  }, [currentConversation]);
 
   return (
     <>
-      <UsersList
-        users={currentUser as unknown as User[]}
-        currentUser={currentUser as User}
-        setCurrentUser={setCurrentUser}
+      <ConversationsList
+        conversations={conversations}
+        currentConversation={currentConversation}
+        setCurrentConversation={setCurrentConversation}
       />
-      <Chat
-        userMessages={userMessages}
-        toggleDrawer={() => setIsDrawerOpen(!isDrawerOpen)}
-        userDetails={userDetails}
-        setUserMessages={setUserMessages}
-      />
-      <div className="hidden 3xl:block">
-        <Profile userDetails={userDetails} />
-      </div>
+      {conversationMessages.length > 0 && (
+        <Chat
+          currentConversation={currentConversation}
+          conversationMessages={conversationMessages}
+        />
+      )}
     </>
   );
 };

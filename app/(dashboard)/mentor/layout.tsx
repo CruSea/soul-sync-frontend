@@ -7,7 +7,6 @@ import React, { useEffect } from 'react';
 const MentorFrontPageLayout = ({ children }: { children: React.ReactNode }) => {
   const pathname = usePathname();
   const router = useRouter();
-
   // Get the last segment of the URL
   const lastSegment = pathname.split('/').filter(Boolean).pop();
 
@@ -31,7 +30,6 @@ const MentorFrontPageLayout = ({ children }: { children: React.ReactNode }) => {
   if (excludedRoutes.includes(pathname)) {
     return <>{children}</>; // Render without the layout
   }
-
   return (
     <MentorLayout title={lastSegment?.toLocaleUpperCase() as string}>
       {children}

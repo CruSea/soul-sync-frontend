@@ -74,8 +74,6 @@ export function MessageTable() {
   const page = currentPage;
   const [itemsPerPage, onItemsPerPageChange] = useState<number>(10);
 
-  const apiUrl = `${endpoint}?page=${page}&limit=${itemsPerPage}`;
-
   return (
     <div className="flex-1 p-4 bg-secondary dark:bg-gray-900">
       <div className="space-y-6 bg-white p-6 rounded-lg">
@@ -86,7 +84,7 @@ export function MessageTable() {
             searchFields={['name', 'platform', 'type']}
             filterOptions={filterOptions}
             tag="get-message"
-            apiUrl={apiUrl}
+            apiUrl={endPoint}
             currentPage={currentPage}
             onPageChange={setCurrentPage}
             triggerState={triggerState}

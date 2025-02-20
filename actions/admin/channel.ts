@@ -56,3 +56,11 @@ export const handleConnect = async (connectedId: string | null) => {
   const data = postRequest.postData();
   return data;
 };
+export const handleDisconnect = async (connectedId: string | null) => {
+  const postRequest = new PostRequest(
+    `${Url.fetchedChannel}/${connectedId}/disconnect`,
+    'disconnect-channel'
+  );
+  const data = postRequest.postData();
+  return data;
+};

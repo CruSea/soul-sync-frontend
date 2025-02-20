@@ -13,14 +13,14 @@ export const landingPage = {
 };
 
 export const loginPage = {
-  title: 'TURUMBA',
+  title: 'LEYU CHAT',
   line1: 'Connect with ',
   line2: ' your audience Today.',
   description: 'Connect Mentors and Peoples anytime anywhere',
 };
 
 export const MentorGetStarted = {
-  title: 'TURUMBA',
+  title: 'LEYU CHAT',
   text: 'Get started and get the chance to carve the generation',
   quote:
     "Young pupil are the world's most valuable resource and its best hope for the future.",
