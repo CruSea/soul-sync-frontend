@@ -18,18 +18,20 @@ const MentorFrontPageLayout = ({ children }: { children: React.ReactNode }) => {
     return <>{children}</>; // Render without the layout
   }
 
+  useEffect(() => {
+    const checkRole = async () => {
+      // Fetch user profile
+      const userProfileData = await userProfile();
+      const userRole = userProfileData?.role;
+  
+      if (userRole !== 'Mentor') {
+        router.push('/admin');
+      }
+    };
+  
+    checkRole();
+  }, [router])
 
-  const checkRole = async () => {
-    // Fetch user profile
-    const userProfileData = await userProfile();
-    const userRole = userProfileData?.role;
-
-    if (userRole !== 'Owner') {
-      router.push('/mentor');
-    }
-  };
-
-  checkRole();
 
   return (
     <MentorLayout title={lastSegment?.toLocaleUpperCase() as string}>
