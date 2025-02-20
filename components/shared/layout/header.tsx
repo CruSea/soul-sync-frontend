@@ -42,11 +42,12 @@ export function Header({ title }: { title: string }) {
     fetchUserProfile();
   }, []);
 
-  const endPoint = `${endPoints.userProfile}?accountId=${clientUser?.id}/user/${clientUser?.userId}`;
+  const endPoint = `${endPoints.userProfile}/${clientUser?.id}/user/${clientUser?.userId}`;
 
   const profile = async () => {
     try {
       const response = await fetchUserProfile(endPoint);
+      console.log('response', response);
       if (response.error) {
         toast({
           variant: 'destructive',
