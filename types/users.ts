@@ -22,6 +22,7 @@ export type Account = {
   role: role;
   token?: string | null;
   imageUrl?: string | null;
+  email?: string;
   userId?: string | null;
 };
 export type role = {

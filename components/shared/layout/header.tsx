@@ -13,17 +13,16 @@ import {
 } from './accountDialog';
 import { LuUser } from 'react-icons/lu';
 import { LuLogOut } from 'react-icons/lu';
-import Link from 'next/link';
 import { removeUserProfile } from '@/actions/auth/auth';
 import { useRouter } from 'next/navigation';
-import type { Account } from '@/types/users';
+import type { Account, User_Info } from '@/types/users';
 import { endPoints } from '@/data/end-points';
 import { userProfile } from '@/actions/auth/login';
 import { fetchUserProfile } from '@/actions/shared/user-profile';
 import { toast } from '@/hooks/use-toast';
 
 export function Header({ title }: { title: string }) {
-  const [clientUser, setClientUser] = useState<Account | null>(null);
+  const [clientUser, setClientUser] = useState<User_Info | null>(null);
   const [profileData, setProfileData] = useState<Account | null>(null);
   const router = useRouter();
 
@@ -36,18 +35,19 @@ export function Header({ title }: { title: string }) {
 
   useEffect(() => {
     const fetchUserProfile = async () => {
-      const userAccount: Account = await userProfile();
+      const userAccount: User_Info = await userProfile();
       setClientUser(userAccount);
     };
     fetchUserProfile();
   }, []);
 
-  const endPoint = `${endPoints.userProfile}/${clientUser?.id}/user/${clientUser?.userId}`;
-
   const profile = async () => {
+    if (!clientUser) return;
+
+    const endPoint = `${endPoints.userProfile}/${clientUser.accountId}/user/${clientUser.userId}`;
+
     try {
       const response = await fetchUserProfile(endPoint);
-      console.log('response', response);
       if (response.error) {
         toast({
           variant: 'destructive',
@@ -69,9 +69,23 @@ export function Header({ title }: { title: string }) {
     }
   };
 
+  const goToProfile = () => {
+    console.log('profile', clientUser);
+    if (clientUser?.role === 'Owner') {
+      router.push('/admin/get-started');
+      return;
+    }
+    if (clientUser?.role === 'Mentor') {
+      router.push('/mentor/get-started');
+      return;
+    }
+  };
+
   useEffect(() => {
-    profile();
-  }, []);
+    if (clientUser) {
+      profile();
+    }
+  }, [clientUser]);
 
   return (
     <header className="flex h-14 items-center justify-between border-b px-4">
@@ -84,31 +98,30 @@ export function Header({ title }: { title: string }) {
           <DialogTrigger>
             <Avatar className="w-8 h-8 cursor-pointer">
               <AvatarImage
-                src={profileData?.imageUrl}
+                src={profileData?.imageUrl ?? undefined}
                 className="w-full h-full object-cover"
               />
               <AvatarFallback className="w-full h-full flex items-center justify-center text-xl">
-                {profileData?.name.slice(0, 2)}
+                {profileData?.userName?.slice(0, 2)}
               </AvatarFallback>
             </Avatar>
           </DialogTrigger>
           <DialogContent className="rounded-[6px] pt-4 pb-0 px-0 w-min translate-x-0 translate-y-0 top-12 left-auto right-2.5 ">
             <DialogHeader className="space-y-0 px-4">
               <DialogTitle className="text-start text-lg">
-                {profileData?.name}
+                {profileData?.userName}
               </DialogTitle>
               <DialogDescription className="text-base">
                 {profileData?.email}{' '}
               </DialogDescription>
             </DialogHeader>
             <div className="flex flex-col">
-              {/*change this link to redirect to the already made /mentor/profile in the future */}
-              <Link
-                href="/mentor/get-started"
+              <div
+                onClick={goToProfile}
                 className="flex gap-2 text-lg py-2 border border-y-slate-200 border-x-0 px-4 cursor-pointer hover:bg-slate-50"
               >
                 <LuUser size={25} /> Profile
-              </Link>
+              </div>
               <div
                 className="flex gap-2 text-lg py-2 px-4 cursor-pointer hover:bg-slate-50"
                 onClick={logOut}
