@@ -14,7 +14,7 @@ import { useForm } from 'react-hook-form';
 import CreateOrgSidebar from '@/components/shared/admin/create-org/create-org-sidebar';
 import CreateOrgForm from '@/components/shared/admin/create-org/create-org-form';
 import { createOrganazation } from '@/actions/admin/admin';
-import { Account, User_Info } from '@/types/users';
+import { Account } from '@/types/users';
 
 import { toast } from '@/hooks/use-toast';
 import { userProfile } from '@/actions/auth/login';
@@ -22,10 +22,10 @@ import { userProfile } from '@/actions/auth/login';
 const CreateOrgView = () => {
   const [currentPage, setCurrentPage] = useState<Page>('first');
   const [orgData, setOrgData] = useState<OrgDataValues>({});
-  const [clientUser, setClientUser] = useState<User_Info | null>(null);
+  const [clientUser, setClientUser] = useState<Account | null>(null);
   useEffect(() => {
     const fetchUserProfile = async () => {
-      const userAccoutId: User_Info = await userProfile();
+      const userAccoutId: Account = await userProfile();
       setClientUser(userAccoutId);
     };
     fetchUserProfile();
@@ -69,7 +69,7 @@ const CreateOrgView = () => {
       };
 
       const response = await createOrganazation(
-        clientUser?.accountId as string,
+        clientUser?.id as string,
         reqBody
       );
       if (response) {

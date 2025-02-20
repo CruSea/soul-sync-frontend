@@ -32,6 +32,7 @@ const LoginPageCard = () => {
         imageUrl: userInfo?.imageUrl ?? null,
         token,
       };
+      console.log('login', userInfo);
       setAuthCookie(user);
       // Fix: Store user properly in localStorage
     }

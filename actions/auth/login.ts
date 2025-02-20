@@ -2,7 +2,7 @@
 import { cookies } from 'next/headers';
 import apiCall from '../../base-api/api';
 import { redirect } from 'next/navigation';
-import { Account, User_Info } from '@/types/users';
+import { Account } from '@/types/users';
 
 const BASE_URL = process.env.NEXT_PUBLIC_API_BASE_URL;
 
@@ -19,7 +19,7 @@ export const apiUrl = async () => {
 export const userProfile = async () => {
   const cookieStore = await cookies();
   const userProfile = cookieStore.get('user-profile')?.value;
-  const user: User_Info = userProfile && JSON.parse(userProfile);
+  const user: Account = userProfile && JSON.parse(userProfile);
   return user;
 };
 export const userToken = async () => {
