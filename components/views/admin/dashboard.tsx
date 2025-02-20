@@ -12,7 +12,7 @@ export default async function AdminView() {
   const user: User_Info | null = await userProfile();
 
   // Verify account status
-  const response = await checkAccount(user.id as string);
+  const response = await checkAccount(user.accountId as string);
   // Handle invalid token
 
   // Redirect to org creation if no domain
