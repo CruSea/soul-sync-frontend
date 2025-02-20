@@ -1,6 +1,7 @@
 "use client"; // Ensures this file runs only on the client side
 
 import { apiUrl, userToken } from "@/actions/auth/login";
+import { socket_address } from "@/actions/revalidate";
 import { createContext, useContext, useEffect, useState } from "react";
 import { io, Socket } from "socket.io-client";
 
@@ -15,17 +16,18 @@ export default function SocketProvider({ children }: { children: React.ReactNode
     let newSocket: Socket | null = null; // Scoped variable for cleanup
 
     const setupSocket = async () => {
+    
+      
+      console.log('url',await socket_address())
       try {
         const token = await userToken();
-        
-        
-        newSocket = io("https://1clr2kph-3002.uks1.devtunnels.ms", {
-          query: { token },
-          transports: ["websocket"], // Ensure WebSocket connection
-          reconnection: true, // Enable reconnection attempts
-          reconnectionAttempts: 5, // Max retries
-          reconnectionDelay: 2000, // Delay between retries
-        });
+        newSocket = io(await socket_address(), {
+            query: { token },
+            transports: ["websocket"], // Ensure WebSocket connection
+            reconnection: true, // Enable reconnection attempts
+            reconnectionAttempts: 5, // Max retries
+            reconnectionDelay: 2000, // Delay between retries
+          });
 
         newSocket.on("connect", () => console.log("Connected to WebSocket"));
         newSocket.on("disconnect", () => console.log("Disconnected from WebSocket"));
