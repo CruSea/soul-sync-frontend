@@ -7,13 +7,17 @@ import {
   CommandList,
 } from '@/components/ui/command';
 
+import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 import { ScrollArea } from '@/components/ui/scroll-area';
 import { cn, getFallBack } from '@/lib/utils';
-import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
-import { User, UsersListProps } from '@/types/mentor';
-import { Account, role } from '@/types/users';
+import { ConversationsListProps } from '@/types/mentor';
+import { platformIcons } from '@/data/mentor';
 
-const UsersList = ({ users, currentUser, setCurrentUser }: UsersListProps) => {
+const ConversationsList = ({
+  conversations,
+  currentConversation,
+  setCurrentConversation,
+}: ConversationsListProps) => {
   return (
     <div className="w-80 overflow-y-auto bg-white rounded-[10px] py-4 shadow-sidebar">
       <Command className="px-0">
@@ -29,30 +33,38 @@ const UsersList = ({ users, currentUser, setCurrentUser }: UsersListProps) => {
             <CommandEmpty>No results found.</CommandEmpty>
             <CommandGroup className="p-3 flex flex-col">
               {/* a an individual user */}
-              {users?.length > 0 &&
-                users?.map((data) => (
+              {conversations?.length > 0 &&
+                conversations?.map((data, index) => (
                   <CommandItem
-                    key={data.id}
+                    key={data.conversation_id}
                     className={cn(
                       'flex px-2.5 gap-3.5 items-center h-[70px] outline-none rounded-lg cursor-pointer',
-                      data.id === currentUser.id ? '!bg-gray-300' : 'bg-white'
+                      data.conversation_id ===
+                        currentConversation?.conversation_id
+                        ? '!bg-gray-300'
+                        : 'bg-white'
                     )} // if user is selected sets the background to gry
-                    onSelect={() => setCurrentUser(data)} // sets the chosen user to the index of the selected item
+                    onSelect={() => setCurrentConversation(data)} // sets the chosen user to the index of the selected item
                   >
                     {/* Avatar image a user */}
                     <Avatar className="w-[32px] h-[32px]">
                       <AvatarImage
-                        src={data.imageUrl}
+                        src={platformIcons[data.platform]}
                         className="w-full h-full object-cover"
                       />
                       <AvatarFallback className="w-full h-full flex items-center justify-center text-base">
-                        {getFallBack(data.name)}
+                        {getFallBack(platformIcons[data.platform])}
                       </AvatarFallback>
                     </Avatar>
 
                     {/* user information */}
                     <div className="flex flex-col justify-center">
-                      <div className="font-bold text-base">{data.name}</div>
+                      <div className="font-bold text-base">
+                        <p>Leyu Chat</p>
+                        <p className="text-[10px] px-1 bg-green-100 rounded-[8px] ">
+                          {data.conversation_id}
+                        </p>
+                      </div>
                     </div>
                   </CommandItem>
                 ))}
@@ -64,4 +76,4 @@ const UsersList = ({ users, currentUser, setCurrentUser }: UsersListProps) => {
   );
 };
 
-export default UsersList;
+export default ConversationsList;

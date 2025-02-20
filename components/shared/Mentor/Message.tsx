@@ -5,18 +5,12 @@ import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 import { MessageProps } from '@/types/mentor';
 import React from 'react';
 
-const Message: React.FC<MessageProps> = ({
-  text,
-  isUser,
-  time,
-  newDay,
-  imageUrl,
-}) => {
+const Message: React.FC<MessageProps> = ({ text, isMentor, time, newDay }) => {
   return (
     <div
       className={cn(
         ' flex gap-2 items-end',
-        isUser ? 'ml-auto flex-row-reverse' : 'flex',
+        isMentor ? 'ml-auto flex-row-reverse' : 'flex',
         newDay !== '' ? 'pt-6' : ''
       )}
     >
@@ -32,12 +26,12 @@ const Message: React.FC<MessageProps> = ({
       )}
 
       {/*dummy avatar man for the user and woman for the mentor*/}
-      <Avatar className="w-[50px] h-[50px]">
+      {/* <Avatar className="w-[50px] h-[50px]">
         <AvatarImage src={imageUrl} className="w-full h-full object-cover" />
         <AvatarFallback className="w-full h-full flex items-center justify-center text-xl">
           JD
         </AvatarFallback>
-      </Avatar>
+      </Avatar> */}
 
       {/* chat text*/}
       <div className="relative">
@@ -48,7 +42,7 @@ const Message: React.FC<MessageProps> = ({
         <div
           className={cn(
             'absolute bottom-[-15px] min-w-[45px] font-normal text-[9px] text-neutral-400',
-            isUser ? 'right-[7px]' : 'left-[14px]'
+            isMentor ? 'right-[7px]' : 'left-[14px]'
           )}
         >
           {/* make the time text directly under the text */}

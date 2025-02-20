@@ -2,15 +2,17 @@
 
 import apiCall from '../../base-api/api';
 
-export const fetchedDataTable = async (url: string, tag: string) => {
+export const fetchedDataTable = async (
+  url: string,
+  tag: string,
+  currentPage: number,
+  itemsPerPage: number
+) => {
   const response = apiCall({
-    url: url,
+    url: `${url}&page=${currentPage}&limit=${itemsPerPage}`,
     tag: tag,
   });
-
-  // console.log(response);
   const data = await response;
-  console.log(data);
   return data;
 };
 

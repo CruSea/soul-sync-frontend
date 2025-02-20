@@ -19,7 +19,7 @@ const LandingPageHeader: React.FC<LandingPageHeaderProps> = ({
           width={40}
           height={40}
         />
-        <div className="font-bold text-2xl">TURUMBA</div>
+        <div className="font-bold text-2xl">LEYU CHAT</div>
       </div>
       {showButton && (
         <Link href="/log-in">

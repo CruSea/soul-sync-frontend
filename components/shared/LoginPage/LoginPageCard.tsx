@@ -1,4 +1,5 @@
 'use client';
+
 import { Button } from '@/components/ui/button';
 import {
   Card,
@@ -7,37 +8,33 @@ import {
   CardHeader,
   CardTitle,
 } from '@/components/ui/card';
-import { redirect, useSearchParams } from 'next/navigation';
+import { useRouter, useSearchParams } from 'next/navigation';
 import { useEffect } from 'react';
 import { decodeToken } from '@/lib/utils';
-import { User } from '@/types/users';
-import { setAuthCookie } from '@/actions/auth/auth';
-import { googleAuthCallback } from '@/actions/auth/login';
+import { endPoints } from '@/data/end-points';
+
+const BASE_URL = process.env.NEXT_PUBLIC_API_BASE_URL;
 
 const LoginPageCard = () => {
+  const router = useRouter();
   const searchParams = useSearchParams();
+
   useEffect(() => {
     const token = searchParams.get('token'); // Extract the token from the URL
     if (token) {
-      const decoded = decodeToken(token); // Ensure decodeToken is working properly
-      const userInfo = decoded as User;
-      console.log(userInfo);
-      // Fix: Correctly access the first account
-      const user = {
-        userId: userInfo?.sub ?? null,
-        userName: userInfo?.email ?? 'Guest', // Default to "Guest" if no name
-        accountId: userInfo?.accounts?.[0]?.id ?? null, // Ensure we access index 0
-        roleId: userInfo?.accounts?.[0]?.role?.id ?? null, // Access role correctly
-        role: userInfo?.accounts?.[0]?.role?.name ?? null,
-        imageUrl: userInfo?.imageUrl ?? null,
-        token,
-      };
-      setAuthCookie(user);
-      // Fix: Store user properly in localStorage
+      const decoded = decodeToken(token);
+      // You can store the token in state, sessionStorage, or make an API call with it
+
+      // Store the decoded token in the cookie
+      // Cookies.set("user", JSON.stringify(decoded), { expires: 7 }); // Cookie will expire in 7 days
+      localStorage.setItem('user', JSON.stringify(decoded));
+      localStorage.setItem('token', token);
     }
   }, [searchParams]);
+
   const handleLogin = () => {
-    googleAuthCallback();
+    console.log('redirecting to', `${process.env.GOOGLE_CALLBACK_URL}`);
+    router.push(`${process.env.GOOGLE_CALLBACK_URL}`);
   };
 
   return (
