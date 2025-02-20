@@ -10,8 +10,8 @@ export async function revalidate(tag: string) {
 }
 const BASE_URL = process.env.SOCKET_URL;
 
-export  const socket_address=async()=> {
-  const token=await userToken();
- 
+export const socket_address = async () => {
+  const token = await userToken();
+
   return BASE_URL;
-}
+};
