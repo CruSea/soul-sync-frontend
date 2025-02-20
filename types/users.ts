@@ -19,7 +19,7 @@ export type Account = {
   userName: string | null;
   id: string | null;
   roleId: string | null;
-  role: string | null;
+  role: role;
   token?: string | null;
   imageUrl?: string | null;
   userId?: string | null;
@@ -31,7 +31,7 @@ export type role = {
 
 export type User_Info = {
   userName: string | null;
-  id: string | null;
+  accountId: string | null;
   roleId: string | null;
   role: string | null;
   token?: string | null;

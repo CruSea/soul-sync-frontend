@@ -4,7 +4,7 @@ import DataTable from '@/components/shared/data-table';
 import { Column, FilterOption } from '@/types/data-table';
 import { userProfile } from '@/actions/auth/login';
 import messageType from '@/types/message';
-import type { Account } from '@/types/users';
+import type { Account, User_Info } from '@/types/users';
 import { endPoints } from '@/data/end-points';
 
 const columns: Array<Column<messageType>> = [
@@ -58,19 +58,19 @@ const filterOptions: Array<FilterOption<messageType>> = [
 ];
 
 export function MessageTable() {
-  const [clientUser, setClientUser] = useState<Account | null>(null);
+  const [clientUser, setClientUser] = useState<User_Info | null>(null);
   const [currentPage, setCurrentPage] = useState(1);
   const [triggerState, setTriggerState] = React.useState<boolean>(false);
 
   useEffect(() => {
     const fetchUserProfile = async () => {
-      const userAccount: Account = await userProfile();
+      const userAccount: User_Info = await userProfile();
       setClientUser(userAccount);
     };
     fetchUserProfile();
   }, []);
 
-  const endpoint = `${endPoints.message}/${clientUser?.id}`;
+  const endpoint = `${endPoints.message}/${clientUser?.accountId}`;
   const page = currentPage;
   const [itemsPerPage, onItemsPerPageChange] = useState<number>(10);
 
