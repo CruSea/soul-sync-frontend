@@ -1,13 +1,21 @@
 'use server';
 
-import apiCall from '../../base-api/api';
+import { GetRequest } from '@/base-api/method';
 
-export const fetchUserProfile = async (url: string) => {
-  const response = apiCall({
-    url: url,
-    tag: 'fetchUserProfile',
-  });
+const Url = {
+  userProfile: `admin/user`,
+};
 
-  const data = await response;
-  return data;
+export const fetchUserProfile = async (userId: string, id: string) => {
+  try {
+    const getRequest = new GetRequest(
+      `${Url.userProfile}/${id}/user/${userId}`,
+      'fetchUserProfile'
+    );
+    const data = await getRequest.getData();
+    return data;
+  } catch (error) {
+    console.error('Error fetching user profile:', error);
+    throw new Error('Failed to fetch user profile.');
+  }
 };

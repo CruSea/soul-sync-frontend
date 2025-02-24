@@ -16,7 +16,6 @@ import { LuLogOut } from 'react-icons/lu';
 import { removeUserProfile } from '@/actions/auth/auth';
 import { useRouter } from 'next/navigation';
 import type { Account } from '@/types/users';
-import { endPoints } from '@/data/end-points';
 import { userProfile } from '@/actions/auth/login';
 import { fetchUserProfile } from '@/actions/shared/user-profile';
 import { toast } from '@/hooks/use-toast';
@@ -34,8 +33,18 @@ export function Header({ title }: { title: string }) {
 
   useEffect(() => {
     const fetchUserProfile = async () => {
-      const userAccount: Account = await userProfile();
-      setClientUser(userAccount);
+      try {
+        const userAccount: Account = await userProfile();
+        setClientUser(userAccount);
+      } catch (error) {
+        console.error('Failed to fetch user profile:', error);
+        toast({
+          variant: 'destructive',
+          title: 'Error!',
+          description: 'Failed to fetch user profile. Please try again later.',
+        });
+        setClientUser(null);
+      }
     };
     fetchUserProfile();
   }, []);
@@ -43,10 +52,11 @@ export function Header({ title }: { title: string }) {
   const profile = async () => {
     if (!clientUser) return;
 
-    const endPoint = `${endPoints.userProfile}/${clientUser.id}/user/${clientUser.userId}`;
-
     try {
-      const response = await fetchUserProfile(endPoint);
+      if (!clientUser.userId || !clientUser.id) {
+        throw new Error('User ID or Client ID is missing.');
+      }
+      const response = await fetchUserProfile(clientUser.userId, clientUser.id);
       if (response.error) {
         toast({
           variant: 'destructive',
@@ -55,16 +65,14 @@ export function Header({ title }: { title: string }) {
         });
         throw new Error('Failed to fetch profile.');
       }
-
       setProfileData(response);
-
       toast({
         variant: 'success',
         title: 'Success!',
-        description: 'Their is Profile.',
+        description: 'Profile fetched successfully.',
       });
     } catch (error) {
-      // console.error(error);
+      console.error('Error fetching profile:', error);
     }
   };
 
@@ -101,7 +109,7 @@ export function Header({ title }: { title: string }) {
           <DialogTrigger>
             <Avatar className="w-8 h-8 cursor-pointer">
               <AvatarImage
-                src={profileData?.imageUrl || undefined}
+                src={profileData?.imageUrl || '/assets/avatars/woman1.png'}
                 className="w-full h-full object-cover"
               />
               <AvatarFallback className="w-full h-full flex items-center justify-center text-xl">
