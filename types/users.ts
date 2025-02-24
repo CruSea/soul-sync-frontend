@@ -22,6 +22,7 @@ export type Account = {
   imageUrl?: string;
   lastUpdated?: string;
   userId?: string;
+  email?: string;
 };
 export type role = {
   id: string;

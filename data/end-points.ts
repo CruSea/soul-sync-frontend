@@ -3,6 +3,7 @@ export const endPoints = {
   adminAccount: 'admin/account',
   adminUser: 'admin/user',
   adminMentors: 'admin/mentor',
+  userProfile: 'admin/user',
   mentor: 'mentors',
   allConversations: 'conversation',
   channel: 'admin/channel',
