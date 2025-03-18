@@ -26,6 +26,7 @@ jobs:
             git stash
             git clean -f -d
             git pull
+            cp .env.dev .env
             pnpm install
             pnpm run build
             pm2 delete dev-soul-sync-web

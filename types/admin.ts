@@ -1,3 +1,6 @@
+export interface LayoutProps {
+  children: React.ReactNode;
+}
 export interface Admin {
   id: string;
   name: string;

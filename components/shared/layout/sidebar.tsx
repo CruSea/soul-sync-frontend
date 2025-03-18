@@ -3,11 +3,29 @@
 import { useState } from 'react';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
-import { FiChevronLeft } from 'react-icons/fi';
+import { FiChevronLeft, FiHelpCircle } from 'react-icons/fi';
 
+import { LuUser, LuMessagesSquare, LuMic, LuLibrary } from 'react-icons/lu';
+import { RxLinkNone2 } from 'react-icons/rx';
+import { CiSettings } from 'react-icons/ci';
+import { LayoutDashboardIcon as LuLayoutDashboard } from 'lucide-react';
 import { cn } from '@/lib/utils';
 import { Button } from '@/components/ui/button';
-import { menuItems, footerItems } from '@/data/sidebar';
+
+const menuItems = [
+  { icon: LuLayoutDashboard, label: 'Dashboard', href: '/admin' },
+  { icon: LuUser, label: 'Mentors', href: '/admin/mentors' },
+  { icon: LuUser, label: 'Mentees', href: '/admin/mentees' },
+  { icon: LuMessagesSquare, label: 'Messages', href: '/admin/messages' },
+  { icon: RxLinkNone2, label: 'Channels', href: '/admin/channels' },
+  { icon: LuMic, label: 'Admins', href: '/admin/admins' },
+  { icon: LuLibrary, label: 'Agents', href: '/admin/agents' },
+];
+
+const footerItems = [
+  { icon: FiHelpCircle, label: 'Help and Support', href: '/support' },
+  { icon: CiSettings, label: 'Setting', href: '/settings' },
+];
 
 export function Sidebar() {
   const [isCollapsed, setIsCollapsed] = useState(false);
@@ -21,7 +39,9 @@ export function Sidebar() {
       )}
     >
       <div className="flex h-14 items-center justify-between border-b px-4">
-        {!isCollapsed && <span className="text-xl font-semibold">TURUMBA</span>}
+        {!isCollapsed && (
+          <span className="text-xl font-semibold">LEYU-CHAT</span>
+        )}
         <Button
           variant="ghost"
           size="icon"

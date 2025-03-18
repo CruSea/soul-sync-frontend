@@ -1,5 +1,5 @@
 import React from 'react';
-import { DataTable } from '@/components/shared/DataTable';
+import DataTable from '@/components/shared/data-table';
 import { Badge } from '@/components/ui/badge';
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 import { Button } from '@/components/ui/button';
@@ -67,6 +67,7 @@ const filterOptions: Array<FilterOption<Admin>> = [
 ];
 
 export function AdminsTable() {
+  const [triggerState, setTriggerState] = React.useState<boolean>(false);
   return (
     <div className="flex-1 p-4 bg-secondary dark:bg-gray-900">
       <div className="space-y-6  bg-white p-6 rounded-lg">
@@ -75,7 +76,7 @@ export function AdminsTable() {
           <InviteAdminDialog />
         </div>
         <DataTable
-          data={ALL_ADMINS}
+          //  data={ALL_ADMINS }
           columns={columns}
           searchFields={[
             'name',
@@ -87,6 +88,17 @@ export function AdminsTable() {
           ]}
           filterOptions={filterOptions}
           itemsPerPage={10}
+          apiUrl={''}
+          tag="addmin-tabele"
+          onDelete={function (id: string | number): Promise<void> {
+            throw new Error('Function not implemented.');
+          }}
+          triggerState={triggerState}
+          setTriggerState={setTriggerState}
+          currentPage={0}
+          onPageChange={function (page: number): void {
+            throw new Error('Function not implemented.');
+          }}
         />
       </div>
     </div>

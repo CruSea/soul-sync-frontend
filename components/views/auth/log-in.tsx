@@ -1,9 +1,33 @@
-'use client';
+import LoginPageCard from '@/components/login-page/login-page-card';
+import LoginPageSidebar from '@/components/login-page/login-page-sidebar';
 
-import LoginPageCard from '@/components/shared/LoginPage/LoginPageCard';
-import LoginPageSidebar from '@/components/shared/LoginPage/LoginPageSidebar';
+import { User_Info } from '@/types/users';
+import { cookies } from 'next/headers';
+import { redirect } from 'next/navigation';
 
-const LogInView = () => {
+const LoginPage = async () => {
+  // Get cookies directly in server component
+  const cookieStore = cookies();
+  const userProfile = (await cookieStore).get('user-profile')?.value;
+
+  // Parse user data if cookie exists
+  const user: User_Info | null = userProfile ? JSON.parse(userProfile) : null;
+  // Redirect logged-in users based on role
+  if (user) {
+    switch (user.role) {
+      case 'Owner':
+        redirect('/admin');
+        break;
+      case 'Mentor':
+        redirect('/mentor');
+        break;
+      default:
+        redirect('/log-in');
+        break;
+    }
+  }
+
+  // Show login UI for non-authenticated users
   return (
     <div className="w-screen h-screen flex">
       <LoginPageSidebar />
@@ -12,4 +36,4 @@ const LogInView = () => {
   );
 };
 
-export default LogInView;
+export default LoginPage;

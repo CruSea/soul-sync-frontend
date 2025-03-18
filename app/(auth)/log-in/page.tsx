@@ -1,6 +1,6 @@
+'use server';
 import LogInView from '@/components/views/auth/log-in';
-
-export default function LogInPage() {
+export default async function LogInPage() {
   return (
     <>
       <LogInView />

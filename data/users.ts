@@ -9,6 +9,7 @@ const users: User[] = [
     location: 'Addis Ababa',
     platform: 'Telegram',
     date: '21/01/2024',
+
     avatar: '/placeholder.svg',
   },
   {

@@ -1,9 +1,26 @@
-import { GrowthChart } from '@/components/shared/GrowthChart';
-import { MentorsChart } from '@/components/shared/MentorsChart';
-import { StatsCards } from '@/components/shared/StatCard';
-import { UsersTable } from '@/components/shared/UserTable';
+import { checkAccount } from '@/actions/admin/admin';
+import { GrowthChart } from '@/components/shared/admin/dashboard/growth-chart';
+import { MentorsChart } from '@/components/shared/admin/dashboard/mentors-chart';
+import { StatsCards } from '@/components/shared/admin/dashboard/stat-card';
+import UsersTable from '@/components/shared/admin/dashboard/user-table';
+import { cookies } from 'next/headers';
+import { redirect } from 'next/navigation';
+export default async function AdminView() {
+  // Get user data from cookies
+  const cookieStore = await cookies();
+  const userProfile = cookieStore.get('user-profile')?.value;
+  // Redirect to login if no user cookie
+  // Parse user info from cookie
+  const user = userProfile && JSON.parse(userProfile);
+  // Verify account status
+  // const response = await checkAccount(user.id);
+  // // Handle invalid token
 
-export default function AdminView() {
+  // // Redirect to org creation if no domain
+  // if (!response?.domain) {
+  //   redirect('/admin/create-org');
+  // }
+
   return (
     <div className="flex-1 p-4 bg-secondary dark:bg-gray-900">
       <div className="flex flex-col lg:flex-row gap-6">

@@ -6,7 +6,6 @@ import { ChannelCard } from '@/components/shared/Channel/channel-card';
 import type { Channel } from '@/types/channel';
 import { ChevronDown } from 'lucide-react';
 import { Button } from '@/components/ui/button';
-import { v4 as uuidv4 } from 'uuid';
 import {
   Command,
   CommandEmpty,
@@ -22,72 +21,102 @@ import {
   DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu';
 import { useToast } from '@/hooks/use-toast';
+import { fetchedChannels, handleAddChannel } from '@/actions/admin/channel';
+import { Account } from '@/types/users';
+import { userProfile } from '@/actions/auth/login';
+import { revalidate } from '@/actions/revalidate';
+import Pagination from '@/components/shared/pagination';
+// import { channel } from 'diagnostics_channel';
 
 export default function ChannelsPage() {
   const [channels, setChannels] = useState<Channel[]>([]);
   const [search, setSearch] = useState('');
   const [selectedCategory, setSelectedCategory] = useState('All');
   const { toast } = useToast();
+  const [selectedChannel, setSelectedChannel] = useState<string>('TELEGRAM');
+  const [triggerState, setTriggerState] = useState<boolean>(true);
   const categories = [
     'All',
-    'Telegram Bot',
-    'WhatsApp',
-    'Negarit',
-    'Facebook',
-    'Twilio',
+    'TELEGRAM',
+    'WHATSAPP',
+    'NEGARIT',
+    'FACEBOOK',
+    'TWILIO',
   ];
+  const [user, setUser] = useState<Account | null>(null);
+  const [itemsPerPage, onItemsPerPageChange] = useState<number>(6);
+  const [totalPages, setTotalPages] = useState(1);
+  const [currentPage, setCurrentPage] = useState(1);
+  const page = currentPage;
+  useEffect(() => {
+    const fetchUserProfile = async () => {
+      const userAccoutId: Account = await userProfile();
+      setUser(userAccoutId);
+      console.log('user:', userAccoutId);
+    };
+    fetchUserProfile();
+  }, []);
 
   useEffect(() => {
-    const fetchedChannels = async () => {
-      const response = await fetch('http://localhost:3001/channels');
-      const data = await response.json();
-      setChannels(data); // Access the channels array from the response
+    const getChannels = async () => {
+      console.log('user:', user);
+
+      const response = await fetchedChannels(
+        user?.id as string,
+        itemsPerPage,
+        page
+      );
+      console.log(response);
+
+      if (!response.error) {
+        setChannels(response.data);
+        setTotalPages(response.meta.totalPages);
+      } else {
+        toast(response.error);
+      }
+      console.log('totalPages:', totalPages);
     };
-    fetchedChannels();
-  }, []);
+    getChannels();
+  }, [user?.id, triggerState, itemsPerPage, page]);
 
   const filteredChannel = channels?.filter(
     (item) =>
       (selectedCategory === 'All' || item.type === selectedCategory) &&
       item.name.toLowerCase().includes(search.toLowerCase())
   );
-  const format: Intl.DateTimeFormatOptions = {
-    year: 'numeric',
-    month: 'short',
-    day: 'numeric',
-  };
 
-  const handleAddChannel = (
-    newChannel: Omit<Channel, 'id' | 'icon' | 'Date'>
+  const AddChannel = async (
+    newChannel: Omit<Channel, 'id' | 'icon' | 'createdAt' | 'accountId'>
   ) => {
-    const channelWithId: Channel = {
-      ...newChannel,
-      id: `${uuidv4().toString()}`,
-      icon: `/${newChannel.type.toLowerCase().replace(' ', '-')}-icon.svg`,
-      Date: `${new Date().toLocaleDateString('en-US', format)}`,
-    };
-    setChannels(channels ? [...channels, channelWithId] : [channelWithId]);
-    fetch('http://localhost:3001/channels', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify(channelWithId),
-    })
-      .then((response) => response.json())
-      .catch((error) => {
-        console.error('Error adding channel:', error);
+    if (user) {
+      const channelWithId = {
+        ...newChannel,
+        accountId: user.id,
+      } as Channel;
+
+      const response = await handleAddChannel(channelWithId);
+      if (response.error) {
+        toast({
+          variant: 'destructive',
+          title: 'Error',
+          description: response.error.discription,
+          duration: 3000,
+        });
+      }
+      setTriggerState(!triggerState);
+      toast({
+        variant: 'success',
+        title: 'Success',
+        description: `Channel ${channelWithId.name} added successfully`,
+        duration: 3000,
       });
-    toast({
-      title: 'Channel added successfully',
-      description: 'The channel has been added to the list',
-      duration: 3000,
-    });
+      await revalidate('add-channel');
+    }
   };
 
   return (
-    <div className="h-fit min-h-screen container mx-auto p-10 ">
-      <div className="h-fit min-h-screen space-y-6  bg-white p-6 rounded-lg ">
+    <div className="h-fit min-h-screen w-full mx-auto p-10  ">
+      <div className="h-fit min-h-screen w-full space-y-6  bg-white border p-6 rounded-lg ">
         <div className="flex items-center justify-between mb-6 px-3 pt-3">
           <h1 className="text-2xl font-bold">List of Channels</h1>
           <p className="text-sm text-muted-foreground">
@@ -125,28 +154,38 @@ export default function ChannelsPage() {
             <CommandList className="flex-grow overflow-none h-full">
               <CommandEmpty>No results found.</CommandEmpty>
               <CommandGroup className="h-full">
-                <div className="grid lg:grid-cols-4 md:grid-cols-3 grid-cols-[repeat(auto-fit,minmax(min-content,1fr))] gap-4 p-4 h-full">
-                  {filteredChannel?.map((channel) =>
-                    channel.isDeleted ? null : (
+                <div className="grid lg:grid-cols-4 3xl:grid-cols-5 md:grid-cols-3 grid-cols-[repeat(auto-fit,minmax(min-content,1fr))] gap-4 p-4 h-full">
+                  {filteredChannel.length > 0 &&
+                    filteredChannel?.map((channel, index) => (
                       <CommandItem
-                        key={channel.id}
-                        className="w-auto flex flex-col items-center justify-center h-full min-h-[100px] rounded-xl"
+                        key={channel.id || `channel-${index}`}
+                        className="w-auto items-center justify-center h-full min-h-[100px] rounded-xl"
                       >
                         <ChannelCard
-                          key={channel.id}
                           channel={channel}
                           setChannels={setChannels}
-                          toast={toast}
+                          setTriggerState={setTriggerState}
+                          triggerState={triggerState}
                         />
                       </CommandItem>
-                    )
-                  )}
-                  <AddChannelDialog onAddChannel={handleAddChannel} />
+                    ))}
+                  <AddChannelDialog
+                    onAddChannel={AddChannel}
+                    setSelectedChannel={setSelectedChannel}
+                    selectedChannel={selectedChannel}
+                  />
                 </div>
               </CommandGroup>
             </CommandList>
           </Command>
         </div>
+        <Pagination
+          currentPage={currentPage}
+          totalPages={totalPages}
+          onPageChange={setCurrentPage}
+          itemsPerPage={itemsPerPage}
+          onItemsPerPageChange={onItemsPerPageChange}
+        />
       </div>
     </div>
   );

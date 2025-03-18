@@ -1,12 +1,11 @@
-import Header from '@/components/shared/Header';
-import Main from '@/components/shared/Main';
+'use server';
+import MentorContainer from '@/components/shared/Mentor/mentor-container';
 
-const MentorView = () => {
+const MentorView = async () => {
   return (
-    <div className="flex flex-col w-full h-screen">
-      <Header page="mentor" />
-      <Main page="mentor" />
-    </div>
+    <>
+      <MentorContainer />
+    </>
   );
 };
 
