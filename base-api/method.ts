@@ -21,7 +21,6 @@ class ApiRequest {
       });
       return response; // Returning the API response
     } catch (error) {
-
       throw error;
     }
   }

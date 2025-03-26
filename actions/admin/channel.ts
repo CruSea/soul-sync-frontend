@@ -11,8 +11,6 @@ export const fetchedChannels = async (
   itemsPerPage: number,
   page: number
 ) => {
-  
-
   const getRequest = new GetRequest(
     `${Url.fetchedChannel}?accountId=${id}&page=${page}&limit=${itemsPerPage}`,
     'fetche-channel'
@@ -23,7 +21,6 @@ export const fetchedChannels = async (
 };
 
 export const handleAddChannel = async (body: Channel) => {
-  
   const postRequest = new PostRequest(
     `${Url.fetchedChannel}`,
     'add-channel',
