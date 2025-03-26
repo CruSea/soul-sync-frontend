@@ -33,7 +33,6 @@ const LoginPageCard = () => {
   }, [searchParams]);
 
   const handleLogin = () => {
-    
     router.push(`${process.env.GOOGLE_CALLBACK_URL}`);
   };
 

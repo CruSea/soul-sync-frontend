@@ -42,7 +42,7 @@ const MentorContainer = () => {
         setConversationMessages(messagedData);
       }
     } catch (error) {
-
+      throw new Error(error as string);
     }
   };
 
@@ -50,12 +50,12 @@ const MentorContainer = () => {
     const fetchConversation = async () => {
       try {
         const response = await conversation();
-    
+
         const data: Conversation = await response;
 
         if (Array.isArray(data) && data.length > 0) {
           setConversations(data);
-         
+
           fetchConversationMessages(data[0]?.conversation_id as string);
           setCurrentConversation(data);
         }

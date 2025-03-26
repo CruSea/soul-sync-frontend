@@ -39,7 +39,6 @@ const GetStartedMentorForm = () => {
   const router = useRouter(); // Initialize the useRouter hook
 
   const onSubmit = (data: getStartedMentorFormValues) => {
-  
     // Navigate to /mentor after form submission
     router.push('/mentor'); // Use router.push for smooth navigation
   };
@@ -47,7 +46,6 @@ const GetStartedMentorForm = () => {
   const {
     formState: { errors },
   } = form;
-
 
   return (
     <Form {...form}>

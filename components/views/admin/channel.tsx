@@ -52,28 +52,24 @@ export default function ChannelsPage() {
     const fetchUserProfile = async () => {
       const userAccoutId: Account = await userProfile();
       setUser(userAccoutId);
-      
     };
     fetchUserProfile();
   }, []);
 
   useEffect(() => {
     const getChannels = async () => {
-   
-
       const response = await fetchedChannels(
         user?.id as string,
         itemsPerPage,
         page
       );
-    
+
       if (!response.error) {
         setChannels(response.data);
         setTotalPages(response.meta.totalPages);
       } else {
         toast(response.error);
       }
-  
     };
     getChannels();
   }, [user?.id, triggerState, itemsPerPage, page]);

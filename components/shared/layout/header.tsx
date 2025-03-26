@@ -37,7 +37,6 @@ export function Header({ title }: { title: string }) {
         const userAccount: Account = await userProfile();
         setClientUser(userAccount);
       } catch (error) {
-       
         toast({
           variant: 'destructive',
           title: 'Error!',
@@ -72,7 +71,7 @@ export function Header({ title }: { title: string }) {
         description: 'Profile fetched successfully.',
       });
     } catch (error) {
-     
+      throw new Error(error as string);
     }
   };
 
