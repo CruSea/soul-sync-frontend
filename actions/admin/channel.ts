@@ -11,7 +11,7 @@ export const fetchedChannels = async (
   itemsPerPage: number,
   page: number
 ) => {
-  console.log('id:', id);
+  
 
   const getRequest = new GetRequest(
     `${Url.fetchedChannel}?accountId=${id}&page=${page}&limit=${itemsPerPage}`,
@@ -23,12 +23,7 @@ export const fetchedChannels = async (
 };
 
 export const handleAddChannel = async (body: Channel) => {
-  console.table(body);
-  // const tempRequest = {
-  //   name: body.name,
-  //   configuration: body.configuration,
-  //   accountId: body.accountId,
-  // };
+  
   const postRequest = new PostRequest(
     `${Url.fetchedChannel}`,
     'add-channel',

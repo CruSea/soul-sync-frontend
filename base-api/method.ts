@@ -21,7 +21,7 @@ class ApiRequest {
       });
       return response; // Returning the API response
     } catch (error) {
-      console.error('API Request Error:', error);
+
       throw error;
     }
   }

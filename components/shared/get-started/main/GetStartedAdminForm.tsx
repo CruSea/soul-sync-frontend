@@ -32,8 +32,7 @@ const GetStartedAdminForm = () => {
   const router = useRouter(); // Initialize the useRouter hook
 
   const onSubmit = (data: getStartedAdminFormValues) => {
-    console.log('Admin form data', data);
-
+   
     // Navigate to /mentor after form submission
     router.push('/admin'); // Use router.push for smooth navigation
   };
@@ -42,10 +41,7 @@ const GetStartedAdminForm = () => {
     formState: { errors },
   } = form;
 
-  useEffect(() => {
-    console.log(errors);
-  }, []);
-
+ 
   return (
     <Form {...form}>
       <form

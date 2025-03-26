@@ -14,7 +14,7 @@ export const conversation = async () => {
 };
 
 export const checkUser = async (params: string) => {
-  console.log('params', params);
+ 
   const getRequest = new GetRequest(`${Url.checkuser}/${params}`, 'user check');
   const data = getRequest.getData();
   return data;

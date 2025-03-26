@@ -21,7 +21,7 @@ const LoginPageCard = () => {
     if (token) {
       const decoded = decodeToken(token); // Ensure decodeToken is working properly
       const userInfo = decoded as User;
-      console.log(userInfo);
+      
       // Fix: Correctly access the first account
       const user = {
         userId: userInfo?.sub ?? null,
@@ -32,7 +32,7 @@ const LoginPageCard = () => {
         imageUrl: userInfo?.imageUrl ?? null,
         token,
       };
-      console.log('login', userInfo);
+ 
       setAuthCookie(user);
       // Fix: Store user properly in localStorage
     }

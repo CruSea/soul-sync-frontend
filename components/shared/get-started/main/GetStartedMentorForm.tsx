@@ -39,10 +39,7 @@ const GetStartedMentorForm = () => {
   const router = useRouter(); // Initialize the useRouter hook
 
   const onSubmit = (data: getStartedMentorFormValues) => {
-    // Everything is finished except sending the mentor form data to the backend through an api
-    // Good luck working on this
-    console.log('Mentor form data', data);
-
+  
     // Navigate to /mentor after form submission
     router.push('/mentor'); // Use router.push for smooth navigation
   };
@@ -51,9 +48,6 @@ const GetStartedMentorForm = () => {
     formState: { errors },
   } = form;
 
-  useEffect(() => {
-    console.log(errors);
-  }, []);
 
   return (
     <Form {...form}>

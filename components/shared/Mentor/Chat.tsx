@@ -24,13 +24,9 @@ const Chat = ({ currentConversation, conversationMessages }: ChatProps) => {
   useEffect(() => {
     if (!socket) return;
 
-    console.log('socket', socket);
-
     socket.on('message', (msg) => {
-      console.log(msg);
       const data = msg;
       setWebSocketMessages((prevMessages) => [...prevMessages, data]);
-      console.log('new message', msg);
     });
 
     return () => {
@@ -87,11 +83,6 @@ const Chat = ({ currentConversation, conversationMessages }: ChatProps) => {
     if (bottomOfPanelRef.current) {
       bottomOfPanelRef.current.scrollIntoView({ behavior: 'smooth' }); // Optional: Add smooth scrolling
     }
-
-    // // sets the input box to empty when changing from one mentee to another
-    // if (textBox.current) {
-    //   textBox.current.value = "";
-    // }
   }, [currentConversation, conversationMessages]);
 
   return (
