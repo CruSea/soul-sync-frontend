@@ -15,7 +15,6 @@ export default async function RootLayout({
           defaultTheme="light"
           enableSystem
           disableTransitionOnChange
-          // storageKey="dashboard-theme"
         >
           {children}
         </ThemeProvider>
