@@ -129,13 +129,13 @@ export function ChannelCard({
       });
       return;
     }
-  
+
     setChannels((prevItems) =>
       prevItems.map((item) =>
         item.id === channelId ? { ...item, isOn: !item.isOn } : item
       )
     );
-  
+
     if (!channel.isOn) {
       handleConnect(channelId);
       toast({
@@ -153,10 +153,10 @@ export function ChannelCard({
         duration: 3000,
       });
     }
-  
+
     setTriggerState((prev) => !prev);
   };
-  
+
   return (
     <div className="h-full w-full  gap-4  pb-5 flex flex-col items-center justify-between px-2.5 pt-1 border rounded-xl bg-white hover:shadow-md hover:rounded-xl transition-shadow ">
       <div className="h-auto px-1 py-2 rounded-tl-lg rounded-tr-lg justify-between items-center inline-flex w-full">
