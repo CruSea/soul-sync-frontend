@@ -20,3 +20,20 @@ export interface inviteMentorProps {
   name: string;
   email: string;
 }
+
+export interface GetStartedMentorFormValues {
+  age: number;
+  gender: 'male' | 'female';
+  location: string;
+  capacity: number;
+  specialization: string[];
+  availability: {
+    monday?: string;
+    tuesday?: string;
+    wednesday?: string;
+    thursday?: string;
+    friday?: string;
+    saturday?: string;
+    sunday?: string;
+  };
+}
