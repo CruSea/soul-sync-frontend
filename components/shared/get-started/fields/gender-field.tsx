@@ -1,3 +1,5 @@
+'use client';
+
 import {
   FormField,
   FormItem,
@@ -13,13 +15,13 @@ export function GenderField({ control, options, className }: GenderFieldProps) {
   return (
     <FormField
       control={control}
-      name="Gender"
+      name="gender"
       render={({ field }) => (
-        <FormItem className="">
+        <FormItem className={className}>
           <FormLabel className="text-lg font-semibold">Gender</FormLabel>
           <FormControl>
             <RadioGroup
-              defaultValue="male"
+              value={field.value}
               onValueChange={field.onChange}
               className="flex gap-10"
             >
