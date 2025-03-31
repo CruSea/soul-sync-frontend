@@ -6,6 +6,7 @@ import {
   PatchRequest,
 } from '@/base-api/method';
 import type { inviteMentorProps } from '@/types/requests';
+import type { inviteAdminProps } from '@/types/requests';
 import type { getStartedMentorFormValues } from '@/types/get-started';
 
 import { revalidateTag } from 'next/cache';
@@ -13,6 +14,7 @@ const Url = {
   adminAccount: `admin/account`,
   adminMentors: `admin/mentor`,
   mentorProfile: `mentor/profile`,
+  inviteAdmin: `admin/user`,
 };
 
 export const checkAccount = async (params: string) => {
@@ -56,6 +58,16 @@ export const inviteMentore = async (body: inviteMentorProps) => {
   const postRequest = new PostRequest(
     `${Url.adminMentors}`,
     'invite-mentor',
+    body
+  );
+  const data = postRequest.postData();
+  return data;
+};
+
+export const inviteAdmin = async (body: inviteAdminProps) => {
+  const postRequest = new PostRequest(
+    `${Url.inviteAdmin}`,
+    'invite-admin',
     body
   );
   const data = postRequest.postData();
