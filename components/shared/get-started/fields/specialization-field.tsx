@@ -6,12 +6,9 @@ import {
   FormLabel,
 } from '@/components/ui/form';
 import { Checkbox } from '@/components/ui/checkbox';
-import { SpecializationFieldProps } from '@/types/get-started';
+import { ExpertiseFieldProps } from '@/types/get-started';
 
-export function SpecializationField({
-  control,
-  options,
-}: SpecializationFieldProps) {
+export function SpecializationField({ control, options }: ExpertiseFieldProps) {
   return (
     <FormField
       control={control}
