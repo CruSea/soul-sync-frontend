@@ -21,6 +21,14 @@ export interface inviteMentorProps {
   email: string;
 }
 
+export interface inviteAdminProps {
+  accountId: string;
+  name: string;
+  email: string;
+  password: string;
+  roleId: string;
+}
+
 export interface GetStartedMentorFormValues {
   age: number;
   gender: 'male' | 'female';
