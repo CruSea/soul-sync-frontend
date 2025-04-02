@@ -19,7 +19,6 @@ import { inviteAdmin } from '@/actions/admin/admin';
 interface InviteAdminFormData {
   name: string;
   email: string;
-  password: string;
 }
 
 interface InviteAdminDialogProps {
@@ -30,7 +29,6 @@ interface InviteAdminDialogProps {
   triggerState: boolean;
   setTriggerState: React.Dispatch<React.SetStateAction<boolean>>;
 }
-
 export function InviteAdminDialog({
   accountId,
   roleId,
@@ -41,17 +39,14 @@ export function InviteAdminDialog({
   const [formData, setFormData] = useState<InviteAdminFormData>({
     name: '',
     email: '',
-    password: '',
   });
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-
     const requestBody = {
       accountId: accountId as string,
       name: formData.name,
       email: formData.email,
-      password: formData.password,
       roleId: roleId as string,
     };
 
@@ -70,7 +65,7 @@ export function InviteAdminDialog({
         title: 'Success!',
         description: `Invitation sent to ${formData.email}`,
       });
-      setFormData({ name: '', email: '', password: '' });
+      setFormData({ name: '', email: '' });
       setIsOpen(false);
     } catch (error) {
       toast({
@@ -121,18 +116,6 @@ export function InviteAdminDialog({
               type="email"
               placeholder="Insert their email"
               value={formData.email}
-              onChange={handleChange}
-              required
-            />
-          </div>
-          <div className="space-y-2">
-            <Label htmlFor="password">Password</Label>
-            <Input
-              id="password"
-              name="password"
-              type="password"
-              placeholder="Enter a password"
-              value={formData.password}
               onChange={handleChange}
               required
             />
