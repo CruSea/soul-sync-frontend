@@ -48,8 +48,23 @@ export const deleteMentor = async (id: string) => {
   return data;
 };
 
+export const deleteAdmin = async (accountId: string,  userId: string | number
+  ) => {
+  const deleteRequest = new DeleteRequest(
+    `${Url.inviteAdmin}/${accountId}/user/${userId}`,
+    'delete-admin'
+  );
+  const data = await deleteRequest.deleteData();
+  return data;
+};
+
 export const TableData = async (url: string, tag: string) => {
   const getRequest = new GetRequest(url, tag);
+  const data = await getRequest.getData();
+  return data;
+};
+export const GetRole = async (url: string) => {
+  const getRequest = new GetRequest(url, 'get-role');
   const data = await getRequest.getData();
   return data;
 };
@@ -136,6 +151,20 @@ export const toggleMentorStatus = async (
 ) => {
   const url = `${Url.adminMentors}/${mentorId}/toggle-status?accountId=${accountId}`;
   const patchRequest = new PatchRequest(url, 'toggle-mentor-status', {
+    isActive,
+  });
+  const data = await patchRequest.patchData();
+  revalidateTag('admin-mentors');
+  return data;
+};
+
+export const toggleAdminStatus = async (
+  adminId: string | number,
+  accountId: string,
+  isActive: boolean
+) => {
+  const url = `${Url.inviteAdmin}/${adminId}/activate/${accountId}`;
+  const patchRequest = new PatchRequest(url, 'toggle-admin-status', {
     isActive,
   });
   const data = await patchRequest.patchData();
