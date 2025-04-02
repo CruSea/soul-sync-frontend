@@ -48,8 +48,10 @@ export const deleteMentor = async (id: string) => {
   return data;
 };
 
-export const deleteAdmin = async (accountId: string,  userId: string | number
-  ) => {
+export const deleteAdmin = async (
+  accountId: string,
+  userId: string | number
+) => {
   const deleteRequest = new DeleteRequest(
     `${Url.inviteAdmin}/${accountId}/user/${userId}`,
     'delete-admin'

@@ -55,7 +55,7 @@ interface DataTableProps<T> {
   setTriggerState: React.Dispatch<React.SetStateAction<boolean>>;
   itemsPerPage?: number;
   onItemsPerPageChange?: React.Dispatch<React.SetStateAction<number>>;
-  transformData?: (data: any) => any;
+  transformData?: (data: T[]) => T[];
 }
 
 const DataTable = <T extends { id: string | number }>({
@@ -97,7 +97,9 @@ const DataTable = <T extends { id: string | number }>({
           itemsPerPage ?? 10
         );
         if (response && response.data) {
-          const transformedData = transformData ? transformData(response.data) : response.data;
+          const transformedData = transformData
+            ? transformData(response.data)
+            : response.data;
           setData(transformedData);
           setTotalPages(response.meta.totalPages);
         } else {

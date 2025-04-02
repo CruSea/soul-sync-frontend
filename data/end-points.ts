@@ -8,7 +8,7 @@ export const endPoints = {
   allConversations: 'conversation',
   channel: 'admin/channel',
   message: 'admin/messages',
-  invitedAdmins: 'admin/user/all'
+  invitedAdmins: 'admin/user/all',
 };
 
 export const jsonServer = {

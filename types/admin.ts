@@ -11,7 +11,6 @@ export interface Admin {
   location: string;
   status: string;
   profileImage: string;
-  role: string; 
-  createdAt: string | Date; 
+  role: string;
+  createdAt: string | Date;
 }
-
