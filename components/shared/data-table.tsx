@@ -55,6 +55,7 @@ interface DataTableProps<T> {
   setTriggerState: React.Dispatch<React.SetStateAction<boolean>>;
   itemsPerPage?: number;
   onItemsPerPageChange?: React.Dispatch<React.SetStateAction<number>>;
+  transformData?: (data: any) => any;
 }
 
 const DataTable = <T extends { id: string | number }>({
@@ -72,6 +73,7 @@ const DataTable = <T extends { id: string | number }>({
   onError,
   triggerState,
   onItemsPerPageChange,
+  transformData,
   setTriggerState,
 }: DataTableProps<T>) => {
   const [data, setData] = useState<T[]>([]);
@@ -94,9 +96,9 @@ const DataTable = <T extends { id: string | number }>({
           currentPage,
           itemsPerPage ?? 10
         );
-
         if (response && response.data) {
-          setData(response.data);
+          const transformedData = transformData ? transformData(response.data) : response.data;
+          setData(transformedData);
           setTotalPages(response.meta.totalPages);
         } else {
           throw new Error('Invalid response format');
