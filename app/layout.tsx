@@ -18,9 +18,7 @@ export default async function RootLayout({
           enableSystem
           disableTransitionOnChange
         >
-          <SocketProvider>
-            {children}
-          </SocketProvider>
+          <SocketProvider>{children}</SocketProvider>
         </ThemeProvider>
       </body>
     </html>
