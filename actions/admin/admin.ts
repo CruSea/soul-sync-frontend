@@ -7,6 +7,8 @@ import {
 } from '@/base-api/method';
 import type { inviteMentorProps } from '@/types/requests';
 import type { getStartedMentorFormValues } from '@/types/get-started';
+import { ToggleMentorStatusProps } from '@/types/mentor';
+import { CreateOrganizationProps } from '@/types/admin';
 
 import { revalidateTag } from 'next/cache';
 const Url = {
@@ -24,17 +26,13 @@ export const checkAccount = async (params: string) => {
   return data;
 };
 
-export const createOrganazation = async (
-  id: string,
-  body: { name: string; domain: string }
-) => {
+export const createOrganazation = async ({ id, body }: CreateOrganizationProps) => {
   const putRequest = new PatchRequest(
     `${Url.adminAccount}/${id}`,
     'createOrg',
     body
   );
-  const data = await putRequest.patchData();
-  return data;
+  return await putRequest.patchData();
 };
 
 export const deleteMentor = async (id: string) => {
@@ -117,15 +115,13 @@ export const submitMentorForm = async (
   return await patchRequest.patchData();
 };
 
-export const toggleMentorStatus = async (
-  mentorId: string | number,
-  accountId: string,
-  isActive: boolean
-) => {
+export const toggleMentorStatus = async ({
+  mentorId,
+  accountId,
+  isActive,
+}: ToggleMentorStatusProps) => {
   const url = `${Url.adminMentors}/${mentorId}/toggle-status?accountId=${accountId}`;
-  const patchRequest = new PatchRequest(url, 'toggle-mentor-status', {
-    isActive,
-  });
+  const patchRequest = new PatchRequest(url, 'toggle-mentor-status', { isActive });
   const data = await patchRequest.patchData();
   revalidateTag('admin-mentors');
   return data;

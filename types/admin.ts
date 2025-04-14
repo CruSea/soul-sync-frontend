@@ -12,3 +12,9 @@ export interface Admin {
   status: string;
   profileImage: string;
 }
+
+export interface CreateOrganizationProps {
+  id: string;
+  body: { name: string; domain: string };
+}
+

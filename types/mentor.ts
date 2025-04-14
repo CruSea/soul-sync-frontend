@@ -17,6 +17,13 @@ export interface Mentor {
   updatedAt: string;
 }
 
+export interface ToggleMentorStatusProps {
+  mentorId: string | number;
+  accountId: string;
+  isActive: boolean;
+}
+
+
 export type User = {
   id: string;
   name: string;
