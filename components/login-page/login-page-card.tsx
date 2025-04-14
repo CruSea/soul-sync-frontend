@@ -18,53 +18,49 @@ const LoginPageCard = () => {
   const searchParams = useSearchParams();
   const router = useRouter();
   const [userInfo, setUserInfo] = useState<User | null>(null);
-const [loginToken, setLoginToken] = useState<string | null>(null);
+  const [loginToken, setLoginToken] = useState<string | null>(null);
 
+  useEffect(() => {
+    const token = searchParams.get('token');
+    if (token) {
+      const decoded = decodeToken(token) as User;
+      if (!decoded?.accounts || decoded.accounts.length === 0) return;
 
-useEffect(() => {
-  const token = searchParams.get('token');
-  if (token) {
-    const decoded = decodeToken(token) as User;
-    if (!decoded?.accounts || decoded.accounts.length === 0) return;
-
-    if (decoded.accounts.length === 1) {
-      const singleUser: User_Info = {
-        userId: decoded.sub ?? null,
-        userName: decoded.email ?? null,
-        accountId: decoded.accounts[0].id,
-        roleId: decoded.accounts[0].role?.id ?? null,
-        role: decoded.accounts[0].role?.name ?? null,
-        imageUrl: decoded.imageUrl ?? null,
-        token,
-      };
-      setAuthCookie(singleUser);
-      router.refresh();
-    } else {
-      setUserInfo(decoded); 
-      setLoginToken(token); 
+      if (decoded.accounts.length === 1) {
+        const singleUser: User_Info = {
+          userId: decoded.sub ?? null,
+          userName: decoded.email ?? null,
+          accountId: decoded.accounts[0].id,
+          roleId: decoded.accounts[0].role?.id ?? null,
+          role: decoded.accounts[0].role?.name ?? null,
+          imageUrl: decoded.imageUrl ?? null,
+          token,
+        };
+        setAuthCookie(singleUser);
+        router.refresh();
+      } else {
+        setUserInfo(decoded);
+        setLoginToken(token);
+      }
     }
-  }
-}, [searchParams]);
+  }, [searchParams]);
 
+  const handleAccountSelect = (account: Account) => {
+    if (!userInfo || !loginToken) return;
 
-const handleAccountSelect = (account: Account) => {
-  if (!userInfo || !loginToken) return;
+    const user: User_Info = {
+      userId: userInfo.sub ?? null,
+      userName: userInfo.email ?? null,
+      accountId: account.id,
+      roleId: account.role?.id ?? null,
+      role: account.role?.name ?? null,
+      imageUrl: userInfo.imageUrl ?? null,
+      token: loginToken,
+    };
 
-  const user: User_Info = {
-    userId: userInfo.sub ?? null,
-    userName: userInfo.email ?? null,
-    accountId: account.id,
-    roleId: account.role?.id ?? null,
-    role: account.role?.name ?? null,
-    imageUrl: userInfo.imageUrl ?? null,
-    token: loginToken,
+    setAuthCookie(user);
+    router.refresh();
   };
-
-  setAuthCookie(user);
-  router.refresh();
-};
-
-  
 
   const handleLogin = () => {
     googleAuthCallback();
