@@ -17,4 +17,3 @@ export interface CreateOrganizationProps {
   id: string;
   body: { name: string; domain: string };
 }
-

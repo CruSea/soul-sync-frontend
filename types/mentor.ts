@@ -23,7 +23,6 @@ export interface ToggleMentorStatusProps {
   isActive: boolean;
 }
 
-
 export type User = {
   id: string;
   name: string;

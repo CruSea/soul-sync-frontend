@@ -72,7 +72,7 @@ const CreateOrgView = () => {
         id: clientUser?.id as string,
         body: reqBody,
       });
-      
+
       if (response) {
         toast({
           variant: 'success',
