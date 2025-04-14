@@ -15,6 +15,7 @@ const Url = {
   adminAccount: `admin/account`,
   adminMentors: `admin/mentor`,
   mentorProfile: `mentor/profile`,
+  inviteAdmin: `admin/user`,
 };
 
 export const checkAccount = async (params: string) => {
@@ -120,7 +121,7 @@ export const toggleMentorStatus = async ({
   accountId,
   isActive,
 }: ToggleMentorStatusProps) => {
-  const url = `${Url.adminMentors}/${mentorId}/toggle-status?accountId=${accountId}`;
+  const url = `${Url.inviteAdmin}/${mentorId}/activate/${accountId}`;
   const patchRequest = new PatchRequest(url, 'toggle-mentor-status', { isActive });
   const data = await patchRequest.patchData();
   revalidateTag('admin-mentors');
