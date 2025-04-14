@@ -30,7 +30,6 @@ export interface InviteMentorDialogProps {
   setTriggerState: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
-
 export type User = {
   id: string;
   name: string;

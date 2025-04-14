@@ -13,11 +13,7 @@ import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { toast } from '@/hooks/use-toast';
 import React from 'react';
-import {
-  InviteAdminFormData,
-  InviteAdminDialogProps,
-} from '@/types/admin';
-
+import { InviteAdminFormData, InviteAdminDialogProps } from '@/types/admin';
 
 import { inviteAdmin } from '@/actions/admin/admin';
 

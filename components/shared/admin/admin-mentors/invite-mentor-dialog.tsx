@@ -15,11 +15,7 @@ import { toast } from '@/hooks/use-toast';
 import React from 'react';
 
 import { inviteMentore } from '@/actions/admin/admin';
-import {
-  InviteMentorFormData,
-  InviteMentorDialogProps,
-} from '@/types/mentor';
-
+import { InviteMentorFormData, InviteMentorDialogProps } from '@/types/mentor';
 
 export function InviteMentorDialog({
   userName,
