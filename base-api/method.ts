@@ -48,13 +48,24 @@ class PostRequest extends ApiRequest {
   }
 }
 
-// PUT request subclass
+// PATCH request subclass
 class PatchRequest extends ApiRequest {
   constructor(url: string, tag: string, data: unknown) {
     super(url, tag, data, 'PATCH');
   }
 
   public async patchData() {
+    return this.executeRequest();
+  }
+}
+
+// PUT request subclass
+class PutRequest extends ApiRequest {
+  constructor(url: string, tag: string, data: unknown) {
+    super(url, tag, data, 'PUT');
+  }
+
+  public async putData() {
     return this.executeRequest();
   }
 }
@@ -70,4 +81,4 @@ class DeleteRequest extends ApiRequest {
   }
 }
 
-export { GetRequest, PostRequest, PatchRequest, DeleteRequest };
+export { GetRequest, PostRequest, PatchRequest, PutRequest, DeleteRequest };
