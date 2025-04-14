@@ -8,12 +8,16 @@ import type { Column, FilterOption } from '@/types/data-table';
 import { toast } from '@/hooks/use-toast';
 import { InviteMentorDialog } from './invite-mentor-dialog';
 import { endPoints } from '@/data/end-points';
-import { deleteMentor } from '@/actions/admin/admin';
+import { deleteMentor, toggleMentorStatus } from '@/actions/admin/admin';
 import type { Account } from '@/types/users';
 import { userProfile } from '@/actions/auth/login';
 import { Mentor } from '@/types/mentor';
+import { Switch } from '@/components/ui/switch';
 
-const columns: Column<Mentor>[] = [
+const createColumns = (
+  client: Account | null,
+  setTriggerState: React.Dispatch<React.SetStateAction<boolean>>
+): Column<Mentor>[] => [
   {
     key: 'name',
     header: 'Name',
@@ -30,41 +34,91 @@ const columns: Column<Mentor>[] = [
   {
     key: 'age',
     header: 'Age',
-    render: (mentor: Mentor) => (mentor.age === null ? 'null' : mentor.age),
+    render: (mentor: Mentor) => (mentor.age === null ? 'N/A' : mentor.age),
   },
   { key: 'gender', header: 'Gender' },
   {
     key: 'expertise',
     header: 'Expertise',
     render: (mentor: Mentor) =>
-      mentor.expertise === null ? 'null' : mentor.expertise,
+      mentor.expertise
+        ? Object.entries(mentor.expertise)
+            .map(([key, description]) => `${key}: ${description}`)
+            .join(', ')
+        : 'N/A',
   },
   {
     key: 'availability',
     header: 'Availability',
     render: (mentor: Mentor) =>
-      mentor.availability === null
-        ? 'null'
-        : mentor.availability?.startDate || 'null',
+      mentor.availability
+        ? Object.entries(mentor.availability)
+            .map(([day, times]) => `${day}: ${times.join(', ')}`)
+            .join('; ')
+        : 'N/A',
+  },
+  {
+    key: 'capacity',
+    header: 'Capacity',
+    render: (mentor: Mentor) =>
+      mentor.capacity === null ? 'N/A' : mentor.capacity,
   },
   {
     key: 'location',
     header: 'Location',
-    render: (mentor: Mentor) =>
-      mentor.location === null ? 'null' : mentor.location,
+    render: (mentor: Mentor) => (mentor.location ? mentor.location : 'N/A'),
   },
   {
     key: 'isActive',
     header: 'Status',
     render: (mentor: Mentor) => (
-      <Badge variant="secondary">{mentor.isActive ? 'Yes' : 'No'}</Badge>
+      <div className="flex items-center gap-2">
+        <Switch
+          checked={mentor.isActive}
+          onCheckedChange={async (checked) => {
+            try {
+              if (!client?.id) {
+                throw new Error('User account ID missing');
+              }
+
+              await toggleMentorStatus({
+                mentorId: String(mentor.id),
+                accountId: client.id,
+                isActive: checked,
+              });
+
+              mentor.isActive = checked;
+              setTriggerState((prev) => !prev);
+
+              toast({
+                variant: 'success',
+                title: 'Status Updated!',
+                description: `Mentor status has been ${checked ? 'activated' : 'deactivated'}.`,
+              });
+            } catch (error) {
+              console.error('Status toggle error:', error);
+              toast({
+                variant: 'destructive',
+                title: 'Error!',
+                description:
+                  error instanceof Error
+                    ? error.message
+                    : 'Failed to update mentor status',
+              });
+            }
+          }}
+        />
+        <Badge variant={mentor.isActive ? 'default' : 'secondary'}>
+          {mentor.isActive ? 'Active' : 'Inactive'}
+        </Badge>
+      </div>
     ),
   },
 ];
 
 const filterOptions: FilterOption<Mentor>[] = [
-  { key: 'isActive', label: 'Yes' },
-  { key: 'isActive', label: 'No' },
+  { key: 'gender', label: 'FEMALE' },
+  { key: 'gender', label: 'MALE' },
 ];
 
 const searchFields: (keyof Mentor)[] = ['name', 'email', 'gender', 'isActive'];
@@ -81,6 +135,7 @@ const MentorsTable: React.FC = () => {
     };
     fetchUserProfile();
   }, []);
+
   const endPoint = `${endPoints.adminMentors}?accountId=${clientUser?.id}`;
   const [itemsPerPage, onItemsPerPageChange] = useState<number>(10);
 
@@ -130,7 +185,7 @@ const MentorsTable: React.FC = () => {
           <DataTable<Mentor>
             tag="admin-mentors"
             apiUrl={endPoint}
-            columns={columns}
+            columns={createColumns(clientUser, setTriggerState)}
             searchFields={searchFields}
             filterOptions={filterOptions}
             itemsPerPage={itemsPerPage}

@@ -5,11 +5,17 @@ import {
   PostRequest,
   PatchRequest,
 } from '@/base-api/method';
-import { inviteMentorProps } from '@/types/requests';
+import type { inviteMentorProps } from '@/types/requests';
+import type { getStartedMentorFormValues } from '@/types/get-started';
+import { ToggleMentorStatusProps } from '@/types/mentor';
+import { CreateOrganizationProps } from '@/types/admin';
+
 import { revalidateTag } from 'next/cache';
 const Url = {
   adminAccount: `admin/account`,
   adminMentors: `admin/mentor`,
+  mentorProfile: `mentor/profile`,
+  inviteAdmin: `admin/user`,
 };
 
 export const checkAccount = async (params: string) => {
@@ -21,17 +27,16 @@ export const checkAccount = async (params: string) => {
   return data;
 };
 
-export const createOrganazation = async (
-  id: string,
-  body: { name: string; domain: string }
-) => {
+export const createOrganazation = async ({
+  id,
+  body,
+}: CreateOrganizationProps) => {
   const putRequest = new PatchRequest(
     `${Url.adminAccount}/${id}`,
     'createOrg',
     body
   );
-  const data = await putRequest.putData();
-  return data;
+  return await putRequest.patchData();
 };
 
 export const deleteMentor = async (id: string) => {
@@ -56,6 +61,75 @@ export const inviteMentore = async (body: inviteMentorProps) => {
     body
   );
   const data = postRequest.postData();
+  return data;
+};
+
+export const submitMentorForm = async (
+  formData: getStartedMentorFormValues,
+  accountId: string
+) => {
+  // Transform data to match backend format
+  const backendData = {
+    expertise: formData.expertise.reduce(
+      (acc, exp) => {
+        const expertiseMap: Record<string, string> = {
+          marriageCounseling: 'Expert in marriage counseling',
+          discipleship: 'Expert in discipleship counseling',
+          spritual: 'Expert in spiritual counseling',
+          dayToDay: 'Expert in day-to-day counseling',
+          lifeCoach: 'Expert in life coaching',
+          psychology: 'Expert in psychological counseling',
+        };
+        const key =
+          exp
+            .replace(/Counseling$/, 'Counselor')
+            .replace(/([A-Z])/g, ' $1')
+            .trim()
+            .toLowerCase() + 'Counselor';
+        acc[key] = expertiseMap[exp] || `Expert in ${exp}`;
+        return acc;
+      },
+      {} as Record<string, string>
+    ),
+    capacity: formData.capacity,
+    availability: Object.entries(formData.availability)
+      .filter(([_, value]) => value !== undefined)
+      .reduce(
+        (acc, [day, value]) => {
+          if (!value) return acc;
+
+          const formattedDay = day.charAt(0).toUpperCase() + day.slice(1);
+          const startTime = value.startTime;
+          const endTime = value.endTime;
+          const timeRange = `${startTime.hour}:${startTime.minute} ${startTime.dayPeriod} - ${endTime.hour}:${endTime.minute} ${endTime.dayPeriod}`;
+
+          acc[formattedDay] = [timeRange];
+          return acc;
+        },
+        {} as Record<string, string[]>
+      ),
+    age: formData.age,
+    gender: formData.gender.toUpperCase(),
+    location: formData.location,
+  };
+
+  const url = `${Url.mentorProfile}?accountId=${accountId}`;
+
+  const patchRequest = new PatchRequest(url, 'submit-mentor-form', backendData);
+  return await patchRequest.patchData();
+};
+
+export const toggleMentorStatus = async ({
+  mentorId,
+  accountId,
+  isActive,
+}: ToggleMentorStatusProps) => {
+  const url = `${Url.inviteAdmin}/${mentorId}/activate/${accountId}`;
+  const patchRequest = new PatchRequest(url, 'toggle-mentor-status', {
+    isActive,
+  });
+  const data = await patchRequest.patchData();
+  revalidateTag('admin-mentors');
   return data;
 };
 
