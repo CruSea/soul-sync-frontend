@@ -68,10 +68,11 @@ const CreateOrgView = () => {
         domain: orgData.companyDomain as string,
       };
 
-      const response = await createOrganazation(
-        clientUser?.id as string,
-        reqBody
-      );
+      const response = await createOrganazation({
+        id: clientUser?.id as string,
+        body: reqBody,
+      });
+      
       if (response) {
         toast({
           variant: 'success',
