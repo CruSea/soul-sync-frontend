@@ -15,19 +15,11 @@ import { toast } from '@/hooks/use-toast';
 import React from 'react';
 
 import { inviteMentore } from '@/actions/admin/admin';
-import { User_Info } from '@/types/users';
+import {
+  InviteMentorFormData,
+  InviteMentorDialogProps,
+} from '@/types/mentor';
 
-interface InviteMentorFormData {
-  name: string;
-  email: string;
-}
-interface InviteMentorDialogProps {
-  userName: string;
-  accountId: string;
-  role: string;
-  triggerState: boolean;
-  setTriggerState: React.Dispatch<React.SetStateAction<boolean>>;
-}
 
 export function InviteMentorDialog({
   userName,

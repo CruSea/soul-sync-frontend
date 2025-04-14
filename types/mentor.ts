@@ -17,6 +17,20 @@ export interface Mentor {
   updatedAt: string;
 }
 
+export interface InviteMentorFormData {
+  name: string;
+  email: string;
+}
+
+export interface InviteMentorDialogProps {
+  userName: string;
+  accountId: string;
+  role: string;
+  triggerState: boolean;
+  setTriggerState: React.Dispatch<React.SetStateAction<boolean>>;
+}
+
+
 export type User = {
   id: string;
   name: string;
