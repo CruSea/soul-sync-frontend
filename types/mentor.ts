@@ -1,20 +1,33 @@
 import { colors } from '@/components/shared/Mentor/Info';
-import { Account } from './users';
+//import { Account } from './users';
 
-// types/mentor.ts
 export interface Mentor {
   id: string | number;
   accountId: string;
   name: string;
   email: string;
-  expertise?: string | null;
+  expertise?: { [key: string]: string } | null;
   age?: number | null;
   gender: string;
   location?: string | null;
-  availability?: { startDate: string } | null;
+  availability?: { [key: string]: string[] } | null;
+  capacity?: number | null;
   isActive: boolean;
   createdAt: string;
   updatedAt: string;
+}
+
+export interface InviteMentorFormData {
+  name: string;
+  email: string;
+}
+
+export interface InviteMentorDialogProps {
+  userName: string;
+  accountId: string;
+  role: string;
+  triggerState: boolean;
+  setTriggerState: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
 export type User = {

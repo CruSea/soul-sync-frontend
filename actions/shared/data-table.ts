@@ -13,6 +13,7 @@ export const fetchedDataTable = async (
     tag: tag,
   });
   const data = await response;
+  console.log('API Response:', response);
   return data;
 };
 

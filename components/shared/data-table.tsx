@@ -33,8 +33,6 @@ import {
   DropdownMenuTrigger,
 } from '@radix-ui/react-dropdown-menu';
 
-// ... other imports
-
 export interface Column<T> {
   key: keyof T;
   header: string;
@@ -57,6 +55,7 @@ interface DataTableProps<T> {
   setTriggerState: React.Dispatch<React.SetStateAction<boolean>>;
   itemsPerPage?: number;
   onItemsPerPageChange?: React.Dispatch<React.SetStateAction<number>>;
+  transformData?: (data: T[]) => T[];
 }
 
 const DataTable = <T extends { id: string | number }>({
@@ -74,6 +73,7 @@ const DataTable = <T extends { id: string | number }>({
   onError,
   triggerState,
   onItemsPerPageChange,
+  transformData,
   setTriggerState,
 }: DataTableProps<T>) => {
   const [data, setData] = useState<T[]>([]);
@@ -96,10 +96,12 @@ const DataTable = <T extends { id: string | number }>({
           currentPage,
           itemsPerPage ?? 10
         );
-
         if (response && response.data) {
-          setData(response.data);
-          setTotalPages(response.meta.totalPages); // Use meta.totalPages for pagination
+          const transformedData = transformData
+            ? transformData(response.data)
+            : response.data;
+          setData(transformedData);
+          setTotalPages(response.meta.totalPages);
         } else {
           throw new Error('Invalid response format');
         }
@@ -120,14 +122,11 @@ const DataTable = <T extends { id: string | number }>({
   const handleSearchChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     setSearchTerm(event.target.value);
   };
-  // Apply search and filters to the data
   const filteredData = data.filter((item) => {
-    // Apply search
     const matchesSearch = searchFields.some((field) =>
       item[field]?.toString().toLowerCase().includes(searchTerm.toLowerCase())
     );
 
-    // Apply filters
     const matchesFilters = filters.every((filter) => {
       const [key, value] = filter.split(':');
       return item[key as keyof T]?.toString() === value;
@@ -135,13 +134,6 @@ const DataTable = <T extends { id: string | number }>({
 
     return matchesSearch && matchesFilters;
   });
-
-  // Filter data based on search term
-  // const filteredData = data.filter((item) =>
-  //   searchFields.some((field) =>
-  //     item[field]?.toString().toLowerCase().includes(searchTerm.toLowerCase())
-  //   )
-  // );
 
   const handleDelete = (id: string | number) => {
     setDeleteDialog({ open: true, id });

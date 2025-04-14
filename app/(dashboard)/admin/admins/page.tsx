@@ -1,8 +1,11 @@
-export default function Admins() {
+'use server';
+import AdminsTable from '@/components/shared/admin/admin-mentors/admins';
+
+function Admin() {
   return (
     <>
-      <div>Admin</div>
-      {/* <AdminsTable /> */}
+      <AdminsTable />
     </>
   );
 }
+export default Admin;

@@ -13,34 +13,33 @@ import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { toast } from '@/hooks/use-toast';
 import React from 'react';
+import { InviteAdminFormData, InviteAdminDialogProps } from '@/types/admin';
 
-import { inviteMentore } from '@/actions/admin/admin';
-import { InviteMentorFormData, InviteMentorDialogProps } from '@/types/mentor';
+import { inviteAdmin } from '@/actions/admin/admin';
 
-export function InviteMentorDialog({
-  userName,
+export function InviteAdminDialog({
   accountId,
-  role,
+  roleId,
   triggerState,
   setTriggerState,
-}: InviteMentorDialogProps) {
+}: InviteAdminDialogProps) {
   const [isOpen, setIsOpen] = useState(false);
-  const [formData, setFormData] = useState<InviteMentorFormData>({
+  const [formData, setFormData] = useState<InviteAdminFormData>({
     name: '',
     email: '',
   });
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-
     const requestBody = {
       accountId: accountId as string,
       name: formData.name,
       email: formData.email,
+      roleId: roleId as string,
     };
 
     try {
-      const response = await inviteMentore(requestBody);
+      const response = await inviteAdmin(requestBody);
       if (response.error) {
         toast({
           variant: 'destructive',
@@ -75,12 +74,12 @@ export function InviteMentorDialog({
     <Dialog open={isOpen} onOpenChange={setIsOpen}>
       <DialogTrigger asChild>
         <Button variant={'outline'}>
-          <span className="mr-1">+</span> Invite a Mentor
+          <span className="mr-1">+</span> Invite an Admin
         </Button>
       </DialogTrigger>
       <DialogContent className="sm:max-w-[425px]">
         <DialogHeader>
-          <DialogTitle>Invite A mentor</DialogTitle>
+          <DialogTitle>Invite An Admin</DialogTitle>
           <DialogDescription>
             Send an invitation link through their email
           </DialogDescription>

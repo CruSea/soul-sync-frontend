@@ -54,7 +54,7 @@ class PatchRequest extends ApiRequest {
     super(url, tag, data, 'PATCH');
   }
 
-  public async putData() {
+  public async patchData() {
     return this.executeRequest();
   }
 }
