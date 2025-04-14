@@ -81,7 +81,11 @@ const createColumns = (
                 throw new Error('User account ID missing');
               }
 
-              await toggleMentorStatus(String(mentor.id), client.id, checked);
+              await toggleMentorStatus({
+                mentorId: String(mentor.id),
+                accountId: client.id,
+                isActive: checked,
+              });
 
               mentor.isActive = checked;
               setTriggerState((prev) => !prev);

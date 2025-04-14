@@ -27,7 +27,10 @@ export const checkAccount = async (params: string) => {
   return data;
 };
 
-export const createOrganazation = async ({ id, body }: CreateOrganizationProps) => {
+export const createOrganazation = async ({
+  id,
+  body,
+}: CreateOrganizationProps) => {
   const putRequest = new PatchRequest(
     `${Url.adminAccount}/${id}`,
     'createOrg',
@@ -122,7 +125,9 @@ export const toggleMentorStatus = async ({
   isActive,
 }: ToggleMentorStatusProps) => {
   const url = `${Url.inviteAdmin}/${mentorId}/activate/${accountId}`;
-  const patchRequest = new PatchRequest(url, 'toggle-mentor-status', { isActive });
+  const patchRequest = new PatchRequest(url, 'toggle-mentor-status', {
+    isActive,
+  });
   const data = await patchRequest.patchData();
   revalidateTag('admin-mentors');
   return data;
