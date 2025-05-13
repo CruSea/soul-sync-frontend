@@ -1,38 +1,49 @@
 'use client';
+
 import { userProfile } from '@/actions/auth/login';
 import MentorLayout from '@/components/shared/layout/mentor-layout';
+import SocketProvider from '@/context/providers/SocketProvider';
 import { usePathname, useRouter } from 'next/navigation';
 import React, { useEffect } from 'react';
+
+import type { Account } from '@/types/users';
 
 const MentorFrontPageLayout = ({ children }: { children: React.ReactNode }) => {
   const pathname = usePathname();
   const router = useRouter();
-  // Get the last segment of the URL
+
   const lastSegment = pathname.split('/').filter(Boolean).pop();
 
-  // List of pages to exclude from this layout
   const excludedRoutes = ['/mentor/get-started'];
 
   useEffect(() => {
     const checkRole = async () => {
-      // Fetch user profile
-      const userProfileData = await userProfile();
-      const userRole = userProfileData?.role as unknown as string;
+      try {
+        const userProfileData: Account = await userProfile();
 
-      if (userRole !== 'Owner') {
+        const role = userProfileData?.role;
+        if (!role || String(role) !== 'Owner') {
+          router.push('/mentor');
+        }
+      } catch (error) {
+        console.error('Failed to fetch user profile:', error);
         router.push('/mentor');
       }
     };
 
     checkRole();
-  }, []);
-  if (excludedRoutes.includes(pathname)) {
-    return <>{children}</>; // Render without the layout
-  }
+  }, [router]);
+
   return (
-    <MentorLayout title={lastSegment?.toLocaleUpperCase() as string}>
-      {children}
-    </MentorLayout>
+    <SocketProvider>
+      {excludedRoutes.includes(pathname) ? (
+        <>{children}</>
+      ) : (
+        <MentorLayout title={lastSegment?.toUpperCase() || ''}>
+          {children}
+        </MentorLayout>
+      )}
+    </SocketProvider>
   );
 };
 

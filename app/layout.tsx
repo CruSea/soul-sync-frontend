@@ -1,7 +1,7 @@
 'use server';
 import './globals.css';
 import { ThemeProvider } from '@/context/providers/ThemeProvider';
-import SocketProvider from '@/context/providers/SocketProvider';
+
 import React from 'react';
 
 export default async function RootLayout({
@@ -18,7 +18,7 @@ export default async function RootLayout({
           enableSystem
           disableTransitionOnChange
         >
-          <SocketProvider>{children}</SocketProvider>
+         {children}
         </ThemeProvider>
       </body>
     </html>
