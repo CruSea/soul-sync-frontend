@@ -18,7 +18,7 @@ export default async function RootLayout({
           enableSystem
           disableTransitionOnChange
         >
-         {children}
+          {children}
         </ThemeProvider>
       </body>
     </html>
