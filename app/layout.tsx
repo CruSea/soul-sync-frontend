@@ -1,7 +1,9 @@
 'use server';
 import './globals.css';
 import { ThemeProvider } from '@/context/providers/ThemeProvider';
+
 import React from 'react';
+
 export default async function RootLayout({
   children,
 }: Readonly<{
