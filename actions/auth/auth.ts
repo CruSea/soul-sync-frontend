@@ -56,7 +56,7 @@ export async function googleAuthCallback(token: string) {
   return {
     success: true,
     requiresSelection: true,
-    accounts: decoded.accounts.map(acc => ({
+    accounts: decoded.accounts.map((acc) => ({
       id: acc.id,
       name: acc.name,
       role: acc.role?.name ?? null,
@@ -68,7 +68,7 @@ export async function selectAccount(token: string, accountId: string) {
   const decoded = decodeToken(token) as User;
   if (!decoded?.accounts) return { success: false };
 
-  const account = decoded.accounts.find(acc => acc.id === accountId);
+  const account = decoded.accounts.find((acc) => acc.id === accountId);
   if (!account) return { success: false };
 
   await setAuthCookie({
