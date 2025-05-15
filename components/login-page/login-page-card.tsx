@@ -9,61 +9,47 @@ import {
 } from '@/components/ui/card';
 import { useSearchParams, useRouter } from 'next/navigation';
 import { useEffect, useState } from 'react';
-import { decodeToken } from '@/lib/utils';
-import { User, Account, User_Info } from '@/types/users';
-import { setAuthCookie } from '@/actions/auth/auth';
-import { googleAuthCallback } from '@/actions/auth/login';
+import { googleAuthCallback, selectAccount } from '@/actions/auth/auth';
+import { googleAuthCallbackk } from '@/actions/auth/login';
+import type { AccountInfo } from '@/types/users';
 
 const LoginPageCard = () => {
   const searchParams = useSearchParams();
   const router = useRouter();
-  const [userInfo, setUserInfo] = useState<User | null>(null);
-  const [loginToken, setLoginToken] = useState<string | null>(null);
+  const [accounts, setAccounts] = useState<AccountInfo[]>([]);
+  const [authToken, setAuthToken] = useState<string | null>(null);
 
   useEffect(() => {
     const token = searchParams.get('token');
-    if (token) {
-      const decoded = decodeToken(token) as User;
-      if (!decoded?.accounts || decoded.accounts.length === 0) return;
+    if (!token) return;
 
-      if (decoded.accounts.length === 1) {
-        const singleUser: User_Info = {
-          userId: decoded.sub ?? null,
-          userName: decoded.email ?? null,
-          accountId: decoded.accounts[0].id,
-          roleId: decoded.accounts[0].role?.id ?? null,
-          role: decoded.accounts[0].role?.name ?? null,
-          imageUrl: decoded.imageUrl ?? null,
-          token,
-        };
-        setAuthCookie(singleUser);
-        router.refresh();
-      } else {
-        setUserInfo(decoded);
-        setLoginToken(token);
+    const handleToken = async () => {
+      const result = await googleAuthCallback(token);
+
+      if (result.success) {
+        if (result.requiresSelection && result.accounts) {
+          setAccounts(result.accounts as AccountInfo[]);
+          setAuthToken(token);
+        } else {
+          router.refresh();
+        }
       }
-    }
-  }, [searchParams]);
-
-  const handleAccountSelect = (account: Account) => {
-    if (!userInfo || !loginToken) return;
-
-    const user: User_Info = {
-      userId: userInfo.sub ?? null,
-      userName: userInfo.email ?? null,
-      accountId: account.id,
-      roleId: account.role?.id ?? null,
-      role: account.role?.name ?? null,
-      imageUrl: userInfo.imageUrl ?? null,
-      token: loginToken,
     };
 
-    setAuthCookie(user);
-    router.refresh();
+    handleToken();
+  }, [searchParams]);
+
+  const handleAccountSelect = async (accountId: string) => {
+    if (!authToken) return;
+
+    const result = await selectAccount(authToken, accountId);
+    if (result.success) {
+      router.refresh();
+    }
   };
 
   const handleLogin = () => {
-    googleAuthCallback();
+    googleAuthCallbackk();
   };
 
   return (
@@ -77,7 +63,7 @@ const LoginPageCard = () => {
         </CardDescription>
       </CardHeader>
       <CardContent className="flex flex-col gap-4 pt-0">
-        {!userInfo ? (
+        {accounts.length === 0 ? (
           <Button
             className="w-96 h-10 font-medium text-sm"
             variant="default"
@@ -88,14 +74,14 @@ const LoginPageCard = () => {
         ) : (
           <>
             <p className="text-center">Choose an account to continue</p>
-            {userInfo.accounts?.map((acc) => (
+            {accounts.map((acc) => (
               <Button
                 key={acc.id}
                 className="w-96 h-10"
                 variant="secondary"
-                onClick={() => handleAccountSelect(acc)}
+                onClick={() => handleAccountSelect(acc.id)}
               >
-                {acc.name} — {acc.role?.name}
+                {acc.name} — {acc.role ?? ''}
               </Button>
             ))}
           </>
