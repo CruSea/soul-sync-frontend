@@ -7,38 +7,49 @@ import {
   CardHeader,
   CardTitle,
 } from '@/components/ui/card';
-import { redirect, useSearchParams } from 'next/navigation';
-import { useEffect } from 'react';
-import { decodeToken } from '@/lib/utils';
-import { User } from '@/types/users';
-import { setAuthCookie } from '@/actions/auth/auth';
-import { googleAuthCallback } from '@/actions/auth/login';
+import { useSearchParams, useRouter } from 'next/navigation';
+import { useEffect, useState } from 'react';
+import { googleAuthCallback, selectAccount } from '@/actions/auth/auth';
+import { googleAuthCallbackk } from '@/actions/auth/login';
+import type { AccountInfo } from '@/types/users';
 
 const LoginPageCard = () => {
   const searchParams = useSearchParams();
+  const router = useRouter();
+  const [accounts, setAccounts] = useState<AccountInfo[]>([]);
+  const [authToken, setAuthToken] = useState<string | null>(null);
+
   useEffect(() => {
-    const token = searchParams.get('token'); // Extract the token from the URL
-    if (token) {
-      const decoded = decodeToken(token); // Ensure decodeToken is working properly
-      const userInfo = decoded as User;
+    const token = searchParams.get('token');
+    if (!token) return;
 
-      // Fix: Correctly access the first account
-      const user = {
-        userId: userInfo?.sub ?? null,
-        userName: userInfo?.email ?? 'Guest', // Default to "Guest" if no name
-        accountId: userInfo?.accounts?.[0]?.id ?? null, // Ensure we access index 0
-        roleId: userInfo?.accounts?.[0]?.role?.id ?? null, // Access role correctly
-        role: userInfo?.accounts?.[0]?.role?.name ?? null,
-        imageUrl: userInfo?.imageUrl ?? null,
-        token,
-      };
+    const handleToken = async () => {
+      const result = await googleAuthCallback(token);
 
-      setAuthCookie(user);
-      // Fix: Store user properly in localStorage
-    }
+      if (result.success) {
+        if (result.requiresSelection && result.accounts) {
+          setAccounts(result.accounts as AccountInfo[]);
+          setAuthToken(token);
+        } else {
+          router.refresh();
+        }
+      }
+    };
+
+    handleToken();
   }, [searchParams]);
+
+  const handleAccountSelect = async (accountId: string) => {
+    if (!authToken) return;
+
+    const result = await selectAccount(authToken, accountId);
+    if (result.success) {
+      router.refresh();
+    }
+  };
+
   const handleLogin = () => {
-    googleAuthCallback();
+    googleAuthCallbackk();
   };
 
   return (
@@ -52,13 +63,29 @@ const LoginPageCard = () => {
         </CardDescription>
       </CardHeader>
       <CardContent className="flex flex-col gap-4 pt-0">
-        <Button
-          className="w-96 h-10 font-medium text-sm"
-          variant="default"
-          onClick={handleLogin}
-        >
-          Login with Google
-        </Button>
+        {accounts.length === 0 ? (
+          <Button
+            className="w-96 h-10 font-medium text-sm"
+            variant="default"
+            onClick={handleLogin}
+          >
+            Login with Google
+          </Button>
+        ) : (
+          <>
+            <p className="text-center">Choose an account to continue</p>
+            {accounts.map((acc) => (
+              <Button
+                key={acc.id}
+                className="w-96 h-10"
+                variant="secondary"
+                onClick={() => handleAccountSelect(acc.id)}
+              >
+                {acc.name} — {acc.role ?? ''}
+              </Button>
+            ))}
+          </>
+        )}
       </CardContent>
     </Card>
   );

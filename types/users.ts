@@ -15,16 +15,18 @@ export interface User {
   accounts?: Account[];
   sub?: string;
 }
+
 export type Account = {
   id: string;
   name: string;
-  role?: role;
+  role?: Role;
   imageUrl?: string;
   lastUpdated?: string;
   userId?: string;
   email?: string;
 };
-export type role = {
+
+export type Role = {
   id: string;
   name: string;
 };
@@ -37,6 +39,12 @@ export type User_Info = {
   token?: string | null;
   imageUrl?: string | null;
   userId?: string | null;
+};
+
+export type AccountInfo = {
+  id: string;
+  name: string;
+  role: string | null;
 };
 
 export type SortField = 'name' | 'email' | 'joinedDate' | 'location';
