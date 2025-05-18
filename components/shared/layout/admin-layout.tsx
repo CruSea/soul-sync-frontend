@@ -1,3 +1,5 @@
+'use client';
+
 import { Header } from '@/components/shared/layout/header';
 import { Sidebar } from '@/components/shared/layout/sidebar';
 import { Toaster } from '@/components/ui/toaster';
@@ -10,9 +12,18 @@ interface AdminLayoutProps {
 
 export function AdminLayout({ children, title }: AdminLayoutProps) {
   return (
-    <div className="flex max-h-screen">
+    <div className="lg:flex relative min-h-screen">
+      {/* Sidebar */}
       <Sidebar />
-      <div className="flex w-full flex-1 flex-col">
+
+      {/* Content Area */}
+      <div
+        className={`
+          flex flex-col transition-all duration-300
+          lg:ml-0 lg:flex-1
+          ml-12
+        `}
+      >
         <Header title={title} />
         <main className="w-full overflow-auto">{children}</main>
         <Toaster />
