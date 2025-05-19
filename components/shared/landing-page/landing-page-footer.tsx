@@ -7,7 +7,10 @@ const LandingPageFooter = () => {
         { value: '3000M+', label: 'Users capacity' },
         { value: '24/7', label: 'Support' },
       ].map((item, index) => (
-        <div key={index} className="flex flex-col items-center text-center min-w-[80px]">
+        <div
+          key={index}
+          className="flex flex-col items-center text-center min-w-[80px]"
+        >
           <div className="text-xl md:text-3xl font-medium">{item.value}</div>
           <div className="text-sm md:text-base">{item.label}</div>
         </div>

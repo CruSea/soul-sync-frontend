@@ -14,8 +14,11 @@ const LoginPage = async () => {
     switch (user.role) {
       case 'Owner':
         redirect('/admin');
+        return;
       case 'Mentor':
         redirect('/mentor');
+        return;
+
       default:
         redirect('/log-in');
     }

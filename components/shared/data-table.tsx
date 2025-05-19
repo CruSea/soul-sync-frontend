@@ -233,98 +233,126 @@ const DataTable = <T extends { id: string | number }>({
         </div>
       </div>
       <div className="rounded-lg border">
-      
-{isSmallScreen ? (
-  // Improved Small Screen (Stacked Card) Layout
-  <div className="space-y-4">
-    {filteredData.map((item) => (
-      <div
-        key={item.id}
-        className="p-4 rounded-xl bg-white shadow-md border border-gray-200 flex flex-col gap-2"
-      >
-        <div className="flex items-center justify-between mb-2">
-          <div className="flex flex-col gap-1 flex-1">
-            {columns.map((col) =>
-              col.key === 'name' ? (
-                <div key={col.key as string} className="flex items-center gap-2">
-                  <span className="text-xs font-semibold text-gray-500 uppercase tracking-wide">{col.header}</span>
-                  <span className="text-base font-bold text-gray-900">
-                    {col.render ? col.render(item) : (item[col.key] as React.ReactNode)}
-                  </span>
-                </div>
-              ) : null
-            )}
-          </div>
-          {/* REMOVE TOP DELETE ICON ON SMALL SCREENS */}
-        </div>
-        <div className="grid grid-cols-2 gap-2">
-          {columns.map((col) =>
-            col.key !== 'name' ? (
-              <div key={col.key as string} className="flex flex-col">
-                <span className="text-xs font-medium text-gray-500">{col.header}</span>
-                <span className="text-sm text-gray-800 break-words"> {/* Added break-words */}
-                  {col.render ? col.render(item) : (item[col.key] as React.ReactNode)}
-                </span>
-              </div>
-            ) : null
-          )}
-        </div>
-        {enableActions && (
-          <div className="flex justify-end gap-2 mt-2"> {/* Removed sm:hidden to always show on small screens */}
-            <Button
-              variant="outline"
-              size="sm"
-              onClick={() => handleDelete(item.id)}
-              className="text-red-500 border-red-200 hover:bg-red-50"
-            >
-              <Trash2 className="h-4 w-4 mr-1" />
-              Delete
-            </Button>
-          </div>
-        )}
-      </div>
-    ))}
-    {filteredData.length === 0 && !loading && (
-      <div className="py-4 text-center text-gray-500">No data available</div>
-    )}
-    {loading &&
-      Array.from({ length: itemsPerPage ?? 0 }).map((_, index) => (
-        <div
-          key={index}
-          className="p-4 rounded-xl bg-white shadow-md border border-gray-200 flex flex-col gap-2"
-        >
-          <div className="flex items-center justify-between mb-2">
-            <div className="flex flex-col gap-1 flex-1">
-              {columns.map((col) =>
-                col.key === 'name' ? (
-                  <div key={col.key as string} className="flex items-center gap-2">
-                    <span className="text-xs font-semibold text-gray-500 uppercase tracking-wide">{col.header}</span>
-                    <Skeleton className="h-6 w-24 inline-block" />
+        {isSmallScreen ? (
+          // Improved Small Screen (Stacked Card) Layout
+          <div className="space-y-4">
+            {filteredData.map((item) => (
+              <div
+                key={item.id}
+                className="p-4 rounded-xl bg-white shadow-md border border-gray-200 flex flex-col gap-2"
+              >
+                <div className="flex items-center justify-between mb-2">
+                  <div className="flex flex-col gap-1 flex-1">
+                    {columns.map((col) =>
+                      col.key === 'name' ? (
+                        <div
+                          key={col.key as string}
+                          className="flex items-center gap-2"
+                        >
+                          <span className="text-xs font-semibold text-gray-500 uppercase tracking-wide">
+                            {col.header}
+                          </span>
+                          <span className="text-base font-bold text-gray-900">
+                            {col.render
+                              ? col.render(item)
+                              : (item[col.key] as React.ReactNode)}
+                          </span>
+                        </div>
+                      ) : null
+                    )}
                   </div>
-                ) : null
-              )}
-            </div>
-            {/* REMOVE TOP DELETE ICON ON SMALL SCREENS (LOADING STATE) */}
-          </div>
-          <div className="grid grid-cols-2 gap-2">
-            {columns.map((col) =>
-              col.key !== 'name' ? (
-                <div key={col.key as string} className="flex flex-col ml-2">
-                  <span className="text-xs font-medium text-gray-500">{col.header}</span>
-                  <Skeleton className="h-6 w-24 inline-block" />
+                  {/* REMOVE TOP DELETE ICON ON SMALL SCREENS */}
                 </div>
-              ) : null
+                <div className="grid grid-cols-2 gap-2">
+                  {columns.map((col) =>
+                    col.key !== 'name' ? (
+                      <div key={col.key as string} className="flex flex-col">
+                        <span className="text-xs font-medium text-gray-500">
+                          {col.header}
+                        </span>
+                        <span className="text-sm text-gray-800 break-words">
+                          {' '}
+                          {/* Added break-words */}
+                          {col.render
+                            ? col.render(item)
+                            : (item[col.key] as React.ReactNode)}
+                        </span>
+                      </div>
+                    ) : null
+                  )}
+                </div>
+                {enableActions && (
+                  <div className="flex justify-end gap-2 mt-2">
+                    {' '}
+                    {/* Removed sm:hidden to always show on small screens */}
+                    <Button
+                      variant="outline"
+                      size="sm"
+                      onClick={() => handleDelete(item.id)}
+                      className="text-red-500 border-red-200 hover:bg-red-50"
+                    >
+                      <Trash2 className="h-4 w-4 mr-1" />
+                      Delete
+                    </Button>
+                  </div>
+                )}
+              </div>
+            ))}
+            {filteredData.length === 0 && !loading && (
+              <div className="py-4 text-center text-gray-500">
+                No data available
+              </div>
             )}
+            {loading &&
+              Array.from({ length: itemsPerPage ?? 0 }).map((_, index) => (
+                <div
+                  key={index}
+                  className="p-4 rounded-xl bg-white shadow-md border border-gray-200 flex flex-col gap-2"
+                >
+                  <div className="flex items-center justify-between mb-2">
+                    <div className="flex flex-col gap-1 flex-1">
+                      {columns.map((col) =>
+                        col.key === 'name' ? (
+                          <div
+                            key={col.key as string}
+                            className="flex items-center gap-2"
+                          >
+                            <span className="text-xs font-semibold text-gray-500 uppercase tracking-wide">
+                              {col.header}
+                            </span>
+                            <Skeleton className="h-6 w-24 inline-block" />
+                          </div>
+                        ) : null
+                      )}
+                    </div>
+                    {/* REMOVE TOP DELETE ICON ON SMALL SCREENS (LOADING STATE) */}
+                  </div>
+                  <div className="grid grid-cols-2 gap-2">
+                    {columns.map((col) =>
+                      col.key !== 'name' ? (
+                        <div
+                          key={col.key as string}
+                          className="flex flex-col ml-2"
+                        >
+                          <span className="text-xs font-medium text-gray-500">
+                            {col.header}
+                          </span>
+                          <Skeleton className="h-6 w-24 inline-block" />
+                        </div>
+                      ) : null
+                    )}
+                  </div>
+                  {enableActions && (
+                    <div className="flex justify-end gap-2 mt-2">
+                      {' '}
+                      {/* Removed sm:hidden (loading state) */}
+                      <Skeleton className="h-8 w-20" />
+                    </div>
+                  )}
+                </div>
+              ))}
           </div>
-          {enableActions && (
-            <div className="flex justify-end gap-2 mt-2"> {/* Removed sm:hidden (loading state) */}
-              <Skeleton className="h-8 w-20" />
-            </div>
-          )}
-        </div>
-      ))}
-  </div>
-) : (
+        ) : (
           // Large Screen (Table) Layout - Minor adjustment for potential overflow
           <div className="overflow-x-auto">
             <Table>
@@ -333,7 +361,9 @@ const DataTable = <T extends { id: string | number }>({
                   {columns.map((col) => (
                     <TableHead key={col.key as string}>{col.header}</TableHead>
                   ))}
-                  {enableActions && <TableHead className="text-right">Actions</TableHead>}
+                  {enableActions && (
+                    <TableHead className="text-right">Actions</TableHead>
+                  )}
                 </TableRow>
               </TableHeader>
               <TableBody>
@@ -366,7 +396,9 @@ const DataTable = <T extends { id: string | number }>({
                     <TableRow key={item.id}>
                       {columns.map((col) => (
                         <TableCell key={col.key as string}>
-                          {col.render ? col.render(item) : (item[col.key] as React.ReactNode)}
+                          {col.render
+                            ? col.render(item)
+                            : (item[col.key] as React.ReactNode)}
                         </TableCell>
                       ))}
                       {enableActions && (

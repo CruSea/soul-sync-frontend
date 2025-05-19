@@ -10,12 +10,19 @@ const LandingPageBody = () => {
     <div className="flex flex-col md:flex-row items-center justify-evenly w-full px-6 md:px-0 py-12 md:py-0">
       {/* Desktop View */}
       <div className="hidden md:flex flex-col justify-center gap-7 max-w-[500px] text-center">
-        <div className="font-bold text-5xl">Build the next Generation through Automation</div>
+        <div className="font-bold text-5xl">
+          Build the next Generation through Automation
+        </div>
         <div className="font-normal text-lg">
-          TURUMBA helps you connect a mentor with a pupil to guide them through a journey with an Automation
+          TURUMBA helps you connect a mentor with a pupil to guide them through
+          a journey with an Automation
         </div>
         <Link href="/log-in" className="mx-auto">
-          <Button variant="default" className="rounded-[20px] w-min gap-2 p-3" size="lg">
+          <Button
+            variant="default"
+            className="rounded-[20px] w-min gap-2 p-3"
+            size="lg"
+          >
             Get Started
             <LuArrowRight />
           </Button>
@@ -44,7 +51,8 @@ const LandingPageBody = () => {
 
         {/* TURUMBA Text */}
         <div className="text-sm text-center text-gray-700 px-2">
-          TURUMBA helps you connect a mentor with a pupil to guide them through a journey with an Automation
+          TURUMBA helps you connect a mentor with a pupil to guide them through
+          a journey with an Automation
         </div>
 
         {/* Get Started Button */}

@@ -7,10 +7,11 @@ interface LandingPageHeaderProps {
   showButton?: boolean;
 }
 
-const LandingPageHeader: React.FC<LandingPageHeaderProps> = ({ showButton = true }) => {
+const LandingPageHeader: React.FC<LandingPageHeaderProps> = ({
+  showButton = true,
+}) => {
   return (
     <div className="w-full h-20 border-b border-neutral-200 px-4 md:px-14 flex items-center justify-between">
-
       <div className="flex gap-2.5 items-center">
         <Image
           src="/assets/turumba.png"
