@@ -11,7 +11,7 @@ const LandingPageHeader: React.FC<LandingPageHeaderProps> = ({
   showButton = true,
 }) => {
   return (
-    <div className="w-full h-20 border-b border-neutral-200 px-14 flex items-center justify-between">
+    <div className="w-full h-20 border-b border-neutral-200 px-4 md:px-14 flex items-center justify-between">
       <div className="flex gap-2.5 items-center">
         <Image
           src="/assets/turumba.png"
@@ -19,7 +19,7 @@ const LandingPageHeader: React.FC<LandingPageHeaderProps> = ({
           width={40}
           height={40}
         />
-        <div className="font-bold text-2xl">LEYU CHAT</div>
+        <div className="font-bold text-xl sm:text-2xl">LEYU CHAT</div>
       </div>
       {showButton && (
         <Link href="/log-in">

@@ -26,7 +26,6 @@ import { Account } from '@/types/users';
 import { userProfile } from '@/actions/auth/login';
 import { revalidate } from '@/actions/revalidate';
 import Pagination from '@/components/shared/pagination';
-// import { channel } from 'diagnostics_channel';
 
 export default function ChannelsPage() {
   const [channels, setChannels] = useState<Channel[]>([]);
@@ -48,31 +47,29 @@ export default function ChannelsPage() {
   const [totalPages, setTotalPages] = useState(1);
   const [currentPage, setCurrentPage] = useState(1);
   const page = currentPage;
+
   useEffect(() => {
-    const fetchUserProfile = async () => {
-      const userAccoutId: Account = await userProfile();
-      setUser(userAccoutId);
+    const fetchUserAccount = async () => {
+      const userAccount: Account = await userProfile();
+      setUser(userAccount);
     };
-    fetchUserProfile();
+    fetchUserAccount();
   }, []);
 
   useEffect(() => {
-    const getChannels = async () => {
-      const response = await fetchedChannels(
-        user?.id as string,
-        itemsPerPage,
-        page
-      );
+    const loadChannels = async () => {
+      if (!user?.id) return;
+      const response = await fetchedChannels(user.id, itemsPerPage, page);
 
-      if (!response.error) {
+      if (response.error) {
+        toast(response.error);
+      } else {
         setChannels(response.data);
         setTotalPages(response.meta.totalPages);
-      } else {
-        toast(response.error);
       }
     };
-    getChannels();
-  }, [user?.id, triggerState, itemsPerPage, page]);
+    loadChannels();
+  }, [user?.id, triggerState, itemsPerPage, page, toast]);
 
   const filteredChannel = channels?.filter(
     (item) =>
@@ -80,16 +77,12 @@ export default function ChannelsPage() {
       item.name.toLowerCase().includes(search.toLowerCase())
   );
 
-  const AddChannel = async (
+  const addChannel = async (
     newChannel: Omit<Channel, 'id' | 'icon' | 'createdAt' | 'accountId'>
   ) => {
     if (user) {
-      const channelWithId = {
-        ...newChannel,
-        accountId: user.id,
-      } as Channel;
-
-      const response = await handleAddChannel(channelWithId);
+      const channelToAdd = { ...newChannel, accountId: user.id } as Channel;
+      const response = await handleAddChannel(channelToAdd);
       if (response.error) {
         toast({
           variant: 'destructive',
@@ -97,39 +90,40 @@ export default function ChannelsPage() {
           description: response.error.discription,
           duration: 3000,
         });
+      } else {
+        setTriggerState(!triggerState);
+        toast({
+          variant: 'success',
+          title: 'Success',
+          description: `Channel ${channelToAdd.name} added successfully`,
+          duration: 3000,
+        });
+        await revalidate('add-channel');
       }
-      setTriggerState(!triggerState);
-      toast({
-        variant: 'success',
-        title: 'Success',
-        description: `Channel ${channelWithId.name} added successfully`,
-        duration: 3000,
-      });
-      await revalidate('add-channel');
     }
   };
 
   return (
-    <div className="h-fit min-h-screen w-full mx-auto p-10  ">
-      <div className="h-fit min-h-screen w-full space-y-6  bg-white border p-6 rounded-lg ">
-        <div className="flex items-center justify-between mb-6 px-3 pt-3">
-          <h1 className="text-2xl font-bold">List of Channels</h1>
-          <p className="text-sm text-muted-foreground">
+    <div className="h-fit min-h-screen w-full mx-auto p-2 sm:p-10">
+      <div className="h-fit min-h-screen w-full space-y-4 sm:space-y-6 bg-white border p-2 sm:p-6 rounded-lg">
+        <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between mb-4 sm:mb-6 px-2 sm:px-3 pt-2 sm:pt-3 gap-2">
+          <h1 className="text-lg sm:text-2xl font-bold">List of Channels</h1>
+          <p className="text-xs sm:text-sm text-muted-foreground">
             {channels?.length} channels added
           </p>
         </div>
-        <div className="flex items-center justify-center bg-background p-4 h-dvh">
-          <Command className=" w-full max-w-full h-full flex flex-col">
-            <div className="flex items-center p-1 border-b pb-6">
+        <div className="flex flex-col items-center justify-center bg-background p-2 sm:p-4">
+          <Command className="w-full max-w-full h-full flex flex-col">
+            <div className="flex flex-col sm:flex-row gap-2 items-stretch sm:items-center p-1 border-b pb-4 sm:pb-6">
               <CommandInput
                 placeholder="Search..."
                 value={search}
                 onValueChange={setSearch}
-                className="flex-grow border px-4 w-full"
+                className="flex-grow border px-3 py-2 w-full text-sm"
               />
               <DropdownMenu>
                 <DropdownMenuTrigger asChild>
-                  <Button variant="outline" className="ml-2">
+                  <Button variant="outline" className="w-full sm:w-auto">
                     {selectedCategory}
                     <ChevronDown className="ml-1 h-4 w-4" />
                   </Button>
@@ -146,15 +140,15 @@ export default function ChannelsPage() {
                 </DropdownMenuContent>
               </DropdownMenu>
             </div>
-            <CommandList className="flex-grow overflow-none h-full">
+            <CommandList className="flex-grow h-full">
               <CommandEmpty>No results found.</CommandEmpty>
               <CommandGroup className="h-full">
-                <div className="grid lg:grid-cols-4 3xl:grid-cols-5 md:grid-cols-3 grid-cols-[repeat(auto-fit,minmax(min-content,1fr))] gap-4 p-4 h-full">
+                <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 3xl:grid-cols-5 gap-3 sm:gap-4 p-2 sm:p-4 h-full">
                   {filteredChannel.length > 0 &&
                     filteredChannel?.map((channel, index) => (
                       <CommandItem
                         key={channel.id || `channel-${index}`}
-                        className="w-auto items-center justify-center h-full min-h-[100px] rounded-xl"
+                        className="w-full items-center justify-center h-full min-h-[100px] rounded-xl"
                       >
                         <ChannelCard
                           channel={channel}
@@ -165,7 +159,7 @@ export default function ChannelsPage() {
                       </CommandItem>
                     ))}
                   <AddChannelDialog
-                    onAddChannel={AddChannel}
+                    onAddChannel={addChannel}
                     setSelectedChannel={setSelectedChannel}
                     selectedChannel={selectedChannel}
                   />
@@ -174,13 +168,15 @@ export default function ChannelsPage() {
             </CommandList>
           </Command>
         </div>
-        <Pagination
-          currentPage={currentPage}
-          totalPages={totalPages}
-          onPageChange={setCurrentPage}
-          itemsPerPage={itemsPerPage}
-          onItemsPerPageChange={onItemsPerPageChange}
-        />
+        <div className="w-full flex justify-center">
+          <Pagination
+            currentPage={currentPage}
+            totalPages={totalPages}
+            onPageChange={setCurrentPage}
+            itemsPerPage={itemsPerPage}
+            onItemsPerPageChange={onItemsPerPageChange}
+          />
+        </div>
       </div>
     </div>
   );
