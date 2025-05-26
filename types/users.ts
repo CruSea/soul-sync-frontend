@@ -39,6 +39,14 @@ export type User_Info = {
   token?: string | null;
   imageUrl?: string | null;
   userId?: string | null;
+  accounts?: Array<{
+    id: string;
+    name: string;
+    role: {
+      name: string;
+      id?: string;
+    } | null;
+  }>;
 };
 
 export type AccountInfo = {
