@@ -9,26 +9,35 @@ export async function setAuthCookie(userData: User_Info) {
 
   cookieStore.set({
     name: 'auth-token',
-    value: userData?.token as string,
+    value: userData.token || '', 
     httpOnly: true,
-    // secure: process.env.NODE_ENV === 'production',
-    maxAge: 60 * 60 * 24, // 1 day
+    maxAge: 60 * 60 * 24,
     path: '/',
     sameSite: 'lax',
   });
 
-  // Set non-sensitive user data in separate cookie
+  cookieStore.set({
+    name: 'selected-org-id',
+    value: userData.accountId || '',
+    maxAge: 60 * 60 * 24,
+    path: '/',
+    sameSite: 'lax',
+  });
+
   cookieStore.set({
     name: 'user-profile',
     value: JSON.stringify({
       id: userData.accountId,
       name: userData.userName,
-      role: userData.role,
+      role: userData.role ? { name: userData.role, id: userData.roleId } : null,
       imageUrl: userData.imageUrl,
       userId: userData.userId,
+      accounts: userData.accounts?.map(acc => ({
+        id: acc.id,
+        name: acc.name,
+        role: acc.role ? { name: acc.role.name, id: acc.role.id } : null
+      }))
     }),
-
-    // secure: process.env.NODE_ENV === 'production',
     maxAge: 60 * 60 * 24,
     path: '/',
     sameSite: 'lax',
@@ -42,13 +51,21 @@ export async function googleAuthCallback(token: string) {
   if (decoded.accounts.length === 1) {
     const account = decoded.accounts[0];
     await setAuthCookie({
-      userId: decoded.sub ?? null,
-      userName: decoded.email ?? null,
+      userId: decoded.sub ?? '',
+      userName: decoded.email ?? '',
       accountId: account.id,
-      roleId: account.role?.id ?? null,
-      role: account.role?.name ?? null,
-      imageUrl: decoded.imageUrl ?? null,
+      roleId: account.role?.id ?? '',
+      role: account.role?.name ?? '',
+      imageUrl: decoded.imageUrl ?? '',
       token: token,
+      accounts: decoded.accounts.map(acc => ({
+        id: acc.id,
+        name: acc.name,
+        role: acc.role ? {
+          name: acc.role.name,
+          id: acc.role.id
+        } : null
+      }))
     });
     return { success: true, requiresSelection: false };
   }
@@ -72,13 +89,21 @@ export async function selectAccount(token: string, accountId: string) {
   if (!account) return { success: false };
 
   await setAuthCookie({
-    userId: decoded.sub ?? null,
-    userName: decoded.email ?? null,
+    userId: decoded.sub ?? '',
+    userName: decoded.email ?? '',
     accountId: account.id,
-    roleId: account.role?.id ?? null,
-    role: account.role?.name ?? null,
-    imageUrl: decoded.imageUrl ?? null,
+    roleId: account.role?.id ?? '',
+    role: account.role?.name ?? '',
+    imageUrl: decoded.imageUrl ?? '',
     token: token,
+    accounts: decoded.accounts.map(acc => ({
+      id: acc.id,
+      name: acc.name,
+      role: acc.role ? {
+        name: acc.role.name,
+        id: acc.role.id
+      } : null
+    }))
   });
 
   return { success: true };
@@ -89,4 +114,5 @@ export async function removeUserProfile() {
 
   cookieStore.delete('auth-token');
   cookieStore.delete('user-profile');
+  cookieStore.delete('selected-org-id');
 }
