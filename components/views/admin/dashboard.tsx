@@ -5,7 +5,6 @@ import { MentorsChart } from '@/components/shared/admin/dashboard/mentors-chart'
 import { StatsCards } from '@/components/shared/admin/dashboard/stat-card';
 import UsersTable from '@/components/shared/admin/dashboard/user-table';
 export default function AdminView() {
-
   return (
     <div className="flex-1 p-4 bg-secondary dark:bg-gray-900">
       <div className="flex flex-col lg:flex-row gap-6">

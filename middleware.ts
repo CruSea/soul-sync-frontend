@@ -12,7 +12,7 @@ export async function middleware(req: NextRequest) {
     try {
       const decoded = JSON.parse(atob(token.split('.')[1]));
       if (decoded.exp < now) {
-        await logoutAction(); 
+        await logoutAction();
         return NextResponse.redirect(new URL('/log-in', req.url));
       }
     } catch (err) {
@@ -22,7 +22,6 @@ export async function middleware(req: NextRequest) {
     }
   }
 
-  
   if (currentPath === '/log-in' && userProfileRaw) {
     try {
       const user = JSON.parse(userProfileRaw);

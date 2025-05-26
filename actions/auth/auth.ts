@@ -9,7 +9,7 @@ export async function setAuthCookie(userData: User_Info) {
 
   cookieStore.set({
     name: 'auth-token',
-    value: userData.token || '', 
+    value: userData.token || '',
     httpOnly: true,
     maxAge: 60 * 60 * 24,
     path: '/',
@@ -32,11 +32,11 @@ export async function setAuthCookie(userData: User_Info) {
       role: userData.role ? { name: userData.role, id: userData.roleId } : null,
       imageUrl: userData.imageUrl,
       userId: userData.userId,
-      accounts: userData.accounts?.map(acc => ({
+      accounts: userData.accounts?.map((acc) => ({
         id: acc.id,
         name: acc.name,
-        role: acc.role ? { name: acc.role.name, id: acc.role.id } : null
-      }))
+        role: acc.role ? { name: acc.role.name, id: acc.role.id } : null,
+      })),
     }),
     maxAge: 60 * 60 * 24,
     path: '/',
@@ -58,14 +58,16 @@ export async function googleAuthCallback(token: string) {
       role: account.role?.name ?? '',
       imageUrl: decoded.imageUrl ?? '',
       token: token,
-      accounts: decoded.accounts.map(acc => ({
+      accounts: decoded.accounts.map((acc) => ({
         id: acc.id,
         name: acc.name,
-        role: acc.role ? {
-          name: acc.role.name,
-          id: acc.role.id
-        } : null
-      }))
+        role: acc.role
+          ? {
+              name: acc.role.name,
+              id: acc.role.id,
+            }
+          : null,
+      })),
     });
     return { success: true, requiresSelection: false };
   }
@@ -96,14 +98,16 @@ export async function selectAccount(token: string, accountId: string) {
     role: account.role?.name ?? '',
     imageUrl: decoded.imageUrl ?? '',
     token: token,
-    accounts: decoded.accounts.map(acc => ({
+    accounts: decoded.accounts.map((acc) => ({
       id: acc.id,
       name: acc.name,
-      role: acc.role ? {
-        name: acc.role.name,
-        id: acc.role.id
-      } : null
-    }))
+      role: acc.role
+        ? {
+            name: acc.role.name,
+            id: acc.role.id,
+          }
+        : null,
+    })),
   });
 
   return { success: true };
