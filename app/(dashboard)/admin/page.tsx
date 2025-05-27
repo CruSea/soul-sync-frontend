@@ -2,6 +2,7 @@
 
 import { useEffect, useState } from 'react';
 import AdminView from '@/components/views/admin/dashboard';
+import type { User } from '@/types/users';
 import { getCookie } from 'cookies-next';
 import {
   Dialog,
@@ -24,9 +25,9 @@ function UserPage() {
         return;
       }
 
-      const profile = JSON.parse(userProfileCookie);
-      const selectedAccount = profile.accounts.find(
-        (account: any) => account.id === selectedOrgId
+      const profile = JSON.parse(userProfileCookie) as User;
+      const selectedAccount = profile.accounts?.find(
+        (account) => account.id === selectedOrgId
       );
 
       setAuthorized(selectedAccount?.role?.name === 'Owner');
