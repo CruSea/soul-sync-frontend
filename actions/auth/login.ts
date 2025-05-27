@@ -10,7 +10,7 @@ const Url = {
   login: `${BASE_URL}/auth/google`,
 };
 
-export const googleAuthCallback = async () => {
+export const googleAuthCallbackk = async () => {
   redirect(process.env.GOOGLE_CALLBACK_URL ?? '/');
 };
 export const apiUrl = async () => {
